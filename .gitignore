@@ -129,3 +129,8 @@ tmp/
 temp/
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+# 커스텀 파일 등록
+
+# 환경변수
+.env
