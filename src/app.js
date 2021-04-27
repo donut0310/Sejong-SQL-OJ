@@ -29,7 +29,12 @@ app.use(function (req, res, next) {
 });
 
 // route
-//   routes.push(new ~~(app));
+//  IndexRoute가 맨 마지막 푸시가 되도록 위에다 적어주셈
+
+//   1. routes.push(new ~~(app));
+//   2. routes.push(new ~~(app));
+//   last. routes.push(new IndexRoute(app));
+
 routes.push(new IndexRoute(app));
 
 export default app;
