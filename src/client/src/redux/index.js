@@ -1,2 +1,2 @@
 export {} from './user/actions'
-export {} from './theme/actions'
+export { toggleTheme } from './theme/actions'
