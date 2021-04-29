@@ -22,4 +22,7 @@ export class Models {
     connection.connect();
     console.log("Mysql is connected");
   }
+  createLogicTable(){
+    
+  }
 }
