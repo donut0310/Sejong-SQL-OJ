@@ -48,7 +48,10 @@ const GlobalStyles = createGlobalStyle`
 `
 
 const MainWrapper = styled.div`
+  min-width: 375px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  background: ${(props) => props.theme.BACKGROUND};
 `
