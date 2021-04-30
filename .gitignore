@@ -134,3 +134,6 @@ temp/
 
 # 환경변수
 .env
+
+# dbconfig
+src/api/models/config.js
