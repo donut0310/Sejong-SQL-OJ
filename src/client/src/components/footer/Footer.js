@@ -6,7 +6,7 @@ import { Typography } from '@material-ui/core'
 const Footer = () => {
   return (
     <FooterWrapper>
-      <Typography>Copyright 2021. 세종컴공 ㅁㄴㅇㅁㄴㅇ</Typography>
+      <Typography>Copyright 2021. 세종컴공</Typography>
     </FooterWrapper>
   )
 }

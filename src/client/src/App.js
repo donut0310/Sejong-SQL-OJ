@@ -16,10 +16,10 @@ const App = ({ theme }) => {
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyles />
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/login">
           <LoginPage />
         </Route>
-        <Route path="/main">
+        <Route path="/">
           <MainWrapper>
             <Modal />
             <Header />

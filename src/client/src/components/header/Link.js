@@ -86,5 +86,4 @@ const Name = styled.p`
   color: ${(props) => props.theme.POINT};
   font-size: 1rem;
   font-weight: bold;
-  margin-right: 5px;
 `
