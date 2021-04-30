@@ -166,7 +166,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     background: transparent;
-    color: red;
+    color: transparent;
     &:hover {
       cursor: pointer;
       background: rgba(0, 0, 0, 0.3);
