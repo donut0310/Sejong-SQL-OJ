@@ -1,14 +1,15 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
+
+import CodingPage from '../../containers/codingPage'
 import StatusPage from '../../containers/statusPage'
 
 const Main = () => {
   return (
     <MainWrapper>
-      <Route path="/main/status">
-        <StatusPage />
-      </Route>
+      <Route path="/main/coding" component={CodingPage} />
+      <Route path="/main/status" component={StatusPage} />
     </MainWrapper>
   )
 }
