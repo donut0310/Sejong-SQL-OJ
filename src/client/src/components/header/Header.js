@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { Collapse, Container } from '@material-ui/core'
+import { Collapse, Hidden, Container } from '@material-ui/core'
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded'
 
 import Logo from './Logo'
 import Link from './Link'
-import Menu from './Menu'
+import MenuY from './MenuY'
 
 const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(true)
@@ -22,16 +22,21 @@ const Header = () => {
           <Logo />
           <MenuWrapper>
             <Link />
-            <ToggleMenuBtn onClick={handleToggleMenu} />
+
+            <Hidden smUp>
+              <ToggleMenuBtn onClick={handleToggleMenu} />
+            </Hidden>
           </MenuWrapper>
         </MaxWidth>
       </HeaderWrapper>
 
-      <StyledCollapse in={toggleMenu}>
-        <MaxWidth maxWidth="lg">
-          <Menu />
-        </MaxWidth>
-      </StyledCollapse>
+      <Hidden smUp>
+        <StyledCollapse in={toggleMenu}>
+          <MaxWidth maxWidth="lg">
+            <MenuY />
+          </MaxWidth>
+        </StyledCollapse>
+      </Hidden>
     </>
   )
 }
