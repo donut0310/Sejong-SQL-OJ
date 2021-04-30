@@ -90,7 +90,6 @@ const GlobalStyles = createGlobalStyle`
 
   ul#table-list {
     width: 80%;
-    max-width: 800px;
     display: flex;
     flex-direction: column;
     margin: 10px;

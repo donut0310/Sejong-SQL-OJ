@@ -13,6 +13,7 @@ export const lightTheme = {
   BOARD_TITLE: '#d9d9d9',
 
   EDITOR_THEME: 'tomorrow',
+  EDITOR_BACKGROUND: '#efefef',
 }
 
 export const darkTheme = {
@@ -30,4 +31,5 @@ export const darkTheme = {
   BOARD_TITLE: '#626362',
 
   EDITOR_THEME: 'tomorrow_night',
+  EDITOR_BACKGROUND: '#2a2a2a',
 }

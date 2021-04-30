@@ -14,8 +14,8 @@ const Problem = () => {
     for (let i in table_info[0]) attributes.push(i)
 
     return (
-      <ul id="table-list">
-        <ul id="title-tab">
+      <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
+        <ul id="title-tab" style={{ marginTop: '5px' }}>
           {attributes.map((attribute) => (
             <li id="content" style={{ width: '20%' }}>
               {attribute}
@@ -37,7 +37,7 @@ const Problem = () => {
 
   return (
     <ProblemWrapper>
-      {dummyData_contents}
+      <div style={{ lineHeight: '1.5em' }}>{dummyData_contents}</div>
       {GenerateTable(dummyData_table)}
     </ProblemWrapper>
   )
@@ -46,6 +46,10 @@ const Problem = () => {
 export default Problem
 
 const ProblemWrapper = styled.div`
-  padding: 10px;
-  background: ${(props) => props.theme.BOARD_LIST_HOVER};
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: ${(props) => props.theme.EDITOR_BACKGROUND};
+  color: ${(props) => props.theme.GENERAL_FONT};
 `
