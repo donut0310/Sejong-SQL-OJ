@@ -42,6 +42,7 @@ create table problem(
     tc_cnt int DEFAULT NULL,
     tc_id int DEFAULT NULL,
     table_info MEDIUMTEXT DEFAULT NULL,
+    table_create MEDIUMTEXT DEFAULT NULL,
     FOREIGN KEY (class_id) REFERENCES course (class_id)
 );
 # week_info 가 기본키가 되면 주차별 문제가 1개씩만 생성가능 
@@ -74,7 +75,7 @@ INSERT INTO user values('16011088','1234','김영률','1234',1,null);
 INSERT INTO user values('17011585 ','1234','이기은','1234',0,null);
 INSERT INTO user values('jinbo0428 ','1234','김진성','1234',2,null);
 
-INSERT INTO problem(week_info,class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info)
+INSERT INTO problem(week_info,class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create)
 values('1','1234','두번째 기본 쿼리값 계산하기','`PATIENT_info` 테이블은 목동 나누리 병원에 환자 정보를 담은 테이블입니다.
 `PATIENT_info` 테이블 구조는 다음과 같으며 `patient_id`,`patient_sex`,`datatime`,`patient_condition`,`name` 
 는 각각 환자의 아이디, 성별,입원일, 환자 상태, 이름을 나타냅니다.
@@ -141,15 +142,75 @@ values('1','1234','두번째 기본 쿼리값 계산하기','`PATIENT_info` 테�
   [
     {
       "patient_sex": "Female",
-      "count": "2",
+      "count(patient_sex)": "2",
     },
     {
       "patient_sex": "Male",
-      "count": "1",
+      "count(patient_sex)": "1",
     }
   ]
-}');
+}','create table patient_info(
+	patient_id varchar(255) not null,
+    patient_sex varchar(255) DEFAULT NULL,
+    datatime datetime DEFAULT NULL,
+    patient_condition varchar(255) DEFAULT NULL,
+    name varchar(255) DEFAULT NULL,
+	PRIMARY KEY (patient_id)
+);');
 
-INSERT INTO submit_answer(class_id,user_id,p_id,week_info,user_query,query_cost,score,result) values('1234','17011585',1,1,'select * from problem',25.5,100,'accept');
-INSERT INTO testcase_problem(p_id,tc_answer,tc_id,tc_content,week_info) values(1,'{"id":1,"name":"jane"}',1,'쿼리문','1');
-INSERT INTO testcase_problem(p_id,tc_answer,tc_id,tc_content,week_info) values(1,'{"id":1,"name":"jane"}',2,'쿼리문','1');
+INSERT INTO submit_answer(class_id,user_id,p_id,week_info,user_query,query_cost,score,result) values('1234','17011585',1,1,'select ANIMAL_TYPE,count(ANIMAL_TYPE)
+from ANIMAL_INS
+group by ANIMAL_TYPE
+ORDER BY ANIMAL_TYPE ASC',25.5,100,'accept');
+INSERT INTO testcase_problem(p_id,tc_answer,tc_id,tc_content,week_info) values(1,'[
+	{
+		"patient_sex" : Female,
+		"count(patient_sex)" : 7
+	},
+	{
+		"patient_sex" : male,
+		"count(patient_sex)" : 5
+	}
+]',1,'insert into patient_info values("A373219","Female","2021-04-15 12:17:00","Healthy","박경자");
+insert into patient_info values("A373220","male","2021-04-16 03:17:00","Healthy","김경자");
+insert into patient_info values("A373221","Female","2021-04-17 17:16:00","Sick","김영자");
+insert into patient_info values("A373222","male","2021-04-18 17:17:40","Healthy","천혜원");
+insert into patient_info values("A373223","Female","2021-05-15 17:17:30","Sick","이수연");
+insert into patient_info values("A373224","male","2021-06-15 17:15:00","Healthy","박명규");
+insert into patient_info values("A373225","Female","2021-11-15 17:13:00","Sick","박정한");
+insert into patient_info values("A373226","male","2021-05-15 10:16:00","Healthy","복신필");
+insert into patient_info values("A373227","male","2021-03-15 09:17:00","Sick","이수경");
+insert into patient_info values("A373228","Female","2021-02-15 08:17:00","Healthy","이의원");
+insert into patient_info values("A373229","Female","2021-01-15 06:17:00","Sick","박성실");
+insert into patient_info values("A373230","Female","2021-02-15 13:17:00","Sick","백상준");','1');
+INSERT INTO testcase_problem(p_id,tc_answer,tc_id,tc_content,week_info) values(1,'[
+	{
+		"patient_sex" : Female,
+		"count(patient_sex)" : 15
+	},
+	{
+		"patient_sex" : male,
+		"count(patient_sex)" : 16
+	}
+]',2,'insert into patient_info values("A373219","Female","2021-04-15 12:17:00","Healthy","박경자");
+insert into patient_info values("A373220","male","2021-04-16 03:17:00","Healthy","김경자");
+insert into patient_info values("A373221","Female","2021-04-17 17:16:00","Sick","김영자");
+insert into patient_info values("A373222","male","2021-04-18 17:17:40","Healthy","천혜원");
+insert into patient_info values("A373223","Female","2021-05-15 17:17:30","Sick","이수연");
+insert into patient_info values("A373224","male","2021-06-15 17:15:00","Healthy","박명규");
+insert into patient_info values("A373225","Female","2021-11-15 17:13:00","Sick","박정한");
+insert into patient_info values("A373226","male","2021-05-15 10:16:00","Healthy","복신필");
+insert into patient_info values("A373227","male","2021-03-15 09:17:00","Sick","이수경");
+insert into patient_info values("A373228","Female","2021-02-15 08:17:00","Healthy","이의원");
+insert into patient_info values("A373229","Female","2021-01-15 06:17:00","Sick","박성실");
+insert into patient_info values("A373230","Female","2021-02-15 13:17:00","Sick","백상준");
+insert into patient_info values("A373237","Female","2021-02-15 08:17:00","Healthy","이의원");
+insert into patient_info values("A373238","Female","2021-01-15 06:17:00","Sick","박성실");
+insert into patient_info values("A373248","Female","2021-02-15 13:17:00","Sick","백상준");
+insert into patient_info values("A373240","Female","2021-02-15 08:17:00","Healthy","이박원");
+insert into patient_info values("A373232","male","2021-01-15 06:17:00","Sick","박부실");
+insert into patient_info values("A373233","Female","2021-02-15 13:17:00","Sick","배상준");
+insert into patient_info values("A373234","Female","2021-02-15 08:17:00","Healthy","허의원");
+insert into patient_info values("A373235","Female","2021-01-15 06:17:00","Sick","이재은");
+insert into patient_info values("A373236","Female","2021-02-15 13:17:00","Sick","이지윤");','1');
+select * from problem;
