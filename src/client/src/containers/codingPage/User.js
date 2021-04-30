@@ -9,7 +9,6 @@ import Result from '../../components/pages/codingPage/Result'
 const User = () => {
   return (
     <PageWrapper>
-      CodingPage User
       <Title name="문제 내용" />
       <Problem />
       <Title name="코드 작성" />
@@ -25,4 +24,5 @@ export default User
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 10px;
 `

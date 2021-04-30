@@ -37,7 +37,6 @@ const Code = ({ theme }) => {
           }}
           style={{
             borderRadius: '5px',
-            margin: '5px 0px',
             boxSizing: 'border-box',
           }}
         />
@@ -63,13 +62,12 @@ const Code = ({ theme }) => {
           }}
           style={{
             borderRadius: '5px',
-            margin: '5px 0px',
             boxSizing: 'border-box',
           }}
         />
       )}
 
-      <div style={{ width: '100%', textAlign: 'end', margin: '5px' }}>
+      <div style={{ width: '100%', textAlign: 'end', margin: '10px 0' }}>
         <button id="submit-btn">실행</button>
         <button id="submit-btn">제출</button>
       </div>
