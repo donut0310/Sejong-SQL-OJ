@@ -1,6 +1,6 @@
-import { AuthMiddleware } from "../../middlewares/auth.middleware";
-import { UsersMiddleware } from "../../middlewares/users.middleware";
-import { UsersController } from "../../controllers/users.controller";
+// import { AuthMiddleware } from "../../middlewares/auth.middleware";
+// import { UsersMiddleware } from "../../middlewares/users.middleware";
+import { UsersController } from "../../controllers/users.controller.js";
 
 export class UsersRoute {
   app;
@@ -12,7 +12,6 @@ export class UsersRoute {
 
   configure() {
     const usersController = new UsersController();
-    const authMiddleware = new AuthMiddleware();
 
     // 회원가입
     this.app.post("/api/v1/user/signup", [usersController.createUser]);
