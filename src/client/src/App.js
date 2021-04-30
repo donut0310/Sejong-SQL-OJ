@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 
 import { lightTheme, darkTheme } from './assets/themes'
 import LoginPage from './containers/loginPage'
+import Modal from './components/modal/Modal'
 import Main from './components/main/Main'
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
@@ -20,6 +21,7 @@ const App = ({ theme }) => {
         </Route>
         <Route path="/main">
           <MainWrapper>
+            <Modal />
             <Header />
             <Main />
             <Footer />
