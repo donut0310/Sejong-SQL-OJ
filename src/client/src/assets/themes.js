@@ -11,6 +11,8 @@ export const lightTheme = {
 
   BOARD_LIST_HOVER: '#ebebeb',
   BOARD_TITLE: '#d9d9d9',
+
+  EDITOR_THEME: 'tomorrow',
 }
 
 export const darkTheme = {
@@ -26,4 +28,6 @@ export const darkTheme = {
   POINT: '#B41313',
   BOARD_LIST_HOVER: '#4d4d4d',
   BOARD_TITLE: '#626362',
+
+  EDITOR_THEME: 'tomorrow_night',
 }

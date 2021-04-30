@@ -1,9 +1,10 @@
 import React from 'react'
+import styled from 'styled-components'
 import AdminTable from './AdminTable'
 
 const AdminPage = () => {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <Container>
       <span>
         아이디:<input id="input-form" type="text" placeholder="아이디"></input>
       </span>
@@ -21,8 +22,13 @@ const AdminPage = () => {
       </span>
       <button id="submit-btn">조회</button>
       <AdminTable />
-    </div>
+    </Container>
   )
 }
 
 export default AdminPage
+
+const Container = styled.div`
+  text-align: center;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

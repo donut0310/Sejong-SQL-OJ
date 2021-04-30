@@ -11,9 +11,9 @@ const User = () => {
     <PageWrapper>
       CodingPage User
       <Title name="문제 내용" />
-      <Code />
-      <Title name="코드 작성" />
       <Problem />
+      <Title name="코드 작성" />
+      <Code />
       <Title name="실행 결과" />
       <Result />
     </PageWrapper>
