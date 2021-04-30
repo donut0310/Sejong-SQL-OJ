@@ -11,6 +11,6 @@ const TitleWrapper = styled.div`
   font-size: 1.4rem;
   font-weight: bold;
   color: ${(props) => props.theme.GENERAL_FONT};
-  margin-top: 7px;
-  margin-bottom: 7px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 `
