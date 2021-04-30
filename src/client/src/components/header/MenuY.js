@@ -64,65 +64,11 @@ const MenuWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 
   padding: 0 5px;
   padding-bottom: 10px;
 
   &:first-child {
     padding-top: 10px;
-  }
-`
-
-const StyledLink = styled(Link)`
-  width: 100%;
-  text-decoration: none;
-
-  &:hover {
-    * {
-      color: ${(props) => props.theme.POINT};
-    }
-  }
-
-  color: ${(props) => props.theme.GENERAL_FONT};
-`
-
-const Li = styled.li`
-  font-size: 1.1rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin: 2px 10px;
-  padding: 8px 12px;
-
-  border: 2px solid transparent;
-  &:hover {
-    border: 2px solid ${(props) => props.theme.POINT};
-    color: ${(props) => props.theme.POINT};
-  }
-`
-
-const ModalWrapper = styled.div`
-  display: flex;
-  align-content: center;
-`
-
-const ContentsWrapper = styled.div`
-  min-width: 350px;
-
-  background: ${(props) => props.theme.BACKGROUND};
-
-  display: flex;
-  flex-direction: column;
-
-  border-radius: 0 5px 5px 0;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-
-  padding: 8px;
-
-  &:focus {
-    outline: 0;
   }
 `
