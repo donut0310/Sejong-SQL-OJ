@@ -68,6 +68,8 @@ const GlobalStyles = createGlobalStyle`
     margin: 5px;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
+    background: ${(props) => props.theme.CONTENTS};
+    color: ${(props) => props.theme.GENERAL_FONT};
     &:focus {
       outline: 0;
     }
@@ -78,6 +80,8 @@ const GlobalStyles = createGlobalStyle`
     margin: 5px;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
+    background: ${(props) => props.theme.CONTENTS};
+    color: ${(props) => props.theme.GENERAL_FONT};
     &:focus {
       outline: 0;
     }

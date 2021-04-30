@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
+import { Link } from '@material-ui/core'
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm()
@@ -11,6 +12,7 @@ const LoginForm = () => {
       <StyledInput name="id" placeholder="아이디" {...register('id', { required: true })} autoFocus />
       <StyledInput name="password" placeholder="비밀번호" type="password" {...register('password', { required: true })} />
       <StyledButton type="submit">로그인</StyledButton>
+      <StyledLink href="">{'회원가입'}</StyledLink>
     </StyledForm>
   )
 }
@@ -37,6 +39,15 @@ const StyledInput = styled.input`
   padding: 20px;
   &:focus {
     outline: 0;
+  }
+`
+
+const StyledLink = styled(Link)`
+  && {
+    font-size: 0.8em;
+    margin: 5px;
+    align-self: flex-end;
+    color: ${(props) => props.theme.POINT};
   }
 `
 

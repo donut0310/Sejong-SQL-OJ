@@ -4,7 +4,7 @@ import UserTable from './UserTable'
 
 const UserPage = () => {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <Container>
       <span>
         아이디:<input id="input-form" type="text" placeholder="아이디"></input>
       </span>
@@ -22,8 +22,13 @@ const UserPage = () => {
       </span>
       <button id="submit-btn">조회</button>
       <UserTable />
-    </div>
+    </Container>
   )
 }
 
 export default UserPage
+
+const Container = styled.div`
+  text-align: center;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`
