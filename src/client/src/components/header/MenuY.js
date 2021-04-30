@@ -37,12 +37,12 @@ const Menu = () => {
     <MenuWrapper>
       <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
         {userClassInfo.map((class_, i) => (
-          <TreeItem nodeId={i} label={class_.className}>
+          <StyledTreeItem nodeId={i} label={class_.className}>
             {class_.weekInfo.map((week_) => (
               // TODO onClick event
-              <TreeItem label={week_} />
+              <StyledTreeItem label={week_} />
             ))}
-          </TreeItem>
+          </StyledTreeItem>
         ))}
       </TreeView>
     </MenuWrapper>
@@ -65,10 +65,24 @@ const MenuWrapper = styled.ul`
   flex-direction: column;
   justify-content: center;
 
-  padding: 0 5px;
   padding-bottom: 10px;
 
   &:first-child {
     padding-top: 10px;
+  }
+`
+
+const StyledTreeItem = styled(TreeItem)`
+  && .MuiTreeItem-content {
+    path {
+      color: ${(props) => props.theme.GENERAL_FONT};
+    }
+  }
+  && .MuiTypography-root {
+    margin: 5px;
+    color: ${(props) => props.theme.GENERAL_FONT};
+    &: hover {
+      background: ${(props) => props.theme.SUB_BORDER};
+    }
   }
 `
