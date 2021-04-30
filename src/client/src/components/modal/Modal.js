@@ -10,7 +10,7 @@ import TreeItem from '@material-ui/lab/TreeItem'
 
 import { SwipeableDrawer } from '@material-ui/core'
 
-const ModalComponenet = () => {
+const ModalComponent = () => {
   const [toggleMenu, setToggleMenu] = useState(false)
 
   const handleToggleMenu = () => {
@@ -75,10 +75,10 @@ const ModalComponenet = () => {
             </div>
             <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
               {userClassInfo.map((class_, i) => (
-                <StyledTreeItem nodeId={i} label={class_.className}>
-                  {class_.weekInfo.map((week_) => (
+                <StyledTreeItem nodeId={i} label={class_.className} key={i}>
+                  {class_.weekInfo.map((week_, j) => (
                     // TODO onClick event
-                    <StyledTreeItem label={week_} />
+                    <StyledTreeItem label={week_} key={j} />
                   ))}
                 </StyledTreeItem>
               ))}
@@ -90,7 +90,7 @@ const ModalComponenet = () => {
   )
 }
 
-export default ModalComponenet
+export default ModalComponent
 
 const ModalWrapper = styled.div`
   display: flex;
@@ -146,6 +146,15 @@ const CloseModalBtn = styled(CloseIcon)`
 `
 
 const Container = styled.div`
+  .PrivateSwipeArea-root-5 {
+    z-index: 0;
+  }
+  .PrivateSwipeArea-root-10 {
+    z-index: 0;
+  }
+  .PrivateSwipeArea-root-15 {
+    z-index: 0;
+  }
   .PrivateSwipeArea-root-20 {
     z-index: 0;
   }
@@ -153,11 +162,11 @@ const Container = styled.div`
     position: absolute;
     z-index: 1;
     height: 100vh;
-    width: 20px;
+    width: 30px;
     display: flex;
     justify-content: center;
     background: transparent;
-    color: transparent;
+    color: red;
     &:hover {
       cursor: pointer;
       background: rgba(0, 0, 0, 0.3);
