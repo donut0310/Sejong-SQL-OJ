@@ -2,7 +2,7 @@ import React from 'react'
 import User from './User'
 import Admin from './Admin'
 
-const StatusPage = () => {
+const ProblemPage = () => {
   return (
     <div>
       user
@@ -13,4 +13,4 @@ const StatusPage = () => {
   )
 }
 
-export default StatusPage
+export default ProblemPage

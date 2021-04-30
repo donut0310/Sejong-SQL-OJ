@@ -4,12 +4,14 @@ import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 
 import CodingPage from '../../containers/codingPage'
+import ProblemPage from '../../containers/problemPage'
 import StatusPage from '../../containers/statusPage'
 
 const Main = () => {
   return (
     <MainWrapper maxWidth="md">
       <Route path="/coding" component={CodingPage} />
+      <Route path="/problems" component={ProblemPage} />
       <Route path="/status" component={StatusPage} />
     </MainWrapper>
   )
