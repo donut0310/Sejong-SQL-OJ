@@ -2,17 +2,30 @@ import React from 'react'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { Link } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm()
-  const onSubmit = (user) => console.log(user)
+
+  const history = useHistory()
+
+  const onSubmit = (user) => {
+    console.log(user)
+    history.push('/')
+  }
+
+  const handleRegisterBtn = () => {
+    history.push('/register')
+  }
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <StyledInput name="id" placeholder="아이디" {...register('id', { required: true })} autoFocus />
       <StyledInput name="password" placeholder="비밀번호" type="password" {...register('password', { required: true })} />
-      <StyledButton type="submit">로그인</StyledButton>
-      <StyledLink href="">{'회원가입'}</StyledLink>
+      <StyledButton type="submit" onClick={onSubmit}>
+        로그인
+      </StyledButton>
+      <StyledLink onClick={handleRegisterBtn}>회원가입</StyledLink>
     </StyledForm>
   )
 }
@@ -48,6 +61,7 @@ const StyledLink = styled(Link)`
     margin: 5px;
     align-self: flex-end;
     color: ${(props) => props.theme.POINT};
+    cursor: pointer;
   }
 `
 

@@ -5,20 +5,21 @@ import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { lightTheme, darkTheme } from './assets/themes'
-import LoginPage from './containers/loginPage'
 import Modal from './components/modal/Modal'
 import Main from './components/main/Main'
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
+
+import LoginPage from './containers/loginPage'
+import RegisterPage from './containers/registerPage'
 
 const App = ({ theme }) => {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyles />
       <Switch>
-        <Route exact path="/login">
-          <LoginPage />
-        </Route>
+        <Route exact path="/login" component={LoginPage} />
+        <Route exact path="/register" component={RegisterPage} />
         <Route path="/">
           <MainWrapper>
             <Modal />
