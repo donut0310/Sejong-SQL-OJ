@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Modal, Hidden } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
@@ -11,10 +12,16 @@ import TreeItem from '@material-ui/lab/TreeItem'
 import { SwipeableDrawer } from '@material-ui/core'
 
 const ModalComponent = () => {
+  const history = useHistory()
+
   const [toggleMenu, setToggleMenu] = useState(false)
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
+  }
+
+  const handleWeekInfo = () => {
+    history.push('/coding')
   }
 
   const userClassInfo = [
@@ -41,28 +48,6 @@ const ModalComponent = () => {
   ]
 
   return (
-    // <>
-    //   <Hidden xsDown>
-    //     <ModalWrapper>
-    //       <ModalContents open={toggleMenu}>
-    //         <ContentsWrapper>
-    //           <CloseModalBtn onClick={handleToggleMenu} />
-    //           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-    //             {userClassInfo.map((class_, i) => (
-    //               <TreeItem nodeId={i} label={class_.className}>
-    //                 {class_.weekInfo.map((week_) => (
-    //                   // TODO onClick event
-    //                   <TreeItem label={week_} />
-    //                 ))}
-    //               </TreeItem>
-    //             ))}
-    //           </TreeView>
-    //         </ContentsWrapper>
-    //       </ModalContents>
-    //       <OpenModalBtn onClick={handleToggleMenu} />
-    //     </ModalWrapper>
-    //   </Hidden>
-    // </>
     <>
       <Hidden xsDown>
         <Container id="Drawer">
@@ -78,7 +63,7 @@ const ModalComponent = () => {
                 <StyledTreeItem nodeId={i} label={class_.className} key={i}>
                   {class_.weekInfo.map((week_, j) => (
                     // TODO onClick event
-                    <StyledTreeItem label={week_} key={j} />
+                    <StyledTreeItem label={week_} key={j} onClick={handleWeekInfo} />
                   ))}
                 </StyledTreeItem>
               ))}

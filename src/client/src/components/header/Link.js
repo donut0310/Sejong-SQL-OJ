@@ -13,7 +13,7 @@ const NavLink = ({ toggleTheme }) => {
 
   const handleLogOutBtn = async () => {
     // await logOut()
-    // history.push('/')
+    history.push('/login')
   }
 
   return (
