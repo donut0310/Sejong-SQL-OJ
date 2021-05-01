@@ -50,4 +50,7 @@ export class ScoreController {
         }
       
       }
+    scoreing(pId,weekInfo,classId,userQuery){
+      
+    }
  }
