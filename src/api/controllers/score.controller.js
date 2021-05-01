@@ -3,6 +3,7 @@
 // 정답 값의 부모이거나 자손인 경우 (0)
 // 같은 데이터가 여러번 있는 경우 때매 중복값 제거 (0)
 // JSON 값은 같고 순서만 다를 경우 50점만 부여 (0)
+import { dbConnection } from "../models/db.js";
 export class ScoreController {
     constructor() {}
 
@@ -50,7 +51,41 @@ export class ScoreController {
         }
       
       }
-    scoreing(pId,weekInfo,classId,userQuery){
-      
-    }
+      async scoreing() {
+        //let userQuery=req.body.user_query;
+        let tcCnt=0
+        let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
+        let sql2= "select tc_content from testcase_problem where p_id=? and week_info=?"
+        let params = [
+          "1","1","1234"
+          // req.body.p_id,
+          // req.body.week_info,
+          // req.body.class_id
+        ];
+        let params2 =[
+          "1","1"
+          // req.body.p_id,
+          // req.body.week_info
+        ]
+        await dbConnection((conn) => {
+          conn.query(sql, params, function (err, rows) {
+            if (err) throw err;
+            else {
+              tcCnt=rows;
+              conn.release();
+              console.log("scoreing success!")
+            }
+          });
+        });
+        await dbConnection((conn) => {
+          conn.query(sql2, params2, function (err, rows) {
+            if (err) throw err;
+            else {
+              conn.release();
+              console.log(rows[0].tc_content)
+            }
+          });
+        });
+      }
+
  }

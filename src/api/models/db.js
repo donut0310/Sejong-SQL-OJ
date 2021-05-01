@@ -15,8 +15,10 @@ export async function dbInit(){
     conn.query(initsql, function (err, rows) {
       if (err) throw err;
       else {
+        conn.release();
         console.log("dbInit!_success!")
       }
     });
+    
   });
 }
