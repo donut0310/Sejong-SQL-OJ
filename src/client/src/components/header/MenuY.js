@@ -1,6 +1,6 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import TreeView from '@material-ui/lab/TreeView'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
@@ -10,6 +10,12 @@ import TreeItem from '@material-ui/lab/TreeItem'
 import {} from '../../redux'
 
 const Menu = () => {
+  const history = useHistory()
+
+  const handleWeekInfo = () => {
+    history.push('/coding')
+  }
+
   const userClassInfo = [
     {
       className: '데이터베이스1(김지환)',
@@ -40,7 +46,7 @@ const Menu = () => {
           <StyledTreeItem nodeId={i} label={class_.className}>
             {class_.weekInfo.map((week_) => (
               // TODO onClick event
-              <StyledTreeItem label={week_} />
+              <StyledTreeItem label={week_} onClick={handleWeekInfo} />
             ))}
           </StyledTreeItem>
         ))}
