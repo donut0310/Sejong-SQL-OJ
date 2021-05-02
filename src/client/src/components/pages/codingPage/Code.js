@@ -1,5 +1,6 @@
 import React from 'react'
 import AceEditor from 'react-ace'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import 'brace/mode/mysql'
@@ -9,8 +10,16 @@ import 'brace/theme/tomorrow'
 import 'brace/theme/tomorrow_night_bright'
 
 const Code = ({ theme }) => {
+  const history = useHistory()
+
   const onChange = (input) => {
     console.log(input)
+  }
+
+  // TODO
+  const handleExecCode = () => {}
+  const handleSubmitCode = () => {
+    history.push('/status')
   }
 
   return (
@@ -68,8 +77,12 @@ const Code = ({ theme }) => {
       )}
 
       <div style={{ width: '100%', textAlign: 'end', margin: '10px 0' }}>
-        <button id="submit-btn">실행</button>
-        <button id="submit-btn">제출</button>
+        <button id="submit-btn" onClick={handleExecCode}>
+          실행
+        </button>
+        <button id="submit-btn" onClick={handleSubmitCode}>
+          제출
+        </button>
       </div>
     </>
   )

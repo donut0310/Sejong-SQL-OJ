@@ -87,7 +87,7 @@ const StyledTreeItem = styled(TreeItem)`
   && .MuiTypography-root {
     margin: 5px;
     color: ${(props) => props.theme.GENERAL_FONT};
-    &: hover {
+    &:hover {
       background: ${(props) => props.theme.SUB_BORDER};
     }
   }
