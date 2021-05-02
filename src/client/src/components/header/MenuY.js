@@ -9,11 +9,12 @@ import TreeItem from '@material-ui/lab/TreeItem'
 
 import {} from '../../redux'
 
-const Menu = () => {
+const Menu = ({ handleToggleMenu }) => {
   const history = useHistory()
 
   const handleWeekInfo = () => {
     history.push('/problems')
+    handleToggleMenu()
   }
 
   const userClassInfo = [
@@ -87,7 +88,7 @@ const StyledTreeItem = styled(TreeItem)`
   && .MuiTypography-root {
     margin: 5px;
     color: ${(props) => props.theme.GENERAL_FONT};
-    &: hover {
+    &:hover {
       background: ${(props) => props.theme.SUB_BORDER};
     }
   }

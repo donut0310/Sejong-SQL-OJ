@@ -1,8 +1,15 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Logo = () => {
-  return <LogoWrapper>Sejong SQL OJ</LogoWrapper>
+  const history = useHistory()
+
+  const handleLogo = () => {
+    history.push('/')
+  }
+
+  return <LogoWrapper onClick={handleLogo}>Sejong SQL OJ</LogoWrapper>
 }
 
 export default Logo
@@ -15,4 +22,9 @@ const LogoWrapper = styled.div`
   align-items: center;
   float: left;
   margin-left: 15px;
+
+  cursor: pointer;
+  :hover {
+    color: ${(props) => props.theme.POINT};
+  }
 `
