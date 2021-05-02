@@ -30,13 +30,13 @@ const Table = () => {
           <li id="content" style={{ width: '10%' }}>
             제출
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '15%' }}>
             점수
           </li>
-          <li id="content" style={{ width: '17.5%' }}>
+          <li id="content" style={{ width: '15%' }}>
             Start
           </li>
-          <li id="content" style={{ width: '17.5%' }}>
+          <li id="content" style={{ width: '15%' }}>
             End
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -56,13 +56,13 @@ const Table = () => {
             <li id="content" style={{ width: '10%' }}>
               {problem.submit}
             </li>
-            <li id="content" style={{ width: '10%' }}>
-              {problem.score}
+            <li id="content" style={{ width: '15%' }}>
+              {problem.score}/100
             </li>
-            <li id="content" style={{ width: '17.5%' }}>
+            <li id="content" style={{ width: '15%' }}>
               {problem.start}
             </li>
-            <li id="content" style={{ width: '17.5%' }}>
+            <li id="content" style={{ width: '15%' }}>
               {problem.end}
             </li>
             <li id="content" style={{ width: '10%' }}>

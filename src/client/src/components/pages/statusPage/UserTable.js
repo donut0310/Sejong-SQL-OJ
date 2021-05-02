@@ -21,10 +21,10 @@ const UserTable = () => {
           <li id="content" style={{ width: '15%' }}>
             결과
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '20%' }}>
             점수
           </li>
-          <li id="content" style={{ width: '40%' }}>
+          <li id="content" style={{ width: '30%' }}>
             제출시각
           </li>
         </ul>
@@ -40,10 +40,10 @@ const UserTable = () => {
               {/* button or icon 으로 바꾸어야됨 */}
               {score.result}
             </li>
-            <li id="content" style={{ width: '10%' }}>
+            <li id="content" style={{ width: '20%' }}>
               {score.score}/100
             </li>
-            <li id="content" style={{ width: '40%' }}>
+            <li id="content" style={{ width: '30%' }}>
               {score.submit_time}
             </li>
           </ul>
