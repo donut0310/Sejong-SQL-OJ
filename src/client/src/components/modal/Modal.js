@@ -22,6 +22,7 @@ const ModalComponent = () => {
 
   const handleWeekInfo = () => {
     history.push('/problems')
+    handleToggleMenu()
   }
 
   const userClassInfo = [

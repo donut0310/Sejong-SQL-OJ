@@ -9,11 +9,12 @@ import TreeItem from '@material-ui/lab/TreeItem'
 
 import {} from '../../redux'
 
-const Menu = () => {
+const Menu = ({ handleToggleMenu }) => {
   const history = useHistory()
 
   const handleWeekInfo = () => {
     history.push('/problems')
+    handleToggleMenu()
   }
 
   const userClassInfo = [

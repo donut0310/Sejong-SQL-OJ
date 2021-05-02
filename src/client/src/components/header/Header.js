@@ -33,7 +33,7 @@ const Header = () => {
       <Hidden smUp>
         <StyledCollapse in={toggleMenu}>
           <MaxWidth maxWidth="lg">
-            <MenuY />
+            <MenuY handleToggleMenu={handleToggleMenu} />
           </MaxWidth>
         </StyledCollapse>
       </Hidden>
