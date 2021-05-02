@@ -8,7 +8,7 @@ const Title = ({ problemInfo }) => {
     <TitleWrapper>
       <ClassName>{problemInfo.classInfo}</ClassName>
       <WeekName>{problemInfo.weekInfo}</WeekName>
-      <ProblemName>문제: {problemInfo.problemInfo}</ProblemName>
+      {problemInfo.problemInfo && <ProblemName>문제: {problemInfo.problemInfo}</ProblemName>}
       <TimeWrapper>
         <StartTime>StartTime: {problemInfo.startTime}</StartTime>
         <EndTime>EndTime: {problemInfo.endTime}</EndTime>

@@ -27,4 +27,7 @@ const MainWrapper = styled(Container)`
 
   display: flex;
   flex-direction: column;
+
+  padding-top: 20px;
+  padding-bottom: 20px;
 `

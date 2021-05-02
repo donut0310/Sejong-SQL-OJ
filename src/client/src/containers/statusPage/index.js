@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import User from './User'
 import Admin from './Admin'
-
 import Title from '../../components/title/Title'
 
 const StatusPage = () => {
@@ -13,6 +12,7 @@ const StatusPage = () => {
     startTime: 'Infinite',
     endTime: 'Infinite',
   }
+
   return (
     <Container>
       <Title problemInfo={problemInfo} />
