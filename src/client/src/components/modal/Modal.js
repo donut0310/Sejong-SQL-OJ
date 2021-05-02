@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { Modal, Hidden } from '@material-ui/core'
+import { Hidden } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import CloseIcon from '@material-ui/icons/Close'
 import TreeView from '@material-ui/lab/TreeView'
@@ -60,7 +60,7 @@ const ModalComponent = () => {
             </div>
             <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
               {userClassInfo.map((class_, i) => (
-                <StyledTreeItem nodeId={i} label={class_.className} key={i}>
+                <StyledTreeItem nodeId={`${i}`} label={class_.className} key={i}>
                   {class_.weekInfo.map((week_, j) => (
                     // TODO onClick event
                     <StyledTreeItem label={week_} key={j} onClick={handleWeekInfo} />
@@ -76,32 +76,6 @@ const ModalComponent = () => {
 }
 
 export default ModalComponent
-
-const ModalWrapper = styled.div`
-  display: flex;
-  align-content: center;
-`
-
-const ModalContents = styled(Modal)`
-  display: flex;
-  height: 100%;
-`
-
-const ContentsWrapper = styled.div`
-  min-width: 350px;
-
-  background: ${(props) => props.theme.BACKGROUND};
-
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-
-  padding: 8px;
-
-  &:focus {
-    outline: 0;
-  }
-`
 
 const OpenModalBtn = styled(KeyboardArrowRightIcon)`
   position: absolute;
@@ -131,6 +105,7 @@ const CloseModalBtn = styled(CloseIcon)`
 `
 
 const Container = styled.div`
+  position: fixed;
   .PrivateSwipeArea-root-5 {
     z-index: 0;
   }
@@ -147,12 +122,13 @@ const Container = styled.div`
     position: absolute;
     z-index: 1;
     height: 100vh;
-    width: 30px;
+    width: 15px;
     display: flex;
     justify-content: center;
-    background: transparent;
-    color: transparent;
+    background: ${(props) => props.theme.POINT};
+    color: white;
     &:hover {
+      width: 30px;
       cursor: pointer;
       background: rgba(0, 0, 0, 0.3);
       color: ${(props) => props.theme.POINT};

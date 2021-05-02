@@ -16,16 +16,16 @@ const Problem = () => {
     return (
       <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
         <ul id="title-tab" style={{ marginTop: '5px' }}>
-          {attributes.map((attribute) => (
-            <li id="content" style={{ width: '20%' }}>
+          {attributes.map((attribute, i) => (
+            <li id="content" key={i} style={{ width: '20%' }}>
               {attribute}
             </li>
           ))}
         </ul>
         {dummyData_table.map((row, i) => (
           <ul id="content-list" key={i}>
-            {attributes.map((attribute) => (
-              <li id="content" style={{ width: '20%' }}>
+            {attributes.map((attribute, j) => (
+              <li id="content" key={j} style={{ width: '20%' }}>
                 {row[attribute]}
               </li>
             ))}
