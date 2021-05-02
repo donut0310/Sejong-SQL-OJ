@@ -1,11 +1,14 @@
 import React from 'react'
-import AdminProblemListPage from '../../components/pages/problemPage/AdminProblemListPage'
+import AdminTable from '../../components/pages/problemPage/AdminTable'
 
 const Admin = () => {
   return (
-    <div>
-      <AdminProblemListPage />
-    </div>
+    <>
+      <AdminTable />
+      <button id="submit-btn" style={{ width: '80px', marginRight: '10px' }}>
+        문제 추가
+      </button>
+    </>
   )
 }
 
