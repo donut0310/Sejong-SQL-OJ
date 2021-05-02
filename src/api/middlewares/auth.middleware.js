@@ -1,8 +1,8 @@
 import passport from "passport";
 
-import { ErrorUtil } from "../utils/error.util";
-import { ResponseUtil } from "../utils/response.util";
-import JWTUtil from "../utils/jwt.util";
+// import { ErrorUtil } from "../utils/error.util";
+// import { ResponseUtil } from "../utils/response.util";
+// import JWTUtil from "../utils/jwt.util/js";
 
 export class AuthMiddleware {
   constructor() {}
@@ -37,10 +37,10 @@ export class AuthMiddleware {
     passport.authenticate("local", (err, user, info) => {
       try {
         if (err) {
-          throw ErrorUtil.internal("an error occurs : local passport");
+          throw ("an error occurs : local passport");
         }
         if (!user) {
-          throw ErrorUtil.unAuthorized(
+          throw (
             `User's informations are wrong.`,
             "아이디 혹은 비밀번호를 확인해주세요."
           );

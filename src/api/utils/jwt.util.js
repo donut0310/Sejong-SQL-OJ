@@ -1,19 +1,19 @@
-import { config } from "./config.util";
+import { config } from "./config.util.js";
 import * as jwt from "jsonwebtoken";
-import { ErrorUtil } from "./error.util";
+// import { ErrorUtil } from "./error.util";
 
-VerifyFail = {
-  success: false,
-  err: ErrorUtil,
-};
+// VerifyFail = {
+//   success: false,
+//   err: "error!!",
+// };
 
-VerifySuccess = {
-  success: true,
-  decoded: Payload,
-};
+// VerifySuccess = {
+//   success: true,
+//   decoded: Payload,
+// };
 
-VerifyResult = VerifySuccess | VerifyFail;
-TokenType = "refresh" | "access";
+// VerifyResult = VerifySuccess | VerifyFail;
+// TokenType = "refresh" | "access";
 
 export default class JWTUtil {
   _ACCESS_TOKEN_SECRET;
@@ -45,11 +45,11 @@ export default class JWTUtil {
   }
 
   get tokenExpiredError() {
-    return ErrorUtil.unAuthorized("Token is expired.", "로그인이 필요합니다.");
+    return ("Token is expired.", "로그인이 필요합니다.");
   }
 
   get invalidTokenError() {
-    return ErrorUtil.unAuthorized(
+    return (
       "It is invalid token.",
       "로그인이 필요합니다."
     );
@@ -91,13 +91,14 @@ export default class JWTUtil {
   //   };
 
   sign = (payload, type, options = {}) => {
+    console.log("sign function entered")
     const secret =
       type == "access" ? this._ACCESS_TOKEN_SECRET : this._REFRESH_TOKEN_SECRET;
 
     const expiresIn =
       type == "access" ? this._ACCESS_TOKEN_LIFE : this._REFRESH_TOKEN_LIFE;
 
-    return jwt.sign(payload, secret, {
+    return jwt.default.sign(payload, secret, {
       ...options,
       expiresIn,
     });

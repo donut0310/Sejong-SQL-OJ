@@ -1,7 +1,7 @@
-import { HashUtil } from "./hash.util";
+import { HashUtil } from "./hash.util.js";
 import passport from "passport";
 import passportLocal from "passport-local";
-import { UsersModel } from "../models/users.model";
+import { Database } from "../models/db.js";
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -18,30 +18,41 @@ export class PassportConfig {
     //     console.log('deserializeUser',email)
     //     done(null, email); // 여기의 user가 req.user가 됨
     // });
-
+    const database = new Database();
     passport.use(
       new LocalStrategy(
         {
           usernameField: "user_id",
-          passwordField: "pwd",
+          passwordField: "user_pw",
           //session: true,             // session 저장 여부
         },
 
-        async (user_id, pwd, done) => {
-          //   const usersModel: UsersModel = new UsersModel();
-          //   const user = await usersModel.read("user_id", user_id, false);
-          //   if (!user)
-          //     return done(null, false, {
-          //       message: "아이디 혹은 비밀번호를 확인해주세요.",
-          //     });
-          //   let hashedPassword = HashUtil.getHashedValue(pwd, user.salt);
-          //   const isMatch = user.pwd == hashedPassword;
-          //   if (isMatch) {
-          //     return done(null, user);
-          //   }
-          //   return done(null, false, {
-          //     message: "아이디 혹은 비밀번호를 확인해주세요.",
-          //   });
+        async (user_id, user_pw, done) => {
+          let sql = "select * from user where user_id =?";
+          let params = user_id;
+          let user;
+          await database.dbConnection((conn) => {
+            conn.query(sql, params, function (err, rows) {
+              if (err) throw err;
+              else {
+                conn.release();
+                user=rows[0];
+                if (!user)
+                return done(null, false, {
+                  message: "아이디 혹은 비밀번호를 확인해주세요.",
+                });
+                let hashedPassword = HashUtil.getHashedValue(user_pw, user.salt);
+                const isMatch = user.user_pw == hashedPassword;
+                if (isMatch) {
+                  return done(null, user);
+                }
+        
+                return done(null, false, {
+                  message: "아이디 혹은 비밀번호를 확인해주세요.",
+                });
+              }
+            });
+          });
         }
       )
     );
