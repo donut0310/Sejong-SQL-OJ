@@ -192,7 +192,7 @@ INSERT INTO testcase_problem(p_id,tc_answer,tc_id,tc_content,week_info) values(1
 		"patient_sex" : "male",
 		"count(patient_sex)" : 16
 	}
-]',1,'
+]',2,'
 insert into patient_info values("A373219","Female","2021-04-15 12:17:00","Healthy","박경자");
 insert into patient_info values("A373220","male","2021-04-16 03:17:00","Healthy","김경자");
 insert into patient_info values("A373221","Female","2021-04-17 17:16:00","Sick","김영자");

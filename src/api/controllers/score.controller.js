@@ -47,45 +47,103 @@ export class ScoreController {
           return 0;
         }
         else{
-          return  correct_answer_rate(userJson,answerJson)
+          return this.correct_answer_rate(userJson,answerJson)
         }
       
       }
-      async scoreing() {
-        //let userQuery=req.body.user_query;
-        let tcCnt=0
-        let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
-        let sql2= "select tc_content from testcase_problem where p_id=? and week_info=?"
-        let params = [
-          "1","1","1234"
-          // req.body.p_id,
-          // req.body.week_info,
-          // req.body.class_id
-        ];
-        let params2 =[
-          "1","1"
-          // req.body.p_id,
-          // req.body.week_info
-        ]
-        await dbConnection((conn) => {
-          conn.query(sql, params, function (err, rows) {
-            if (err) throw err;
-            else {
-              tcCnt=rows;
-              conn.release();
-              console.log("scoreing success!")
-            }
-          });
-        });
-        await dbConnection((conn) => {
-          conn.query(sql2, params2, function (err, rows) {
-            if (err) throw err;
-            else {
-              conn.release();
-              console.log(rows[0].tc_content)
-            }
-          });
-        });
-      }
+    
+    async scoreing() {
+      //req.body.user_query
+      let userQuery=`select ANIMAL_TYPE,count(ANIMAL_TYPE)
+      from ANIMAL_INS
+      group by ANIMAL_TYPE
+      ORDER BY ANIMAL_TYPE ASC`;
+      let result=0
+      let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
+      let sql2= "select tc_content from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
+      let sql3= "select tc_answer from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
+      //문제 생성시 실행하도록
+      let testTable=`create table patient_info(
+        patient_id varchar(255) not null,
+          patient_sex varchar(255) DEFAULT NULL,
+          datatime datetime DEFAULT NULL,
+          patient_condition varchar(255) DEFAULT NULL,
+          name varchar(255) DEFAULT NULL,
+        PRIMARY KEY (patient_id)
+      );`
+      let params = [
+        "1","1","1234"
+        // req.body.p_id,
+        // req.body.week_info,
+        // req.body.class_id
+      ];
+      let params2 =[
+        "1","1"
+        // req.body.p_id,
+        // req.body.week_info
+      ]
 
- }
+      let values =  await dbConnection(async (conn) => {
+        let con1=await conn.query(sql, params, function (err, rows) {
+          if (err) throw err;
+          else {
+            console.log("1")
+            conn.release();
+            return rows[0].tc_cnt;
+              }
+          });
+          let con2= await conn.query(sql2, params2, function (err, rows) {
+          if (err) throw err;
+          else{
+            console.log("2")
+            conn.release();
+            return rows
+          }
+        });
+        let con3=await conn.query(sql3, params2, function (err, rows) {
+          if (err) throw err;
+          else{
+            console.log("3")
+            conn.release();
+            return rows
+          }
+        });
+        
+        return [con1,con2,con3]
+      })
+      console.log(values)
+      // await this.repeated_correct(values,userQuery)
+      
+  }
+  async repeated_correct(rowsResult,tcAnswer,tcCnt,userQuery){
+    let score=0
+    for(var i=0;i<tcCnt;i++){
+      console.log(i)
+      let sql4=rowResult[i].tc_content
+      await dbConnection((conn2)=>{
+        conn2.beginTransaction();
+        conn2.query(sql4, function (err, rows) {
+          if (err) throw err;
+          else {
+            conn2.release();
+            console.log("success!")
+          }
+      });
+      }).then((conn2)=>{
+          dbConnection((conn3)=>{
+          conn3.beginTransaction()
+          conn3.query(userQuery, function (err2, userJson) {
+            if (err2) throw err2;
+            else {
+              score+=this.score_check(userJson,answerJson)
+            }
+          conn3.rollback();
+          conn2.rollback();
+          console.log(score)
+        });
+        })
+      })
+    }
+    return score;
+  }
+}
