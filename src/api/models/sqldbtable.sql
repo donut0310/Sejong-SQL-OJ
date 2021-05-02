@@ -28,6 +28,7 @@ create table user(
   #0은 일반 학생 1은 조교 2는 교수
   author int DEFAULT NULL,
   jwt_token varchar(255) DEFAULT NULL,
+  salt varchar(255) DEFAULT NULL,
   PRIMARY KEY (user_id),
   FOREIGN KEY (class_id) REFERENCES course (class_id)
 );

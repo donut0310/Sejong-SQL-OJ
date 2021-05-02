@@ -1,6 +1,6 @@
 import { AuthMiddleware } from "../../middlewares/auth.middleware.js";
-import { AuthController } from "../../controllers/auth.controller";
-// import { UsersController } from "../../controllers/users.controller";
+import { AuthController } from "../../controllers/auth.controller.js";
+// import { UsersController } from "../../controllers/users.controller.js";
 
 export class AuthRoute {
   app;
