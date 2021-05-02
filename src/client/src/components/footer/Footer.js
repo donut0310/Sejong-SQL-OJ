@@ -28,5 +28,5 @@ const FooterWrapper = styled.div`
 
   border-top: 1.5px solid ${(props) => props.theme.SUB_BORDER};
   color: ${(props) => props.theme.GENERAL_FONT};
-  background: ${(props) => props.theme.BACKGROUND};
+  background: ${(props) => props.theme.HEADER_BACKGROUND};
 `

@@ -7,6 +7,7 @@ export const lightTheme = {
   CONTENTS: '#f6f6f6',
 
   HEADER_BACKGROUND: '#fafafa',
+  FOOTER_BACKGROUND: '#fafafa',
 
   SUB_BORDER: '#c4c4c4',
   MAIN_BORDER: '#242323',
@@ -26,6 +27,7 @@ export const darkTheme = {
   CONTENTS: '#40403e',
 
   HEADER_BACKGROUND: '#333332',
+  FOOTER_BACKGROUND: '#333332',
 
   SUB_BORDER: '#757575',
   MAIN_BORDER: '#b3b3b1',
