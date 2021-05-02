@@ -96,6 +96,9 @@ const GlobalStyles = createGlobalStyle`
     margin: 10px;
     border-radius: 10px;
     color: ${(props) => props.theme.GENERAL_FONT};
+    &:hover {
+      cursor: default;
+    }
   }
 
   ul#title-tab {
@@ -123,6 +126,16 @@ const GlobalStyles = createGlobalStyle`
 
   li#content {
     text-align: center;
+    button#problem {
+      background: none;
+      color: ${(props) => props.theme.GENERAL_FONT};
+      border: none;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+        font-weight: 600;
+      }
+    }
   }
 `
 

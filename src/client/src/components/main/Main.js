@@ -6,10 +6,12 @@ import styled from 'styled-components'
 import CodingPage from '../../containers/codingPage'
 import ProblemPage from '../../containers/problemPage'
 import StatusPage from '../../containers/statusPage'
+import MainPage from '../../containers/mainPage'
 
 const Main = () => {
   return (
     <MainWrapper maxWidth="md">
+      <Route exact path="/" component={MainPage} />
       <Route path="/coding" component={CodingPage} />
       <Route path="/problems" component={ProblemPage} />
       <Route path="/status" component={StatusPage} />
