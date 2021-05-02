@@ -12,23 +12,28 @@ import Footer from './components/footer/Footer'
 
 import LoginPage from './containers/loginPage'
 import RegisterPage from './containers/registerPage'
+import AutoScrollUp from './AutoScrollUp'
+import ScrollUp from './ScrollUp'
 
 const App = ({ theme }) => {
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <GlobalStyles />
-      <Switch>
-        <Route exact path="/login" component={LoginPage} />
-        <Route exact path="/register" component={RegisterPage} />
-        <Route path="/">
-          <MainWrapper>
-            <Modal />
-            <Header />
-            <Main />
-            <Footer />
-          </MainWrapper>
-        </Route>
-      </Switch>
+      <AutoScrollUp>
+        <GlobalStyles />
+        <Switch>
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
+          <Route path="/">
+            <MainWrapper>
+              <Modal />
+              <Header />
+              <Main />
+              <Footer />
+            </MainWrapper>
+            <ScrollUp />
+          </Route>
+        </Switch>
+      </AutoScrollUp>
     </ThemeProvider>
   )
 }
