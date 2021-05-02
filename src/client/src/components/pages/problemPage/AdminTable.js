@@ -46,8 +46,10 @@ const AdminTable = () => {
             <li id="content" style={{ width: '10%' }}>
               {problem.num}
             </li>
-            <li id="content" style={{ width: '30%' }} onClick={handleProblemName}>
-              {problem.name}
+            <li id="content" style={{ width: '30%' }}>
+              <button id="problem" onClick={handleProblemName}>
+                {problem.name}
+              </button>
             </li>
             <li id="content" style={{ width: '15%' }}>
               {problem.start}

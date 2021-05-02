@@ -14,7 +14,7 @@ import { SwipeableDrawer } from '@material-ui/core'
 const ModalComponent = () => {
   const history = useHistory()
 
-  const [toggleMenu, setToggleMenu] = useState(false)
+  const [toggleMenu, setToggleMenu] = useState(true)
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
