@@ -1,10 +1,10 @@
 import React from 'react'
-import UserProblemListPage from '../../components/pages/problemPage/UserProblemListPage'
+import UserTable from '../../components/pages/problemPage/UserTable'
 
 const User = () => {
   return (
     <div>
-      <UserProblemListPage />
+      <UserTable />
     </div>
   )
 }

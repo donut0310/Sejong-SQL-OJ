@@ -35,7 +35,7 @@ const AdminTable = () => {
               {score.name}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {score.score}
+              {score.score}/100
             </li>
             <li id="content" style={{ width: '70%' }}>
               {score.query_cost}

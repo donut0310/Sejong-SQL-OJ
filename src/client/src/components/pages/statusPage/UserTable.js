@@ -41,7 +41,7 @@ const UserTable = () => {
               {score.result}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {score.score}
+              {score.score}/100
             </li>
             <li id="content" style={{ width: '40%' }}>
               {score.submit_time}

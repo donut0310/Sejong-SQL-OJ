@@ -8,6 +8,9 @@ const AdminTable = () => {
   const handleProblemName = () => {
     history.push('/coding')
   }
+  const handleStatus = () => {
+    history.push('status')
+  }
 
   const problems = [
     { num: '1', name: 'Hello Sejong!', start: 'Infinite', end: 'Infinite' },
@@ -58,8 +61,7 @@ const AdminTable = () => {
               {problem.end}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {/* button 클릭 시 status 창으로 */}
-              <StyledButton>Status</StyledButton>
+              <StyledButton onClick={handleStatus}>Status</StyledButton>
             </li>
             <li id="content" style={{ width: '10%' }}>
               {/* button 클릭 시 문제 관리(정보 및 테스트케이스 관리) 창으로 */}

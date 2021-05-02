@@ -1,16 +1,22 @@
 import React from 'react'
+import styled from 'styled-components'
 import User from './User'
 import Admin from './Admin'
 
 const ProblemPage = () => {
   return (
-    <div>
-      user
+    <Container>
+      <p>user</p>
       <User />
-      admin
+      <p>admin</p>
       <Admin />
-    </div>
+    </Container>
   )
 }
 
 export default ProblemPage
+
+const Container = styled.div`
+  text-align: end;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`
