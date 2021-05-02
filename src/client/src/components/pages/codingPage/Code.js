@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AceEditor from 'react-ace'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -10,10 +10,14 @@ import 'brace/theme/tomorrow'
 import 'brace/theme/tomorrow_night_bright'
 
 const Code = ({ theme }) => {
+  const [fontSize, setFontSize] = useState(14)
   const history = useHistory()
 
   const onChange = (input) => {
     console.log(input)
+  }
+  const handleFontSize = (e) => {
+    setFontSize(parseInt(e.target.value))
   }
 
   // TODO
@@ -24,6 +28,17 @@ const Code = ({ theme }) => {
 
   return (
     <>
+      <div style={{ width: 'auto', textAlign: 'end' }}>
+        <select id="select-form" name="글자" onChange={handleFontSize}>
+          <option value="14">글자 크기</option>
+          <option value="12">12</option>
+          <option value="14" selected>
+            14
+          </option>
+          <option value="16">16</option>
+          <option value="18">18</option>
+        </select>
+      </div>
       {theme === 'light' ? (
         <AceEditor
           placeholder="코드를 입력하세요."
@@ -32,7 +47,7 @@ const Code = ({ theme }) => {
           name="editor"
           width="100%"
           onChange={onChange}
-          fontSize={14}
+          fontSize={fontSize}
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
@@ -57,7 +72,7 @@ const Code = ({ theme }) => {
           name="editor"
           width="100%"
           onChange={onChange}
-          fontSize={14}
+          fontSize={fontSize}
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
