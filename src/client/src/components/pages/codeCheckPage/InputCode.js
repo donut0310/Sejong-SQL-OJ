@@ -70,7 +70,7 @@ const InputCode = ({ theme, code }) => {
           name="editor"
           width="100%"
           onChange={onChange}
-          fontSize={14}
+          fontSize={fontSize}
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
