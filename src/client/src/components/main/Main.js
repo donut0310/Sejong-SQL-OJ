@@ -7,6 +7,7 @@ import CodingPage from '../../containers/codingPage'
 import ProblemPage from '../../containers/problemPage'
 import StatusPage from '../../containers/statusPage'
 import MainPage from '../../containers/mainPage'
+import CodeCheckPage from '../../containers/codeCheckPage'
 
 const Main = () => {
   return (
@@ -15,6 +16,7 @@ const Main = () => {
       <Route path="/coding" component={CodingPage} />
       <Route path="/problems" component={ProblemPage} />
       <Route path="/status" component={StatusPage} />
+      <Route path="/check" component={CodeCheckPage} />
     </MainWrapper>
   )
 }
