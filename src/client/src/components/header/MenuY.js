@@ -13,7 +13,7 @@ const Menu = () => {
   const history = useHistory()
 
   const handleWeekInfo = () => {
-    history.push('/coding')
+    history.push('/problems')
   }
 
   const userClassInfo = [

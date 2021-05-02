@@ -1,7 +1,14 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Table = () => {
+  const history = useHistory()
+
+  const handleProblemName = () => {
+    history.push('/coding')
+  }
+
   const problems = [
     { num: '1', name: 'Hello Sejong!', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
     { num: '2', name: '절댓값 출력', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
@@ -38,7 +45,7 @@ const Table = () => {
             <li id="content" style={{ width: '10%' }}>
               {problem.num}
             </li>
-            <li id="content" style={{ width: '20%' }}>
+            <li id="content" style={{ width: '20%' }} onClick={handleProblemName}>
               {problem.name}
             </li>
             <li id="content" style={{ width: '10%' }}>

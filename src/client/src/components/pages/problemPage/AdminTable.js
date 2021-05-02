@@ -1,12 +1,20 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 const AdminTable = () => {
+  const history = useHistory()
+
+  const handleProblemName = () => {
+    history.push('/coding')
+  }
+
   const problems = [
     { num: '1', name: 'Hello Sejong!', start: 'Infinite', end: 'Infinite' },
     { num: '2', name: '절댓값 출력', start: 'Infinite', end: 'Infinite' },
     { num: '3', name: '숫자 출력', start: 'Infinite', end: 'Infinite' },
   ]
+
   return (
     <Container>
       <ul id="table-list">
@@ -38,7 +46,7 @@ const AdminTable = () => {
             <li id="content" style={{ width: '10%' }}>
               {problem.num}
             </li>
-            <li id="content" style={{ width: '30%' }}>
+            <li id="content" style={{ width: '30%' }} onClick={handleProblemName}>
               {problem.name}
             </li>
             <li id="content" style={{ width: '15%' }}>

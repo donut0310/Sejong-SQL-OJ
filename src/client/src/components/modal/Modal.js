@@ -21,7 +21,7 @@ const ModalComponent = () => {
   }
 
   const handleWeekInfo = () => {
-    history.push('/coding')
+    history.push('/problems')
   }
 
   const userClassInfo = [
