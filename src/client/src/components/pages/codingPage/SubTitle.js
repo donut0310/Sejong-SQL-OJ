@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Title = ({ name }) => {
-  return <TitleWrapper>{name}</TitleWrapper>
+const SubTitle = ({ name }) => {
+  return <SubTitleWrapper>{name}</SubTitleWrapper>
 }
 
-export default Title
+export default SubTitle
 
-const TitleWrapper = styled.div`
+const SubTitleWrapper = styled.div`
   font-size: 1.4rem;
   font-weight: bold;
   color: ${(props) => props.theme.GENERAL_FONT};
