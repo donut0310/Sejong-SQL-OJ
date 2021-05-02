@@ -53,6 +53,7 @@ const HeaderWrapper = styled.div`
   border-top: 2px solid ${(props) => props.theme.POINT};
   border-bottom: 1.5px solid ${(props) => props.theme.SUB_BORDER};
 
+  background: ${(props) => props.theme.HEADER_BACKGROUND};
   color: ${(props) => props.theme.GENERAL_FONT};
 `
 

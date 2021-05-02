@@ -6,6 +6,8 @@ export const lightTheme = {
   BACKGROUND: '#f7f7f7',
   CONTENTS: '#f6f6f6',
 
+  HEADER_BACKGROUND: '#fafafa',
+
   SUB_BORDER: '#c4c4c4',
   MAIN_BORDER: '#242323',
 
@@ -22,6 +24,8 @@ export const darkTheme = {
 
   BACKGROUND: '#393938',
   CONTENTS: '#40403e',
+
+  HEADER_BACKGROUND: '#333332',
 
   SUB_BORDER: '#757575',
   MAIN_BORDER: '#b3b3b1',

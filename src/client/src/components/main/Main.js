@@ -23,7 +23,7 @@ export default Main
 
 const MainWrapper = styled(Container)`
   flex: 1;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 
   display: flex;
   flex-direction: column;

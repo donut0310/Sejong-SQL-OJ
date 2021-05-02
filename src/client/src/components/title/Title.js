@@ -25,9 +25,12 @@ const TitleWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
+  /* border: 1px solid blue; */
+
   padding: 20px;
-  border: 1px solid blue;
   margin-bottom: 40px;
+
+  color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const ClassName = styled.div`
