@@ -60,7 +60,7 @@ const ModalComponent = () => {
             </div>
             <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
               {userClassInfo.map((class_, i) => (
-                <StyledTreeItem nodeId={i} label={class_.className} key={i}>
+                <StyledTreeItem nodeId={`${i}`} label={class_.className} key={i}>
                   {class_.weekInfo.map((week_, j) => (
                     // TODO onClick event
                     <StyledTreeItem label={week_} key={j} onClick={handleWeekInfo} />
