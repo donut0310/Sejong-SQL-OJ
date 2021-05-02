@@ -3,16 +3,15 @@
 // 정답 값의 부모이거나 자손인 경우 (0)
 // 같은 데이터가 여러번 있는 경우 때매 중복값 제거 (0)
 // JSON 값은 같고 순서만 다를 경우 50점만 부여 (0)
-import { dbConnection } from "../models/db.js";
+import { Database } from "../models/db.js";
 export class ScoreController {
     constructor() {}
-
     correct_answer_rate(userJson,answerJson){
         let correct=0;
         let length=0;
           if (userJson.length<answerJson.length){
             length=answerJson.length
-            for(i=0; i<userJson.length; i++){
+            for(var i=0; i<userJson.length; i++){
               if(JSON.stringify(answerJson).includes(JSON.stringify(userJson[i]))){
                 i-=1;
                 userJson.splice(i,1);
@@ -22,7 +21,7 @@ export class ScoreController {
           }
           else{
             length=userJson.length
-            for(i=0; i<answerJson.length; i++){
+            for(var i=0; i<answerJson.length; i++){
               if(JSON.stringify(userJson).includes(JSON.stringify(answerJson[i]))){
                 i-=1
                 answerJson.splice(i,1);
@@ -40,24 +39,26 @@ export class ScoreController {
         }
         
     score_check(userJson,answerJson){
-        if(JSON.stringify(userJson) === JSON.stringify(answerJson)){
+      console.log(JSON.stringify(userJson),answerJson)
+        if(JSON.stringify(userJson) === answerJson){
           return 100;
         }
         else if(userJson.length==0){
           return 0;
         }
         else{
-          return this.correct_answer_rate(userJson,answerJson)
+          return this.correct_answer_rate(JSON.stringify(userJson),answerJson)
         }
       
       }
     
     async scoreing() {
       //req.body.user_query
-      let userQuery=`select ANIMAL_TYPE,count(ANIMAL_TYPE)
-      from ANIMAL_INS
-      group by ANIMAL_TYPE
-      ORDER BY ANIMAL_TYPE ASC`;
+      const dataBase=new Database()
+      let userQuery=`select patient_sex,count(patient_sex)
+      from patient_info
+      group by patient_sex
+      ORDER BY patient_sex ASC;`;
       let result=0
       let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
@@ -82,68 +83,59 @@ export class ScoreController {
         // req.body.p_id,
         // req.body.week_info
       ]
-
-      let values =  await dbConnection(async (conn) => {
-        let con1=await conn.query(sql, params, function (err, rows) {
-          if (err) throw err;
-          else {
-            console.log("1")
-            conn.release();
-            return rows[0].tc_cnt;
-              }
-          });
-          let con2= await conn.query(sql2, params2, function (err, rows) {
-          if (err) throw err;
-          else{
-            console.log("2")
-            conn.release();
-            return rows
-          }
-        });
-        let con3=await conn.query(sql3, params2, function (err, rows) {
-          if (err) throw err;
-          else{
-            console.log("3")
-            conn.release();
-            return rows
-          }
-        });
-        
-        return [con1,con2,con3]
-      })
-      console.log(values)
-      // await this.repeated_correct(values,userQuery)
+      
+      let tcCnt= await this.dbTest(sql,params,dataBase);
+      tcCnt=tcCnt[0].tc_cnt;
+      let rowsResult= await this.dbTest(sql2,params2,dataBase);
+      let tcAnswer=await this.dbTest(sql3,params2,dataBase);
+      let q=await this.repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery)
+      console.log(q)
       
   }
-  async repeated_correct(rowsResult,tcAnswer,tcCnt,userQuery){
+  async dbTest(sql,params,dataBase) {
+    try {
+      const connection = await dataBase.pool.getConnection(async conn => conn);
+      try {
+        const [rows] = await connection.query(sql, params);
+        connection.release();
+        return rows
+      } catch(err) {
+        console.log(err);
+        connection.release();
+        return false;
+      }
+    } catch(err) {
+      console.log('DB Error');
+      return false;
+    }
+  };
+  async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery){
+    const dataBase=new Database()
     let score=0
     for(var i=0;i<tcCnt;i++){
+      let sql4=rowsResult[i].tc_content
       console.log(i)
-      let sql4=rowResult[i].tc_content
-      await dbConnection((conn2)=>{
-        conn2.beginTransaction();
-        conn2.query(sql4, function (err, rows) {
-          if (err) throw err;
-          else {
-            conn2.release();
-            console.log("success!")
-          }
-      });
-      }).then((conn2)=>{
-          dbConnection((conn3)=>{
-          conn3.beginTransaction()
-          conn3.query(userQuery, function (err2, userJson) {
-            if (err2) throw err2;
-            else {
-              score+=this.score_check(userJson,answerJson)
-            }
-          conn3.rollback();
-          conn2.rollback();
-          console.log(score)
-        });
-        })
-      })
-    }
-    return score;
+      try {
+        const connection = await dataBase.pool.getConnection(async conn => conn);
+        try {
+          connection.beginTransaction();
+          await connection.query(sql4);
+          const [userJson] = await connection.execute(userQuery);
+          score+=this.score_check(userJson,tcAnswer[i].tc_answer)
+          console.log("score",score)
+          connection.rollback();
+          connection.release();
+          return score
+        } catch(err) {
+          console.log(err);
+          connection.release();
+          return false;
+        }
+      } catch(err) {
+        console.log('DB Error!');
+        return false;
+      }
+    };
+      
   }
 }

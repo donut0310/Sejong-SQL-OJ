@@ -1,7 +1,6 @@
 // import { AuthMiddleware } from "../../middlewares/auth.middleware";
 // import { UsersMiddleware } from "../../middlewares/users.middleware";
 import { UsersController } from "../../controllers/users.controller.js";
-//import {dbInit} from "../../models/db.js"
 import { ScoreController } from "../../controllers/score.controller.js";
 export class UsersRoute {
   app;
