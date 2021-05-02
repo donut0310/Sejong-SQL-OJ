@@ -112,9 +112,10 @@ export class ScoreController {
   async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery){
     const dataBase=new Database()
     let score=0
+    console.log(tcCnt)
     for(var i=0;i<tcCnt;i++){
+      console.log("i",i)
       let sql4=rowsResult[i].tc_content
-      console.log(i)
       try {
         const connection = await dataBase.pool.getConnection(async conn => conn);
         try {
@@ -125,7 +126,6 @@ export class ScoreController {
           console.log("score",score)
           connection.rollback();
           connection.release();
-          return score
         } catch(err) {
           console.log(err);
           connection.release();
@@ -136,6 +136,6 @@ export class ScoreController {
         return false;
       }
     };
-      
+    return score
   }
 }
