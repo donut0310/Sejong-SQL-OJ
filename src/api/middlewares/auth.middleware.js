@@ -45,7 +45,7 @@ export class AuthMiddleware {
         }
         return next();
       } catch (err) {
-        return res.status(400).send("result: Fail");
+        return res.status(400).send("아이디 혹은 비밀번호를 확인해주세요.");
       }
     })(req, res, next);
   };

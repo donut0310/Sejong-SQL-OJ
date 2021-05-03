@@ -37,8 +37,7 @@ export class PassportConfig {
             try {
               const user = await connection.query(sql, params);
               connection.release();
-
-              if (!user)
+              if (user[0].length == 0)
                 return done(null, false, {
                   message: "아이디 혹은 비밀번호를 확인해주세요.",
                 });
@@ -57,6 +56,7 @@ export class PassportConfig {
             } catch (err) {
               console.log("No User");
               connection.release();
+              return false;
             }
           } catch (err) {
             console.log("ERROR");

@@ -14,15 +14,13 @@ export class UsersController {
 
     let sql =
       "insert into user (\
-      user_id, class_id, user_name, user_pw, author, salt\
+      user_id, user_name, user_pw, salt\
       )\
-      values(?,?,?,?,?,?)";
+      values(?,?,?,?)";
     let params = [
       req.body.user_id,
-      req.body.class_id,
       req.body.user_name,
       req.body.user_pw,
-      req.body.author,
       req.body.salt,
     ];
     try {

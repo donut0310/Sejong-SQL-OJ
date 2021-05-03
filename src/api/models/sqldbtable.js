@@ -16,21 +16,28 @@ DROP TABLE IF EXISTS testcase_problem;
 #데이터 넣는 형식에 따른 not null로 할지 , DEFAULT null로 할지 고민
 create table course(
 	class_id int auto_increment not null,
-  user_id varchar(1000) DEFAULT null,
     class_name varchar(255) DEFAULT NULL,
     admin_id varchar(255) DEFAULT NULL,
     PRIMARY KEY (class_id)
 );
 create table user(
   user_id varchar(255) not null,
-  class_id int(255) DEFAULT NULL,
   user_name varchar(255) DEFAULT NULL,
   user_pw varchar(255) DEFAULT NULL,
   #0은 일반 학생 1은 조교 2는 교수
-  author int DEFAULT NULL,
   salt varchar(255) DEFAULT NULL,
-  PRIMARY KEY (user_id),
+  PRIMARY KEY (user_id)
+);
+create table u_c_bridge(
+  user_id varchar(255) default null,
+  class_id int default null,
+  author int default 0,
+  FOREIGN KEY (user_id) REFERENCES user (user_id)
+  on delete cascade
+  on update cascade,
   FOREIGN KEY (class_id) REFERENCES course (class_id)
+  on delete cascade
+  on update cascade
 );
 create table problem(
 	p_id int not null AUTO_INCREMENT PRIMARY KEY,
