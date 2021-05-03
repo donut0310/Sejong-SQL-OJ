@@ -4,7 +4,6 @@ import { IndexController } from "./../../controllers/index.controller.js";
 
 export class IndexRoute {
   app;
-
   constructor(app) {
     this.app = app;
     this.configure();

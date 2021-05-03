@@ -1,25 +1,40 @@
-import { config } from "../utils/config.util.js";
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
+import { config } from "./dbconfig.js";
 
-export class Models {
-  constructor() {
-    this.username = config.MYSQL_AUTH_USERNAME;
-    this.password = config.MYSQL_AUTH_PASSWORD;
-    this.host = config.MYSQL_HOST;
-    this.port = config.MYSQL_PORT;
-    this.dbname = config.MYSQL_DBNAME;
+
+
+// export const pool = mysql.createPool(config);
+// export async function dbConnection(callback) {
+//   await pool.getConnection(function (err, conn) {
+//     if (!err) {
+//       callback(conn);
+//     }
+//   });
+// }
+
+export class Database{
+  pool
+  constructor(){
+    this.pool = mysql.createPool(config)
   }
-  init() {
-    this.connecting();
-  }
-  connecting() {
-    let connection = mysql.createConnection({
-      host: this.host,
-      user: this.username,
-      password: this.password,
-      database: this.dbname,
-    });
-    connection.connect();
-    console.log("Mysql is connected");
+
+  async dbConnection(callback){
+    console.log("dbConnecting")
+    this.pool.getConnection(function(err,conn){
+      console.log("getConnecting")
+      if(!err){
+        console.log("callback")
+        callback(conn);
+      }
+    })
   }
 }
+//   // constructor(){}
+
+//   // async dbConnection(){
+//   //   let pool = mysql.createPool(config);
+//   //   return pool;
+//   // }
+// }
+
+
