@@ -53,13 +53,12 @@ export class ScoreController {
       }
     
     async scoreing() {
-      //req.body.user_query
       const dataBase=new Database()
+      //req.body.user_query
       let userQuery=`select patient_sex,count(patient_sex)
       from patient_info
       group by patient_sex
       ORDER BY patient_sex ASC;`;
-      let result=0
       let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
       let sql3= "select tc_answer from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
@@ -88,9 +87,8 @@ export class ScoreController {
       tcCnt=tcCnt[0].tc_cnt;
       let rowsResult= await this.dbTest(sql2,params2,dataBase);
       let tcAnswer=await this.dbTest(sql3,params2,dataBase);
-      let q=await this.repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery)
-      console.log(q)
-      
+      let score= await this.repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery)/tcCnt
+      console.log(score)
   }
   async dbTest(sql,params,dataBase) {
     try {
@@ -112,9 +110,7 @@ export class ScoreController {
   async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery){
     const dataBase=new Database()
     let score=0
-    console.log(tcCnt)
     for(var i=0;i<tcCnt;i++){
-      console.log("i",i)
       let sql4=rowsResult[i].tc_content
       try {
         const connection = await dataBase.pool.getConnection(async conn => conn);
@@ -122,8 +118,10 @@ export class ScoreController {
           connection.beginTransaction();
           await connection.query(sql4);
           const [userJson] = await connection.execute(userQuery);
-          score+=this.score_check(userJson,tcAnswer[i].tc_answer)
-          console.log("score",score)
+          // 조교가 넣은 쿼리문 \n\t 제거 
+          let answerJson = tcAnswer[i].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
+          answerJson=answerJson.replace(/(\s*)/g, "");
+          score+=this.score_check(userJson,answerJson)
           connection.rollback();
           connection.release();
         } catch(err) {
@@ -132,7 +130,7 @@ export class ScoreController {
           return false;
         }
       } catch(err) {
-        console.log('DB Error!');
+        console.log(err);
         return false;
       }
     };
