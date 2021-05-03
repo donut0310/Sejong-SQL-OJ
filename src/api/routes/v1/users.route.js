@@ -12,8 +12,8 @@ export class UsersRoute {
 
   configure() {
     const usersController = new UsersController();
-    const scorecontroller = new ScoreController();
-    scorecontroller.scoreing();
+    // const scorecontroller = new ScoreController();
+    // scorecontroller.scoreing();
     // 회원가입
     this.app.post("/api/v1/user/signup", [usersController.createUser]);
 
