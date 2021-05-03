@@ -55,7 +55,6 @@ export class ScoreController {
       }
     
     async scoreing() {
-      const dataBase=new Database()
       //req.body.user_query
       let userQuery=`select patient_sex,count(patient_sex)
       from patient_info
@@ -84,31 +83,15 @@ export class ScoreController {
         // req.body.p_id,
         // req.body.week_info
       ]
-      
-      let tcCnt= await this.dbTest(sql,params,dataBase);
+      const database=new Database()
+      let tcCnt= await database.queryExecute(sql,params);
       tcCnt=tcCnt[0].tc_cnt;
-      let rowsResult= await this.dbTest(sql2,params2,dataBase);
-      let tcAnswer=await this.dbTest(sql3,params2,dataBase);
+      let rowsResult= await database.queryExecute(sql2,params2);
+      let tcAnswer=await database.queryExecute(sql3,params2);
       let score= await this.repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery)/tcCnt
-      console.log(score)
+      // res.status(200).send(score)
   }
-  async dbTest(sql,params,dataBase) {
-    try {
-      const connection = await dataBase.pool.getConnection(async conn => conn);
-      try {
-        const [rows] = await connection.query(sql, params);
-        connection.release();
-        return rows
-      } catch(err) {
-        console.log(err);
-        connection.release();
-        return false;
-      }
-    } catch(err) {
-      console.log('DB Error');
-      return false;
-    }
-  };
+  
   async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery){
     const dataBase=new Database()
     let score=0

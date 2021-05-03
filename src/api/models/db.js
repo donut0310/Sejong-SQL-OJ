@@ -28,6 +28,23 @@ export class Database{
       }
     })
   }
+  async queryExecute(sql,params) {
+    try {
+      const connection = await this.pool.getConnection(async conn => conn);
+      try {
+        const [rows] = await connection.query(sql, params);
+        connection.release();
+        return rows
+      } catch(err) {
+        console.log(err);
+        connection.release();
+        return false;
+      }
+    } catch(err) {
+      console.log('DB Error');
+      return false;
+    }
+}
 }
 //   // constructor(){}
 
