@@ -7,6 +7,7 @@ import { Database } from "../models/db.js";
 export class ScoreController {
     constructor() {}
     correct_answer_rate(userJson,answerJson){
+        console.log(typeof(userJosn), typeof(answerJson))
         let correct=0;
         let length=0;
           if (userJson.length<answerJson.length){
@@ -39,15 +40,17 @@ export class ScoreController {
         }
         
     score_check(userJson,answerJson){
-      console.log(JSON.stringify(userJson),answerJson)
-        if(JSON.stringify(userJson) === answerJson){
+      // 조교가 넣은 쿼리문 \n\t 제거
+      let answerString = answerJson.replace(/(\r\n\t|\n|\r\t)/gm,"");
+      answerString=answerString.replace(/(\s*)/g, ""); 
+        if(JSON.stringify(userJson) === answerString){
           return 100;
         }
         else if(userJson.length==0){
           return 0;
         }
         else{
-          return this.correct_answer_rate(JSON.stringify(userJson),answerJson)
+          return this.correct_answer_rate(userJson,JSON.parse(answerJson))
         }
       
       }
@@ -118,10 +121,7 @@ export class ScoreController {
           connection.beginTransaction();
           await connection.query(sql4);
           const [userJson] = await connection.execute(userQuery);
-          // 조교가 넣은 쿼리문 \n\t 제거 
-          let answerJson = tcAnswer[i].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
-          answerJson=answerJson.replace(/(\s*)/g, "");
-          score+=this.score_check(userJson,answerJson)
+          score+=this.score_check(userJson,tcAnswer[i].tc_answer)
           connection.rollback();
           connection.release();
         } catch(err) {
