@@ -28,7 +28,6 @@ export class TypeUtil {
 
   static cast = (key, type, defaultValue) => {
     const value = process.env[key];
-    console.log(value);
     if (value !== undefined) {
       const result = TypeUtil.typeConverter[type](value);
       if (result !== undefined) {
