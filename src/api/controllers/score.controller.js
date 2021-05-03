@@ -7,7 +7,6 @@ import { Database } from "../models/db.js";
 export class ScoreController {
     constructor() {}
     correct_answer_rate(userJson,answerJson){
-        console.log(typeof(userJosn), typeof(answerJson))
         let correct=0;
         let length=0;
           if (userJson.length<answerJson.length){
