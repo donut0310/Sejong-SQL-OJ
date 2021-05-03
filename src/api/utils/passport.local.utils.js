@@ -30,29 +30,38 @@ export class PassportConfig {
         async (user_id, user_pw, done) => {
           let sql = "select * from user where user_id =?";
           let params = user_id;
-          let user;
-          await database.dbConnection((conn) => {
-            conn.query(sql, params, function (err, rows) {
-              if (err) throw err;
-              else {
-                conn.release();
-                user=rows[0];
-                if (!user)
+          try {
+            const connection = await database.pool.getConnection(
+              async (conn) => conn
+            );
+            try {
+              const user = await connection.query(sql, params);
+              connection.release();
+
+              if (!user)
                 return done(null, false, {
                   message: "아이디 혹은 비밀번호를 확인해주세요.",
                 });
-                let hashedPassword = HashUtil.getHashedValue(user_pw, user.salt);
-                const isMatch = user.user_pw == hashedPassword;
-                if (isMatch) {
-                  return done(null, user);
-                }
-        
-                return done(null, false, {
-                  message: "아이디 혹은 비밀번호를 확인해주세요.",
-                });
+              let hashedPassword = HashUtil.getHashedValue(
+                user_pw,
+                user[0][0].salt
+              );
+              const isMatch = user[0][0].user_pw == hashedPassword;
+              if (isMatch) {
+                return done(null, user[0][0]);
               }
-            });
-          });
+
+              return done(null, false, {
+                message: "아이디 혹은 비밀번호를 확인해주세요.",
+              });
+            } catch (err) {
+              console.log("No User");
+              connection.release();
+            }
+          } catch (err) {
+            console.log("ERROR");
+            return false;
+          }
         }
       )
     );

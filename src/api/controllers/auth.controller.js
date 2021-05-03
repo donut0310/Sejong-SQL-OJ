@@ -1,9 +1,5 @@
-// import { dbConnection } from "../models/db.js";
 import { Database } from "../models/db.js";
-import JWTUtil, {
-  // PayloadAccessToken,
-  // PayloadRefreshToken,
-} from "../utils/jwt.util.js";
+import JWTUtil from "../utils/jwt.util.js"; // PayloadRefreshToken, // PayloadAccessToken,
 
 export class AuthController {
   constructor() {}
@@ -13,48 +9,53 @@ export class AuthController {
 
     const jwtUtil = new JWTUtil();
     const database = new Database();
-
     let sql = "select * from user where user_id = ?";
     let params = req.body.user_id;
-    await database.dbConnection((conn) => {
-      conn.query(sql, params, function (err, rows) {
-        if (err) throw err;
-        else {
-          conn.release();
-          const accessPayload = {
-            id: rows[0].user_id,
-            issuer: "http://13.125.85.53/",
-          };
+    console.log(params);
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        const user = await connection.query(sql, params);
+        connection.release();
+        const accessPayload = {
+          id: user[0][0].user_id,
+          issuer: "http://13.125.85.53/",
+        };
 
-          const refreshPayload = {
-            id: rows[0].user_id,
-            issuer: "http://13.125.85.53/",
-          };
-          try {
-            const accessToken = jwtUtil.sign(accessPayload, "access");
-            const refreshToken = jwtUtil.sign(refreshPayload, "refresh");
+        const refreshPayload = {
+          id: user[0][0].user_id,
+          issuer: "http://13.125.85.53/",
+        };
+        try {
+          const accessToken = jwtUtil.sign(accessPayload, "access");
+          const refreshToken = jwtUtil.sign(refreshPayload, "refresh");
 
-            console.log(parseInt(jwtUtil.accessTokenLife));
-            res.cookie("access-token", accessToken, {
-              secure: false,
-              httpOnly: true,
-              maxAge: 1000 * parseInt(jwtUtil.accessTokenLife),
-            });
-            res.cookie("refresh-token", refreshToken, {
-              secure: false,
-              httpOnly: true,
-              maxAge: 1000 * parseInt(jwtUtil.refreshTokenLife),
-            });
-            res
-              .status(200)
-              .send((rows[0].user, "로그인에 성공했습니다."));
-          } catch (err) {
-            res.status(500).send("500 ERROR");
-          }
+          console.log(parseInt(jwtUtil.accessTokenLife));
+          res.cookie("access-token", accessToken, {
+            secure: false,
+            httpOnly: true,
+            maxAge: 1000 * parseInt(jwtUtil.accessTokenLife),
+          });
+          res.cookie("refresh-token", refreshToken, {
+            secure: false,
+            httpOnly: true,
+            maxAge: 1000 * parseInt(jwtUtil.refreshTokenLife),
+          });
+          res.status(200).send((user[0][0].user, "로그인에 성공했습니다."));
+        } catch (err) {
+          res.status(500).send("500 ERROR");
         }
-      });
-    });
-    
+      } catch (err) {
+        console.log(err);
+        connection.release();
+        return false;
+      }
+    } catch (err) {
+      console.log("ERROR");
+      return false;
+    }
   }
 
   async refreshAccessToken(req, res) {
@@ -69,7 +70,7 @@ export class AuthController {
     }
 
     const accessPayload = {
-      id: user.user_id,
+      id: user[0][0].user_id,
       issuer: "http://13.125.85.53/",
     };
 

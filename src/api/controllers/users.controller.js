@@ -13,31 +13,33 @@ export class UsersController {
     req.body.salt = salt;
 
     let sql =
-    "insert into user (\
-      user_id, class_id, user_name, user_pw, author, jwt_token, salt\
+      "insert into user (\
+      user_id, class_id, user_name, user_pw, author, salt\
       )\
-      values(?,?,?,?,?,?,?)";
-  let params = [
-    req.body.user_id,
-    req.body.class_id,
-    req.body.user_name,
-    req.body.user_pw,
-    req.body.author,
-    req.body.jwt_token,
-    req.body.salt,
-  ];
-    await database.dbConnection((conn) => {
-      try{
-        conn.query(sql, params, function (err, rows) {
-        if (err) throw err;
-        else {
-          conn.release();
-          res.status(200).send("회원가입에 성공하셨습니다.");
-        }
-      });
-    }catch(err){
-      console.log('errorerror')
+      values(?,?,?,?,?,?)";
+    let params = [
+      req.body.user_id,
+      req.body.class_id,
+      req.body.user_name,
+      req.body.user_pw,
+      req.body.author,
+      req.body.salt,
+    ];
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        await connection.query(sql, params);
+        connection.release();
+        res.status(200).send("회원가입에 성공하셨습니다.");
+      } catch (err) {
+        console.log("errorerror");
+        connection.release();
+      }
+    } catch (err) {
+      console.log("ERROR");
+      return false;
     }
-    });
   }
 }

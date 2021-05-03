@@ -2,9 +2,9 @@
 //   mysql -uroot -p
 //   비밀번호 입력
 //   CREATE DATABASE SQL_DB;
-//   use SQL_DB; 
+//   use SQL_DB;
 
-export const query_example=`
+export const query_example = `
 DROP DATABASE IF EXISTS test_case;
 CREATE DATABASE test_case default CHARACTER SET UTF8;
 use test_case;
@@ -15,19 +15,19 @@ DROP TABLE IF EXISTS problem;
 DROP TABLE IF EXISTS testcase_problem;
 #데이터 넣는 형식에 따른 not null로 할지 , DEFAULT null로 할지 고민
 create table course(
-	class_id varchar(255) not null,
+	class_id int auto_increment not null,
+  user_id varchar(1000) DEFAULT null,
     class_name varchar(255) DEFAULT NULL,
     admin_id varchar(255) DEFAULT NULL,
     PRIMARY KEY (class_id)
 );
 create table user(
   user_id varchar(255) not null,
-  class_id varchar(255) DEFAULT NULL,
+  class_id int(255) DEFAULT NULL,
   user_name varchar(255) DEFAULT NULL,
   user_pw varchar(255) DEFAULT NULL,
   #0은 일반 학생 1은 조교 2는 교수
   author int DEFAULT NULL,
-  jwt_token varchar(255) DEFAULT NULL,
   salt varchar(255) DEFAULT NULL,
   PRIMARY KEY (user_id),
   FOREIGN KEY (class_id) REFERENCES course (class_id)
@@ -214,4 +214,4 @@ insert into patient_info values("A373232","male","2021-01-15 06:17:00","Sick","�
 insert into patient_info values("A373233","Female","2021-02-15 13:17:00","Sick","배상준");
 insert into patient_info values("A373234","Female","2021-02-15 08:17:00","Healthy","허의원");
 insert into patient_info values("A373235","Female","2021-01-15 06:17:00","Sick","이재은");
-insert into patient_info values("A373236","Female","2021-02-15 13:17:00","Sick","이지윤");',1);`
+insert into patient_info values("A373236","Female","2021-02-15 13:17:00","Sick","이지윤");',1);`;
