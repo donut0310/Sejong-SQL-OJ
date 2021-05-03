@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { IndexRoute } from "./api/routes/v1/index.route.js";
 import { AuthRoute } from "./api/routes/v1/auth.route.js";
 import { UsersRoute } from "./api/routes/v1/users.route.js";
+import { CourseRoute } from "./api/routes/v1/course.route.js";
 import { PassportConfig } from "./api/utils/passport.local.utils.js";
 
 const app = express();
@@ -48,6 +49,7 @@ app.use(function (req, res, next) {
 //   last. routes.push(new IndexRoute(app));
 routes.push(new UsersRoute(app));
 routes.push(new AuthRoute(app));
+routes.push(new CourseRoute(app));
 routes.push(new IndexRoute(app));
 
 export default app;
