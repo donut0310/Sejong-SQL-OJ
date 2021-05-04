@@ -7,6 +7,7 @@ import { IndexRoute } from "./api/routes/v1/index.route.js";
 import { AuthRoute } from "./api/routes/v1/auth.route.js";
 import { UsersRoute } from "./api/routes/v1/users.route.js";
 import { CourseRoute } from "./api/routes/v1/course.route.js";
+import { ScoreRoute } from "./api/routes/v1/score.route.js";
 import { PassportConfig } from "./api/utils/passport.local.utils.js";
 import { ProblemRoute } from "./api/routes/v1/problem.route.js";
 
@@ -47,6 +48,7 @@ routes.push(new UsersRoute(app));
 routes.push(new AuthRoute(app));
 routes.push(new CourseRoute(app));
 routes.push(new ProblemRoute(app));
+routes.push(new ScoreRoute(app));
 routes.push(new IndexRoute(app));
 
 export default app;

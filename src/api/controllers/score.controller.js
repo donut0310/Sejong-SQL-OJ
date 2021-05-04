@@ -91,6 +91,7 @@ export class ScoreController {
       let rowsResult= await database.queryExecute(sql2,params2);
       let tcAnswer=await database.queryExecute(sql3,params2);
       let score= await this.repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery)/tcCnt
+      console.log(score)
       // res.status(200).send(score)
   }
 
