@@ -56,8 +56,7 @@ export class ScoreController {
   }
     
     async scoreing(req,res) {
-      let userQuery="select1 patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;";
-      //let userQuery=req.body.user_query;
+      let userQuery=req.body.user_query;
       let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
       let sql3= "select tc_answer from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
@@ -110,23 +109,26 @@ export class ScoreController {
               score=err2.sqlMessage
               connection.rollback();
               connection.release();
-              return false;
+              res.status(400).send("UserQuery Error");
+              return ;
             }
             connection.rollback();
             connection.release();
           } catch (err) {
             console.log(err);
             connection.release();
-            return false;
+            res.status(400).send("Transaction Error");
+            return ;
           }
 
       } catch(err) {
         console.log(err);
-        return false;
+        res.status(400).send("DB Connect Error");
+        return ;
       }
     }
-      console.log(score);
-      res.status(200).send("suc");
+      let a={"message":"success", "score": score/tcCnt};
+      res.status(200).send(a);
   }
 
   async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery,database){
