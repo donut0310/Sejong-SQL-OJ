@@ -26,10 +26,12 @@ export class ProblemController {
         const b = await connection.query(sql2, params2);
         connection.release();
 
+        let data = {};
         const arr = a[0].concat(b[0]);
-        console.log("Length:", arr.length);
-        console.log(arr);
-        res.status(200).send(arr);
+        data.result = arr;
+        data.message = "Success";
+
+        res.status(200).send(data);
       } catch (err) {
         console.log(err);
         connection.release();
