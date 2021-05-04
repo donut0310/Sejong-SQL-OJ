@@ -17,7 +17,7 @@ DROP TABLE IF EXISTS testcase_problem;
 create table course(
 	class_id int auto_increment not null,
     class_name varchar(255) DEFAULT NULL,
-    admin_id varchar(255) DEFAULT NULL,
+    admin_id varchar(1000) DEFAULT NULL,
     PRIMARY KEY (class_id)
 );
 create table user(
