@@ -2,18 +2,38 @@ import { config } from "./config.util.js";
 import * as jwt from "jsonwebtoken";
 // import { ErrorUtil } from "./error.util";
 
-// VerifyFail = {
-//   success: false,
-//   err: "error!!",
+// const PayloadAccessToken = {
+//   user_id: "",
+//   user_name: "",
+//   issuer: "http://13.125.85.53/",
 // };
 
-// VerifySuccess = {
-//   success: true,
-//   decoded: Payload,
+// const PayloadRefreshToken = {
+//   user_id: "",
+//   user_name: "",
+//   issuer: "http://13.125.85.53/",
 // };
 
-// VerifyResult = VerifySuccess | VerifyFail;
-// TokenType = "refresh" | "access";
+// let Payload = PayloadAccessToken | PayloadRefreshToken;
+
+let Payload = {
+  user_id: "",
+  user_name: "",
+  issuer: "http://13.125.85.53/",
+};
+
+const VerifyFail = {
+  success: false,
+  err: "error!!",
+};
+
+const VerifySuccess = {
+  success: true,
+  decoded: Payload,
+};
+
+let VerifyResult = VerifySuccess | VerifyFail;
+let TokenType = "refresh" | "access";
 
 export default class JWTUtil {
   _ACCESS_TOKEN_SECRET;
@@ -45,53 +65,45 @@ export default class JWTUtil {
   }
 
   get tokenExpiredError() {
-    return ("Token is expired.", "로그인이 필요합니다.");
+    return "Token is expired.", "로그인이 필요합니다.";
   }
 
   get invalidTokenError() {
-    return (
-      "It is invalid token.",
-      "로그인이 필요합니다."
-    );
+    return "It is invalid token.", "로그인이 필요합니다.";
   }
 
-  //   public verifyToken = (token: string, type: TokenType): VerifyResult => {
-  //     const secret =
-  //       type == "access" ? this._ACCESS_TOKEN_SECRET : this._REFRESH_TOKEN_SECRET;
+  verifyToken = (token, type) => {
+    const secret =
+      type == "access" ? this._ACCESS_TOKEN_SECRET : this._REFRESH_TOKEN_SECRET;
 
-  //     let result: VerifyResult = {
-  //       success: false,
-  //       err: this.invalidTokenError,
-  //     };
+    let result = {
+      success: false,
+      err: this.invalidTokenError,
+    };
 
-  //     jwt.verify(
-  //       token,
-  //       secret,
-  //       (err: jwt.VerifyErrors | null, decoded: Payload | undefined) => {
-  //         if (err) {
-  //           result = {
-  //             success: false,
-  //             err: this.getErrorUtil(err),
-  //           };
-  //         } else if (!decoded) {
-  //           result = {
-  //             success: false,
-  //             err: this.getErrorUtil(new jwt.JsonWebTokenError("")),
-  //           };
-  //         } else {
-  //           result = {
-  //             success: true,
-  //             decoded,
-  //           };
-  //         }
-  //       }
-  //     );
+    jwt.default.verify(token, secret, (err, decoded) => {
+      if (err) {
+        result = {
+          success: false,
+          err: this.getErrorUtil(err),
+        };
+      } else if (!decoded) {
+        result = {
+          success: false,
+          err: this.getErrorUtil(new jwt.JsonWebTokenError("")),
+        };
+      } else {
+        result = {
+          success: true,
+          decoded,
+        };
+      }
+    });
 
-  //     return result;
-  //   };
+    return result;
+  };
 
   sign = (payload, type, options = {}) => {
-    console.log("sign function entered")
     const secret =
       type == "access" ? this._ACCESS_TOKEN_SECRET : this._REFRESH_TOKEN_SECRET;
 

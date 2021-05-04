@@ -1,35 +1,32 @@
 import passport from "passport";
 
-// import JWTUtil from "../utils/jwt.util/js";
+import JWTUtil from "../utils/jwt.util.js";
 
 export class AuthMiddleware {
   constructor() {}
 
-  // verifyToken = async (req, res, next) => {
-  //   const path = req.route.path;
-  //   const type = path == "/api/v1/auth/access-token" ? "refresh" : "access";
-  //   const token = req.cookies[`${type}-token`];
+  verifyToken = async (req, res, next) => {
+    const path = req.route.path;
+    const type = path == "/api/v1/auth/access-token" ? "refresh" : "access";
+    const token = req.cookies[`${type}-token`];
 
-  //   if (!token) {
-  //     const error = ErrorUtil.unAuthorized(
-  //       `${type} token is required.`,
-  //       "로그인이 필요합니다."
-  //     );
-  //     res.status(error.status).send(ResponseUtil.successFalse(error));
-  //     return;
-  //   }
-  //   const jwtUtil = new JWTUtil();
-  //   const verifyResult = jwtUtil.verifyToken(token, type);
+    if (!token) {
+      const error = "로그인이 필요합니다.";
+      res.status(401).send(error);
+      return;
+    }
+    const jwtUtil = new JWTUtil();
+    const verifyResult = jwtUtil.verifyToken(token, type);
 
-  //   if (!verifyResult.success) {
-  //     res
-  //       .status(verifyResult.err.status)
-  //       .send(ResponseUtil.successFalse(verifyResult.err));
-  //   } else {
-  //     req.body.decoded = verifyResult.decoded;
-  //     next();
-  //   }
-  // };
+    if (!verifyResult.success) {
+      res
+        .status(verifyResult.err.status)
+        .send(ResponseUtil.successFalse(verifyResult.err));
+    } else {
+      req.body.decoded = verifyResult.decoded;
+      next();
+    }
+  };
 
   verifyUserByLocalPassport = async (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {

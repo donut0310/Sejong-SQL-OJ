@@ -11,7 +11,6 @@ export class AuthController {
     const database = new Database();
     let sql = "select * from user where user_id = ?";
     let params = req.body.user_id;
-    console.log(params);
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
