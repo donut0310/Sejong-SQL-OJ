@@ -9,6 +9,8 @@ import StatusPage from '../../containers/statusPage'
 import MainPage from '../../containers/mainPage'
 import CodeCheckPage from '../../containers/codeCheckPage'
 
+import ProblemAddPage from '../../containers/problemAddPage'
+
 const Main = () => {
   return (
     <MainWrapper maxWidth="md">
@@ -17,6 +19,7 @@ const Main = () => {
       <Route path="/problems" component={ProblemPage} />
       <Route path="/status" component={StatusPage} />
       <Route path="/check" component={CodeCheckPage} />
+      <Route path="/admin/addproblem" component={ProblemAddPage} />
     </MainWrapper>
   )
 }
