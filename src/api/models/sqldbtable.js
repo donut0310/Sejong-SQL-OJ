@@ -39,10 +39,18 @@ create table u_c_bridge(
   on delete cascade
   on update cascade
 );
+create table week(
+  week_id int not null auto_increment primary key,
+  class_id int default 0,
+  week_title varchar(255) default null,
+  foreign key(class_id) references course (class_id)
+  on delete cascade
+  on update cascade
+);
 create table problem(
 	p_id int not null AUTO_INCREMENT PRIMARY KEY,
-    class_id varchar(255) not null,
-    week_info varchar(255) DEFAULT NULL,
+    week_id int default 0,
+    class_id int default 0,
     title varchar(255) DEFAULT NULL,
     content MEDIUMTEXT DEFAULT NULL,
     start_time DATETIME DEFAULT NULL,
@@ -51,8 +59,15 @@ create table problem(
     tc_id int DEFAULT NULL,
     table_info MEDIUMTEXT DEFAULT NULL,
     table_create MEDIUMTEXT DEFAULT NULL,
+    week_title varchar(255) DEFAULT NULL,
+    FOREIGN KEY (week_id) REFERENCES week (week_id)
+    on delete cascade
+    on update cascade,
     FOREIGN KEY (class_id) REFERENCES course (class_id)
-);
+    on delete cascade
+    on update cascade
+    );
+
 # week_info 가 기본키가 되면 주차별 문제가 1개씩만 생성가능 
 create table testcase_problem(
 	p_id int not null,
@@ -64,19 +79,57 @@ create table testcase_problem(
 );
 # week_info 가 기본키가 되면 주차별 문제가 1개씩만 생성가능 
 create table submit_answer(
-  class_id varchar(255) not null,
-  user_id varchar(255) not null,
-  p_id int not null,
-  week_info varchar(255) DEFAULT NULL,
+  submit_id int not null auto_increment primary key,
+  week_id int default 0,
+  class_id int default 0,
+  user_id varchar(255) default null,
+  p_id int default 0,
   user_query varchar(255) DEFAULT NULL,
   query_cost DOUBLE DEFAULT NULL,
   score int DEFAULT NULL,
   submit_time datetime DEFAULT CURRENT_TIMESTAMP,
   result varchar(255) DEFAULT NULL,
-  FOREIGN KEY (class_id) REFERENCES course (class_id),
-  FOREIGN KEY (user_id) REFERENCES user (user_id),
+  week_title varchar(255) DEFAULT NULL,
+  FOREIGN KEY (week_id) REFERENCES week (week_id)
+  on delete cascade
+  on update cascade,
+  FOREIGN KEY (class_id) REFERENCES course (class_id)
+  on delete cascade
+  on update cascade,
+  FOREIGN KEY (user_id) REFERENCES user (user_id)
+  on delete cascade
+  on update cascade,
   FOREIGN KEY (p_id) REFERENCES problem (p_id)
+  on delete cascade
+  on update cascade
 );
+create table top_submit_answer(
+  submit_id int not null auto_increment primary key,
+  week_id int default 0,
+  class_id int default 0,
+  user_id varchar(255) default null,
+  p_id int default 0,
+  user_query varchar(255) DEFAULT NULL,
+  query_cost DOUBLE DEFAULT NULL,
+  score int DEFAULT NULL,
+  submit_time datetime DEFAULT CURRENT_TIMESTAMP,
+  result varchar(255) DEFAULT NULL,
+  week_title varchar(255) DEFAULT NULL,
+  submit_cnt int default 0,
+  FOREIGN KEY (week_id) REFERENCES week (week_id)
+  on delete cascade
+  on update cascade,
+  FOREIGN KEY (class_id) REFERENCES course (class_id)
+  on delete cascade
+  on update cascade,
+  FOREIGN KEY (user_id) REFERENCES user (user_id)
+  on delete cascade
+  on update cascade,
+  FOREIGN KEY (p_id) REFERENCES problem (p_id)
+  on delete cascade
+  on update cascade
+);
+
 INSERT INTO course VALUES('1234', '(2021-1학기)데이터베이스(홍길동)','16011076;16011088');
 INSERT INTO user values('16011076','1234','허준현','1234',1,null);
 INSERT INTO user values('16011088','1234','김영률','1234',1,null);
@@ -222,3 +275,36 @@ insert into patient_info values("A373233","Female","2021-02-15 13:17:00","Sick",
 insert into patient_info values("A373234","Female","2021-02-15 08:17:00","Healthy","허의원");
 insert into patient_info values("A373235","Female","2021-01-15 06:17:00","Sick","이재은");
 insert into patient_info values("A373236","Female","2021-02-15 13:17:00","Sick","이지윤");',1);`;
+
+// 테스트 데이터 예시
+// 문제 호출 관련
+
+// week table
+`
+insert into week (class_id,week_title) values (1,"1주차 SELECT문");
+insert into week (class_id,week_title) values (1,"2주차 SELECT문");
+insert into week (class_id,week_title) values (2,"1주차 SELECT문");
+` // problem table
+`
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,1,"1번 문제","1+1은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,1,"2번 문제","2+2은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,1,"3번 문제","3+3은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,1,"1번 문제","10+10은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,1,"2번 문제","20+20은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,1,"3번 문제","30+30은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,2,"1번 문제","1*1은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
+insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,2,"2번 문제","2*2은?","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
+
+` // top_submit_answer table
+`
+insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,1,"22222222",1,"select * from user;",0.5,50,"2021-02-15 13:17:00","W/A","1주차 SELECT문",2);
+insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,1,"22222222",2,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문",4);
+insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,2,"33333333",1,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문",1);
+insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,2,"33333333",2,"select * from user;",0.5,30,"2021-02-15 13:17:00","W/A","1주차 SELECT문",5);
+insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(2,1,"22222222",1,"select * from user;",0.5,10,"2021-02-15 13:17:00","W/A","2주차 DELETE문",4);
+insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(2,1,"22222222",2,"select * from user;",0.5,80,"2021-02-15 13:17:00","W/A","2주차 DELETE문",8);
+
+` // auto incremeat init
+`ALTER TABLE course AUTO_INCREMENT=1;
+SET @CNT = 0;
+UPDATE course SET course.class_id = @CNT:=@CNT+1;`;

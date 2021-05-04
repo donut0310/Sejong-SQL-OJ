@@ -9,6 +9,7 @@ import { UsersRoute } from "./api/routes/v1/users.route.js";
 import { CourseRoute } from "./api/routes/v1/course.route.js";
 import { ScoreRoute } from "./api/routes/v1/score.route.js";
 import { PassportConfig } from "./api/utils/passport.local.utils.js";
+import { ProblemRoute } from "./api/routes/v1/problem.route.js";
 
 const app = express();
 const routes = [];
@@ -46,6 +47,7 @@ app.use(function (req, res, next) {
 routes.push(new UsersRoute(app));
 routes.push(new AuthRoute(app));
 routes.push(new CourseRoute(app));
+routes.push(new ProblemRoute(app));
 routes.push(new ScoreRoute(app));
 routes.push(new IndexRoute(app));
 
