@@ -13,12 +13,7 @@ const app = express();
 const routes = [];
 const passportConfig = new PassportConfig();
 const __dirname = path.resolve();
-const root = path.join(__dirname, "src/client");
-
-// DB connect
-// (async () => {
-//   await new Models().init();
-// })();
+const root = path.join(__dirname, "src/client/build");
 
 app.use(express.static(root));
 app.use(express.json({ limit: "5mb" }));
