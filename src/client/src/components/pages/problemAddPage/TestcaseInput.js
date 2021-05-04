@@ -21,7 +21,7 @@ const TestcaseInput = () => {
     <div>
       <TitleContainer>
         테스트케이스 추가
-        <AddCircleOutlineRoundedIcon onClick={handleAddTC} />
+        <StyledAddBtn onClick={handleAddTC} />
       </TitleContainer>
       <GridContainer>
         <Grid container spacing={3}>
@@ -62,6 +62,12 @@ const TitleContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+`
+const StyledAddBtn = styled(AddCircleOutlineRoundedIcon)`
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.SUB_FONT};
+  }
 `
 
 const GridContainer = styled.div`
