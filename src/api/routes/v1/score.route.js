@@ -11,7 +11,7 @@ export class ScoreRoute {
 
   configure() {
      const scorecontroller = new ScoreController();
-    // scorecontroller.scoreing();
+     //scorecontroller.scoreing();
     // 채점
     this.app.post("/api/v1/score", [scorecontroller.scoreing]);
 

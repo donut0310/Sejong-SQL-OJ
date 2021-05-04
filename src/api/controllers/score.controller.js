@@ -40,9 +40,9 @@ export class ScoreController {
     }
     
    score_check(userJson,answerJson){
-  // 조교가 넣은 쿼리문 \n\t 제거
-  let answerString = answerJson.replace(/(\r\n\t|\n|\r\t)/gm,"");
-  answerString=answerString.replace(/(\s*)/g, ""); 
+    // 조교가 넣은 쿼리문 \n\t 제거
+    let answerString = answerJson.replace(/(\r\n\t|\n|\r\t)/gm,"");
+    answerString=answerString.replace(/(\s*)/g, ""); 
     if(JSON.stringify(userJson) === answerString){
       return 100;
     }
@@ -55,12 +55,9 @@ export class ScoreController {
   
   }
     
-    async scoreing() {
-      //req.body.user_query
-      let userQuery=`select patient_sex,count(patient_sex)
-      from patient_info
-      group by patient_sex
-      ORDER BY patient_sex ASC;`;
+    async scoreing(req,res) {
+      let userQuery="select1 patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;";
+      //let userQuery=req.body.user_query;
       let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
       let sql3= "select tc_answer from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
@@ -72,56 +69,69 @@ export class ScoreController {
           patient_condition varchar(255) DEFAULT NULL,
           name varchar(255) DEFAULT NULL,
         PRIMARY KEY (patient_id)
-
       );`
       let params = [
-        "1","1","1234"
-        // req.body.p_id,
-        // req.body.week_info,
-        // req.body.class_id
+        //"1","1","1234"
+        req.body.p_id,
+        req.body.week_info,
+        req.body.class_id
       ];
       let params2 =[
-        "1","1"
-        // req.body.p_id,
-        // req.body.week_info
+        req.body.p_id,req.body.week_info
+        //"1","1"
       ]
       const database=new Database()
       let tcCnt= await database.queryExecute(sql,params);
       tcCnt=tcCnt[0].tc_cnt;
       let rowsResult= await database.queryExecute(sql2,params2);
       let tcAnswer=await database.queryExecute(sql3,params2);
-      let score= await this.repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery)/tcCnt
-      console.log(score)
-      // res.status(200).send(score)
-  }
-
-  async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery){
-    const dataBase=new Database()
-    let score=0
-    for(var i=0;i<tcCnt;i++){
-      let sql4=rowsResult[i].tc_content
-      try {
-        const connection = await dataBase.pool.getConnection(
-          async (conn) => conn
-        );
+      let score=0
+      for(var i=0;i<tcCnt;i++){
+        let sql4=rowsResult[i].tc_content
         try {
-          connection.beginTransaction();
-          await connection.query(sql4);
-          const [userJson] = await connection.execute(userQuery);
-          score+=this.score_check(userJson,tcAnswer[i].tc_answer)
-          connection.rollback();
-          connection.release();
-        } catch (err) {
-          console.log(err);
-          connection.release();
-          return false;
-        }
+          const connection = await database.pool.getConnection(async (conn) => conn);
+          try {
+            connection.beginTransaction();
+            await connection.query(sql4);
+            try{
+              const [userJson] = await connection.query(userQuery);
+              let answerString = tcAnswer[i].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
+              answerString=answerString.replace(/(\s*)/g, ""); 
+              if(JSON.stringify(userJson) === answerString){
+                score+= 100;
+              }
+              else if(userJson.length==0){
+                score+= 0;
+              }
+              else{
+                score+= this.correct_answer_rate(userJson,JSON.parse(answerJson))
+              }
+            } catch (err2){
+              score=err2.sqlMessage
+              connection.rollback();
+              connection.release();
+              return false;
+            }
+            connection.rollback();
+            connection.release();
+          } catch (err) {
+            console.log(err);
+            connection.release();
+            return false;
+          }
 
       } catch(err) {
         console.log(err);
         return false;
       }
     }
+      console.log(score);
+      res.status(200).send("suc");
+  }
+
+  async repeated_correct(tcCnt,rowsResult,tcAnswer,userQuery,database){
+    console.log(tcCnt)
+    
     return score;
   }
 }
