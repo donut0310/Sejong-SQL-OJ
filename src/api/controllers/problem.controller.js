@@ -72,4 +72,46 @@ export class ProblemController {
       return false;
     }
   }
+  //사용자가 문제 실행시 테스트케이스 결과 보여주고 롤백
+  async getProcessProblem(req, res) {
+    const database = new Database();
+    const pId = req.body.p_id;
+    const userQuery=req.body.user_query;
+    const sql = "select tc_id from problem where p_id = ?";
+    const params=[pId];
+    let [tcId]= await database.queryExecute(sql,params);
+    tcId=tcId.tc_id
+    const sql2= "select tc_content from testcase_problem where p_id = ? and tc_id = ?";
+    const params2=[pId,tcId];
+    let [sql3]= await database.queryExecute(sql2,params2);
+    sql3=sql3.tc_content
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        connection.beginTransaction();
+        await connection.query(sql3);
+        const [a] = await connection.query(userQuery);
+
+        connection.rollback();
+        connection.release();
+        let data = {};
+        data.result = a;
+        data.message = "success";
+        res.status(200).send(data);
+
+      } catch (err) {
+        console.log(err);
+        connection.rollback();
+        connection.release();
+        res.status(400).send("UserQuery Error");
+        return ;
+      }
+    } catch (err) {
+      console.log(err);
+      res.status(400).send("DB Connect Error");
+      return ;
+    }
+  }
 }
