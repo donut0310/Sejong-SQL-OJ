@@ -29,7 +29,7 @@ export class ProblemController {
         let data = {};
         const arr = a[0].concat(b[0]);
         data.result = arr;
-        data.message = "Success";
+        data.message = "success";
 
         res.status(200).send(data);
       } catch (err) {
@@ -60,7 +60,7 @@ export class ProblemController {
 
         let data = {};
         data.result = a[0];
-        data.message = "Success";
+        data.message = "success";
 
         res.status(200).send(data);
       } catch (err) {

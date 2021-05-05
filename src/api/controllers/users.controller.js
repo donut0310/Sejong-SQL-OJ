@@ -58,4 +58,35 @@ export class UsersController {
     const userId = req.body.decoded.id;
   }
   // 사용자가 입력한 정답 쿼리문 실행
+
+  // 제출한 코드 요청
+  async getSubmittedCode(req, res) {
+    const database = new Database();
+    const submitId = req.params.submitId;
+    const userId = req.body.decoded.id;
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql =
+          "select user_query from submit_answer where user_id = ? and submit_id = ?";
+        let params = [userId, submitId];
+        const a = await connection.query(sql, params);
+        connection.release();
+
+        let data = {};
+        data.result = a[0];
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        console.log("errorerror");
+        connection.release();
+      }
+    } catch (err) {
+      console.log("ERROR");
+      return false;
+    }
+  }
 }

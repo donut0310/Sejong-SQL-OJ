@@ -303,6 +303,16 @@ insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_co
 insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,2,"33333333",2,"select * from user;",0.5,30,"2021-02-15 13:17:00","W/A","1주차 SELECT문",5);
 insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(2,1,"22222222",1,"select * from user;",0.5,10,"2021-02-15 13:17:00","W/A","2주차 DELETE문",4);
 insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(2,1,"22222222",2,"select * from user;",0.5,80,"2021-02-15 13:17:00","W/A","2주차 DELETE문",8);
+` // submit_answer table
+`
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"22222222",1,"select * from user;",0.5,50,"2021-02-15 13:17:00","W/A","1주차 SELECT문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"22222222",1,"select * from user22;",0.5,20,"2021-02-15 13:17:00","W/A","1주차 SELECT문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"22222222",2,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"22222222",2,"select * from user11afsd;",0.5,80,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,2,"33333333",1,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,2,"33333333",2,"select * from user;",0.5,30,"2021-02-15 13:17:00","W/A","1주차 SELECT문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(2,1,"22222222",1,"select * from user;",0.5,10,"2021-02-15 13:17:00","W/A","2주차 DELETE문");
+insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(2,1,"22222222",2,"select * from user;",0.5,80,"2021-02-15 13:17:00","W/A","2주차 DELETE문");
 
 ` // auto incremeat init
 `ALTER TABLE course AUTO_INCREMENT=1;
