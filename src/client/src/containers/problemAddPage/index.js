@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components'
 import Title from '../../components/title/Title'
 import Admin from './Admin'
 
@@ -9,11 +10,15 @@ const index = () => {
   }
 
   return (
-    <div>
+    <Container>
       <Title problemInfo={problemInfo} />
       <Admin />
-    </div>
+    </Container>
   )
 }
 
 export default index
+
+const Container = styled.div`
+  color: ${(props) => props.theme.GENERAL_FONT};
+`
