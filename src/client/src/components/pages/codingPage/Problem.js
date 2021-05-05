@@ -13,15 +13,15 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
       <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
         <ul id="title-tab" style={{ marginTop: '5px' }}>
           {attributes.map((attribute, i) => (
-            <li id="content" style={{ width: '20%' }}>
+            <li id="content" style={{ width: '20%' }} key={i}>
               {attribute}
             </li>
           ))}
         </ul>
         {table_info.map((row, i) => (
-          <ul id="content-list">
+          <ul id="content-list" key={i}>
             {attributes.map((attribute, j) => (
-              <li id="content" style={{ width: '20%' }}>
+              <li id="content" style={{ width: '20%' }} key={j}>
                 {row[attribute]}
               </li>
             ))}
@@ -34,10 +34,10 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
   return (
     <ProblemWrapper>
       {paragraph.map((text, i) => (
-        <>
+        <div key={i}>
           <Text>{text}</Text>
           <Table>{i + 1 < paragraphCnt && generateTable(table_info[i])}</Table>
-        </>
+        </div>
       ))}
     </ProblemWrapper>
   )

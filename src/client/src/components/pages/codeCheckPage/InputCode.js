@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import AceEditor from 'react-ace'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-
-import 'brace/mode/mysql'
+import 'ace-builds/src-noconflict/ace'
+import 'ace-builds/src-noconflict/mode-mysql'
+import 'ace-builds/src-noconflict/snippets/mysql'
+import 'ace-builds/src-noconflict/ext-beautify'
+import 'ace-builds/src-noconflict/ext-language_tools'
 // light mode
-import 'brace/theme/tomorrow'
+import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
-import 'brace/theme/tomorrow_night_bright'
+import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
 const InputCode = ({ theme, code }) => {
   const [fontSize, setFontSize] = useState(14)
@@ -28,7 +31,7 @@ const InputCode = ({ theme, code }) => {
         <select id="select-form" name="글자" onChange={handleFontSize}>
           <option value="14">글자 크기</option>
           <option value="12">12</option>
-          <option value="14" selected>
+          <option value="14" defaultValue>
             14
           </option>
           <option value="16">16</option>
