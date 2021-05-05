@@ -126,11 +126,14 @@ export class ProblemController {
     let dataBase= new Database()
     let queryCost=0
     let data = {};
+    data.result={};
     let userId=req.body.decoded.id;
     let pId=req.params.pId;
     let userQuery=req.body.user_query;
+
     const s="select week_title, week_id, class_id from problem where p_id=?"
     const [c] =await dataBase.queryExecute(s,[pId]);
+
     let weekTitle=c.week_title;
     let weekId=c.week_id;
     let classId=c.class_id;
@@ -153,8 +156,8 @@ export class ProblemController {
       errorkinds = score;
       score=0
       //에러 종류 추후에 나누기
-      result= "query_error"
-      data.errorkinds= errorkinds;
+      result= "error"
+      data.result.err_msg= errorkinds;
       data.message = result;
     }
     // console.log(queryCost)
@@ -196,7 +199,7 @@ export class ProblemController {
     from submit_answer where p_id=? and user_id= ?;"
     let params6= [pId,userId]
     let [b]= await dataBase.queryExecute(sql6,params6);
-    data.result=b
+    data.result.exec_result=b
     res.status(200).send(data);
   }
 }
