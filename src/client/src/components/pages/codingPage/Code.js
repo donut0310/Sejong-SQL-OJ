@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AceEditor from 'react-ace'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
+import axios from 'axios'
 
 import 'brace/mode/mysql'
 // light mode
@@ -21,9 +22,24 @@ const Code = ({ theme }) => {
   }
 
   // TODO
-  const handleExecCode = () => {}
+  const pId = '1'
+  const input = 'select *'
+
+  const handleExecCode = () => {
+    ;(async () => {
+      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      // data => result: {is_error, err_msg, exec_result}, message: "success"
+      console.log('handleExecCode data=> ', data)
+    })()
+  }
+
   const handleSubmitCode = () => {
     history.push('/status')
+    ;(async () => {
+      const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
+      // data => message: string
+      console.log('handleSubmitCode=> ', data)
+    })()
   }
 
   return (
