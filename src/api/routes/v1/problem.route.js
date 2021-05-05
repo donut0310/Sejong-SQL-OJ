@@ -12,6 +12,14 @@ export class ProblemRoute {
     const problemController = new ProblemController();
     const authMiddleware = new AuthMiddleware();
 
+    //문제 실행 
+    this.app.post("/api/v1/problem/testing/",[
+      problemController.getProblemCommit
+    ]);
+    //문제 실행 
+    this.app.post("/api/v1/problem/test/",[
+      problemController.getProcessProblem
+    ]);
     // 문제 목록 요청 & 현재 사용자의 제출 결과 상태
     this.app.get("/api/v1/problem/:classId/:weekId", [
       authMiddleware.verifyToken,
