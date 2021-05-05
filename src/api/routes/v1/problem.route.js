@@ -17,7 +17,7 @@ export class ProblemRoute {
       problemController.getProblemCommit
     ]);
     //문제 실행 
-    this.app.post("/api/v1/problem/test/",[
+    this.app.post("/api/v1/user/code/exec/:pId",[
       problemController.getProcessProblem
     ]);
     // 문제 목록 요청 & 현재 사용자의 제출 결과 상태
