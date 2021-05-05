@@ -13,7 +13,8 @@ export class ProblemRoute {
     const authMiddleware = new AuthMiddleware();
 
     //문제 제출
-    this.app.post("/api/v1/problem/testing/",[
+    this.app.post("/api/v1/user/code/submit/:pId",[
+      authMiddleware.verifyToken,
       problemController.getProblemCommit
     ]);
     //문제 실행 

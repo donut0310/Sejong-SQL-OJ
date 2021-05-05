@@ -99,7 +99,9 @@ export class ProblemController {
         connection.rollback();
         connection.release();
         let data = {};
-        data.result = a;
+        data.result={};
+        data.result.is_error=false
+        data.result.exec_result = a;
         data.message = "success";
         res.status(200).send(data);
 
@@ -107,30 +109,37 @@ export class ProblemController {
         console.log(err);
         connection.rollback();
         connection.release();
-        res.status(400).send(err);
+        data.result.is_error=true
+        data.result.err_msg =err;
+        res.status(400).send(data);
         return ;
       }
     } catch (err) {
       console.log(err);
-      res.status(400).send(err);
+      data.result.is_error=true
+      data.result.err_msg =err;
+      res.status(400).send(data);
       return ;
     }
   }
   async getProblemCommit(req, res) {
     let dataBase= new Database()
-    let scoreController = new ScoreController();
-    let score= await scoreController.scoring(req,res);
-    console.log("after",typeof(score))
     let queryCost=0
     let data = {};
-    let weekId=req.body.week_id;
-    let classId=req.body.class_id;
-    let userId=req.body.user_id;
-    let pId=req.body.p_id;
-    let weekTitle=req.body.week_title;
+    let userId=req.body.decoded.id;
+    let pId=req.params.pId;
     let userQuery=req.body.user_query;
+    const s="select week_title, week_id, class_id from problem where p_id=?"
+    const [c] =await dataBase.queryExecute(s,[pId]);
+    let weekTitle=c.week_title;
+    let weekId=c.week_id;
+    let classId=c.class_id;
     let result;
     let errorkinds;
+    console.log(classId);
+    let scoreController = new ScoreController();
+    let score= await scoreController.scoring(req,res);
+    
     if(typeof(score)=="number"){
       if (score===100){
         queryCost = await scoreController.check_cost(userQuery);
@@ -187,8 +196,7 @@ export class ProblemController {
     from submit_answer where p_id=? and user_id= ?;"
     let params6= [pId,userId]
     let [b]= await dataBase.queryExecute(sql6,params6);
-    data.submit_answer=b
-    console.log(b)
+    data.result=b
     res.status(200).send(data);
   }
 }
