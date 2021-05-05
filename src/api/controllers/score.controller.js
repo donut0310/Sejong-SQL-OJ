@@ -7,9 +7,9 @@ import { Database } from "../models/db.js";
 export class ScoreController {  
     async scoring(req,res) {
       let userQuery=req.body.user_query;
-      let sql = "select tc_cnt from problem where p_id=? and week_info=? and class_id=? ";
-      let sql2= "select tc_content from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
-      let sql3= "select tc_answer from testcase_problem where p_id=? and week_info=? order by tc_id asc;"
+      let sql = "select tc_cnt from problem where p_id=? ";
+      let sql2= "select tc_content from testcase_problem where p_id=?  order by tc_id asc;"
+      let sql3= "select tc_answer from testcase_problem where p_id=? order by tc_id asc;"
       //문제 생성시 실행하도록
       let testTable=`create table patient_info(
         patient_id varchar(255) not null,
@@ -21,15 +21,11 @@ export class ScoreController {
       );`
       let params = [
         req.body.p_id,
-        req.body.week_info,
-        req.body.class_id
       ];
       let params2 =[
-        req.body.p_id,req.body.week_info
+        req.body.p_id
       ]
       const database=new Database()
-      // await database.queryExecute("drop table patient_info",params);
-      // await database.queryExecute(testTable,params);
       let tcCnt= await database.queryExecute(sql,params);
       tcCnt=tcCnt[0].tc_cnt;
       let rowsResult= await database.queryExecute(sql2,params2);
@@ -92,30 +88,42 @@ export class ScoreController {
             } catch (err2){
               connection.rollback();
               connection.release();
-              res.status(400).send("UserQuery Error");
-              return ;
+              return err2
             }
           } catch (err) {
             console.log(err);
             connection.release();
-            res.status(400).send("Transaction Error");
-            return ;
+            return err;
           }
 
       } catch(err) {
         console.log(err);
-        res.status(400).send("DB Connect Error");
-        return ;
+        return err;
       }
     }
     score=score/tcCnt;
-    let a={"message":"success", "score": score};
-    res.status(200).send(a);
+    return score;
   }
   async check_cost(userQuery){
     const database=new Database()
     console.log("1")
-    userQuery="explain FORMAT=json " +userQuery
+    var count = 0;
+    // ; 갯수 구하기 
+    var searchChar = ';'; 
+    var pos = userQuery.indexOf(searchChar); 
+    while (pos !== -1) {
+      count++;
+      pos = userQuery.indexOf(searchChar, pos + 1); 
+    }
+
+    if(count==1 || count==0){
+      userQuery="explain FORMAT=json " +userQuery
+    }
+    else{
+      let temp= userQuery.split(';');
+      let userQueryLast=temp[temp.length-1]
+      userQuery="explain FORMAT=json "+userQueryLast
+    }
     console.log(userQuery)
     let query_cost=0
     try {
