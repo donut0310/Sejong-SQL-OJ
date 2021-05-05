@@ -104,12 +104,10 @@ export class ScoreController {
       }
     }
     score=score/tcCnt;
-    console.log("before",typeof(score))
     return score;
   }
   async check_cost(userQuery){
     const database=new Database()
-    console.log("1")
     var count = 0;
     // ; 갯수 구하기 
     var searchChar = ';'; 
@@ -118,7 +116,6 @@ export class ScoreController {
       count++;
       pos = userQuery.indexOf(searchChar, pos + 1); 
     }
-
     if(count==1 || count==0){
       userQuery="explain FORMAT=json " +userQuery
     }
@@ -127,7 +124,6 @@ export class ScoreController {
       let userQueryLast=temp[temp.length-1]
       userQuery="explain FORMAT=json "+userQueryLast
     }
-    console.log(userQuery)
     let query_cost=0
     try {
       const connection = await database.pool.getConnection(async (conn) => conn);
