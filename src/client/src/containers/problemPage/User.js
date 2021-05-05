@@ -11,7 +11,7 @@ const User = () => {
     ;(async () => {
       const classId = '1'
       const weekId = '1'
-      const { data } = await axios.get(`/api/v1/problem/${classId}/${weekId}`)
+      const { data } = await axios.get(`/api/v1/user/problem/${classId}/${weekId}`)
       // res => result(obj), message("success")
       console.log('get problem list info data=>', data)
       // console.log('data.result =>', data.result)

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 import Title from '../../components/title/Title'
 import SubTitle from '../../components/pages/codingPage/SubTitle'
@@ -41,23 +42,24 @@ const User = () => {
   // ! Code component에서 사용
 
   // WIP
-  // console.log(JSON.parse(JSON.stringify(dummyData_table)))
   useEffect(() => {
-    console.log(JSON.stringify(dummyData_table))
-    console.log(JSON.parse(JSON.stringify(dummyData_table)))
+    // console.log(JSON.stringify(dummyData_table))
+    // console.log(JSON.parse(JSON.stringify(dummyData_table)))
     console.log('useEffect 실행')
     ;(async () => {
       setIsLoading(true)
 
       // TODO
       const pId = '1'
-      // const { data } = await axios.get(`/api/v1/user/problem/${pId}`)
-      const data = {
-        content: dummyData_content,
-        table_info: dummyData_table,
-      }
+      const { data } = await axios.get(`/api/v1/user/problem/${pId}`)
+      console.log('codingpage get problem info =>', data)
 
-      // await setTable_info(data.table_info)
+      // const data = {
+      //   content: dummyData_content,
+      //   table_info: dummyData_table,
+      // }
+
+      await setTable_info(data.table_info)
       await setTable_info(dummyData_table)
       // const data = { content: dummyData_content, table_info: JSON.parse(dummyData_table) }
 

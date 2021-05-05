@@ -23,7 +23,7 @@ const Code = ({ theme }) => {
 
   // TODO
   const pId = '1'
-  const input = 'select *'
+  const input = 'select * from aaa'
 
   const handleExecCode = () => {
     ;(async () => {
