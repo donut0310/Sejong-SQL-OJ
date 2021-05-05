@@ -5,6 +5,7 @@ import { HashUtil } from "../utils/hash.util.js";
 export class UsersController {
   constructor() {}
 
+  // 회원 가입
   async createUser(req, res, next) {
     const database = new Database();
 
@@ -40,4 +41,21 @@ export class UsersController {
       return false;
     }
   }
+
+  // 로그인시 정보 유지
+  async getProfile(req, res) {
+    const userModel = new UsersModel();
+    // const user = await userModel.readByEmail(req.body.decoded.email);
+    // -password, -salt
+
+    res.status(200).send(user);
+  }
+
+  // 사용자가 입력한 정답 쿼리문 제출
+  async submitAnswerQuery(req, res) {
+    const database = new Database();
+    const pId = req.params.pId;
+    const userId = req.body.decoded.id;
+  }
+  // 사용자가 입력한 정답 쿼리문 실행
 }

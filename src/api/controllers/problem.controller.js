@@ -41,4 +41,35 @@ export class ProblemController {
       return false;
     }
   }
+
+  //선택된 문제 정보 요청
+  async getSelectedProblemInfo(req, res) {
+    const database = new Database();
+    const pId = req.params.pId;
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        // 문제 목록 요청
+        let sql = "select * from problem where p_id = ?";
+        let params = [pId];
+        const a = await connection.query(sql, params);
+        connection.release();
+
+        let data = {};
+        data.result = a[0];
+        data.message = "Success";
+
+        res.status(200).send(data);
+      } catch (err) {
+        console.log(err);
+        connection.release();
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
 }
