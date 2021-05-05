@@ -86,11 +86,13 @@ export class ScoreController {
               connection.rollback();
               connection.release();
             } catch (err2){
+              console.log(err2)
               connection.rollback();
               connection.release();
               return err2
             }
           } catch (err) {
+            console.log(err)
             console.log(err);
             connection.release();
             return err;
@@ -102,6 +104,7 @@ export class ScoreController {
       }
     }
     score=score/tcCnt;
+    console.log("before",typeof(score))
     return score;
   }
   async check_cost(userQuery){
@@ -129,11 +132,13 @@ export class ScoreController {
     try {
       const connection = await database.pool.getConnection(async (conn) => conn);
       try{
+        connection.beginTransaction();
         let [userJson] = await connection.query(userQuery);
         console.log(userJson)
         userJson=userJson[0].EXPLAIN
         userJson=JSON.parse(userJson)
         query_cost=userJson.query_block.cost_info.query_cost
+        connection.rollback();
         connection.release();
       } catch(err) {
         console.log(err);
