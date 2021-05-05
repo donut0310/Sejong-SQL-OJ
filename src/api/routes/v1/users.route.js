@@ -32,6 +32,11 @@ export class UsersRoute {
       authMiddleware.verifyToken,
       usersController.getSubmittedCode,
     ]);
+
+    // 문제 추가 요청
+    this.app.post("/api/v1/user/:classId/:weekId", [
+      usersController.postAddProblem,
+    ]);
     // // 아이디 중복검사
     // this.app.post("/api/v1/user/id", [
     //   usersMiddleware.validatePostIsAlreadyID,

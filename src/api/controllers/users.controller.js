@@ -89,4 +89,45 @@ export class UsersController {
       return false;
     }
   }
+
+  //문제 추가 요청
+  async postAddProblem(req, res) {
+    const database = new Database();
+    const classId = req.params.classId;
+    const weekId = req.params.weekId;
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql =
+          "insert into problem\
+          (class_id,week_id,title,content,table_info,start_time,end_time,is_public)\
+          values (?,?,?,?,?,?,?,?)";
+        let params = [
+          classId,
+          weekId,
+          req.body.title,
+          req.body.content,
+          req.body.table_info,
+          req.body.start_time,
+          req.body.end_time,
+          req.body.is_public,
+        ];
+        const a = await connection.query(sql, params);
+        connection.release();
+
+        let data = {};
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        console.log(err);
+        connection.release();
+      }
+    } catch (err) {
+      console.log("ERROR");
+      return false;
+    }
+  }
 }
