@@ -12,7 +12,7 @@ export class ProblemRoute {
     const problemController = new ProblemController();
     const authMiddleware = new AuthMiddleware();
 
-    //문제 실행 
+    //문제 제출
     this.app.post("/api/v1/problem/testing/",[
       problemController.getProblemCommit
     ]);
