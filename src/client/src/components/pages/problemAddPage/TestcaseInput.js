@@ -1,42 +1,52 @@
 import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import PublishIcon from '@material-ui/icons/Publish'
 import { Grid } from '@material-ui/core'
 
 const TestcaseInput = () => {
-  const [testcase, setTestcase] = useState([{ inputFile: '', outputFile: '' }])
+  const [tcCnt, setTcCnt] = useState(1)
+  const [testcases, setTestcases] = useState([])
 
   const handleAddTC = () => {
-    setTestcase([...testcase, { inputFile: '', outputFile: '' }])
+    setTcCnt(tcCnt + 1)
+    setTestcases([...testcases, { count: `${tcCnt}`, inputFile: '', outputFile: '' }])
   }
+
+  const handleDeleteTC = (e) => {
+    console.log(e.target.id)
+  }
+
   // TODO Testcase 업로드한 파일명 표시
-  // TODO Testcase 업로드한 거 삭제 가능
   return (
     <div>
       <TitleContainer>
         테스트케이스 추가
         <StyledAddBtn onClick={handleAddTC} />
       </TitleContainer>
-      <GridContainer>
-        {testcase.map((i) => (
-          <div id="testcase" key={i}>
-            <Grid container spacing={3}>
+      <FileContainer>
+        {testcases.map((testcase, i) => (
+          <div id="testcase" key={i} style={{ marginBottom: '15px' }}>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+              <StyledDeleteBtn id={testcase.count} onClick={handleDeleteTC} />
+            </div>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <p style={{ fontWeight: '600' }}>Input</p>
+                <p style={{ fontWeight: '600' }}>Input {testcase.count}</p>
                 <StyledUploadContainer>
                   <label htmlFor="input-file">
-                    <StyledBoxIcon />
+                    <StyledUploadIcon />
                     <p>업로드</p>
                   </label>
                   <input type="file" id="input-file" accept=".sql" />
                 </StyledUploadContainer>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <p style={{ fontWeight: '600' }}>Output</p>
+                <p style={{ fontWeight: '600' }}>Output {testcase.count}</p>
                 <StyledUploadContainer>
                   <label htmlFor="output-file">
-                    <StyledBoxIcon />
+                    <StyledUploadIcon />
                     <p>업로드</p>
                   </label>
                   <input type="file" id="output-file" accept=".json" />
@@ -45,7 +55,7 @@ const TestcaseInput = () => {
             </Grid>
           </div>
         ))}
-      </GridContainer>
+      </FileContainer>
     </div>
   )
 }
@@ -69,7 +79,14 @@ const StyledAddBtn = styled(AddCircleOutlineRoundedIcon)`
   }
 `
 
-const GridContainer = styled.div`
+const StyledDeleteBtn = styled(HighlightOffIcon)`
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.SUB_FONT};
+  }
+`
+
+const FileContainer = styled.div`
   border: none;
   border-radius: 5px;
   width: 100%;
@@ -106,18 +123,18 @@ const StyledUploadContainer = styled.div`
       margin-top: 3px;
     }
   }
-  input[type='file'] {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-  }
+  // input[type='file'] {
+  //   position: absolute;
+  //   width: 1px;
+  //   height: 1px;
+  //   padding: 0;
+  //   margin: -1px;
+  //   overflow: hidden;
+  //   clip: rect(0, 0, 0, 0);
+  //   border: 0;
+  // }
 `
-const StyledBoxIcon = styled(PublishIcon)`
+const StyledUploadIcon = styled(PublishIcon)`
   && {
     margin: 5px;
     font-size: 1.2em;
