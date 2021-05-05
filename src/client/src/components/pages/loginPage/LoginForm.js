@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import { useForm } from 'react-hook-form'
 import { Link } from '@material-ui/core'
@@ -9,8 +10,14 @@ const LoginForm = () => {
 
   const history = useHistory()
 
+  // TODO
   const onSubmit = (user) => {
     console.log(user)
+    const id = '1234'
+    const password = '1234'
+    const { data } = axios.post(`/api/v1/login`, {})
+    console.log('login submit data=>', data)
+
     history.push('/')
   }
 
