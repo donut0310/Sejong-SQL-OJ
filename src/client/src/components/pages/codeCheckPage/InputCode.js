@@ -28,7 +28,7 @@ const InputCode = ({ theme, code }) => {
         <select id="select-form" name="글자" onChange={handleFontSize}>
           <option value="14">글자 크기</option>
           <option value="12">12</option>
-          <option value="14" selected>
+          <option value="14" defaultValue>
             14
           </option>
           <option value="16">16</option>
