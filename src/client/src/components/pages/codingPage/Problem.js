@@ -1,15 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 
-const Problem = () => {
-  const dummyData_contents = '아래 테이블 구조는 동물 보호소에 들어온 동물의 정보를 담은 테이블입니다. 동물 보호소에 가장 먼저 들어온 동물의 이름 3개를 조회하는 SQL 문을 작성해주세요.'
-  const dummyData_table = [
-    { id: '1', name: 'Gob', value: '2' },
-    { id: '2', name: 'Buster', value: '5' },
-    { id: '3', name: 'George Michael', value: '4' },
-  ]
+const Problem = ({ paragraph, paragraphCnt, table_info }) => {
+  console.log('Problem) table_info=>', table_info)
 
-  const GenerateTable = (table_info) => {
+  const generateTable = (table_info) => {
     let attributes = []
     for (let i in table_info[0]) attributes.push(i)
 
@@ -17,15 +13,15 @@ const Problem = () => {
       <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
         <ul id="title-tab" style={{ marginTop: '5px' }}>
           {attributes.map((attribute, i) => (
-            <li id="content" key={i} style={{ width: '20%' }}>
+            <li id="content" style={{ width: '20%' }}>
               {attribute}
             </li>
           ))}
         </ul>
-        {dummyData_table.map((row, i) => (
-          <ul id="content-list" key={i}>
+        {table_info.map((row, i) => (
+          <ul id="content-list">
             {attributes.map((attribute, j) => (
-              <li id="content" key={j} style={{ width: '20%' }}>
+              <li id="content" style={{ width: '20%' }}>
                 {row[attribute]}
               </li>
             ))}
@@ -37,8 +33,12 @@ const Problem = () => {
 
   return (
     <ProblemWrapper>
-      <div style={{ lineHeight: '1.5em' }}>{dummyData_contents}</div>
-      {GenerateTable(dummyData_table)}
+      {paragraph.map((text, i) => (
+        <>
+          <Text>{text}</Text>
+          <Table>{i + 1 < paragraphCnt && generateTable(table_info[i])}</Table>
+        </>
+      ))}
     </ProblemWrapper>
   )
 }
@@ -52,4 +52,13 @@ const ProblemWrapper = styled.div`
   box-sizing: border-box;
   background: ${(props) => props.theme.EDITOR_BACKGROUND};
   color: ${(props) => props.theme.GENERAL_FONT};
+`
+
+const Text = styled.div`
+  line-height: '1.5em';
+  margin-bottom: 20px;
+`
+
+const Table = styled.div`
+  margin-bottom: 20px;
 `
