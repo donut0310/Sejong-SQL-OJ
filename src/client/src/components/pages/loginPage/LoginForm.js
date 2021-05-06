@@ -13,9 +13,12 @@ const LoginForm = () => {
   // TODO
   const onSubmit = (user) => {
     console.log(user)
-    const id = '1234'
-    const password = '1234'
-    const { data } = axios.post(`/api/v1/login`, {})
+
+    // dummy data
+    const id = '22222222'
+    const password = '123123'
+
+    const { data } = axios.post(`/api/v1/auth/signin`, { user_id: id, user_pw: password })
     console.log('login submit data=>', data)
 
     history.push('/')

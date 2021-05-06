@@ -42,9 +42,15 @@ export class AuthController {
             httpOnly: true,
             maxAge: 1000 * parseInt(jwtUtil.refreshTokenLife),
           });
-          res.status(200).send((user[0][0].user, "로그인에 성공했습니다."));
+          let data = {};
+          data.result = null;
+          data.message = "success";
+          res.status(200).send(data);
         } catch (err) {
-          res.status(500).send(err);
+          let data = {};
+          data.result = null;
+          data.message = "아이디 혹은 비밀번호를 확인해주세요";
+          res.status(401).send(data);
         }
       } catch (err) {
         console.log(err);
