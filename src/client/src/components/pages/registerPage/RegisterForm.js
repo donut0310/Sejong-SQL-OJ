@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import { TextField, Button, Container } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
@@ -12,7 +13,12 @@ const RegisterForm = () => {
   password.current = watch('password')
 
   const onSubmit = async (data) => {
-    console.log('data', data)
+    console.log('data.id', data.id)
+    console.log('data.name', data.name)
+    console.log('data.password', data.password)
+
+    const { data } = await axios.post(`/api/v1/user/signup`, { user_id: data.id, user_name: data.name, user_pw: data.password })
+    console.log('signup data=>', data)
     history.push('/login')
   }
 
@@ -26,6 +32,10 @@ const RegisterForm = () => {
           <RegisterTextField name="id" label="아이디" inputRef={register({ required: true, maxLength: 10 })} placeholder="Enter your ID" variant="outlined" size="small" />
           {errors.id && errors.id.type === 'required' && <ErrorMessage> This ID field is required</ErrorMessage>}
           {errors.id && errors.id.type === 'maxLength' && <ErrorMessage> Your input exceed maximum length</ErrorMessage>}
+
+          <RegisterTextField name="name" label="이름" inputRef={register({ required: true, maxLength: 10 })} placeholder="Enter your name" variant="outlined" size="small" />
+          {errors.name && errors.name.type === 'required' && <ErrorMessage> This name field is required</ErrorMessage>}
+          {errors.name && errors.name.type === 'maxLength' && <ErrorMessage> Your input exceed maximum length</ErrorMessage>}
 
           <RegisterTextField name="password" inputRef={register({ required: true, minLength: 4 })} type="password" label="비밀번호" placeholder="Enter your password" variant="outlined" size="small" />
           {errors.password && errors.password.type === 'required' && <ErrorMessage> This password field is required</ErrorMessage>}
