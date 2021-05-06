@@ -21,11 +21,6 @@ export class UsersRoute {
       usersController.getProfile,
     ]);
 
-    //  사용자가 입력한 정답 쿼리문 제출
-    this.app.post("/api/v1/user/code/submit/:pId", [
-      usersController.submitAnswerQuery,
-      usersController.createUser,
-    ]);
 
     // 제출한 코드 요청
     this.app.get("/api/v1/user/code/:submitId", [
