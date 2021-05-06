@@ -51,7 +51,7 @@ const User = () => {
 
       // TODO
       const pId = '1'
-      const data = await axios.get(`/api/v1/user/problem/${pId}`)
+      const data = await axios.get(`/api/v1/problem/${pId}`)
       console.log('codingpage get problem info =>', data)
 
       // const data = {
