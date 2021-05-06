@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-const AdminTable = () => {
+const AdminTable = ({ problemList }) => {
   const history = useHistory()
 
   const handleProblemName = () => {
@@ -12,11 +12,13 @@ const AdminTable = () => {
     history.push('status')
   }
 
-  const problems = [
-    { num: '1', name: 'Hello Sejong!', start: 'Infinite', end: 'Infinite' },
-    { num: '2', name: '절댓값 출력', start: 'Infinite', end: 'Infinite' },
-    { num: '3', name: '숫자 출력', start: 'Infinite', end: 'Infinite' },
-  ]
+  const handleEdit = () => {
+    history.push('admin/addproblem')
+  }
+
+  const handleDelete = () => {
+    console.log('delete problem')
+  }
 
   return (
     <Container>
@@ -44,31 +46,34 @@ const AdminTable = () => {
             삭제
           </li>
         </ul>
-        {problems.map((problem, i) => (
+        {problemList[0].map((problem, i) => (
           <ul id="content-list" key={i}>
             <li id="content" style={{ width: '10%' }}>
-              {problem.num}
+              {problem.p_id}
             </li>
             <li id="content" style={{ width: '30%' }}>
               <button id="problem" onClick={handleProblemName}>
-                {problem.name}
+                {problem.title}
               </button>
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {problem.start}
+              {problem.start_time}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {problem.end}
+              {problem.end_time}
             </li>
             <li id="content" style={{ width: '10%' }}>
               <StyledButton onClick={handleStatus}>Status</StyledButton>
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {/* button 클릭 시 문제 관리(정보 및 테스트케이스 관리) 창으로 */}
-              <StyledButton style={{ color: 'red' }}>수정</StyledButton>
+              <StyledButton style={{ color: 'red' }} onClick={handleEdit}>
+                수정
+              </StyledButton>
             </li>
             <li id="content" style={{ width: '10%' }}>
-              <StyledButton style={{ color: 'red' }}>삭제</StyledButton>
+              <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
+                삭제
+              </StyledButton>
             </li>
           </ul>
         ))}

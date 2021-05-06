@@ -4,6 +4,39 @@ import axios from 'axios'
 import UserTable from '../../components/pages/problemPage/UserTable'
 
 const User = () => {
+  const dummyDataList = [
+    [
+      {
+        p_id: '1',
+        week_id: '1',
+        class_id: '1',
+        title: '1번 문제',
+        content: '1+1은?',
+        start_time: '2021-01-14T21:17:00.000Z',
+        end_time: '2021-01-15T21:17:00.000Z',
+        tc_cnt: '3',
+        tc_id: '1',
+        table_info: '답은 3개',
+        table_create: 'create table',
+        week_title: '1주차 SELECT문',
+      },
+      {
+        p_id: '2',
+        week_id: '1',
+        class_id: '1',
+        title: '2번 문제',
+        content: '2+2은?',
+        start_time: '2021-01-14T21:17:00.000Z',
+        end_time: '2021-01-15T21:17:00.000Z',
+        tc_cnt: '3',
+        tc_id: '1',
+        table_info: '답은 3개',
+        table_create: 'create table',
+        week_title: '1주차 SELECT문',
+      },
+    ],
+  ]
+
   const [problemList, setProblemList] = useState([])
 
   // TODO
@@ -21,7 +54,7 @@ const User = () => {
 
   return (
     <div>
-      <UserTable problemList={problemList} />
+      <UserTable problemList={dummyDataList} />
     </div>
   )
 }
