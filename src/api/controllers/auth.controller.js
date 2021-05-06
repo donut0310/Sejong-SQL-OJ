@@ -44,7 +44,7 @@ export class AuthController {
           });
           res.status(200).send((user[0][0].user, "로그인에 성공했습니다."));
         } catch (err) {
-          res.status(500).send("500 ERROR");
+          res.status(500).send(err);
         }
       } catch (err) {
         console.log(err);
@@ -52,7 +52,7 @@ export class AuthController {
         return false;
       }
     } catch (err) {
-      console.log("ERROR");
+      console.log(err);
       return false;
     }
   }
