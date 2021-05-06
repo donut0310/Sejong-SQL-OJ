@@ -31,14 +31,22 @@ export class UsersController {
       try {
         await connection.query(sql, params);
         connection.release();
-        res.status(200).send("회원가입에 성공하셨습니다.");
+        let data = {};
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        let data = {};
+        data.result = null;
+        data.message = "fail";
+        res.status(400).send(data);
       }
     } catch (err) {
-      console.log("ERROR");
-      res.status(400).send(err);
+      let data = {};
+      data.result = null;
+      data.message = "fail";
+      res.status(400).send(data);
       return false;
     }
   }
@@ -65,7 +73,7 @@ export class UsersController {
     const database = new Database();
     const submitId = req.params.submitId;
     const userId = req.body.decoded.id;
-
+    let data = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -77,16 +85,21 @@ export class UsersController {
         const a = await connection.query(sql, params);
         connection.release();
 
-        let data = {};
         data.result = a[0];
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
@@ -96,7 +109,7 @@ export class UsersController {
     const database = new Database();
     const classId = req.params.classId;
     const weekId = req.params.weekId;
-
+    let data = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -118,16 +131,21 @@ export class UsersController {
         ];
         const a = await connection.query(sql, params);
         connection.release();
-
-        let data = {};
+        data.result = null;
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
