@@ -130,7 +130,7 @@ export class ScoreController {
     }
     let query_cost=0
     try {
-      const connection = database.pool.getConnection(async (conn) => conn);
+      const connection = await database.pool.getConnection(async (conn) => conn);
       try{
         connection.beginTransaction();
         let [userJson] = await connection.query(userQuery);
