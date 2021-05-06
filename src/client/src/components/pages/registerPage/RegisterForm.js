@@ -19,7 +19,7 @@ const RegisterForm = () => {
 
     const res = await axios.post(`/api/v1/user/signup`, { user_id: data.id, user_name: data.name, user_pw: data.password })
     console.log('signup data=>', res.data)
-    history.push('/login')
+    // history.push('/login')
   }
 
   return (
@@ -56,7 +56,7 @@ const RegisterForm = () => {
           {errors.password_confirm && errors.password_confirm.type === 'required' && <ErrorMessage> This password confirm field is required</ErrorMessage>}
           {errors.password_confirm && errors.password_confirm.type === 'validate' && <ErrorMessage>The passwords do not match</ErrorMessage>}
 
-          <SubmitBtn type="submit" onClick={onSubmit}>
+          <SubmitBtn type="submit" onClick={handleSubmit(onSubmit)}>
             회원가입
           </SubmitBtn>
         </RegisterFormWrapper>
@@ -77,7 +77,7 @@ const PageWrapper = styled.div`
   align-items: center;
 `
 
-const StyledForm = styled.form`
+const StyledForm = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
