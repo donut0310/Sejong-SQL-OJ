@@ -46,9 +46,8 @@ const User = () => {
       const weekId = '1'
       const { data } = await axios.get(`/api/v1/problem/${classId}/${weekId}`)
       // res => result(obj), message("success")
-      console.log('get problem list info data=>', data)
-      // console.log('data.result =>', data.result)
-      // setProblemList(data.result)
+      console.log('get problem list info data.result=>', data.result)
+      setProblemList(data.result)
     })()
   }, [])
 
