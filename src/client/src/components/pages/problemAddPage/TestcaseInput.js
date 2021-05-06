@@ -7,15 +7,22 @@ import { Grid } from '@material-ui/core'
 
 const TestcaseInput = () => {
   const [tcCnt, setTcCnt] = useState(1)
-  const [testcases, setTestcases] = useState([])
+  const [testcases, setTestcases] = useState([
+    {
+      count: `${tcCnt}`,
+      inputFile: '',
+      outputFile: '',
+    },
+  ])
 
   const handleAddTC = () => {
+    setTestcases([...testcases, { count: `${tcCnt + 1}`, inputFile: '', outputFile: '' }])
     setTcCnt(tcCnt + 1)
-    setTestcases([...testcases, { count: `${tcCnt}`, inputFile: '', outputFile: '' }])
+    console.log('Add Testcase')
   }
 
   const handleDeleteTC = (e) => {
-    console.log(e.target.id)
+    console.log('Delete testcase: ' + e.target.id)
   }
 
   // TODO Testcase 업로드한 파일명 표시
@@ -28,7 +35,7 @@ const TestcaseInput = () => {
       <FileContainer>
         {testcases.map((testcase, i) => (
           <div id="testcase" key={i} style={{ marginBottom: '15px' }}>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <StyledDeleteBtn id={testcase.count} onClick={handleDeleteTC} />
             </div>
             <Grid container spacing={2}>
@@ -63,7 +70,7 @@ const TestcaseInput = () => {
 export default TestcaseInput
 
 const TitleContainer = styled.div`
-  margin-top: 10px;
+  margin: 25px 0 10px 0;
   font-size: 1.2em;
   font-weight: 600;
   display: flex;
@@ -91,7 +98,6 @@ const FileContainer = styled.div`
   border-radius: 5px;
   width: 100%;
   background: ${(props) => props.theme.BOARD_LIST_HOVER};
-  margin: 10px 0;
   padding: 15px;
   box-sizing: border-box;
 `
