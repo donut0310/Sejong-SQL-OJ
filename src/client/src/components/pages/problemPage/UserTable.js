@@ -44,7 +44,7 @@ const UserTable = ({ problemList }) => {
           </li>
         </ul>
 
-        {problemList[0].map((problem, i) => (
+        {problemList.map((problem, i) => (
           <ul id="content-list" key={i}>
             <li id="content" style={{ width: '10%' }}>
               {problem.p_id}
