@@ -6,7 +6,7 @@ import { Link } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm()
+  const { register, errors, handleSubmit } = useForm()
 
   const history = useHistory()
 
@@ -30,8 +30,10 @@ const LoginForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <StyledInput name="id" placeholder="아이디" {...register('id', { required: true })} autoFocus />
-      <StyledInput name="password" placeholder="비밀번호" type="password" {...register('password', { required: true })} />
+      <StyledInput name="id" placeholder="아이디" ref={register({ required: true })} autoFocus />
+      {errors.id && <p>아이디를 입력하세요</p>}
+      <StyledInput name="password" placeholder="비밀번호" type="password" ref={register({ required: true })} />
+      {errors.password && <p>비밀번호를 입력하세요</p>}
       <StyledButton type="submit" onClick={onSubmit}>
         로그인
       </StyledButton>
