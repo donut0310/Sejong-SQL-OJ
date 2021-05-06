@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-const UserTable = () => {
+const UserTable = ({ problemList }) => {
   const history = useHistory()
 
   const handleProblemName = () => {
@@ -12,11 +12,10 @@ const UserTable = () => {
     history.push('status')
   }
 
-  const problems = [
-    { num: '1', name: 'Hello Sejong!', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
-    { num: '2', name: '절댓값 출력', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
-    { num: '3', name: '숫자 출력', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
-  ]
+  const parseDateTime = (data) => {
+    const dateTime = new Date(data)
+    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+  }
 
   return (
     <Container>
@@ -44,27 +43,30 @@ const UserTable = () => {
             Status
           </li>
         </ul>
-        {problems.map((problem, i) => (
+
+        {problemList.map((problem, i) => (
           <ul id="content-list" key={i}>
             <li id="content" style={{ width: '10%' }}>
-              {problem.num}
+              {problem.p_id}
             </li>
             <li id="content" style={{ width: '20%' }}>
               <button id="problem" onClick={handleProblemName}>
-                {problem.name}
+                {problem.title}
               </button>
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {problem.submit}
+              {/* 사용자 제출 횟수 가져와야함 */}
+              {problem.submit_cnt}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {problem.score}/100
+              {/* 사용자 점수 가져와야함 */}
+              {problem.score} / 100
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {problem.start}
+              {parseDateTime(problem.start_time)}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {problem.end}
+              {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
               <StyledButton onClick={handleStatus}>Status</StyledButton>

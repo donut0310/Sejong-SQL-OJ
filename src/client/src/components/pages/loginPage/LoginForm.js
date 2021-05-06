@@ -6,22 +6,19 @@ import { Link } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
-  const { register, handleSubmit } = useForm()
+  const { register, errors, handleSubmit } = useForm()
 
   const history = useHistory()
 
   // TODO
-  const onSubmit = (user) => {
-    console.log(user)
+  const onSubmit = async (data) => {
+    console.log('data.id', data.id)
+    console.log('data.password', data.password)
 
-    // dummy data
-    const id = '22222222'
-    const password = '123123'
+    const res = await axios.post(`/api/v1/auth/signin`, { user_id: data.id, user_pw: data.password })
+    console.log('login submit data=>', res.data)
 
-    const { data } = axios.post(`/api/v1/auth/signin`, { user_id: id, user_pw: password })
-    console.log('login submit data=>', data)
-
-    history.push('/')
+    // history.push('/')
   }
 
   const handleRegisterBtn = () => {
@@ -30,8 +27,10 @@ const LoginForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <StyledInput name="id" placeholder="아이디" {...register('id', { required: true })} autoFocus />
-      <StyledInput name="password" placeholder="비밀번호" type="password" {...register('password', { required: true })} />
+      <StyledInput name="id" placeholder="아이디" ref={register({ required: true })} autoFocus />
+      {errors.id && <p>아이디를 입력하세요</p>}
+      <StyledInput name="password" placeholder="비밀번호" type="password" ref={register({ required: true })} />
+      {errors.password && <p>비밀번호를 입력하세요</p>}
       <StyledButton type="submit" onClick={onSubmit}>
         로그인
       </StyledButton>

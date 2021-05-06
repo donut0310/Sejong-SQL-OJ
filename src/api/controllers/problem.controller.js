@@ -23,14 +23,25 @@ export class ProblemController {
 
         // 현재 사용자 제출 결과에 대한 상태 요청
         let sql2 =
-          "select score,result,submit_cnt from top_submit_answer\
+          "select p_id,score,result,submit_cnt from top_submit_answer\
            where user_id = ? and week_id = ? order by p_id";
         let params2 = [userId, weekId];
         const b = await connection.query(sql2, params2);
         connection.release();
 
-        const arr = a[0].concat(b[0]);
-        data.result = arr;
+        console.log(a[0].length);
+        for (let i in a[0]) {
+          if (b[0][i] != null) {
+            a[0][i].score = b[0][i].score;
+            a[0][i].result = b[0][i].result;
+            a[0][i].submit_cnt = b[0][i].submit_cnt;
+          } else {
+            a[0][i].score = 0;
+            a[0][i].result = "";
+            a[0][i].submit_cnt = 0;
+          }
+        }
+        data.result = a[0];
         data.message = "success";
 
         res.status(200).send(data);
@@ -89,10 +100,10 @@ export class ProblemController {
     const database = new Database();
 
     const pId = req.params.pId;
-    const userQuery=req.body.user_query;
+    const userQuery = req.body.user_query;
     let data = {};
-    data.result={};
-    
+    data.result = {};
+
     const sql = "select tc_id from problem where p_id = ?";
     const params = [pId];
     let [tcId] = await database.queryExecute(sql, params);
@@ -113,7 +124,7 @@ export class ProblemController {
 
         connection.rollback();
         connection.release();
-        data.result.is_error=false
+        data.result.is_error = false;
 
         data.result.exec_result = a;
         data.message = "success";
