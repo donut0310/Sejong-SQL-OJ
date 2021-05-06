@@ -77,7 +77,7 @@ export class ProblemController {
   //사용자가 문제 실행시 테스트케이스 결과 보여주고 롤백
   async getProcessProblem(req, res) {
     const database = new Database();
-    const pId = req.params.p_id;
+    const pId = req.params.pId;
     const userQuery=req.body.user_query;
     const sql = "select tc_id from problem where p_id = ?";
     const params=[pId];
