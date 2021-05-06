@@ -218,6 +218,7 @@ $RECYCLE.BIN/
 
 # dbconfig
 src/api/models/dbconfig.js
+src/api/models/testTable.js
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,linux,node,react
 
 

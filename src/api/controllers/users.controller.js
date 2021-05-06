@@ -33,11 +33,12 @@ export class UsersController {
         connection.release();
         res.status(200).send("회원가입에 성공하셨습니다.");
       } catch (err) {
-        console.log("errorerror");
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
       console.log("ERROR");
+      res.status(400).send(err);
       return false;
     }
   }
@@ -81,11 +82,11 @@ export class UsersController {
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
-        console.log("errorerror");
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
-      console.log("ERROR");
+      res.status(400).send(err);
       return false;
     }
   }
@@ -122,11 +123,11 @@ export class UsersController {
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
-        console.log(err);
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
-      console.log("ERROR");
+      res.status(400).send(err);
       return false;
     }
   }
