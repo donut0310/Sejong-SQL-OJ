@@ -7,12 +7,12 @@ import { Switch } from '@material-ui/core'
 
 import { toggleTheme, logOut } from '../../redux'
 
-const NavLink = ({ toggleTheme, user, logOut }) => {
+const NavLink = ({ toggleTheme, user }) => {
   const history = useHistory()
 
   // TODO
   const handleLogOutBtn = async () => {
-    const result = await logOut()
+    // const result = await logOut()
     history.push('/login')
   }
 
@@ -35,7 +35,7 @@ const mapStateToProps = ({ user }) => {
 
 const mapDispatchToProps = {
   toggleTheme,
-  logOut,
+  // logOut,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavLink)
