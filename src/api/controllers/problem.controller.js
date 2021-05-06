@@ -92,6 +92,7 @@ export class ProblemController {
     const userQuery=req.body.user_query;
     let data = {};
     data.result={};
+    
     const sql = "select tc_id from problem where p_id = ?";
     const params = [pId];
     let [tcId] = await database.queryExecute(sql, params);
