@@ -1,11 +1,14 @@
 import React from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { Link } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
-const LoginForm = () => {
+import { logIn } from '../../../redux'
+
+const LoginForm = ({ logIn }) => {
   const { register, errors, handleSubmit } = useForm()
 
   const history = useHistory()
@@ -15,10 +18,11 @@ const LoginForm = () => {
     console.log('data.id', data.id)
     console.log('data.password', data.password)
 
-    const res = await axios.post(`/api/v1/auth/signin`, { user_id: data.id, user_pw: data.password })
-    console.log('login submit data=>', res.data)
+    const result = await logIn(data.id, data.password)
 
-    // history.push('/')
+    if (result.isCompleted) {
+      history.push('/')
+    }
   }
 
   const handleRegisterBtn = () => {
@@ -39,7 +43,15 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+const mapStateToProps = ({}) => {
+  return {}
+}
+
+const mapDispatchToProps = {
+  logIn,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
 
 const StyledForm = styled.form`
   width: 50%;

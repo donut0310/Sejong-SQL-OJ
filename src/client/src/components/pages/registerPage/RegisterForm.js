@@ -18,8 +18,10 @@ const RegisterForm = () => {
     console.log('data.password', data.password)
 
     const res = await axios.post(`/api/v1/user/signup`, { user_id: data.id, user_name: data.name, user_pw: data.password })
-    console.log('signup data=>', res.data)
-    // history.push('/login')
+    console.log(res)
+    if (res.status === 200) {
+      history.push('/login')
+    }
   }
 
   return (
