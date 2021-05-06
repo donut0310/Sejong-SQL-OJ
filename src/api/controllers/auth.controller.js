@@ -9,6 +9,8 @@ export class AuthController {
 
     const jwtUtil = new JWTUtil();
     const database = new Database();
+    let data = {};
+
     let sql = "select * from user where user_id = ?";
     let params = req.body.user_id;
     try {
@@ -42,23 +44,27 @@ export class AuthController {
             httpOnly: true,
             maxAge: 1000 * parseInt(jwtUtil.refreshTokenLife),
           });
-          let data = {};
           data.result = null;
           data.message = "success";
           res.status(200).send(data);
         } catch (err) {
-          let data = {};
           data.result = null;
           data.message = "아이디 혹은 비밀번호를 확인해주세요";
           res.status(401).send(data);
         }
       } catch (err) {
-        console.log(err);
         connection.release();
+        data.result = null;
+        data.messgae = "fail";
+        data.error = err;
+        res.status(401).send(data);
         return false;
       }
     } catch (err) {
-      console.log(err);
+      data.result = null;
+      data.messgae = "fail";
+      data.error = err;
+      res.status(401).send(data);
       return false;
     }
   }
