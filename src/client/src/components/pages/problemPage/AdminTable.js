@@ -20,8 +20,10 @@ const AdminTable = ({ problemList }) => {
     console.log('delete problem')
   }
 
+  console.log(problemList)
+
   const parseDateTime = (data) => {
-    const dateTime = new Date(`${data}`)
+    const dateTime = new Date(data)
     return dateTime.toISOString().substr(0, 19).replace('T', ' ')
   }
 

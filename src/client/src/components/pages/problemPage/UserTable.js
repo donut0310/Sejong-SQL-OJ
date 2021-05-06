@@ -13,7 +13,7 @@ const UserTable = ({ problemList }) => {
   }
 
   const parseDateTime = (data) => {
-    const dateTime = new Date(`${data}`)
+    const dateTime = new Date(data)
     return dateTime.toISOString().substr(0, 19).replace('T', ' ')
   }
 
@@ -56,18 +56,16 @@ const UserTable = ({ problemList }) => {
             </li>
             <li id="content" style={{ width: '10%' }}>
               {/* 사용자 제출 횟수 가져와야함 */}
-              제출횟수
+              {problem.submit_cnt}
             </li>
             <li id="content" style={{ width: '15%' }}>
               {/* 사용자 점수 가져와야함 */}
-              점수
+              {problem.score} / 100
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {/* Format 바꿔야됨 */}
               {parseDateTime(problem.start_time)}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {/* Format 바꿔야됨 */}
               {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
