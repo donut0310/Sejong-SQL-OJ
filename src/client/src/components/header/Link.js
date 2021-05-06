@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Switch } from '@material-ui/core'
 
-import { toggleTheme, logOut } from '../../redux'
+import { toggleTheme } from '../../redux'
 
 const NavLink = ({ toggleTheme, user }) => {
   const history = useHistory()
