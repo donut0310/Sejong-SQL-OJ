@@ -12,6 +12,11 @@ const UserTable = ({ problemList }) => {
     history.push('status')
   }
 
+  const parseDateTime = (data) => {
+    const dateTime = new Date(`${data}`)
+    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+  }
+
   return (
     <Container>
       <ul id="table-list">
@@ -59,11 +64,11 @@ const UserTable = ({ problemList }) => {
             </li>
             <li id="content" style={{ width: '15%' }}>
               {/* Format 바꿔야됨 */}
-              {problem.start_time}
+              {parseDateTime(problem.start_time)}
             </li>
             <li id="content" style={{ width: '15%' }}>
               {/* Format 바꿔야됨 */}
-              {problem.end_time}
+              {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
               <StyledButton onClick={handleStatus}>Status</StyledButton>
