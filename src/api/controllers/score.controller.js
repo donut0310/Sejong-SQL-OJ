@@ -20,22 +20,23 @@ export class ScoreController {
           patient_condition varchar(255) DEFAULT NULL,
           name varchar(255) DEFAULT NULL,
         PRIMARY KEY (patient_id)
-      );`;
-    let params = [req.params.pId];
-    let params2 = [req.params.pId];
-    const database = new Database();
-    let tcCnt = await database.queryExecute(sql, params);
-    console.log(sql, params);
-    tcCnt = tcCnt[0].tc_cnt;
-    let rowsResult = await database.queryExecute(sql2, params2);
-    let tcAnswer = await database.queryExecute(sql3, params2);
-    let score = 0;
-    for (var i = 0; i < tcCnt; i++) {
-      let sql4 = rowsResult[i].tc_content;
-      try {
-        const connection = await database.pool.getConnection(
-          async (conn) => conn
-        );
+      );`
+      let params = [
+        req.params.pId,
+      ];
+      let params2 =[
+        req.params.pId
+      ]
+      const database=new Database()
+      let tcCnt= await database.queryExecute(sql,params);
+      console.log("tc",tcCnt)
+      tcCnt=tcCnt[0].tc_cnt;
+      let rowsResult= await database.queryExecute(sql2,params2);
+      let tcAnswer=await database.queryExecute(sql3,params2);
+      let score=0
+      for(var i=0;i<tcCnt;i++){
+        let sql4=rowsResult[i].tc_content
+
         try {
           connection.beginTransaction();
           await connection.query(sql4);
@@ -113,14 +114,20 @@ export class ScoreController {
     var pos = userQuery.indexOf(searchChar);
     while (pos !== -1) {
       count++;
-      pos = userQuery.indexOf(searchChar, pos + 1);
+
+      pos = userQuery.indexOf(searchChar, pos + 1); 
     }
-    if (count == 1 || count == 0) {
-      userQuery = "explain FORMAT=json " + userQuery;
-    } else {
-      let temp = userQuery.split(";");
-      let userQueryLast = temp[temp.length - 1];
-      userQuery = "explain FORMAT=json " + userQueryLast;
+    if(count==1){
+      userQuery="explain FORMAT=json " +userQuery
+    }
+    else if(count==0){
+      userQuery="explain FORMAT=json " +userQuery+";"
+    }
+    else{
+      let temp= userQuery.split(';');
+      let userQueryLast=temp[temp.length-1]
+      userQuery="explain FORMAT=json "+userQueryLast
+
     }
     let query_cost = 0;
     try {
