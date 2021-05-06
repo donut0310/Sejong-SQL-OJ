@@ -104,7 +104,7 @@ create table submit_answer(
   on update cascade
 );
 create table top_submit_answer(
-  submit_id int not null auto_increment primary key,
+  top_submit_id int not null auto_increment primary key,
   week_id int default 0,
   class_id int default 0,
   user_id varchar(255) default null,

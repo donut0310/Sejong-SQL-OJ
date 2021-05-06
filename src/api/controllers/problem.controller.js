@@ -146,7 +146,6 @@ export class ProblemController {
 
     const s = "select week_title, week_id, class_id from problem where p_id=?";
     const [c] = await dataBase.queryExecute(s, [pId]);
-
     let weekTitle = c.week_title;
     let weekId = c.week_id;
     let classId = c.class_id;
@@ -192,16 +191,16 @@ export class ProblemController {
       result,
       weekTitle,
     ];
-    await dataBase.queryExecute(sql, params);
-
     //top_submit_answer 탐색후 조정
     let sql2 =
       "select score,submit_cnt from top_submit_answer where p_id=? and user_id = ?;";
     let params2 = [pId, userId];
     let [a] = await dataBase.queryExecute(sql2, params2);
-    if (Array.isArray(a) && a.length === 0) {
+    if (a=== undefined) {
       let sql3 =
-        "insert into from top_submit_answer values(?,?,?,?,?,?,?,?,?,?,?,?);";
+        "insert into submit_answer(week_id,class_id,user_id,p_id,\
+        user_query,query_cost,score,submit_time,result,week_title,submit_cnt) \
+        values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?,?);";
       let params3 = [
         weekId,
         classId,
@@ -213,13 +212,13 @@ export class ProblemController {
         new Date(),
         result,
         weekTitle,
-        a.submit_cnt + 1,
+        1
       ];
       await dataBase.queryExecute(sql3, params3);
     } else {
       if (a.score <= score) {
-        let sql4 = `UPDATE top_submit_answer SET user_query=?, query_cost=? , 
-        score=? ,submit_time =? , result=?, submit_cnt =?  WHERE p_id=? and user_id= ?;`;
+        let sql4 = `UPDATE top_submit_answer SET user_query=?, 
+        query_cost=?, score=? ,submit_time =? , result=?, submit_cnt =?  WHERE p_id=? and user_id= ?;`;
         let params4 = [
           userQuery,
           queryCost,

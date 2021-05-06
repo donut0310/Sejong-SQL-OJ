@@ -20,13 +20,14 @@ export class ScoreController {
         PRIMARY KEY (patient_id)
       );`
       let params = [
-        req.body.p_id,
+        req.params.pId,
       ];
       let params2 =[
-        req.body.p_id
+        req.params.pId
       ]
       const database=new Database()
       let tcCnt= await database.queryExecute(sql,params);
+      console.log("tc",tcCnt)
       tcCnt=tcCnt[0].tc_cnt;
       let rowsResult= await database.queryExecute(sql2,params2);
       let tcAnswer=await database.queryExecute(sql3,params2);
@@ -116,8 +117,11 @@ export class ScoreController {
       count++;
       pos = userQuery.indexOf(searchChar, pos + 1); 
     }
-    if(count==1 || count==0){
+    if(count==1){
       userQuery="explain FORMAT=json " +userQuery
+    }
+    else if(count==0){
+      userQuery="explain FORMAT=json " +userQuery+";"
     }
     else{
       let temp= userQuery.split(';');
