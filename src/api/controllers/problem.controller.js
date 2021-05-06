@@ -210,7 +210,7 @@ export class ProblemController {
     if (a=== undefined) {
       let sql3 =
         "insert into submit_answer(week_id,class_id,user_id,p_id,\
-        user_query,query_cost,score,submit_time,result,week_title,submit_cnt) \
+        user_query,query_cost,score,submit_time,result,week_title) \
         values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?,?);";
       let params3 = [
         weekId,
@@ -222,8 +222,7 @@ export class ProblemController {
         score,
         new Date(),
         result,
-        weekTitle,
-        1
+        weekTitle
       ];
       await dataBase.queryExecute(sql3, params3);
     } else {
