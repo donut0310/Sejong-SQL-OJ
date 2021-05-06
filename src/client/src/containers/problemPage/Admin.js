@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import AdminTable from '../../components/pages/problemPage/AdminTable'
 
 const Admin = () => {
+  const history = useHistory()
   const dummyDataList = [
     [
       {
@@ -36,6 +38,10 @@ const Admin = () => {
     ],
   ]
 
+  const handleAddProblem = () => {
+    history.push('/admin/addProblem')
+  }
+
   const [problemList, setProblemList] = useState([])
 
   // TODO
@@ -54,7 +60,7 @@ const Admin = () => {
   return (
     <>
       <AdminTable problemList={dummyDataList} />
-      <button id="submit-btn" style={{ width: '80px', marginRight: '10px' }}>
+      <button id="submit-btn" style={{ width: '80px', marginRight: '10px' }} onClick={handleAddProblem}>
         문제 추가
       </button>
     </>
