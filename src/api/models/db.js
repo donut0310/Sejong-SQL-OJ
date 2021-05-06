@@ -19,7 +19,7 @@ export class Database {
         return false;
       }
     } catch(err) {
-      console.log('DB Error');
+      console.log(err);
       return false;
     }
 }

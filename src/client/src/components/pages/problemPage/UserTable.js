@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-const Table = () => {
+const UserTable = () => {
   const history = useHistory()
 
   const handleProblemName = () => {
@@ -17,6 +17,7 @@ const Table = () => {
     { num: '2', name: '절댓값 출력', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
     { num: '3', name: '숫자 출력', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' },
   ]
+
   return (
     <Container>
       <ul id="table-list">
@@ -75,7 +76,7 @@ const Table = () => {
   )
 }
 
-export default Table
+export default UserTable
 
 const Container = styled.div`
   display: flex;

@@ -1,4 +1,6 @@
 import { Database } from "../models/db.js";
+import { ScoreController } from "./score.controller.js";
+
 
 export class ProblemController {
   // 문제 목록 요청 & 현재 사용자의 제출 결과에 대한 상태
@@ -71,5 +73,133 @@ export class ProblemController {
       res.status(400).send(err);
       return false;
     }
+  }
+  //사용자가 문제 실행시 테스트케이스 결과 보여주고 롤백
+  async getProcessProblem(req, res) {
+    const database = new Database();
+    const pId = req.params.p_id;
+    const userQuery=req.body.user_query;
+    const sql = "select tc_id from problem where p_id = ?";
+    const params=[pId];
+    let [tcId]= await database.queryExecute(sql,params);
+    tcId=tcId.tc_id
+    const sql2= "select tc_content from testcase_problem where p_id = ? and tc_id = ?";
+    const params2=[pId,tcId];
+    let [sql3]= await database.queryExecute(sql2,params2);
+    sql3=sql3.tc_content
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        connection.beginTransaction();
+        await connection.query(sql3);
+        const [a] = await connection.query(userQuery);
+
+        connection.rollback();
+        connection.release();
+        let data = {};
+        data.result={};
+        data.result.is_error=false
+        data.result.exec_result = a;
+        data.message = "success";
+        res.status(200).send(data);
+
+      } catch (err) {
+        console.log(err);
+        connection.rollback();
+        connection.release();
+        data.result.is_error=true
+        data.result.err_msg =err;
+        res.status(400).send(data);
+        return ;
+      }
+    } catch (err) {
+      console.log(err);
+      data.result.is_error=true
+      data.result.err_msg =err;
+      res.status(400).send(data);
+      return ;
+    }
+  }
+  async getProblemCommit(req, res) {
+    let dataBase= new Database()
+    let queryCost=0
+    let data = {};
+    data.result={};
+    let userId=req.body.decoded.id;
+    let pId=req.params.pId;
+    let userQuery=req.body.user_query;
+
+    const s="select week_title, week_id, class_id from problem where p_id=?"
+    const [c] =await dataBase.queryExecute(s,[pId]);
+
+    let weekTitle=c.week_title;
+    let weekId=c.week_id;
+    let classId=c.class_id;
+    let result;
+    let errorkinds;
+    console.log(classId);
+    let scoreController = new ScoreController();
+    let score= await scoreController.scoring(req,res);
+    
+    if(typeof(score)=="number"){
+      if (score===100){
+        queryCost = await scoreController.check_cost(userQuery);
+        console.log(queryCost)
+        result="Accept"
+      }else{
+        result="Wrong Answer"
+      }
+      data.message = "success"
+    }else{
+      errorkinds = score;
+      score=0
+      //에러 종류 추후에 나누기
+      result= "error"
+      data.result.err_msg= errorkinds;
+      data.message = result;
+    }
+    // console.log(queryCost)
+
+    //submit_table insert
+    let sql = "insert into submit_answer(week_id,class_id,user_id,p_id,\
+    user_query,query_cost,score,submit_time,result,week_title) \
+    values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?);";
+    let params = [weekId, classId,userId,pId,userQuery,
+    queryCost,score,new Date(), result,weekTitle];
+    await dataBase.queryExecute(sql,params);
+    
+    
+    //top_submit_answer 탐색후 조정
+    let sql2= "select score,submit_cnt from top_submit_answer where p_id=? and user_id = ?;"
+    let params2= [pId,userId]
+    let [a]= await dataBase.queryExecute(sql2,params2);
+    if(Array.isArray(a) && a.length === 0)  {
+      let sql3= "insert into from top_submit_answer values(?,?,?,?,?,?,?,?,?,?,?,?);"
+      let params3= [weekId,classId,userId,pId,
+        userQuery,queryCost,score,new Date(),result,weekTitle,a.submit_cnt+1]
+        await dataBase.queryExecute(sql3,params3);
+    } else {
+      if (a.score<=score){
+        let sql4= `UPDATE top_submit_answer SET user_query=?, query_cost=? , 
+        score=? ,submit_time =? , result=?, submit_cnt =?  WHERE p_id=? and user_id= ?;`
+        let params4= [userQuery,queryCost,score,
+        new Date(),result,a.submit_cnt+1,pId,userId]
+        await dataBase.queryExecute(sql4,params4);
+      }else{
+        let sql5= `UPDATE top_submit_answer SET submit_cnt =?  WHERE p_id=? and user_id= ?;`
+        let params5= [a.submit_cnt+1,pId,userId]
+        await dataBase.queryExecute(sql5,params5);
+      }
+    }
+  
+    //사용자가 지금까지 제출한 답안 보여주기
+    let sql6= "select submit_id, user_id, result ,score,user_query,submit_time\
+    from submit_answer where p_id=? and user_id= ?;"
+    let params6= [pId,userId]
+    let [b]= await dataBase.queryExecute(sql6,params6);
+    data.result.exec_result=b
+    res.status(200).send(data);
   }
 }
