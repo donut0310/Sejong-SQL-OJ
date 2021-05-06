@@ -87,8 +87,12 @@ export class ProblemController {
   //사용자가 문제 실행시 테스트케이스 결과 보여주고 롤백
   async getProcessProblem(req, res) {
     const database = new Database();
-    const pId = req.params.p_id;
-    const userQuery = req.body.user_query;
+
+    const pId = req.params.pId;
+    const userQuery=req.body.user_query;
+    let data = {};
+    data.result={};
+    
     const sql = "select tc_id from problem where p_id = ?";
     const params = [pId];
     let [tcId] = await database.queryExecute(sql, params);
@@ -109,9 +113,8 @@ export class ProblemController {
 
         connection.rollback();
         connection.release();
-        let data = {};
-        data.result = {};
-        data.result.is_error = false;
+        data.result.is_error=false
+
         data.result.exec_result = a;
         data.message = "success";
         res.status(200).send(data);

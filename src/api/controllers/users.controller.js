@@ -60,12 +60,7 @@ export class UsersController {
     res.status(200).send(user);
   }
 
-  // 사용자가 입력한 정답 쿼리문 제출
-  async submitAnswerQuery(req, res) {
-    const database = new Database();
-    const pId = req.params.pId;
-    const userId = req.body.decoded.id;
-  }
+  
   // 사용자가 입력한 정답 쿼리문 실행
 
   // 제출한 코드 요청
