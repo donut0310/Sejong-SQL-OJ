@@ -11,17 +11,15 @@ const LoginForm = () => {
   const history = useHistory()
 
   // TODO
-  const onSubmit = (user) => {
-    console.log(user)
+  const onSubmit = async (data) => {
+    console.log(data)
+    console.log('data.id', data.id)
+    console.log('data.password', data.password)
 
-    // dummy data
-    const id = '22222222'
-    const password = '123123'
+    const res = await axios.post(`/api/v1/auth/signin`, { user_id: data.id, user_pw: data.password })
+    console.log('login submit data=>', res.data)
 
-    const { data } = axios.post(`/api/v1/auth/signin`, { user_id: id, user_pw: password })
-    console.log('login submit data=>', data)
-
-    history.push('/')
+    // history.push('/')
   }
 
   const handleRegisterBtn = () => {
