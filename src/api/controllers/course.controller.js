@@ -48,11 +48,11 @@ export class CourseController {
         }
         res.status(200).send("강좌 생성이 완료되었습니다.");
       } catch (err) {
-        console.log(err);
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
-      console.log("ERROR");
+      res.status(400).send(err);
       return false;
     }
   }
@@ -113,12 +113,11 @@ export class CourseController {
 
         res.status(200).send("학생, 조교 등록이 완료되었습니다.");
       } catch (err) {
-        console.log("errorerror");
-        console.log(err);
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
-      console.log("ERROR");
+      res.status(400).send(err);
       return false;
     }
   }

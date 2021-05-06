@@ -33,11 +33,11 @@ export class ProblemController {
 
         res.status(200).send(data);
       } catch (err) {
-        console.log(err);
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
-      console.log(err);
+      res.status(400).send(err);
       return false;
     }
   }
@@ -64,11 +64,11 @@ export class ProblemController {
 
         res.status(200).send(data);
       } catch (err) {
-        console.log(err);
         connection.release();
+        res.status(400).send(err);
       }
     } catch (err) {
-      console.log(err);
+      res.status(400).send(err);
       return false;
     }
   }
