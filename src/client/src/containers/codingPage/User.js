@@ -36,8 +36,10 @@ const User = () => {
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
       console.log('codingpage get problem info =>', data)
 
-      await setTable_info(JSON.parse(data.table_info))
-      await setParagraph(data.content.split('^&^'))
+      const problem = data.result[0]
+
+      await setTable_info(JSON.parse(problem.table_info))
+      await setParagraph(problem.content.split('^&^'))
       await setParagraphCnt(paragraph.length)
 
       setIsLoading(false)
