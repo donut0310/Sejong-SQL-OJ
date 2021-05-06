@@ -12,7 +12,6 @@ const LoginForm = () => {
 
   // TODO
   const onSubmit = async (data) => {
-    console.log(data)
     console.log('data.id', data.id)
     console.log('data.password', data.password)
 
