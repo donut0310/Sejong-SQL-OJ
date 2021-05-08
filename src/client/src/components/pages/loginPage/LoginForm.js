@@ -6,10 +6,9 @@ import { useForm } from 'react-hook-form'
 import { Link } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
-// import { logIn } from '../../../redux'
+import { logIn } from '../../../redux'
 
-// const LoginForm = ({ logIn }) => {
-const LoginForm = () => {
+const LoginForm = ({ logIn }) => {
   const { register, errors, handleSubmit } = useForm()
 
   const history = useHistory()
@@ -19,10 +18,10 @@ const LoginForm = () => {
     console.log('data.id', data.id)
     console.log('data.password', data.password)
 
-    // const result = await logIn(data.id, data.password)
-    const res = await axios.post(`/api/v1/auth/signin`, { user_id: data.id, user_pw: data.password })
+    const result = await logIn(data.id, data.password)
+    // const res = await axios.post(`/api/v1/auth/signin`, { user_id: data.id, user_pw: data.password })
 
-    if (res.status === 200) {
+    if (result.isCompleted) {
       history.push('/')
     }
   }
@@ -50,7 +49,7 @@ const mapStateToProps = ({}) => {
 }
 
 const mapDispatchToProps = {
-  // logIn,
+  logIn,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

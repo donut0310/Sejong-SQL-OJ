@@ -20,7 +20,7 @@ const OptionButton = () => {
     console.log('Public? ' + `${e.target.value}`)
   }
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} style={{ marginTop: '15px' }}>
       <Grid item xs={12} sm={6}>
         <RadioContainer aria-label="isPublic" name="isPubic" value={isPublic} onChange={handleChange}>
           <FormControlLabel value="true" control={<RedRadio />} label="공개" />

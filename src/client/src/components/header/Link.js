@@ -5,22 +5,24 @@ import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Switch } from '@material-ui/core'
 
-import { toggleTheme } from '../../redux'
+import { toggleTheme, logOut } from '../../redux'
 
-const NavLink = ({ toggleTheme, user }) => {
+const NavLink = ({ toggleTheme, user, logOut }) => {
   const history = useHistory()
 
-  // TODO
+  // WIP
   const handleLogOutBtn = async () => {
-    // const result = await logOut()
+    const result = await logOut()
+    console.log('logout result=>', result)
     history.push('/login')
   }
 
   return (
     <LinkWrapper>
+      {/* //TODO id => name ? */}
       <Name>{user.id}</Name>
       <LinkBtn onClick={handleLogOutBtn}>
-        <Li onClick={handleLogOutBtn}>Logout</Li>
+        <Li>Logout</Li>
       </LinkBtn>
       <ThemeSwitch onClick={toggleTheme} size="small" color="default" />
     </LinkWrapper>
@@ -35,7 +37,7 @@ const mapStateToProps = ({ user }) => {
 
 const mapDispatchToProps = {
   toggleTheme,
-  // logOut,
+  logOut,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavLink)
