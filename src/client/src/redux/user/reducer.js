@@ -24,6 +24,7 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         isLoggedIn: true,
         id: action.payload,
+        // TODO
         name: '',
       }
     }
