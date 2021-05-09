@@ -179,10 +179,10 @@ const AddWeekText = styled.div`
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
+    background: ${(props) => props.theme.INPUT_BACKGROUND};
     margin-left: 20px;
     margin-right: 5px;
-    background: ${(props) => props.theme.BOARD_LIST_HOVER};
-    /* background: white; */
+    border-radius: 5px;
   }
 
   .MuiInputBase-input {
@@ -204,7 +204,7 @@ const StyledTextField = styled(TextField)`
 `
 
 const AddWeekBtn = styled.div`
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   /* font-weight: bold; */
   width: 60px;
 
@@ -213,7 +213,7 @@ const AddWeekBtn = styled.div`
   align-items: center;
   padding: 5px;
 
-  border-radius: 4px;
+  border-radius: 5px;
 
   color: white;
   background: ${(props) => props.theme.POINT};
