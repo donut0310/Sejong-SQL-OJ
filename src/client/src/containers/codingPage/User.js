@@ -38,9 +38,9 @@ const User = () => {
 
       const problem = data.result[0]
 
-      await setTable_info(JSON.parse(problem.table_info))
+      setTable_info(await JSON.parse(problem.table_info))
       await setParagraph(problem.content.split('^&^'))
-      await setParagraphCnt(paragraph.length)
+      setParagraphCnt(paragraph.length)
 
       setIsLoading(false)
       console.log('paragraph=>', paragraph)
@@ -49,6 +49,18 @@ const User = () => {
       console.log('useEffect 종료')
     })()
   }, [])
+
+  // ! 보여줄 코드
+  // useEffect(() => {
+  //   ;(async () => {
+  //     const { data } = await axios.get(`/api/v1/problem/3`)
+
+  //     setParagraphCnt(data.test)
+
+  //     console.log('paragraphCnt=>', paragraphCnt)
+  //   })()
+  // }, [])
+  // ----------------
 
   return (
     <PageWrapper>
