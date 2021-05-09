@@ -141,6 +141,7 @@ export default WeekManagement
 
 const Wrapper = styled.div`
   padding: 10px;
+  margin-bottom: 30px;
 `
 
 const AddWeekWrapper = styled.div`
@@ -148,6 +149,7 @@ const AddWeekWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  margin-bottom: 30px;
 `
 
 const AddWeekForm = styled.form`

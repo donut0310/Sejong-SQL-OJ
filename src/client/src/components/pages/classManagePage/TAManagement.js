@@ -14,18 +14,22 @@ const TAManagement = () => {
     console.log('TA List saved \n' + TA)
   }
   return (
-    <div>
-      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={5} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
+    <Wrapper>
+      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={20} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveTA}>
           저장
         </button>
       </div>
-    </div>
+    </Wrapper>
   )
 }
 
 export default TAManagement
+
+const Wrapper = styled.div`
+  padding: 10px;
+`
 
 const StyledTextField = styled(TextField)`
   && {
