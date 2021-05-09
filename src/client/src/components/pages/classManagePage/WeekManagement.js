@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { TextField } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AddIcon from '@material-ui/icons/Add'
+import RemoveIcon from '@material-ui/icons/Remove'
 
-// TODO +, - 머테 아이콘으로
+// TODO 추가, - 머테 아이콘으로
 
 const WeekManagement = () => {
   const [isChanged, setIsChanged] = useState(false)
@@ -48,31 +51,32 @@ const WeekManagement = () => {
     // push => status by pId
   }
 
+  // TODO
   const classInfo = [
     {
-      weekName: '1주차 실습(ㄱㄴㄷ)',
+      weekName: '1주차 실습 SELECT 문 연습',
       weekId: '1',
       problemList: [
-        { pId: '1', pName: '1번 문제' },
-        { pId: '2', pName: '2번 문제' },
-        { pId: '3', pName: '3번 문제' },
+        { pId: '1', pName: '이름이 없는 동물의 아이디' },
+        { pId: '2', pName: '모든 동물 조회하기' },
+        { pId: '3', pName: '루시와 엘라 찾기' },
       ],
     },
     {
-      weekName: '2주차 실습(ㅁㄴㅇ)',
+      weekName: '2주차 실습 table 다루기',
       weekId: '2',
       problemList: [
-        { pId: '4', pName: '1번 문제' },
-        { pId: '5', pName: '2번 문제' },
-        { pId: '6', pName: '3번 문제' },
+        { pId: '4', pName: '역순 정렬하기' },
+        { pId: '5', pName: '없어진 기록 찾기' },
+        { pId: '6', pName: '야식으로 치킨, 햄버거 중에 뭐가 좋을지' },
       ],
     },
     {
       weekName: '3주차 실습',
       weekId: '3',
       problemList: [
-        { pId: '8', pName: '1번 문제' },
-        { pId: '12', pName: '2번 문제' },
+        { pId: '8', pName: '입양 시각 구하기(1)' },
+        { pId: '12', pName: '중성화 여부 파악하기' },
       ],
     },
   ]
@@ -98,20 +102,16 @@ const WeekManagement = () => {
           <WeepNameWrapper>
             <WeekNameText>{week.weekName}</WeekNameText>
             <BtnBox>
-              <Btn
-                onClick={() => {
-                  handleDeleteWeekBtn(week.weekId)
-                }}
-              >
-                -
-              </Btn>
-              <Btn
+              <WeekAddBtn
                 onClick={() => {
                   handleAddProblemBtn(week.weekId)
                 }}
-              >
-                +
-              </Btn>
+              />
+              <WeekDeleteBtn
+                onClick={() => {
+                  handleDeleteWeekBtn(week.weekId)
+                }}
+              />
             </BtnBox>
           </WeepNameWrapper>
           {week.problemList.map((problem) => (
@@ -124,13 +124,11 @@ const WeekManagement = () => {
                 {problem.pName}
               </ProblemNameText>
               <BtnBox>
-                <Btn
+                <ProblemDeleteBtn
                   onClick={() => {
                     handleDeleteProblemBtn(problem.pId)
                   }}
-                >
-                  -
-                </Btn>
+                />
               </BtnBox>
             </ProblemWrapper>
           ))}
@@ -143,7 +141,6 @@ const WeekManagement = () => {
 export default WeekManagement
 
 const Wrapper = styled.div`
-  border: 1px solid red;
   padding: 10px;
 `
 
@@ -152,8 +149,6 @@ const AddWeekWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-
-  border: 1px solid blue;
 `
 
 const AddWeekForm = styled.form`
@@ -161,8 +156,9 @@ const AddWeekForm = styled.form`
 `
 
 const AddWeekText = styled.div`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
+
   margin-bottom: 20px;
 `
 
@@ -170,7 +166,6 @@ const StyledTextField = styled(TextField)`
   && {
     width: 100%;
     background: ${(props) => props.theme.INPUT_BACKGROUND};
-    margin-left: 20px;
     margin-right: 5px;
     border-radius: 5px;
   }
@@ -190,13 +185,11 @@ const StyledTextField = styled(TextField)`
   }
   .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
     border: 1.5px solid ${(props) => props.theme.SUB_BORDER};
-
   }
 `
 
 const AddWeekBtn = styled.div`
   font-size: 1.1rem;
-  /* font-weight: bold; */
 
   width: 60px;
 
@@ -209,13 +202,12 @@ const AddWeekBtn = styled.div`
 
   color: white;
   background: ${(props) => props.theme.POINT};
-
 `
 
 const WeekWrapper = styled.div`
-  border: 1px solid blue;
   padding: 3px;
-  margin: 5px 0px;
+  margin-top: 8px;
+  margin-bottom: 12px;
 `
 
 const WeekNameText = styled.div`
@@ -224,34 +216,87 @@ const WeekNameText = styled.div`
 `
 
 const WeepNameWrapper = styled.div`
-  /* border: 1px solid black; */
-
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 2.5px solid ${(props) => props.theme.POINT};
+  margin-bottom: 5px;
 `
 
 const ProblemWrapper = styled.div`
-  /* border: 1px solid green; */
-  padding: 3px;
-
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  padding: 3px;
+  border-left: 4px solid ${(props) => props.theme.BACKGROUND};
+
+  /* border-radius: 5px; */
+  /* background: ${(props) => props.theme.BOARD_LIST_HOVER}; */
+  :hover {
+    border-left: 4px solid ${(props) => props.theme.POINT};
+    background: ${(props) => props.theme.BOARD_LIST_HOVER};
+  }
 `
 
 const ProblemNameText = styled.div`
   font-size: 1.1rem;
   display: flex;
   margin-left: 20px;
-`
 
-const Btn = styled.div`
-  font-size: 1.2rem;
-  font-weight: bold;
-  padding: 5px;
-  /* border: 2px solid red; */
+  :hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 `
 
 const BtnBox = styled.div`
   display: flex;
-  /* border: 1px solid pink; */
+  justify-content: flex-end;
+`
+
+const WeekDeleteBtn = styled(RemoveIcon)`
+  padding: 4px;
+
+  && {
+    font-size: 1.8rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    path {
+      color: ${(props) => props.theme.POINT};
+    }
+  }
+`
+
+const WeekAddBtn = styled(AddIcon)`
+  padding: 4px;
+
+  && {
+    font-size: 1.8rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    path {
+      color: ${(props) => props.theme.POINT};
+    }
+  }
+`
+
+const ProblemDeleteBtn = styled(DeleteIcon)`
+  padding: 4px;
+
+  && {
+    font-size: 1.5rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    path {
+      color: ${(props) => props.theme.POINT};
+    }
+  }
 `
