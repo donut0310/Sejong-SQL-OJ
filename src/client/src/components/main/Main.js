@@ -10,6 +10,7 @@ import MainPage from '../../containers/mainPage'
 import CodeCheckPage from '../../containers/codeCheckPage'
 
 import ProblemAddPage from '../../containers/problemAddPage'
+import ClassManagePage from '../../containers/classManagePage'
 
 const Main = () => {
   return (
@@ -20,6 +21,7 @@ const Main = () => {
       <Route path="/status" component={StatusPage} />
       <Route path="/check" component={CodeCheckPage} />
       <Route path="/admin/addproblem" component={ProblemAddPage} />
+      <Route path="/manage" component={ClassManagePage} />
     </MainWrapper>
   )
 }
