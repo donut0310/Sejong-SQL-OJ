@@ -85,8 +85,6 @@ const WeekManagement = () => {
   return (
     <Wrapper>
       <AddWeekWrapper>
-        <AddWeekText>주차 추가</AddWeekText>
-
         <AddWeekForm noValidate autoComplete="off">
           <StyledTextField id="outlined-basic" label="주차 이름" variant="outlined" onChange={handleChangeNewWeekName} />
           <AddWeekBtn onClick={handleAddWeekBtn}>추가</AddWeekBtn>
@@ -160,12 +158,6 @@ const AddWeekForm = styled.form`
   display: flex;
 `
 
-const AddWeekText = styled.div`
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-`
-
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
@@ -190,7 +182,6 @@ const StyledTextField = styled(TextField)`
   }
   .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
     border: 1.5px solid ${(props) => props.theme.SUB_BORDER};
-
   }
 `
 
@@ -209,7 +200,6 @@ const AddWeekBtn = styled.div`
 
   color: white;
   background: ${(props) => props.theme.POINT};
-
 `
 
 const WeekWrapper = styled.div`
