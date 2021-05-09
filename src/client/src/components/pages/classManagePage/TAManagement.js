@@ -27,9 +27,7 @@ const TAManagement = () => {
 
 export default TAManagement
 
-const Wrapper = styled.div`
-  padding: 10px;
-`
+const Wrapper = styled.div``
 
 const StyledTextField = styled(TextField)`
   && {

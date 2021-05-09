@@ -30,9 +30,7 @@ const StudentManagement = () => {
 
 export default StudentManagement
 
-const Wrapper = styled.div`
-  padding: 10px;
-`
+const Wrapper = styled.div``
 
 const StyledTextField = styled(TextField)`
   && {
