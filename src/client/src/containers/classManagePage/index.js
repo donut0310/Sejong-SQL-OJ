@@ -16,7 +16,7 @@ const ClassManagePage = () => {
   return (
     <PageWrapper>
       <Title problemInfo={problemInfo} />
-      <Subtitle subtitle={'주차 추가'} />
+      <Subtitle subtitle={'주차 관리'} />
       <WeekManagement />
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>

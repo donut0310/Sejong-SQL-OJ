@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
-// TODO 추가, - 머테 아이콘으로
+// TODO
 
 const WeekManagement = () => {
   const [isChanged, setIsChanged] = useState(false)
@@ -89,6 +89,7 @@ const WeekManagement = () => {
   return (
     <Wrapper>
       <AddWeekWrapper>
+        <AddWeekText>주차 추가</AddWeekText>
         <AddWeekForm noValidate autoComplete="off">
           <StyledTextField id="outlined-basic" label="주차 이름" variant="outlined" onChange={handleChangeNewWeekName} />
           <AddWeekBtn onClick={handleAddWeekBtn}>추가</AddWeekBtn>
