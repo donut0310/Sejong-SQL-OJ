@@ -15,6 +15,8 @@ export const lightTheme = {
   BOARD_LIST_HOVER: '#ebebeb',
   BOARD_TITLE: '#d9d9d9',
 
+  INPUT_BACKGROUND: '#f5f5f5',
+
   EDITOR_THEME: 'tomorrow',
   EDITOR_BACKGROUND: '#efefef',
 }
@@ -23,6 +25,7 @@ export const darkTheme = {
   GENERAL_FONT: '#F3F6F2',
   SUB_FONT: '#F3F6F2',
 
+  POINT: '#B41313',
   BACKGROUND: '#393938',
   CONTENTS: '#40403e',
 
@@ -32,9 +35,10 @@ export const darkTheme = {
   SUB_BORDER: '#757575',
   MAIN_BORDER: '#b3b3b1',
 
-  POINT: '#B41313',
   BOARD_LIST_HOVER: '#4d4d4d',
   BOARD_TITLE: '#626362',
+
+  INPUT_BACKGROUND: '#f5f5f5',
 
   EDITOR_THEME: 'tomorrow_night',
   EDITOR_BACKGROUND: '#2a2a2a',

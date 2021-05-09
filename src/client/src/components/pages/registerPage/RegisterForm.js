@@ -31,15 +31,23 @@ const RegisterForm = () => {
       <SubTitle>회원가입</SubTitle>
       <StyledForm maxWidth="lg">
         <RegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <RegisterTextField name="id" label="아이디" inputRef={register({ required: true, maxLength: 10 })} placeholder="Enter your ID" variant="outlined" size="small" />
+          <RegisterTextField name="id" label="아이디" inputRef={register({ required: true, maxLength: 10 })} placeholder="아이디를 입력하세요." variant="outlined" size="small" />
           {errors.id && errors.id.type === 'required' && <ErrorMessage> This ID field is required</ErrorMessage>}
           {errors.id && errors.id.type === 'maxLength' && <ErrorMessage> Your input exceed maximum length</ErrorMessage>}
 
-          <RegisterTextField name="name" label="이름" inputRef={register({ required: true, maxLength: 10 })} placeholder="Enter your name" variant="outlined" size="small" />
+          <RegisterTextField name="name" label="이름" inputRef={register({ required: true, maxLength: 10 })} placeholder="이름을 입력하세요." variant="outlined" size="small" />
           {errors.name && errors.name.type === 'required' && <ErrorMessage> This name field is required</ErrorMessage>}
           {errors.name && errors.name.type === 'maxLength' && <ErrorMessage> Your input exceed maximum length</ErrorMessage>}
 
-          <RegisterTextField name="password" inputRef={register({ required: true, minLength: 4 })} type="password" label="비밀번호" placeholder="Enter your password" variant="outlined" size="small" />
+          <RegisterTextField
+            name="password"
+            inputRef={register({ required: true, minLength: 4 })}
+            type="password"
+            label="비밀번호"
+            placeholder="비밀번호를 입력하세요."
+            variant="outlined"
+            size="small"
+          />
           {errors.password && errors.password.type === 'required' && <ErrorMessage> This password field is required</ErrorMessage>}
           {errors.password && errors.password.type === 'minLength' && <ErrorMessage> Password must have at least 4 characters</ErrorMessage>}
 
@@ -51,7 +59,7 @@ const RegisterForm = () => {
             })}
             type="password"
             label="비밀번호 확인"
-            placeholder="Enter your password one more time"
+            placeholder="비밀번호를 한 번 더 입력하세요."
             variant="outlined"
             size="small"
           />
@@ -113,6 +121,9 @@ const RegisterFormWrapper = styled.form`
 
 const RegisterTextField = styled(TextField)`
   && {
+    background: ${(props) => props.theme.INPUT_BACKGROUND};
+    border-radius: 5px;
+
     margin-top: 10px;
   }
 
