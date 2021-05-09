@@ -88,7 +88,7 @@ const WeekManagement = () => {
         <AddWeekText>주차 추가</AddWeekText>
 
         <AddWeekForm noValidate autoComplete="off">
-          <StyledTextField id="outlined-basic" label="주차 이름" placeholder="주차 이름을 입력하세요." variant="outlined" onChange={handleChangeNewWeekName} />
+          <StyledTextField id="outlined-basic" label="주차 이름" variant="outlined" onChange={handleChangeNewWeekName} />
           <AddWeekBtn onClick={handleAddWeekBtn}>추가</AddWeekBtn>
         </AddWeekForm>
       </AddWeekWrapper>
@@ -153,7 +153,7 @@ const AddWeekWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
 `
 
 const AddWeekForm = styled.form`
@@ -166,61 +166,28 @@ const AddWeekText = styled.div`
   margin-bottom: 20px;
 `
 
-// const StyledTextField = styled(TextField)`
-//   && {
-//     width: 100%;
-//     margin-left: 20px;
-//     margin-right: 5px;
-//     /* background: ${(props) => props.theme.BOARD_LIST_HOVER}; */
-//     /* background: white; */
-//   }
-// `
-
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
     margin-left: 20px;
     margin-right: 5px;
-    background: ${(props) => props.theme.BOARD_LIST_HOVER};
-    /* background: white; */
-  }
-
-  .MuiInputBase-input {
-    color: ${(props) => props.theme.GENERAL_FONT};
-  }
-  .MuiInputLabel-formControl {
-    color: ${(props) => props.theme.MAIN_BORDER};
-  }
-  .MuiFormLabel-root.Mui-focused {
-    color: ${(props) => props.theme.POINT};
-    font-weight: bold;
-  }
-  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-    border-color: ${(props) => props.theme.POINT};
-  }
-  .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
-    border: 1.5px solid ${(props) => props.theme.SUB_BORDER};
   }
 `
 
 const AddWeekBtn = styled.div`
-  font-size: 1.3rem;
-  /* font-weight: bold; */
+  font-size: 1.4rem;
+  font-weight: bold;
   width: 60px;
 
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
-
-  border-radius: 4px;
-
-  color: white;
-  background: ${(props) => props.theme.POINT};
+  border: 1px solid black;
 `
 
 const WeekWrapper = styled.div`
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
   padding: 3px;
   margin: 5px 0px;
 `
