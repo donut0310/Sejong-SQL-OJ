@@ -38,7 +38,7 @@ export const darkTheme = {
   BOARD_LIST_HOVER: '#4d4d4d',
   BOARD_TITLE: '#626362',
 
-  INPUT_BACKGROUND: '#f5f5f5',
+  INPUT_BACKGROUND: '#222',
 
   EDITOR_THEME: 'tomorrow_night',
   EDITOR_BACKGROUND: '#2a2a2a',

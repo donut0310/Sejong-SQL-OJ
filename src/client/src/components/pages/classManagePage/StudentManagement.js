@@ -16,7 +16,6 @@ const StudentManagement = () => {
 
   return (
     <div>
-      <AddStudentList>학생 등록</AddStudentList>
       <StyledTextField id="outlined-basic" label="학생 등록" multiline rows={5} variant="outlined" placeholder="학번을 입력하세요." value={Student} onChange={handleChangeStudent}></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveStudent}>
@@ -28,12 +27,6 @@ const StudentManagement = () => {
 }
 
 export default StudentManagement
-
-const AddStudentList = styled.div`
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin: 20px 0;
-`
 
 const StyledTextField = styled(TextField)`
   && {

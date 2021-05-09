@@ -15,8 +15,7 @@ const TAManagement = () => {
   }
   return (
     <div>
-      <AddTAList>조교 등록</AddTAList>
-      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={3} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
+      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={5} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveTA}>
           저장
@@ -27,12 +26,6 @@ const TAManagement = () => {
 }
 
 export default TAManagement
-
-const AddTAList = styled.div`
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin: 20px 0;
-`
 
 const StyledTextField = styled(TextField)`
   && {

@@ -59,7 +59,7 @@ const GlobalStyles = createGlobalStyle`
     height: 30px;
     border: 0px;
     border-radius: 5px;
-    margin: 5px;
+    margin: 5px 0px 5px 5px;
     padding: 5px;
     color: white;
     background: ${(props) => props.theme.POINT};

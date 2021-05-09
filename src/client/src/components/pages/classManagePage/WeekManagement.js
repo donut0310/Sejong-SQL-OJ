@@ -89,8 +89,6 @@ const WeekManagement = () => {
   return (
     <Wrapper>
       <AddWeekWrapper>
-        <AddWeekText>주차 추가</AddWeekText>
-
         <AddWeekForm noValidate autoComplete="off">
           <StyledTextField id="outlined-basic" label="주차 이름" variant="outlined" onChange={handleChangeNewWeekName} />
           <AddWeekBtn onClick={handleAddWeekBtn}>추가</AddWeekBtn>

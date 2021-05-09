@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 
 import Title from '../../components/title/Title'
-import SubTitle from '../../components/pages/codingPage/SubTitle'
+import Subtitle from '../../components/subtitle/Subtitle'
 import Code from '../../components/pages/codingPage/Code'
 import Problem from '../../components/pages/codingPage/Problem'
 import Result from '../../components/pages/codingPage/Result'
@@ -53,11 +53,11 @@ const User = () => {
   return (
     <PageWrapper>
       <Title problemInfo={problemInfo} />
-      <SubTitle name="문제 내용" />
+      <Subtitle subtitle={'문제 내용'} />
       {!isLoading && <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />}
-      <SubTitle name="코드 작성" />
+      <Subtitle subtitle={'코드 작성'} />
       <Code />
-      <SubTitle name="실행 결과" />
+      <Subtitle subtitle={'실행 결과'} />
       <Result />
     </PageWrapper>
   )
