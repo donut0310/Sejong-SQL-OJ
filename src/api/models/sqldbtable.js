@@ -132,10 +132,7 @@ create table top_submit_answer(
 
 INSERT INTO course VALUES(1, '(2021-1학기)데이터베이스(홍길동)','16011076;16011088');
 INSERT INTO course VALUES(2, '(2021-1학기)데이터베이스(김성실)','16011076;16011088');
-INSERT INTO user values('16011076','허준현','1234');
-INSERT INTO user values('16011088','김영률','1234');
-INSERT INTO user values('17011585 ','이기은','1234');
-INSERT INTO user values('jinbo0428 ','김진성','1234');
+
 
 //week table
 insert into week (class_id,week_title) values (1,"1주차 SELECT문");
