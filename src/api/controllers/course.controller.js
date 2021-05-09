@@ -63,8 +63,7 @@ export class CourseController {
 
     const stdList = req.body.stds;
     const assistsList = req.body.assists;
-    const classId = req.body.class_id;
-    const usersList = stdList.concat(assistsList);
+    const classId = req.params.classId;
 
     let assists = "";
 
