@@ -37,7 +37,7 @@ const AddStudentList = styled.div`
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.BOARD_LIST_HOVER};
+    background: ${(props) => props.theme.INPUT_BACKGROUND};
   }
 
   .MuiInputBase-input {

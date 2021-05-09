@@ -5,10 +5,10 @@ import LoginForm from './LoginForm'
 const Login = () => {
   return (
     <Container>
-      <div style={{ fontSize: '40px', textAlign: 'center', marginBottom: '30px' }}>
+      <div style={{ fontSize: '3em', textAlign: 'center', marginBottom: '30px' }}>
         SEJONG <br /> ONLINE JUDGE
       </div>
-      <div style={{ fontSize: '30px', marginBottom: '30px' }}>LOG IN</div>
+      <div style={{ fontSize: '1.6em', marginBottom: '30px' }}>로그인</div>
       <LoginForm />
     </Container>
   )
