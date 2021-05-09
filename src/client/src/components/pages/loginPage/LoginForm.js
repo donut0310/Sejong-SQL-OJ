@@ -92,6 +92,8 @@ const ErrorMessage = styled.p`
   color: ${(props) => props.theme.POINT};
   font-size: 0.9rem;
   font-weight: bold;
+  display: flex;
+  align-self: start;
   margin-top: 4px;
   margin-left: 10px;
   margin-bottom: 4px;

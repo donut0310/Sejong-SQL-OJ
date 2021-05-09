@@ -4,19 +4,19 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
 const TAManagement = () => {
-  const [TA, setTA] = useState()
+  const [TA, setTA] = useState(['17010001\n16010001'])
   const handleChangeTA = (e) => {
     setTA(e.target.value)
     console.log(e.target.value)
   }
   const handleSaveTA = () => {
     // post
-    console.log('TA List saved')
+    console.log('TA List saved \n' + TA)
   }
   return (
     <div>
       <AddTAList>조교 등록</AddTAList>
-      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={5} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
+      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={3} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveTA}>
           저장

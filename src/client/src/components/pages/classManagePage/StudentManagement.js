@@ -4,13 +4,14 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
 const StudentManagement = () => {
-  const [Student, setStudent] = useState('')
+  const [Student, setStudent] = useState(['19010001\n19010002\n19010003\n19010004\n19010005'])
   const handleChangeStudent = (e) => {
     setStudent(e.target.value)
+    console.log(e.target.value)
   }
   const handleSaveStudent = () => {
     // post
-    console.log(Student)
+    console.log('Student List saved \n' + Student)
   }
 
   return (
