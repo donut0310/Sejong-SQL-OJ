@@ -193,7 +193,7 @@ const StyledTreeItem = styled(TreeItem)`
     }
   }
   && .MuiTypography-root {
-    margin: 2px;
+    margin: 2px 0;
     padding: 5px;
     font-weight: 500;
     color: ${(props) => props.theme.GENERAL_FONT};

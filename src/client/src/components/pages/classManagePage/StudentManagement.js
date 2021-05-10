@@ -4,21 +4,59 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
 const StudentManagement = () => {
+  // dummy data Student, classId
   const [Student, setStudent] = useState([
-    '19010001\n19010002\n19010003\n19010004\n19010005\n19010006\n19010007\n19010008\n19010009\n19010001\n19010002\n19010003\n19010004\n19010005\n19010006\n19010007\n19010008\n19010009\n',
+    '19010001',
+    '19010002',
+    '19010003',
+    '19010004',
+    '19010005',
+    '19010006',
+    '19010007',
+    '19010008',
+    '19010009',
+    '19010001',
+    '19010002',
+    '19010003',
+    '19010004',
+    '19010005',
+    '19010006',
+    '19010007',
+    '19010008',
+    '19010009',
   ])
+  const classId = '1'
+  //
+
+  const textFieldStudent = Student.join('\r\n')
+
   const handleChangeStudent = (e) => {
-    setStudent(e.target.value)
-    console.log(e.target.value)
+    setStudent(e.target.value.split(/\r\n|\r|\n/))
+    console.log(Student)
   }
+
   const handleSaveStudent = () => {
-    // post
-    console.log('Student List saved \n' + Student)
+    console.log('Student List', Student)
+    ;(async () => {
+      await axios
+        .post(`/api/v1/course/enrollStd/${classId}`, { stds: Student })
+        .then((res) => console.log('Student List saved\n' + res))
+        .catch((err) => console.log(err))
+    })()
   }
 
   return (
     <Wrapper>
-      <StyledTextField id="outlined-basic" label="학생 등록" multiline rows={20} variant="outlined" placeholder="학번을 입력하세요." value={Student} onChange={handleChangeStudent}></StyledTextField>
+      <StyledTextField
+        id="outlined-basic"
+        label="학생 등록"
+        multiline
+        rows={20}
+        variant="outlined"
+        placeholder="학번을 입력하세요."
+        value={textFieldStudent}
+        onChange={handleChangeStudent}
+      ></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveStudent}>
           저장
