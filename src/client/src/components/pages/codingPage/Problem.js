@@ -3,27 +3,36 @@ import axios from 'axios'
 import styled from 'styled-components'
 
 const Problem = ({ paragraph, paragraphCnt, table_info }) => {
-  console.log('Problem) table_info=>', table_info)
+  // console.log('Problem) table_info=>', table_info)
 
   const [attributes, setAttributes] = useState([])
 
   useEffect(() => {
-    table_info.map((t, i) => {
+    const a = []
+    table_info.forEach((t) => {
+      // console.log('테이블 개수만큼 반복')
       let temp = []
-      for (let j in t[0]) temp.push(j)
-      setAttributes([attributes, temp])
+      for (let i in t[0]) {
+        temp.push(i)
+      }
+      a.push(temp)
     })
-    console.log('changed attributes', attributes)
-  }, [table_info])
 
-  const generateTable = (table_info) => {
-    let attributes = []
-    for (let i in table_info[0]) attributes.push(i)
+    console.log(a)
+    setAttributes(a)
+  }, [table_info, paragraph, paragraphCnt])
+
+  useEffect(() => {
+    // console.log('changed attributes', attributes)
+  }, [attributes])
+
+  const GenerateTable = (index, table_info) => {
+    console.log(attributes)
 
     return (
       <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
         <ul id="title-tab" style={{ marginTop: '5px' }}>
-          {attributes.map((attribute, j) => (
+          {attributes[index].map((attribute, j) => (
             <li id="content" style={{ width: '20%' }} key={j}>
               {attribute}
             </li>
@@ -31,7 +40,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
         </ul>
         {table_info.map((row, j) => (
           <ul id="content-list" key={j}>
-            {attributes.map((attribute, k) => (
+            {attributes[index].map((attribute, k) => (
               <li id="content" style={{ width: '20%' }} key={k}>
                 {row[attribute]}
               </li>
@@ -41,39 +50,21 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
       </ul>
     )
   }
+  //
 
-  return (
-    <ProblemWrapper>
-      {paragraph.map((text, i) => (
-        <div key={i}>
-          <Text>{text}</Text>
-          <Table>
-            {i + 1 < paragraphCnt && (
-              // generateTable(table_info[i])
-              <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
-                <ul id="title-tab" style={{ marginTop: '5px' }}>
-                  {attributes[i].map((attribute, j) => (
-                    <li id="content" style={{ width: '20%' }} key={j}>
-                      {attribute}
-                    </li>
-                  ))}
-                </ul>
-                {table_info.map((row, j) => (
-                  <ul id="content-list" key={j}>
-                    {attributes[i].map((attribute, k) => (
-                      <li id="content" style={{ width: '20%' }} key={k}>
-                        {row[attribute]}
-                      </li>
-                    ))}
-                  </ul>
-                ))}
-              </ul>
-            )}
-          </Table>
-        </div>
-      ))}
-    </ProblemWrapper>
-  )
+  const Contents = paragraph.map((p, i) => (
+    <>
+      {attributes !== [] ? (
+        <Text>{p}</Text>
+      ) : (
+        <Table>
+          <GenerateTable index={i - 1} table_info={table_info[i - 1]} />
+        </Table>
+      )}
+    </>
+  ))
+
+  return <ProblemWrapper>{paragraphCnt > 1 && Contents}</ProblemWrapper>
 }
 
 export default Problem

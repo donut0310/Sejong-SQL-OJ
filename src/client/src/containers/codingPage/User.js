@@ -25,7 +25,7 @@ const User = () => {
 
   // ! Code component에서 사용
   // TODO
-
+  //
   useEffect(() => {
     console.log('useEffect 실행')
     ;(async () => {
@@ -34,33 +34,18 @@ const User = () => {
       // WIP
       const pId = '1'
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
-      console.log('codingpage get problem info =>', data)
-
+      console.log('codingpage get problem info data.result[0] =>', data.result[0])
       const problem = data.result[0]
 
-      setTable_info(await JSON.parse(problem.table_info))
-      await setParagraph(problem.content.split('^&^'))
+      setTable_info(JSON.parse(problem.table_info))
+      setParagraph(problem.content.split('^&^'))
       setParagraphCnt(paragraph.length)
-
-      setIsLoading(false)
-      console.log('paragraph=>', paragraph)
-      console.log('table_info=>', table_info)
-
-      console.log('useEffect 종료')
     })()
   }, [])
 
-  // ! 보여줄 코드
-  // useEffect(() => {
-  //   ;(async () => {
-  //     const { data } = await axios.get(`/api/v1/problem/3`)
-
-  //     setParagraphCnt(data.test)
-
-  //     console.log('paragraphCnt=>', paragraphCnt)
-  //   })()
-  // }, [])
-  // ----------------
+  useEffect(() => {
+    setIsLoading(false)
+  }, [table_info, paragraph, paragraphCnt])
 
   return (
     <PageWrapper>
