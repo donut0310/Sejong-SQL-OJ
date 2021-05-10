@@ -1,63 +1,33 @@
 import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
+import Preview from './Preview'
 import ContentInput from './ContentInput'
-import DynamicTable from './DynamicTable'
+import TableInput from './TableInput'
 
 const DescriptionInput = () => {
-  const textInput = useRef() // 텍스트 내용 가져오는 ref 변수
+  const [content, setContent] = useState('')
+  const [tableInfo, setTableInfo] = useState([])
 
-  const [description, setDescription] = useState([]) // 문제 내용 저장하는 변수
-
-  const [renderingContent, setRenderingContent] = useState([]) // 단순 컴포넌트 매핑하기 위한 배열
-
-  const handleAddTable = () => {
-    console.log('Add Example table')
-    setRenderingContent([...renderingContent, DynamicTable])
-  }
-  const handleAddContent = () => {
-    console.log('Add Content input')
-    setRenderingContent([...renderingContent, ContentInput])
-  }
-
-  const handleSaveDesc = () => {
-    setDescription([...description, textInput.current.value])
-  }
-
-  const mapContent = (data) => {
-    return data.map((content, i) => {
-      if (content === DynamicTable) return <DynamicTable key={i} />
-      else
-        return (
-          <div key={i}>
-            <ContentInput ref={textInput} />
-            <button id="submit-btn" onClick={handleSaveDesc}>
-              SAVE
-            </button>
-            {description}
-          </div>
-        )
-    })
-  }
+  const handleApplyContent = () => {}
+  const handleApplyTable = () => {}
 
   return (
-    <div>
-      <TitleContainer>
-        문제 내용
-        <div>
-          <button id="submit-btn" style={{ width: '90px' }} onClick={handleAddContent}>
-            내용 추가
-          </button>
-          <button id="submit-btn" style={{ width: '90px' }} onClick={handleAddTable}>
-            테이블 추가
-          </button>
-        </div>
-      </TitleContainer>
-      <div>{mapContent(renderingContent)}</div>
-    </div>
+    <Wrapper>
+      <TitleContainer>문제 내용</TitleContainer>
+      <Preview content={content} tableInfo={tableInfo} />
+      <ContentInput content={content} setContent={setContent} />
+      <ApplyBtn onClick={handleApplyContent}>적용</ApplyBtn>
+      <TableInput tableInfo={tableInfo} setTableInfo={setTableInfo} />
+      <ApplyBtn onClick={handleApplyTable}>적용</ApplyBtn>
+    </Wrapper>
   )
 }
 
 export default DescriptionInput
+
+const Wrapper = styled.div`
+  border: 1px solid blue;
+`
 
 const TitleContainer = styled.div`
   margin: 25px 0 10px 0;
@@ -69,4 +39,8 @@ const TitleContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
+`
+
+const ApplyBtn = styled.div`
+  border: 3px solid pink;
 `

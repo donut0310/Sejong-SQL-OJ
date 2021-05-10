@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 // TODO 내용 수정 가능한 테이블 작성 add row col 버튼 ㄷㅏ시 잘 생각해바..
 
-const DynamicTable = () => {
+const TableInput = () => {
   const handleTableChange = (e) => {
     // let copy = [...tableInfo]
     // copy[row][column] = +event.target.value
@@ -59,7 +59,7 @@ const DynamicTable = () => {
   )
 }
 
-export default DynamicTable
+export default TableInput
 
 const Container = styled.div`
   box-sizing: border-box;
