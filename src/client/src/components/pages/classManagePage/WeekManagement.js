@@ -96,8 +96,8 @@ const WeekManagement = () => {
         </AddWeekForm>
       </AddWeekWrapper>
 
-      {classInfo.map((week) => (
-        <WeekWrapper>
+      {classInfo.map((week, i) => (
+        <WeekWrapper key={i}>
           <WeepNameWrapper>
             <WeekNameText>{week.weekName}</WeekNameText>
             <BtnBox>
@@ -113,8 +113,8 @@ const WeekManagement = () => {
               />
             </BtnBox>
           </WeepNameWrapper>
-          {week.problemList.map((problem) => (
-            <ProblemWrapper>
+          {week.problemList.map((problem, j) => (
+            <ProblemWrapper key={j}>
               <ProblemNameText
                 onClick={() => {
                   handleProblemName(problem.pId)

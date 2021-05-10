@@ -4,18 +4,31 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
 const TAManagement = () => {
-  const [TA, setTA] = useState(['17010001\n16010001'])
+  // dummy data TA, classId
+  const [TA, setTA] = useState(['16010001', '16010002'])
+  const classId = '1'
+  //
+
+  const textFieldTA = TA.join('\r\n')
+
   const handleChangeTA = (e) => {
-    setTA(e.target.value)
-    console.log(e.target.value)
+    setTA(e.target.value.split(/\r\n|\r|\n/))
+    console.log(TA)
   }
+
   const handleSaveTA = () => {
-    // post
-    console.log('TA List saved \n' + TA)
+    console.log('TA List', TA)
+    ;(async () => {
+      await axios
+        .post(`/api/v1/course/enrollStd/${classId}`, { assists: TA })
+        .then((res) => console.log('TA List saved\n' + res))
+        .catch((err) => console.log(err))
+    })()
   }
+
   return (
     <Wrapper>
-      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={20} variant="outlined" placeholder="학번을 입력하세요." value={TA} onChange={handleChangeTA}></StyledTextField>
+      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={20} variant="outlined" placeholder="학번을 입력하세요." value={textFieldTA} onChange={handleChangeTA}></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveTA}>
           저장
