@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { Hidden } from '@material-ui/core'
+import { Hidden, Paper, SwipeableDrawer } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import CloseIcon from '@material-ui/icons/Close'
 import TreeView from '@material-ui/lab/TreeView'
@@ -9,12 +9,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import TreeItem from '@material-ui/lab/TreeItem'
 
-import { SwipeableDrawer } from '@material-ui/core'
-
 const ModalComponent = () => {
   const history = useHistory()
 
-  const [toggleMenu, setToggleMenu] = useState(true)
+  const [toggleMenu, setToggleMenu] = useState(false)
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
@@ -51,26 +49,25 @@ const ModalComponent = () => {
   return (
     <>
       <Hidden xsDown>
-        <Container id="Drawer">
-          <div className="open-btn" onClick={handleToggleMenu}>
-            <OpenModalBtn />
-          </div>
-          <StyledDrawer open={toggleMenu} onOpen={handleToggleMenu} onClose={handleToggleMenu}>
-            <div className="close-btn">
-              <CloseModalBtn onClick={handleToggleMenu} />
-            </div>
-            <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-              {userClassInfo.map((class_, i) => (
-                <StyledTreeItem nodeId={`${i}`} label={class_.className} key={i}>
-                  {class_.weekInfo.map((week_, j) => (
-                    // TODO onClick event
-                    <StyledTreeItem label={week_} key={j} onClick={handleWeekInfo} />
-                  ))}
-                </StyledTreeItem>
-              ))}
-            </TreeView>
-          </StyledDrawer>
+        <Container onClick={handleToggleMenu} elevation={10}>
+          <KeyboardArrowRightIcon />
         </Container>
+        <StyledDrawer id="Drawer" open={toggleMenu} onOpen={handleToggleMenu} onClose={handleToggleMenu} swipeAreaWidth={1}>
+          <div className="close-btn">
+            <CloseModalBtn onClick={handleToggleMenu} />
+          </div>
+          <Subtitle>My Class</Subtitle>
+          <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
+            {userClassInfo.map((class_, i) => (
+              <StyledTreeItem nodeId={`${parseInt(i)}`} label={class_.className} key={i}>
+                {class_.weekInfo.map((week_, j) => (
+                  // TODO onClick event
+                  <StyledTreeItem label={week_} key={j} onClick={handleWeekInfo} />
+                ))}
+              </StyledTreeItem>
+            ))}
+          </TreeView>
+        </StyledDrawer>
       </Hidden>
     </>
   )
@@ -78,60 +75,47 @@ const ModalComponent = () => {
 
 export default ModalComponent
 
-const OpenModalBtn = styled(KeyboardArrowRightIcon)`
-  position: absolute;
-  top: 50%;
-  margin-top: -4px;
-  padding: 4px;
-  &:hover {
-    cursor: pointer;
+const Container = styled(Paper)`
+  && {
+    position: fixed;
+    width: 15px;
+    height: 100vh;
+    background: ${(props) => props.theme.POINT};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 12px 12px 0;
+    opacity: 0.7;
+    transition: 0.3s;
+    svg {
+      width: 15px;
+    }
     path {
-      color: ${(props) => props.theme.POINT};
+      color: white;
+    }
+    &:hover {
+      svg {
+        width: 25px;
+      }
+      path {
+        color: white;
+      }
+      width: 25px;
+      opacity: 1;
+      cursor: pointer;
     }
   }
 `
 
 const CloseModalBtn = styled(CloseIcon)`
-  padding: 4px;
   && {
     width: 20px;
     height: 20px;
+    margin: 10px 10px 0 0;
   }
   &:hover {
     cursor: pointer;
     path {
-      color: ${(props) => props.theme.POINT};
-    }
-  }
-`
-
-const Container = styled.div`
-  position: fixed;
-  .PrivateSwipeArea-root-5 {
-    z-index: 0;
-  }
-  .PrivateSwipeArea-root-10 {
-    z-index: 0;
-  }
-  .PrivateSwipeArea-root-15 {
-    z-index: 0;
-  }
-  .PrivateSwipeArea-root-20 {
-    z-index: 0;
-  }
-  div.open-btn {
-    position: absolute;
-    z-index: 1;
-    height: 100vh;
-    width: 15px;
-    display: flex;
-    justify-content: center;
-    background: ${(props) => props.theme.POINT};
-    color: white;
-    &:hover {
-      width: 30px;
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.3);
       color: ${(props) => props.theme.POINT};
     }
   }
@@ -149,6 +133,14 @@ const StyledDrawer = styled(SwipeableDrawer)`
     color: ${(props) => props.theme.GENERAL_FONT};
   }
 `
+const Subtitle = styled.div`
+  margin: 5px 10px;
+  padding: 5px 0;
+  font-size: 1.4em;
+  font-weight: 600;
+  color: ${(props) => props.theme.POINT};
+  border-bottom: 2px solid ${(props) => props.theme.POINT};
+`
 
 const StyledTreeItem = styled(TreeItem)`
   && .MuiTreeItem-root {
@@ -161,10 +153,13 @@ const StyledTreeItem = styled(TreeItem)`
     }
   }
   && .MuiTypography-root {
-    margin: 5px;
+    margin: 2px;
+    padding: 5px;
+    font-weight: 500;
     color: ${(props) => props.theme.GENERAL_FONT};
     &:hover {
-      background: ${(props) => props.theme.SUB_BORDER};
+      border-left: 5px solid ${(props) => props.theme.POINT};
+      background: ${(props) => props.theme.BOARD_LIST_HOVER};
     }
   }
 `
