@@ -21,7 +21,6 @@ const Wrapper = styled.div`
 const ContentWrapper = styled.div`
   box-sizing: border-box;
   line-height: 1.5em;
-  margin: 10px;
   padding: 15px;
   border-radius: 5px;
   background: ${(props) => props.theme.BOARD_LIST_HOVER};
