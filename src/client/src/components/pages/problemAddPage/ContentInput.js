@@ -1,16 +1,13 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 
-const ContentInput = () => {
-  const handleContentChange = (e) => {
-    console.log('content: ' + `${e.target.value}`)
-  }
+const ContentInput = forwardRef((props, ref) => {
   return (
     <div>
-      <StyledInput type="text" placeholder="내용을 입력하세요." onChange={handleContentChange} />
+      <StyledInput type="text" placeholder="내용을 입력하세요." ref={ref} />
     </div>
   )
-}
+})
 
 export default ContentInput
 

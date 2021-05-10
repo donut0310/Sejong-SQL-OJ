@@ -1,26 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import styled from 'styled-components'
 import ContentInput from './ContentInput'
 import DynamicTable from './DynamicTable'
 
-// TODO 내용, 테이블 삭제도 가능해야하나..
-
 const DescriptionInput = () => {
-  const [content, setContent] = useState([])
+  const textInput = useRef() // 텍스트 내용 가져오는 ref 변수
+
+  const [description, setDescription] = useState([]) // 문제 내용 저장하는 변수
+
+  const [renderingContent, setRenderingContent] = useState([]) // 단순 컴포넌트 매핑하기 위한 배열
 
   const handleAddTable = () => {
     console.log('Add Example table')
-    setContent([...content, DynamicTable])
+    setRenderingContent([...renderingContent, DynamicTable])
   }
   const handleAddContent = () => {
-    console.log('Add content input')
-    setContent([...content, ContentInput])
+    console.log('Add Content input')
+    setRenderingContent([...renderingContent, ContentInput])
+  }
+
+  const handleSaveDesc = () => {
+    setDescription([...description, textInput.current.value])
   }
 
   const mapContent = (data) => {
     return data.map((content, i) => {
       if (content === DynamicTable) return <DynamicTable key={i} />
-      else return <ContentInput key={i} />
+      else
+        return (
+          <div key={i}>
+            <ContentInput ref={textInput} />
+            <button id="submit-btn" onClick={handleSaveDesc}>
+              SAVE
+            </button>
+            {description}
+          </div>
+        )
     })
   }
 
@@ -37,7 +52,7 @@ const DescriptionInput = () => {
           </button>
         </div>
       </TitleContainer>
-      <div>{mapContent(content)}</div>
+      <div>{mapContent(renderingContent)}</div>
     </div>
   )
 }
