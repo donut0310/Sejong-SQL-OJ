@@ -36,7 +36,7 @@ const LoginForm = ({ logIn }) => {
       {errors.id && <ErrorMessage>아이디를 입력하세요</ErrorMessage>}
       <LoginTextField variant="outlined" size="small" name="password" label="비밀번호" placeholder="비밀번호" type="password" inputRef={register({ required: true })} />
       {errors.password && <ErrorMessage>비밀번호를 입력하세요</ErrorMessage>}
-      <SubmitBtn type="submit" onClick={onSubmit}>
+      <SubmitBtn type="submit" onClick={handleSubmit(onSubmit)}>
         로그인
       </SubmitBtn>
       <StyledLink onClick={handleRegisterBtn}>회원가입</StyledLink>
