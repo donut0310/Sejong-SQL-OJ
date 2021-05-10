@@ -29,7 +29,7 @@ export class ProblemController {
         const b = await connection.query(sql2, params2);
         connection.release();
 
-        console.log(a[0].length);
+        console.log("a",a[0].length);
         for (let i in a[0]) {
           if (b[0][i] != null) {
             a[0][i].score = b[0][i].score;
@@ -162,14 +162,11 @@ export class ProblemController {
     let classId = c.class_id;
     let result;
     let errorkinds;
-    console.log(classId);
     let scoreController = new ScoreController();
     let score = await scoreController.scoring(req, res);
-
     if (typeof score == "number") {
       if (score === 100) {
         queryCost = await scoreController.check_cost(userQuery);
-        console.log(queryCost);
         result = "Accept";
       } else {
         result = "Wrong Answer";
@@ -211,7 +208,7 @@ export class ProblemController {
       let sql3 =
         "insert into submit_answer(week_id,class_id,user_id,p_id,\
         user_query,query_cost,score,submit_time,result,week_title) \
-        values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?,?);";
+        values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?);";
       let params3 = [
         weekId,
         classId,
