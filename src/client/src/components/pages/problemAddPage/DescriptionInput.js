@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Preview from './Preview'
 import ContentInput from './ContentInput'
@@ -8,7 +8,6 @@ const DescriptionInput = () => {
   const [content, setContent] = useState('')
   const [tableInfo, setTableInfo] = useState([])
 
-  const handleApplyContent = () => {}
   const handleApplyTable = () => {}
 
   return (
@@ -16,9 +15,12 @@ const DescriptionInput = () => {
       <TitleContainer>문제 내용</TitleContainer>
       <Preview content={content} tableInfo={tableInfo} />
       <ContentInput content={content} setContent={setContent} />
-      <ApplyBtn onClick={handleApplyContent}>적용</ApplyBtn>
       <TableInput tableInfo={tableInfo} setTableInfo={setTableInfo} />
-      <ApplyBtn onClick={handleApplyTable}>적용</ApplyBtn>
+      <div style={{ textAlign: 'end' }}>
+        <button id="submit-btn" onClick={handleApplyTable}>
+          적용
+        </button>
+      </div>
     </Wrapper>
   )
 }
@@ -26,6 +28,8 @@ const DescriptionInput = () => {
 export default DescriptionInput
 
 const Wrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
   border: 1px solid blue;
 `
 
@@ -39,8 +43,4 @@ const TitleContainer = styled.div`
   width: 100%;
   align-items: center;
   justify-content: space-between;
-`
-
-const ApplyBtn = styled.div`
-  border: 3px solid pink;
 `
