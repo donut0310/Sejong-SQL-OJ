@@ -25,7 +25,16 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
   const Contents = paragraph.map((p, i) => {
     return i === 0 ? (
       <>
-        <Text>{p}</Text>
+        <Text>
+          {p.split('\n').map((line) => {
+            return (
+              <span>
+                {line}
+                <br />
+              </span>
+            )
+          })}
+        </Text>
       </>
     ) : (
       <>
