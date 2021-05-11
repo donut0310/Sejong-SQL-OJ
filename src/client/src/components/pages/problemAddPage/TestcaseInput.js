@@ -1,37 +1,39 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded'
+import FileInput from './FileInput'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
-import { Grid } from '@material-ui/core'
 
 const TestcaseInput = () => {
-  const [id, setId] = useState(1)
-  const [testcases, setTestcases] = useState([
-    {
-      id: `${id}`,
-      inputFile: '',
-      outputFile: '',
-    },
-  ])
+  const [tcId, setTcId] = useState(1)
+  const [fileForms, setfileForms] = useState([{ id: 1, component: FileInput }])
+  const [inputs, setInputs] = useState([{}])
+  const [outputs, setOutputs] = useState([{}])
 
   const handleAddTC = () => {
-    setId(id + 1)
-    setTestcases([...testcases, { id: `${id}`, inputFile: '', outputFile: '' }])
-    console.log('Add Testcase', id)
+    setfileForms([...fileForms, { id: tcId + 1, component: FileInput }])
+    setTcId(tcId + 1)
   }
 
-  const handleDeleteTC = (tcID) => () => {
-    const tcList = testcases.filter((tc) => tc.id !== tcID)
-    setTestcases(tcList)
+  const filterByID = (array, index) => () => {
+    const filtered = []
+    for (let i = 0; i < array.length; i++) {
+      const obj = array[i]
+      if (obj.id !== index) {
+        filtered.push(obj)
+      }
+    }
+    return filtered
   }
 
-  // TODO setTestcases(input, output file)
-  const handleInputUpload = (e) => {
-    console.log('input file: ', e.target.value)
-  }
-
-  const handleOutputUpload = (e) => {
-    console.log('output file: ', e.target.value)
+  const handleDeleteTC = (index) => () => {
+    console.log('INDEX: ', index)
+    const inputList = filterByID(inputs, index)
+    const outputList = filterByID(outputs, index)
+    const tmpFileForm = filterByID(fileForms, index)
+    setInputs(inputList)
+    setOutputs(outputList)
+    setfileForms(tmpFileForm)
   }
 
   return (
@@ -41,29 +43,18 @@ const TestcaseInput = () => {
         <StyledAddBtn onClick={handleAddTC} />
       </TitleContainer>
       <FileContainer>
-        {testcases.map((testcase, i) => (
-          <div id="testcase" key={i} style={{ margin: '10px 0' }}>
-            {testcases.length === 1 ? (
+        {fileForms.map((f, i) => (
+          <div key={i}>
+            {fileForms.length === 1 ? (
               <></>
             ) : (
               <div id="delete-div" style={{ width: '100%', textAlign: 'end' }}>
-                <StyledDeleteBtn onClick={handleDeleteTC(testcase.id)} />
+                <StyledDeleteBtn onClick={handleDeleteTC(f.id)} />
               </div>
             )}
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <p style={{ fontWeight: '600' }}>Input {i + 1}</p>
-                <StyledUploadContainer type="file" id="input-file" accept=".sql" onChange={handleInputUpload} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <p style={{ fontWeight: '600' }}>Output {i + 1}</p>
-                <StyledUploadContainer type="file" id="output-file" accept=".json" onChange={handleOutputUpload} />
-              </Grid>
-            </Grid>
+            <FileInput tcId={tcId} testcnt={f.id} inputs={inputs} outputs={outputs} setInputs={setInputs} setOutputs={setOutputs} />
           </div>
         ))}
-
-        {console.log('TC LIST=> ', testcases)}
       </FileContainer>
     </Wrapper>
   )
@@ -93,14 +84,12 @@ const StyledAddBtn = styled(AddCircleOutlineRoundedIcon)`
     color: ${(props) => props.theme.SUB_FONT};
   }
 `
-
 const StyledDeleteBtn = styled(HighlightOffIcon)`
   &:hover {
     cursor: pointer;
     color: ${(props) => props.theme.SUB_FONT};
   }
 `
-
 const FileContainer = styled.div`
   border-radius: 5px;
   width: 100%;
@@ -108,19 +97,4 @@ const FileContainer = styled.div`
   border: 1px solid ${(props) => props.theme.SUB_BORDER};
   padding: 15px;
   box-sizing: border-box;
-`
-
-const StyledUploadContainer = styled.input`
-  width: 100%;
-  box-sizing: border-box;
-  border-radius: 5px;
-  margin: 5px 0;
-  padding: 10px;
-  background: ${(props) => props.theme.BOARD_TITLE};
-  border: 1px dashed ${(props) => props.theme.MAIN_BORDER};
-  cursor: pointer;
-  &:hover {
-    border: 1px dashed ${(props) => props.theme.MAIN_BORDER};
-    background: ${(props) => props.theme.SUB_BORDER};
-  }
 `
