@@ -1,26 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
-const ContentInput = ({ content, setContent }) => {
-  const [input, setInput] = useState('')
-
+const ContentInput = ({ contentInput, setContentInput }) => {
   const handleInputChange = (e) => {
-    setInput(e.target.value)
-  }
-  const handleApplyContent = () => {
-    setContent(content + input + '\n')
-    setInput('')
+    setContentInput(e.target.value)
   }
 
   return (
     <div>
-      <StyledInput variant="outlined" label="내용 추가" multiline rows={3} type="text" placeholder="내용을 입력하세요." value={input} onChange={handleInputChange} />
-      <div style={{ textAlign: 'end' }}>
-        <button id="submit-btn" onClick={handleApplyContent}>
-          적용
-        </button>
-      </div>
+      <StyledInput variant="outlined" label="내용 추가" multiline rows={3} type="text" placeholder="내용을 입력하세요." value={contentInput} onChange={handleInputChange} />
     </div>
   )
 }
