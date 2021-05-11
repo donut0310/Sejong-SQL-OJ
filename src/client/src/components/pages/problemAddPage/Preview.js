@@ -20,7 +20,7 @@ const Preview = ({ description, tableInfo }) => {
         <Arrow />
         미리보기
       </TitleContainer>
-      <ContentWrapper>{description === '' ? '내용이 표시됩니다.' : <Problem id="preview" table_info={tableInfo} paragraph={p} paragraphCnt={pCnt} />}</ContentWrapper>
+      <ContentWrapper>{description === '' ? <p style={{ color: 'gray' }}>내용이 표시됩니다.</p> : <Problem id="preview" table_info={tableInfo} paragraph={p} paragraphCnt={pCnt} />}</ContentWrapper>
     </Wrapper>
   )
 }
@@ -57,6 +57,7 @@ const ContentWrapper = styled.div`
   line-height: 1.5em;
   padding: 15px;
   border-radius: 5px;
-  background: ${(props) => props.theme.HEADER_BACKGROUND};
+  min-height: 250px;
+  background: ${(props) => props.theme.BACKGROUND};
   border: 1px solid ${(props) => props.theme.SUB_BORDER};
 `

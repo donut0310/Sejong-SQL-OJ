@@ -14,7 +14,7 @@ const ContentInput = ({ contentInput, setContentInput }) => {
         <Arrow />
         내용 입력
       </TitleContainer>
-      <StyledInput variant="outlined" label="내용" multiline rows={3} type="text" placeholder="내용을 입력하세요." value={contentInput} onChange={handleInputChange} />
+      <StyledInput variant="outlined" label="내용" multiline rows={10} type="text" placeholder="내용을 입력하세요." value={contentInput} onChange={handleInputChange} />
     </Wrapper>
   )
 }
