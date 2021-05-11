@@ -108,33 +108,23 @@ export class ProblemController {
     const params = [pId];
     let [tcId] = await database.queryExecute(sql, params);
     tcId = tcId.tc_id;
-    const sql2 =
-      "select tc_content from testcase_problem where p_id = ? and tc_id = ?";
-    const params2 = [pId, tcId];
-    let [sql3] = await database.queryExecute(sql2, params2);
-    sql3 = sql3.tc_content;
     try {
-      const connection = await database.pool.getConnection(
-        async (conn) => conn
-      );
+      const connection =await database.testCaseConnect(tcId)
       try {
         connection.beginTransaction();
-        await connection.query(sql3);
         const [a] = await connection.query(userQuery);
-
         connection.rollback();
         connection.release();
-        data.result.is_error = false;
-
-        data.result.exec_result = a;
+        data.result = a;
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
         console.log(err);
         connection.rollback();
         connection.release();
-        data.result.is_error = true;
-        data.result.err_msg = err;
+        data.result= null;
+        data.error = err.sqlMessage;
+        data.message = "fail";
         res.status(400).send(data);
         return;
       }
@@ -144,8 +134,11 @@ export class ProblemController {
       data.result.err_msg = err;
       res.status(400).send(data);
       return;
-    }
+      }
+    
+  
   }
+
   // 문제 제출 
   async getProblemCommit(req, res) {
     let dataBase = new Database();
@@ -201,7 +194,6 @@ export class ProblemController {
       weekTitle,
     ];
     await dataBase.queryExecute(sql, params);
-    
     //top_submit_answer 탐색후 조정
     let sql2 =
       "select score,submit_cnt from top_submit_answer where p_id=? and user_id = ?;";

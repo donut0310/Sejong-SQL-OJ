@@ -50,11 +50,11 @@ export class Database {
           } catch(err) {
             console.log(err);
             connection.release();
-            return false;
+            return err;
           }
         } catch(err) {
           console.log(err);
-          return false;
+          return err;
         }
       case 1:
         try {
@@ -68,11 +68,11 @@ export class Database {
           } catch(err) {
             console.log(err);
             connection.release();
-            return false;
+            return err;
           }
         } catch(err) {
           console.log(err);
-          return false;
+          return err;
         }
       case 2:
         try {
@@ -86,11 +86,11 @@ export class Database {
           } catch(err) {
             console.log(err);
             connection.release();
-            return false;
+            return err;
           }
         } catch(err) {
           console.log(err);
-          return false;
+          return err;
         }
       case 3:
         try {
@@ -104,11 +104,11 @@ export class Database {
           } catch(err) {
             console.log(err);
             connection.release();
-            return false;
+            return err;
           }
         } catch(err) {
           console.log(err);
-          return false;
+          return err;
         }
       case 4:
         try {
@@ -122,14 +122,35 @@ export class Database {
           } catch(err) {
             console.log(err);
             connection.release();
-            return false;
+            return err;
           }
         } catch(err) {
           console.log(err);
-          return false;
+          return err;
         }
       default:
         return;
+    }
+  }
+  async testCaseConnect(num){
+    let connection;
+    switch(num){
+      case 0:
+         connection = await this.tc0_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 1:
+         connection = await this.tc1_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 2:
+         connection = await this.tc2_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 3:
+         connection = await this.tc3_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 4:
+         connection = await this.tc4_pool.getConnection(async (conn) => conn);
+        return connection;
+
     }
   }
 }
