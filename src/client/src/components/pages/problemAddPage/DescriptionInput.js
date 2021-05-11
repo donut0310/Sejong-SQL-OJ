@@ -5,17 +5,30 @@ import ContentInput from './ContentInput'
 import TableInput from './TableInput'
 
 const DescriptionInput = () => {
-  const [content, setContent] = useState('')
-  const [tableInfo, setTableInfo] = useState([])
+  const [description, setDescription] = useState('')
 
-  const handleApplyTable = () => {}
+  const [contentInput, setContentInput] = useState('')
+  const [tableInput, setTableInput] = useState('')
+
+  const handleApplyContent = () => {
+    setDescription(description + contentInput + '\n')
+    setContentInput('')
+  }
+  const handleApplyTable = () => {
+    // TODO setDescription()
+  }
 
   return (
     <Wrapper>
       <TitleContainer>문제 내용</TitleContainer>
-      <Preview content={content} tableInfo={tableInfo} />
-      <ContentInput content={content} setContent={setContent} />
-      <TableInput tableInfo={tableInfo} setTableInfo={setTableInfo} />
+      <Preview description={description} />
+      <ContentInput contentInput={contentInput} setContentInput={setContentInput} />
+      <div style={{ textAlign: 'end' }}>
+        <button id="submit-btn" onClick={handleApplyContent}>
+          적용
+        </button>
+      </div>
+      <TableInput tableInput={tableInput} setTableInput={setTableInput} />
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleApplyTable}>
           적용
