@@ -1,95 +1,44 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-const TableInput = ({ tableInput, setTableInput }) => {
-  // TODO 범위
-  const defaultRowCnt = 8
-  const defaultColCnt = 8
-
-  const [attributes, setAttributes] = useState(() => {
-    const temp = []
-    for (let i = 0; i < defaultColCnt; i++) temp.push('')
-
-    return temp
-  })
-
-  const [instance, setInstance] = useState(() => {
-    const temp = []
-
-    for (let i = 1; i < defaultRowCnt; i++) {
-      let row = []
-      for (let j = 0; j < defaultColCnt; j++) row.push('')
-      temp.push(row)
-    }
-
-    return temp
-  })
-
-  // TODO
-  const ex = [
-    [
-      { id: '1', name: 'Gob', value: '2' },
-      { id: '2', name: 'Buster', value: '5' },
-      { id: '3', name: 'George Michael', value: '4' },
-    ],
-    [
-      { id: '1', name: 'Gob', value: '2', cnt: '5' },
-      { id: '2', name: 'Buster', value: '5', cnt: '5' },
-      { id: '3', name: 'George asdsadsadasdasMichael', value: '4', cnt: '5' },
-    ],
-  ]
-
-  const handlePrintBtn = () => {
-    for (let i = 0; i < defaultRowCnt; i++) {
-      let temp = []
-      for (let j = 0; j < defaultColCnt; j++) {
-        if (i === 0) temp.push(attributes[j])
-        else temp.push(instance[i - 1][j])
-      }
-      console.log(temp)
-    }
-  }
-
+const TableInput = ({ defaultRowCnt, defaultColCnt, attributes, setAttributes, instance, setInstance }) => {
   return (
     <Wrapper>
       테이블
-      <div onClick={handlePrintBtn}>출력</div>
       <TableWrapper>
         {[...Array(defaultRowCnt)].map((a, i) => {
           return (
             <>
               {i === 0 ? (
-                // ! attributes
+                // attributes
                 <RowWrapper>
                   {[...Array(defaultColCnt)].map((a, j) => (
                     <AttributeInput
+                      value={attributes[j]}
                       onChange={(e) => {
                         setAttributes(
                           attributes.map((a, index) => {
                             return index === j ? e.target.value : a
                           })
                         )
-                        console.log(i, j, attributes[j])
                       }}
                     />
                   ))}
                 </RowWrapper>
               ) : (
-                // ! instance
+                // instance
                 <RowWrapper>
                   {[...Array(defaultColCnt)].map((a, j) => (
-                    // ! -----------------------
                     <InstanceInput
+                      value={instance[i - 1][j]}
                       onChange={(e) => {
                         setInstance(
                           instance.map((a, rowIndex) => {
                             return rowIndex === i - 1 ? a.map((b, colIndex) => (colIndex === j ? e.target.value : b)) : a
                           })
                         )
-                        console.log(i, j, instance[i - 1][j])
                       }}
                     />
-                    // ! -----------------------
                   ))}
                 </RowWrapper>
               )}

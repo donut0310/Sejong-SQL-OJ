@@ -6,6 +6,12 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
   const [attributes, setAttributes] = useState([])
 
   useEffect(() => {
+    console.log('paragraph', paragraph)
+    console.log('paragraphCnt', paragraphCnt)
+    console.log('table_info', table_info)
+  }, [])
+
+  useEffect(() => {
     const a = []
     table_info.forEach((t) => {
       let temp = []
@@ -13,7 +19,6 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
       a.push(temp)
     })
 
-    console.log('a', a)
     setAttributes(a)
   }, [table_info, paragraph, paragraphCnt])
 
