@@ -9,6 +9,7 @@ const TestcaseInput = () => {
   const [fileForms, setfileForms] = useState([{ id: 1, component: FileInput }])
   const [inputs, setInputs] = useState([{}])
   const [outputs, setOutputs] = useState([{}])
+  const [testcases, setTestcases] = useState([])
 
   const handleAddTC = () => {
     setfileForms([...fileForms, { id: tcId + 1, component: FileInput }])
@@ -36,6 +37,19 @@ const TestcaseInput = () => {
     setfileForms(tmpFileForm)
   }
 
+  // TESTCASE 출력해보면 입력된 만큼 다 들어가있음, 삭제된 건 잘 삭제됐고
+  // 근데 문제는 파일 입력하는 곳에 이름이 이상하게 써있음 !! 개 짜 증 나 !!
+  const handleTestcaseSubmit = () => {
+    if (inputs.length !== outputs.length) alert('파일을 모두 업로드 해주세요.')
+    else {
+      for (let i = 0; i < inputs.length - 1; i++) {
+        // setTestcases 함수 안쓰고 push 써도 되는지 몰으겠음 ㅎㅎ ;;
+        testcases.push({ id: i + 1, inputFile: inputs[i + 1].inputFile, outputFile: outputs[i + 1].outputFile })
+      }
+    }
+    console.log('TESTCASES => ', testcases)
+  }
+
   return (
     <Wrapper>
       <TitleContainer>
@@ -52,10 +66,14 @@ const TestcaseInput = () => {
                 <StyledDeleteBtn onClick={handleDeleteTC(f.id)} />
               </div>
             )}
-            <FileInput tcId={tcId} testcnt={f.id} inputs={inputs} outputs={outputs} setInputs={setInputs} setOutputs={setOutputs} />
+            <FileInput tcId={f.id} testcnt={f.id} inputs={inputs} outputs={outputs} setInputs={setInputs} setOutputs={setOutputs} />
           </div>
         ))}
       </FileContainer>
+      {/* 테스트케이스 데이터 확인용 버튼 */}
+      <button id="submit-btn" style={{ width: '150px' }} onClick={handleTestcaseSubmit}>
+        TESTCASE 적용 test
+      </button>
     </Wrapper>
   )
 }
