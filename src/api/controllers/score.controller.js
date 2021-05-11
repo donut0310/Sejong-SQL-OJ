@@ -31,53 +31,69 @@ export class ScoreController {
       tcCnt=tcCnt[0].tc_cnt;
       let tcAnswer=await database.queryExecute(sql3,params);
       let score=0
+      
       for(var j=0;j<tcCnt;j++){
-          let userJson = await database.testCaseQueryExecute(j,userQuery);
-          let answerString = tcAnswer[j].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
-          answerString=answerString.replace(/(\s*)/g, "");
-          if(JSON.stringify(userJson) === answerString){
-            score+= 100;
-          }
-          else if(userJson.length==0){
-            score+= 0;
-          }
-          else{
-            let answerJson=JSON.parse(answerString)
-            let correct=0;
-            let length=0;
-              if (userJson.length<answerJson.length){
-                length=answerJson.length
-                answerJson=JSON.stringify(answerJson)
-                for(var i=0; i<userJson.length; i++){
-                  if(answerJson.includes(JSON.stringify(userJson[i]))){
-                    i-=1;
-                    userJson.splice(i,1);
-                    correct+=1;
+        try {
+          const connection =await database.testCaseConnect(j)
+          try {
+            connection.beginTransaction();
+            let [userJson] = await connection.query(userQuery);
+            let answerString = tcAnswer[j].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
+            answerString=answerString.replace(/(\s*)/g, "");
+            if(JSON.stringify(userJson) === answerString){
+              score+= 100;
+            }
+            else if(userJson.length==0){
+              score+= 0;
+            }
+            else{
+              let answerJson=JSON.parse(answerString)
+              let correct=0;
+              let length=0;
+                if (userJson.length<answerJson.length){
+                  length=answerJson.length
+                  answerJson=JSON.stringify(answerJson)
+                  for(var i=0; i<userJson.length; i++){
+                    if(answerJson.includes(JSON.stringify(userJson[i]))){
+                      i-=1;
+                      userJson.splice(i,1);
+                      correct+=1;
+                    }
                   }
                 }
-              }
-              else{
-                length=userJson.length
-                userJson=JSON.stringify(userJson)
-                for(var i=0; i<answerJson.length; i++){
-                  if(userJson.includes(JSON.stringify(answerJson[i]))){
-                    i-=1
-                    answerJson.splice(i,1);
-                    correct+=1
+                else{
+                  length=userJson.length
+                  userJson=JSON.stringify(userJson)
+                  for(var i=0; i<answerJson.length; i++){
+                    if(userJson.includes(JSON.stringify(answerJson[i]))){
+                      i-=1
+                      answerJson.splice(i,1);
+                      correct+=1
+                    }
                   }
                 }
-              }
-              // 순서만 다른 경우
-              if (correct==length){
-                score+= 50
-              }
-              else{
-                score+= 100*(correct)/length;
-              }
-              
+                // 순서만 다른 경우
+                if (correct==length){
+                  score+= 50
+                }
+                else{
+                  score+= 100*(correct)/length;
+                }
+            }
+            connection.rollback();
+            connection.release();
+          } catch (err) {
+            console.log(err);
+            connection.rollback();
+            connection.release();
+            return err;
           }
+        } catch (err) {
+          console.log(err);
+          return err;
+          }
+      
       }
-
     score=score/tcCnt;
     console.log("score",score)
     return score;

@@ -135,8 +135,6 @@ export class ProblemController {
       res.status(400).send(data);
       return;
       }
-    
-  
   }
 
   // 문제 제출 
@@ -173,7 +171,7 @@ export class ProblemController {
       //에러 종류 추후에 나누기
       result = "error";
       data.result.err_msg = errorkinds;
-      data.message = result;
+      data.message = "fail";
     }
 
     //submit_table insert
@@ -243,10 +241,10 @@ export class ProblemController {
     //사용자가 지금까지 제출한 답안 보여주기
     let sql6 =
       "select submit_id, user_id, result ,score,user_query,submit_time\
-    from submit_answer where p_id=? and user_id= ?;";
+    from submit_answer where p_id=? and user_id= ? order by submit_id desc;";
     let params6 = [pId, userId];
-    let [b] = await dataBase.queryExecute(sql6, params6);
-    data.result.exec_result = b;
+    let b = await dataBase.queryExecute(sql6, params6);
+    data.result = b;
     res.status(200).send(data);
   }
 }
