@@ -15,7 +15,8 @@ const TimeInput = () => {
           <StyledTimePicker
             id="datetime-local"
             type="datetime-local"
-            defaultValue="2021-03-24T10:30"
+            label="Start Time"
+            variant="outlined"
             onChange={handleDateTimeChange}
             InputLabelProps={{
               shrink: true,
@@ -27,7 +28,8 @@ const TimeInput = () => {
           <StyledTimePicker
             id="datetime-local"
             type="datetime-local"
-            defaultValue="2021-03-24T10:30"
+            label="End Time"
+            variant="outlined"
             onChange={handleDateTimeChange}
             InputLabelProps={{
               shrink: true,
@@ -44,12 +46,24 @@ export default TimeInput
 const StyledTimePicker = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.BOARD_LIST_HOVER};
-    padding: 2px 10px;
-    border-radius: 5px;
+    margin-top: 10px;
     box-sizing: border-box;
+    background: ${(props) => props.theme.INPUT_BACKGROUND};
+    border-radius: 5px;
   }
-  #datetime-local {
+  .MuiInputBase-input {
     color: ${(props) => props.theme.GENERAL_FONT};
+  }
+  .MuiInputLabel-formControl {
+    color: ${(props) => props.theme.GENERAL_FONT};
+  }
+  .MuiFormLabel-root.Mui-focused {
+    color: ${(props) => props.theme.POINT};
+  }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: ${(props) => props.theme.POINT};
+  }
+  .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    border: 1.5px solid ${(props) => props.theme.SUB_BORDER};
   }
 `
