@@ -222,6 +222,23 @@ export class ProblemController {
         weekTitle
       ];
       await dataBase.queryExecute(sql3, params3);
+      let sql5 = `insert into top_submit_answer(
+        week_id,class_id,user_id,p_id,user_query,
+        query_cost,score,submit_time,result,week_title,submit_cnt);`;
+        let params5 = [
+          weekId,
+          classId,
+          userId,
+          pId,
+          userQuery,
+          queryCost,
+          score,
+          new Date(),
+          result,
+          weekTitle,
+          1
+        ];
+        await dataBase.queryExecute(sql5, params5);
     } else {
       if (a.score <= score) {
         let sql4 = `UPDATE top_submit_answer SET user_query=?, 
