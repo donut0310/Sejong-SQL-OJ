@@ -146,6 +146,7 @@ export class ProblemController {
       return;
     }
   }
+  // 문제 제출 
   async getProblemCommit(req, res) {
     let dataBase = new Database();
     let queryCost = 0;
@@ -155,6 +156,7 @@ export class ProblemController {
     let pId = req.params.pId;
     let userQuery = req.body.user_query;
 
+    //문제 정보 가져오기
     const s = "select week_title, week_id, class_id from problem where p_id=?";
     const [c] = await dataBase.queryExecute(s, [pId]);
     let weekTitle = c.week_title;
@@ -180,7 +182,6 @@ export class ProblemController {
       data.result.err_msg = errorkinds;
       data.message = result;
     }
-    // console.log(queryCost)
 
     //submit_table insert
     let sql =
@@ -199,32 +200,18 @@ export class ProblemController {
       result,
       weekTitle,
     ];
+    await dataBase.queryExecute(sql, params);
+    
     //top_submit_answer 탐색후 조정
     let sql2 =
       "select score,submit_cnt from top_submit_answer where p_id=? and user_id = ?;";
     let params2 = [pId, userId];
     let [a] = await dataBase.queryExecute(sql2, params2);
     if (a=== undefined) {
-      let sql3 =
-        "insert into submit_answer(week_id,class_id,user_id,p_id,\
-        user_query,query_cost,score,submit_time,result,week_title) \
-        values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?);";
-      let params3 = [
-        weekId,
-        classId,
-        userId,
-        pId,
-        userQuery,
-        queryCost,
-        score,
-        new Date(),
-        result,
-        weekTitle
-      ];
-      await dataBase.queryExecute(sql3, params3);
       let sql5 = `insert into top_submit_answer(
         week_id,class_id,user_id,p_id,user_query,
-        query_cost,score,submit_time,result,week_title,submit_cnt);`;
+        query_cost,score,submit_time,result,week_title,submit_cnt)
+        values(? ,? ,? ,? ,?, ?, ?, ?, ? ,?,?);`;
         let params5 = [
           weekId,
           classId,
