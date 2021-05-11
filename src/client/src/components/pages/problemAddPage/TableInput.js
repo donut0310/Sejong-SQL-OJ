@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 const TableInput = ({ defaultRowCnt, defaultColCnt, attributes, setAttributes, instance, setInstance }) => {
   return (
     <Wrapper>
-      테이블
+      <TitleContainer>
+        <Arrow />
+        테이블 입력
+      </TitleContainer>
       <TableWrapper>
         {[...Array(defaultRowCnt)].map((a, i) => {
           return (
@@ -54,7 +58,26 @@ export default TableInput
 
 const Wrapper = styled.div`
   box-sizing: border-box;
-  padding: 5px;
+  padding: 10px;
+`
+
+const TitleContainer = styled.div`
+  margin: 10px 0;
+  font-size: 1em;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+`
+
+const Arrow = styled(ArrowForwardIosIcon)`
+  && {
+    width: 0.5em;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
 `
 
 const TableWrapper = styled.div`

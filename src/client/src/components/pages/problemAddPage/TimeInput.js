@@ -8,10 +8,10 @@ const TimeInput = () => {
   }
   return (
     // TODO Time limit INFINITE 추가
-    <div>
+    <Wrapper>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <p style={{ fontSize: '1.2em', fontWeight: '600', margin: '25px 0 10px 0' }}>시작 일시 설정</p>
+          <TitleContainer>시작 일시 설정</TitleContainer>
           <StyledTimePicker
             id="datetime-local"
             type="datetime-local"
@@ -24,7 +24,7 @@ const TimeInput = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <p style={{ fontSize: '1.2em', fontWeight: '600', margin: '25px 0 10px 0' }}>마감 일시 설정</p>
+          <TitleContainer>마감 일시 설정</TitleContainer>
           <StyledTimePicker
             id="datetime-local"
             type="datetime-local"
@@ -37,11 +37,27 @@ const TimeInput = () => {
           />
         </Grid>
       </Grid>
-    </div>
+    </Wrapper>
   )
 }
 
 export default TimeInput
+
+const Wrapper = styled.div`
+  margin-bottom: 60px;
+`
+
+const TitleContainer = styled.div`
+  margin-bottom: 10px;
+  font-size: 1.4em;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`
 
 const StyledTimePicker = styled(TextField)`
   && {

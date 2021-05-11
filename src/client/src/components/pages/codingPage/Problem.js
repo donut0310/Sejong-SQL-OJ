@@ -54,18 +54,20 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
     )
   })
 
-  return <ProblemWrapper>{Contents}</ProblemWrapper>
+  return <ProblemWrapper id="problem">{Contents}</ProblemWrapper>
 }
 
 export default Problem
 
 const ProblemWrapper = styled.div`
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: ${(props) => props.theme.EDITOR_BACKGROUND};
-  color: ${(props) => props.theme.GENERAL_FONT};
+  .problem {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: ${(props) => props.theme.EDITOR_BACKGROUND};
+    color: ${(props) => props.theme.GENERAL_FONT};
+  }
 `
 
 const Text = styled.div`
