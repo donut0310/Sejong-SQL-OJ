@@ -5,26 +5,24 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import { Grid } from '@material-ui/core'
 
 const TestcaseInput = () => {
-  const [tcCnt, setTcCnt] = useState(1)
+  const [id, setId] = useState(1)
   const [testcases, setTestcases] = useState([
     {
-      count: `${tcCnt}`,
+      id: `${id}`,
       inputFile: '',
       outputFile: '',
     },
   ])
 
   const handleAddTC = () => {
-    setTestcases([...testcases, { count: `${tcCnt + 1}`, inputFile: '', outputFile: '' }])
-    setTcCnt(tcCnt + 1)
-    console.log('Add Testcase')
+    setId(id + 1)
+    setTestcases([...testcases, { id: `${id}`, inputFile: '', outputFile: '' }])
+    console.log('Add Testcase', id)
   }
 
-  // TODO delete 시 카운트 값 변화 때문에 제대로 삭제 처리가 안되고 있음
   const handleDeleteTC = (tcID) => () => {
-    const tcList = testcases.filter((tc) => tc.count !== tcID)
+    const tcList = testcases.filter((tc) => tc.id !== tcID)
     setTestcases(tcList)
-    setTcCnt(tcCnt - 1)
   }
 
   // TODO setTestcases(input, output file)
@@ -37,7 +35,7 @@ const TestcaseInput = () => {
   }
 
   return (
-    <div>
+    <Wrapper>
       <TitleContainer>
         테스트케이스 추가
         <StyledAddBtn onClick={handleAddTC} />
@@ -45,11 +43,11 @@ const TestcaseInput = () => {
       <FileContainer>
         {testcases.map((testcase, i) => (
           <div id="testcase" key={i} style={{ margin: '10px 0' }}>
-            {tcCnt === 1 ? (
+            {testcases.length === 1 ? (
               <></>
             ) : (
               <div id="delete-div" style={{ width: '100%', textAlign: 'end' }}>
-                <StyledDeleteBtn onClick={handleDeleteTC(testcase.count)} />
+                <StyledDeleteBtn onClick={handleDeleteTC(testcase.id)} />
               </div>
             )}
             <Grid container spacing={2}>
@@ -65,25 +63,30 @@ const TestcaseInput = () => {
           </div>
         ))}
 
-        {console.log('TC 개수: ', tcCnt)}
-        {console.log('TC VALUE => ', testcases)}
+        {console.log('TC LIST=> ', testcases)}
       </FileContainer>
-    </div>
+    </Wrapper>
   )
 }
 
 export default TestcaseInput
 
+const Wrapper = styled.div`
+  margin-bottom: 60px;
+`
+
 const TitleContainer = styled.div`
-  margin: 25px 0 10px 0;
-  font-size: 1.2em;
-  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 1.4em;
+  font-weight: bold;
   display: flex;
   flex-direction: row;
+  box-sizing: border-box;
   width: 100%;
   align-items: center;
   justify-content: space-between;
 `
+
 const StyledAddBtn = styled(AddCircleOutlineRoundedIcon)`
   &:hover {
     cursor: pointer;
@@ -99,10 +102,10 @@ const StyledDeleteBtn = styled(HighlightOffIcon)`
 `
 
 const FileContainer = styled.div`
-  border: none;
   border-radius: 5px;
   width: 100%;
-  background: ${(props) => props.theme.BOARD_LIST_HOVER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
   padding: 15px;
   box-sizing: border-box;
 `

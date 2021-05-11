@@ -6,14 +6,30 @@ const TitleInput = () => {
     console.log('title: ' + `${e.target.value}`)
   }
   return (
-    <div>
-      <p style={{ margin: '25px 0 10px 0', fontSize: '1.2em', fontWeight: '600' }}>문제 제목</p>
-      <StyledInput variant="outlined" label="문제 제목" size="small" type="text" placeholder="제목을 입력하세요." autoFocus onChange={handleTitleChange}></StyledInput>
-    </div>
+    <Wrapper>
+      <TitleContainer>문제 제목</TitleContainer>
+      <StyledInput variant="outlined" label="제목" size="small" type="text" placeholder="제목을 입력하세요." autoFocus onChange={handleTitleChange}></StyledInput>
+    </Wrapper>
   )
 }
 
 export default TitleInput
+
+const Wrapper = styled.div`
+  margin-bottom: 60px;
+`
+
+const TitleContainer = styled.div`
+  margin-bottom: 10px;
+  font-size: 1.4em;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`
 
 const StyledInput = styled(TextField)`
   && {
