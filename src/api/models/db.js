@@ -42,9 +42,10 @@ export class Database {
         try {
           const connection = await this.tc0_pool.getConnection(async conn => conn);
           try {
+            connection.beginTransaction();
             const [rows] = await connection.query(sql, params);
+            connection.rollback();
             connection.release();
-            console.log(rows)
             return rows
           } catch(err) {
             console.log(err);
@@ -59,9 +60,10 @@ export class Database {
         try {
           const connection = await this.tc1_pool.getConnection(async conn => conn);
           try {
+            connection.beginTransaction();
             const [rows] = await connection.query(sql, params);
+            connection.rollback();
             connection.release();
-            console.log(rows)
             return rows
           } catch(err) {
             console.log(err);
@@ -76,7 +78,9 @@ export class Database {
         try {
           const connection = await this.tc2_pool.getConnection(async conn => conn);
           try {
+            connection.beginTransaction();
             const [rows] = await connection.query(sql, params);
+            connection.rollback();
             connection.release();
             return rows
           } catch(err) {
@@ -92,7 +96,9 @@ export class Database {
         try {
           const connection = await this.tc3_pool.getConnection(async conn => conn);
           try {
+            connection.beginTransaction();
             const [rows] = await connection.query(sql, params);
+            connection.rollback();
             connection.release();
             return rows
           } catch(err) {
@@ -108,7 +114,9 @@ export class Database {
         try {
           const connection = await this.tc4_pool.getConnection(async conn => conn);
           try {
+            connection.beginTransaction();
             const [rows] = await connection.query(sql, params);
+            connection.rollback();
             connection.release();
             return rows
           } catch(err) {

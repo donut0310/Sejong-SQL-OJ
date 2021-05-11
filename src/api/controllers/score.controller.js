@@ -6,7 +6,11 @@
 import { Database } from "../models/db.js";
 export class ScoreController {  
     async scoring(req,res) {
+      // 사용자가 입력한 정답에 ;가 있는지 판별 
       let userQuery=req.body.user_query;
+      if(userQuery.indexOf(';') == -1) {
+        userQuery=userQuery+';'  
+      }
       let sql = "select tc_cnt from problem where p_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=?  order by tc_id asc;"
       let sql3= "select tc_answer from testcase_problem where p_id=? order by tc_id asc;"
@@ -63,7 +67,6 @@ export class ScoreController {
                   }
                 }
               }
-              console.log(correct)
               // 순서만 다른 경우
               if (correct==length){
                 score+= 50
@@ -74,79 +77,7 @@ export class ScoreController {
               
           }
       }
-      
-    //   for(var i=0;i<tcCnt;i++){
-    //     let sql4=rowsResult[i].tc_content
-    //     try {
-    //       const connection = await database.pool.getConnection(async (conn) => conn);
-    //       try {
-    //         connection.beginTransaction();
-    //         await connection.query(sql4);
-    //         try{
-    //           let [userJson] = await connection.query(userQuery);
-    //           let answerString = tcAnswer[i].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
-    //           answerString=answerString.replace(/(\s*)/g, "");
-    //           if(JSON.stringify(userJson) === answerString){
-    //             score+= 100;
-    //           }
-    //           else if(userJson.length==0){
-    //             score+= 0;
-    //           }
-    //           else{
-    //             let answerJson=JSON.parse(answerString)
-    //             let correct=0;
-    //             let length=0;
-    //               if (userJson.length<answerJson.length){
-    //                 length=answerJson.length
-    //                 answerJson=JSON.stringify(answerJson)
-    //                 for(var i=0; i<userJson.length; i++){
-    //                   if(answerJson.includes(JSON.stringify(userJson[i]))){
-    //                     i-=1;
-    //                     userJson.splice(i,1);
-    //                     correct+=1;
-    //                   }
-    //                 }
-    //               }
-    //               else{
-    //                 length=userJson.length
-    //                 userJson=JSON.stringify(userJson)
-    //                 for(var i=0; i<answerJson.length; i++){
-    //                   if(userJson.includes(JSON.stringify(answerJson[i]))){
-    //                     i-=1
-    //                     answerJson.splice(i,1);
-    //                     correct+=1
-    //                   }
-    //                 }
-    //               }
-    //               console.log(correct)
-    //               // 순서만 다른 경우
-    //               if (correct==length){
-    //                 score+= 50
-    //               }
-    //               else{
-    //                 score+= 100*(correct)/length;
-    //               }
-    //           }
-    //           connection.rollback();
-    //           connection.release();
-    //         } catch (err2){
-    //           console.log(err2)
-    //           connection.rollback();
-    //           connection.release();
-    //           return err2
-    //         }
-    //       } catch (err) {
-    //         console.log(err)
-    //         console.log(err);
-    //         connection.release();
-    //         return err;
-    //       }
 
-    //   } catch(err) {
-    //     console.log(err);
-    //     return err;
-    //   }
-    // }
     score=score/tcCnt;
     console.log("score",score)
     return score;
@@ -170,7 +101,7 @@ export class ScoreController {
     else{
       let temp= userQuery.split(';');
       let userQueryLast=temp[temp.length-1]
-      userQuery="explain FORMAT=json "+userQueryLast
+      userQuery="explain FORMAT=json "+userQueryLast+";"
     }
     let query_cost=0
     try {
