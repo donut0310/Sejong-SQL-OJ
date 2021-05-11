@@ -1,77 +1,159 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
-// TODO 내용 수정 가능한 테이블 작성 add row col 버튼 ㄷㅏ시 잘 생각해바..
+const TableInput = ({ tableInput, setTableInput }) => {
+  // TODO 범위
+  const defaultRowCnt = 8
+  const defaultColCnt = 8
 
-const TableInput = () => {
-  const handleTableChange = (e) => {
-    // let copy = [...tableInfo]
-    // copy[row][column] = +event.target.value
-    // setTableInfo(copy)
-    console.log(e.target.value)
-  }
+  const [attributes, setAttributes] = useState(() => {
+    const temp = []
+    for (let i = 0; i < defaultColCnt; i++) temp.push('')
 
-  const [tableCols, setTableCols] = useState([])
-  const [tableInfo, setTableInfo] = useState([[<StyledInput type="text" placeholder="입력하세요" onChange={handleTableChange} />]])
+    return temp
+  })
 
-  const handleAddCol = () => {
-    console.log('Add column')
+  const [instance, setInstance] = useState(() => {
+    const temp = []
 
-    setTableInfo([[...tableInfo, <StyledInput type="text" placeholder="입력하세요" />]])
-    setTableCols([tableInfo])
-    console.log(tableInfo)
-  }
+    for (let i = 1; i < defaultRowCnt; i++) {
+      let row = []
+      for (let j = 0; j < defaultColCnt; j++) row.push('')
+      temp.push(row)
+    }
 
-  const handleAddRow = () => {
-    console.log('Add row')
-    setTableInfo([[...tableInfo], tableCols])
-    console.log(tableInfo)
+    return temp
+  })
+
+  // TODO
+  const ex = [
+    [
+      { id: '1', name: 'Gob', value: '2' },
+      { id: '2', name: 'Buster', value: '5' },
+      { id: '3', name: 'George Michael', value: '4' },
+    ],
+    [
+      { id: '1', name: 'Gob', value: '2', cnt: '5' },
+      { id: '2', name: 'Buster', value: '5', cnt: '5' },
+      { id: '3', name: 'George asdsadsadasdasMichael', value: '4', cnt: '5' },
+    ],
+  ]
+
+  const handlePrintBtn = () => {
+    for (let i = 0; i < defaultRowCnt; i++) {
+      let temp = []
+      for (let j = 0; j < defaultColCnt; j++) {
+        if (i === 0) temp.push(attributes[j])
+        else temp.push(instance[i - 1][j])
+      }
+      console.log(temp)
+    }
   }
 
   return (
-    <Container>
-      <div style={{ display: 'flex', padding: '0 0 0 20px', justifyContent: 'space-between', alignItems: 'center', fontWeight: '500' }}>
-        <span style={{ paddingTop: '5px' }}>테이블 입력</span>
-        <div>
-          <button id="submit-btn" onClick={handleAddCol}>
-            열 추가
-          </button>
-          <button id="submit-btn" onClick={handleAddRow}>
-            행 추가
-          </button>
-        </div>
-      </div>
-
-      <ul id="table-list" style={{ margin: '10px 0' }}>
-        <ul id="content-list" style={{ display: 'flex', flexDirection: 'column', padding: '0' }}>
-          {tableInfo.map((row, rowIndex) => (
-            <ul id="content" key={rowIndex} style={{ display: 'flex', flexDirection: 'row' }}>
-              {row.map((column, columnIndex) => (
-                <li id="content" key={columnIndex}>
-                  {column}
-                </li>
-              ))}
-            </ul>
-          ))}
-        </ul>
-      </ul>
-    </Container>
+    <Wrapper>
+      테이블
+      <div onClick={handlePrintBtn}>출력</div>
+      <TableWrapper>
+        {[...Array(defaultRowCnt)].map((a, i) => {
+          return (
+            <>
+              {i === 0 ? (
+                // ! attributes
+                <RowWrapper>
+                  {[...Array(defaultColCnt)].map((a, j) => (
+                    <AttributeInput
+                      onChange={(e) => {
+                        setAttributes(
+                          attributes.map((a, index) => {
+                            return index === j ? e.target.value : a
+                          })
+                        )
+                        console.log(i, j, attributes[j])
+                      }}
+                    />
+                  ))}
+                </RowWrapper>
+              ) : (
+                // ! instance
+                <RowWrapper>
+                  {[...Array(defaultColCnt)].map((a, j) => (
+                    // ! -----------------------
+                    <InstanceInput
+                      onChange={(e) => {
+                        setInstance(
+                          instance.map((a, rowIndex) => {
+                            return rowIndex === i - 1 ? a.map((b, colIndex) => (colIndex === j ? e.target.value : b)) : a
+                          })
+                        )
+                        console.log(i, j, instance[i - 1][j])
+                      }}
+                    />
+                    // ! -----------------------
+                  ))}
+                </RowWrapper>
+              )}
+            </>
+          )
+        })}
+      </TableWrapper>
+    </Wrapper>
   )
 }
 
 export default TableInput
 
-const Container = styled.div`
+const Wrapper = styled.div`
   box-sizing: border-box;
-`
-const StyledInput = styled.input`
-  background: ${(props) => props.theme.BOARD_TITLE};
-  color: ${(props) => props.theme.GENERAL_FONT};
   padding: 5px;
-  margin: 10px;
-  border: none;
-  border-radius: 5px;
-  &:focus {
-    outline: 0;
+`
+
+const TableWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`
+
+const RowWrapper = styled.div`
+  width: 100%;
+  display: flex;
+`
+
+const AttributeInput = styled.input`
+  width: 100%;
+  height: 25px;
+  border: 1px solid black;
+  display: flex;
+
+  background: ${(props) => props.theme.INPUT_TABLE_TITLE};
+  color: ${(props) => props.theme.GENERAL_FONT};
+
+  font-weight: bold;
+  text-align: center;
+
+  :focus {
+    outline: none;
   }
 `
+
+const InstanceInput = styled.input`
+  width: 100%;
+  height: 25px;
+  border: 1px solid black;
+  display: flex;
+
+  background: ${(props) => props.theme.INPUT_TABLE_CONTENTS};
+  color: ${(props) => props.theme.GENERAL_FONT};
+
+  text-align: center;
+
+  :focus {
+    outline: none;
+  }
+`
+
+// background: ${(props) => props.theme.BOARD_TITLE};
+// color: ${(props) => props.theme.GENERAL_FONT};
+// &:focus {
+//   outline: 0;
+// }

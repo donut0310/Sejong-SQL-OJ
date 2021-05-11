@@ -19,6 +19,9 @@ export const lightTheme = {
 
   EDITOR_THEME: 'tomorrow',
   EDITOR_BACKGROUND: '#efefef',
+
+  INPUT_TABLE_TITLE: '#d9d9d9',
+  INPUT_TABLE_CONTENTS: '#ffffff',
 }
 
 export const darkTheme = {
@@ -42,4 +45,7 @@ export const darkTheme = {
 
   EDITOR_THEME: 'tomorrow_night',
   EDITOR_BACKGROUND: '#2a2a2a',
+
+  INPUT_TABLE_TITLE: '#737373',
+  INPUT_TABLE_CONTENTS: '#a1a1a1',
 }
