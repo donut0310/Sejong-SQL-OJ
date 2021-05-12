@@ -26,12 +26,12 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
     return i === 0 ? (
       <>
         <Text>
-          {p.split('\n').map((line) => {
+          {p.split('\n').map((line, j) => {
             return (
-              <span>
+              <div key={j}>
                 {line}
                 <br />
-              </span>
+              </div>
             )
           })}
         </Text>
@@ -58,7 +58,16 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
             ))}
           </ul>
         </Table>
-        <Text>{p}</Text>
+        <Text key={i}>
+          {p.split('\n').map((line, j) => {
+            return (
+              <div key={j}>
+                {line}
+                <br />
+              </div>
+            )
+          })}
+        </Text>
       </>
     )
   })
