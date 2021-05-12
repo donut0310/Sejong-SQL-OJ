@@ -8,13 +8,12 @@ const UserTable = ({ problemList, user }) => {
 
   const classId = 1
   const weekId = 1
-  const pId = 1
 
-  const handleProblemName = () => {
-    history.push(`${classId}/${weekId}/problem/${pId}`)
+  const handleProblemName = (pId) => {
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
-  const handleStatus = () => {
-    history.push(`${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+  const handleStatus = (pId) => {
+    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
   }
 
   const parseDateTime = (data) => {
@@ -55,7 +54,12 @@ const UserTable = ({ problemList, user }) => {
               {problem.p_id}
             </li>
             <li id="content" style={{ width: '20%' }}>
-              <button id="problem" onClick={handleProblemName}>
+              <button
+                id="problem"
+                onClick={() => {
+                  handleProblemName(problem.p_id)
+                }}
+              >
                 {problem.title}
               </button>
             </li>
@@ -74,7 +78,13 @@ const UserTable = ({ problemList, user }) => {
               {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              <StyledButton onClick={handleStatus}>Status</StyledButton>
+              <StyledButton
+                onClick={() => {
+                  handleStatus(problem.p_id)
+                }}
+              >
+                Status
+              </StyledButton>
             </li>
           </ul>
         ))}

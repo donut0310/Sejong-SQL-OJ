@@ -16,10 +16,10 @@ const Main = () => {
   return (
     <MainWrapper maxWidth="md">
       <Route exact path="/" component={MainPage} />
-      <Route path="/coding" component={CodingPage} />
-      <Route path="/problems" component={ProblemPage} />
-      <Route path="/status" component={StatusPage} />
-      <Route path="/check" component={CodeCheckPage} />
+      <Route path="/:classId/:weekId/problem/:pId" component={CodingPage} />
+      <Route path="/:classId/:weekId/contents" component={ProblemPage} />
+      <Route path="/:classId/:weekId/status" component={StatusPage} />
+      <Route path="/:classId/:weekId/code/:submitId" component={CodeCheckPage} />
       <Route path="/addproblem" component={ProblemAddPage} />
       <Route path="/manage" component={ClassManagePage} />
     </MainWrapper>
