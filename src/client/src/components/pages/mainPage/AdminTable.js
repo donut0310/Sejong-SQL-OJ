@@ -5,11 +5,17 @@ import styled from 'styled-components'
 const AdminTable = () => {
   const history = useHistory()
 
+  const classId = 1
+  const weekId = 1
+  const pId = 1
+  // admin userId
+  const userId = 1
+
   const handleProblemName = () => {
-    history.push('/coding')
+    history.push(`${classId}/${weekId}/problem/${pId}`)
   }
   const handleStatus = () => {
-    history.push('status')
+    history.push(`${classId}/${weekId}/status?userId=${userId}&pId=${pId}`)
   }
 
   const problems = [

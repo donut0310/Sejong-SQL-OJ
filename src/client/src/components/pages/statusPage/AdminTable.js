@@ -3,6 +3,10 @@ import { useHistory } from 'react-router'
 import styled from 'styled-components'
 
 const AdminTable = () => {
+  const classId = 1
+  const weekId = 1
+  const submitId = 1
+
   const history = useHistory()
   const scores = [
     { id: '1701', name: '홍ㅇㅇ', score: '100', query_cost: '3.42' },
@@ -12,7 +16,7 @@ const AdminTable = () => {
   // TODO test case 별로 점수 나타내기
 
   const handleCodeCheck = () => {
-    history.push('/check')
+    history.push(`${classId}/${weekId}/code/${submitId}`)
   }
 
   return (

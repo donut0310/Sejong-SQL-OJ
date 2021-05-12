@@ -14,12 +14,15 @@ const ModalComponent = ({ user }) => {
   const history = useHistory()
   const [toggleMenu, setToggleMenu] = useState(false)
 
+  const classId = 1
+  const weekId = 1
+
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
   }
 
   const handleWeekInfo = () => {
-    history.push('/problems')
+    history.push(`${classId}/${weekId}/contents`)
     handleToggleMenu()
   }
 

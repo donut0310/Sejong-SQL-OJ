@@ -1,15 +1,20 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
-const UserTable = ({ problemList }) => {
+const UserTable = ({ problemList, user }) => {
   const history = useHistory()
 
+  const classId = 1
+  const weekId = 1
+  const pId = 1
+
   const handleProblemName = () => {
-    history.push('/coding')
+    history.push(`${classId}/${weekId}/problem/${pId}`)
   }
   const handleStatus = () => {
-    history.push('status')
+    history.push(`${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
   }
 
   const parseDateTime = (data) => {
@@ -78,7 +83,13 @@ const UserTable = ({ problemList }) => {
   )
 }
 
-export default UserTable
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  }
+}
+
+export default connect(mapStateToProps)(UserTable)
 
 const Container = styled.div`
   display: flex;

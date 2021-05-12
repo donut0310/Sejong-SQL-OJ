@@ -14,7 +14,7 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
-const Code = ({ theme }) => {
+const Code = ({ theme, user }) => {
   const [fontSize, setFontSize] = useState(14)
   const history = useHistory()
 
@@ -28,7 +28,10 @@ const Code = ({ theme }) => {
   }
 
   // TODO
+  const classId = 1
+  const weekId = 1
   const pId = '1'
+  const submitId = ''
   const input = 'select * from aaa'
 
   const handleExecCode = () => {
@@ -40,7 +43,7 @@ const Code = ({ theme }) => {
   }
 
   const handleSubmitCode = () => {
-    history.push('/status')
+    history.push(`${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
     ;(async () => {
       const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
       // data => message: string
@@ -49,6 +52,8 @@ const Code = ({ theme }) => {
   }
 
   return (
+    // submitId !=== null -> 수정
+    // else -> 새로 작성
     <>
       <div style={{ width: 'auto', textAlign: 'end' }}>
         <select id="select-form" name="글자" onChange={handleFontSize}>
@@ -124,9 +129,10 @@ const Code = ({ theme }) => {
   )
 }
 
-const mapStateToProps = ({ theme }) => {
+const mapStateToProps = ({ theme, user }) => {
   return {
     theme: theme.mode,
+    user,
   }
 }
 

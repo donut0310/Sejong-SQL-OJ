@@ -5,8 +5,12 @@ import styled from 'styled-components'
 const CompleteTable = () => {
   const history = useHistory()
 
+  const classId = 1
+  const weekId = 1
+  const pId = 1
+
   const handleProblemName = () => {
-    history.push('/coding')
+    history.push(`${classId}/${weekId}/problem/${pId}`)
   }
 
   const complete = [{ class: '데이터베이스(001)', name: 'SQL 연습(1)', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' }]

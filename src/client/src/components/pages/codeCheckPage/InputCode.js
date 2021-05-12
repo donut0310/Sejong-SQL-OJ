@@ -13,10 +13,15 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
 const InputCode = ({ theme, code }) => {
+  const classId = 1
+  const weekId = 1
+  const pId = 1
+  const submitId = 1
+
   const [fontSize, setFontSize] = useState(14)
   const history = useHistory()
   const handleEditCode = () => {
-    history.push('/coding')
+    history.push(`${classId}/${weekId}/problem/${pId}/${submitId}`)
   }
   const onChange = (input) => {
     console.log(input)
