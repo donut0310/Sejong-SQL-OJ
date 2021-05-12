@@ -37,7 +37,7 @@ const Admin = () => {
   // ]
 
   const handleAddProblem = () => {
-    history.push('/admin/addProblem')
+    history.push('/addProblem')
   }
 
   const [problemList, setProblemList] = useState([])

@@ -43,7 +43,7 @@ const Code = ({ theme, user }) => {
   }
 
   const handleSubmitCode = () => {
-    history.push(`${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
     ;(async () => {
       const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
       // data => message: string

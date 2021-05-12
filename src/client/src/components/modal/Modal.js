@@ -22,7 +22,7 @@ const ModalComponent = ({ user }) => {
   }
 
   const handleWeekInfo = () => {
-    history.push(`${classId}/${weekId}/contents`)
+    history.push(`/${classId}/${weekId}/contents`)
     handleToggleMenu()
   }
 

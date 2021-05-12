@@ -12,10 +12,10 @@ const AdminTable = ({ problemList }) => {
   const userId = 1
 
   const handleProblemName = () => {
-    history.push(`${classId}/${weekId}/problem/${pId}`)
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
   const handleStatus = () => {
-    history.push(`${classId}/${weekId}/status?userId=${userId}&pId=${pId}`)
+    history.push(`/${classId}/${weekId}/status?userId=${userId}&pId=${pId}`)
   }
 
   const handleEdit = () => {

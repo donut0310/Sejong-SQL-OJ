@@ -21,7 +21,7 @@ const InputCode = ({ theme, code }) => {
   const [fontSize, setFontSize] = useState(14)
   const history = useHistory()
   const handleEditCode = () => {
-    history.push(`${classId}/${weekId}/problem/${pId}/${submitId}`)
+    history.push(`/${classId}/${weekId}/problem/${pId}/${submitId}`)
   }
   const onChange = (input) => {
     console.log(input)

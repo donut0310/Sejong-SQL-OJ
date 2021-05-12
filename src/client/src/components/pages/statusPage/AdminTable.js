@@ -16,7 +16,7 @@ const AdminTable = () => {
   // TODO test case 별로 점수 나타내기
 
   const handleCodeCheck = () => {
-    history.push(`${classId}/${weekId}/code/${submitId}`)
+    history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
 
   return (

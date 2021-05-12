@@ -10,7 +10,7 @@ const IncompleteTable = () => {
   const pId = 1
 
   const handleProblemName = () => {
-    history.push(`${classId}/${weekId}/problem/${pId}`)
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
 
   const incomplete = [

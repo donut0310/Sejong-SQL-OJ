@@ -16,7 +16,7 @@ const UserTable = () => {
   ]
 
   const handleCodeCheck = () => {
-    history.push(`${classId}/${weekId}/code/${submitId}`)
+    history.push(`/${classId}/${weekId}/code/${submitId}`)
     // TODO 자기 코드만 볼 수 있어야함.
   }
 

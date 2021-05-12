@@ -10,7 +10,7 @@ const CompleteTable = () => {
   const pId = 1
 
   const handleProblemName = () => {
-    history.push(`${classId}/${weekId}/problem/${pId}`)
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
 
   const complete = [{ class: '데이터베이스(001)', name: 'SQL 연습(1)', submit: '1', score: '100', start: 'Infinite', end: 'Infinite' }]
