@@ -65,5 +65,10 @@ export default User
 const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px;
+
+  box-sizing: border-box;
+  line-height: 1.4em;
+  padding: 15px;
+  border-radius: 5px;
+  min-height: 250px;
 `

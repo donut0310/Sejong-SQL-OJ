@@ -54,7 +54,7 @@ const Arrow = styled(ArrowForwardIosIcon)`
 
 const ContentWrapper = styled.div`
   box-sizing: border-box;
-  line-height: 1.5em;
+  line-height: 1.4em;
   padding: 15px;
   border-radius: 5px;
   min-height: 250px;
