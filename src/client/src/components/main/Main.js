@@ -20,7 +20,7 @@ const Main = () => {
       <Route path="/problems" component={ProblemPage} />
       <Route path="/status" component={StatusPage} />
       <Route path="/check" component={CodeCheckPage} />
-      <Route path="/admin/addproblem" component={ProblemAddPage} />
+      <Route path="/addproblem" component={ProblemAddPage} />
       <Route path="/manage" component={ClassManagePage} />
     </MainWrapper>
   )
