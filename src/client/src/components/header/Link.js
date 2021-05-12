@@ -10,10 +10,8 @@ import { toggleTheme, logOut } from '../../redux'
 const NavLink = ({ toggleTheme, user, logOut }) => {
   const history = useHistory()
 
-  // WIP
   const handleLogOutBtn = async () => {
     const result = await logOut()
-    console.log('logout result=>', result)
     history.push('/login')
   }
 

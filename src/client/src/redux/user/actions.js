@@ -82,9 +82,9 @@ export const logOut = () => {
     try {
       console.log('logOut Start')
       dispatch(logOutRequest())
-      // TODO
-      // const response = await axios.get('/api/user/logout')
-      // console.log(response.data)
+
+      const { data } = await axios.get('/api/v1/auth/signout')
+      console.log(data)
 
       dispatch(logOutSuccess())
       return {
