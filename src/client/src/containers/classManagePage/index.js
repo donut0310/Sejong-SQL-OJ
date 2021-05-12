@@ -35,7 +35,6 @@ const ClassManagePage = () => {
 export default ClassManagePage
 
 const PageWrapper = styled.div`
-  border: 1px solid black;
   color: ${(props) => props.theme.GENERAL_FONT};
-  /* padding-bottom: 20px; */
+  /* border: 1px solid black; */
 `

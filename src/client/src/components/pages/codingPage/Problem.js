@@ -39,18 +39,18 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
     ) : (
       <>
         <Table>
-          <ul id="table-list" style={{ margin: '0', width: 'auto' }}>
-            <ul id="title-tab" style={{ marginTop: '5px' }}>
+          <ul id="table-table-list" style={{ margin: '0' }}>
+            <ul id="table-title-tab" style={{ marginTop: '5px' }}>
               {attributes[i - 1].map((attribute, j) => (
-                <li id="content" style={{ width: '20%' }} key={j}>
+                <li id="table-content" key={j}>
                   {attribute}
                 </li>
               ))}
             </ul>
             {table_info[i - 1].map((row, j) => (
-              <ul id="content-list" key={j}>
+              <ul id="table-content-list" key={j}>
                 {attributes[i - 1].map((attribute, k) => (
-                  <li id="content" style={{ width: '20%' }} key={k}>
+                  <li id="table-content" key={k}>
                     {row[attribute]}
                   </li>
                 ))}
@@ -85,5 +85,7 @@ const Text = styled.div`
 `
 
 const Table = styled.div`
+  display: flex;
+  /* width: 100%; */
   margin-bottom: 20px;
 `

@@ -5,10 +5,10 @@ import LoginForm from './LoginForm'
 const Login = () => {
   return (
     <Container>
-      <div style={{ fontSize: '3em', textAlign: 'center', marginBottom: '30px' }}>
+      <Title>
         SEJONG <br /> ONLINE JUDGE
-      </div>
-      <div style={{ fontSize: '1.6em', marginBottom: '30px' }}>로그인</div>
+      </Title>
+      <SubTitle>로그인</SubTitle>
       <LoginForm />
     </Container>
   )
@@ -23,5 +23,20 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => props.theme.BACKGROUND};
+`
+
+const Title = styled.div`
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 30px;
+
+  color: ${(props) => props.theme.GENERAL_FONT};
+`
+
+const SubTitle = styled.div`
+  font-size: 1.6em;
+  margin-bottom: 30px;
+
+  color: ${(props) => props.theme.GENERAL_FONT};
 `

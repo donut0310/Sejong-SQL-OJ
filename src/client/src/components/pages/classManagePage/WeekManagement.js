@@ -140,7 +140,11 @@ const WeekManagement = () => {
 export default WeekManagement
 
 const Wrapper = styled.div`
-  padding: 10px;
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border-radius: 5px;
+
+  padding: 10px 10px 20px 10px;
   margin-bottom: 30px;
 `
 
@@ -166,7 +170,7 @@ const AddWeekText = styled.div`
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.INPUT_BACKGROUND};
+    background: ${(props) => props.theme.HEADER_BACKGROUND};
     margin-right: 5px;
     border-radius: 5px;
   }
@@ -231,10 +235,8 @@ const ProblemWrapper = styled.div`
   align-items: center;
 
   padding: 3px;
-  border-left: 4px solid ${(props) => props.theme.BACKGROUND};
+  border-left: 4px solid ${(props) => props.theme.INPUT_BACKGROUND};
 
-  /* border-radius: 5px; */
-  /* background: ${(props) => props.theme.BOARD_LIST_HOVER}; */
   :hover {
     border-left: 4px solid ${(props) => props.theme.POINT};
     background: ${(props) => props.theme.BOARD_LIST_HOVER};

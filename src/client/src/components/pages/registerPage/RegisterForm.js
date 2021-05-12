@@ -85,6 +85,8 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  background: ${(props) => props.theme.BACKGROUND};
 `
 
 const StyledForm = styled.div`
@@ -96,15 +98,18 @@ const StyledForm = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 2.6rem;
-  /* font-weight: bold; */
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 30px;
+
+  color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const SubTitle = styled.div`
-  font-size: 1.7rem;
-  font-weight: bold;
-  margin-top: 30px;
-  margin-bottom: 70px;
+  font-size: 1.6em;
+  margin-bottom: 30px;
+
+  color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const RegisterFormWrapper = styled.form`
