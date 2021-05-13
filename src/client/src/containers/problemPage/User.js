@@ -25,10 +25,9 @@ const User = () => {
       console.log('data.result =>', data.result)
       setProblemList(data.result)
 
-      await axios
-        .get(`/api/v1/week/${weekId}`)
-        .then((res) => setProblemInfo({ className: res.data.class_name, weekName: res.data.week_name }))
-        .catch((err) => console.log('TITLE ERROR', err))
+      const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
+      // const currentInfo = titleData.result[0]
+      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
     })()
   }, [])
 

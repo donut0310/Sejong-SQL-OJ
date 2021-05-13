@@ -4,8 +4,9 @@ import Preview from './Preview'
 import ContentInput from './ContentInput'
 import TableInput from './TableInput'
 
-const DescriptionInput = ({ description, setDescription, tableInfo, setTableInfo }) => {
-  const [contentInput, setContentInput] = useState('')
+const DescriptionInput = ({ contentInput, setContentInput, tableInfo, setTableInfo }) => {
+  const [description, setDescription] = useState('')
+  // 보낼 때 stringify
 
   const handleApplyContent = () => {
     setDescription(description + contentInput + '\n')

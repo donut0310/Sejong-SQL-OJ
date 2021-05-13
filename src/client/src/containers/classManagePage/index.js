@@ -12,7 +12,7 @@ const ClassManagePage = () => {
   const problemInfo = {
     classInfo: '데이터베이스1(김지환)',
   }
-
+  // TODO index -> admin.js생성 후 옮겨야됨
   return (
     <PageWrapper>
       <Title problemInfo={problemInfo} />

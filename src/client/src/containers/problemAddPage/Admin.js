@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
+import { useHistory } from 'react-router-dom'
 import Title from '../../components/title/Title'
 import TitleInput from '../../components/pages/problemAddPage/TitleInput'
 import DescriptionInput from '../../components/pages/problemAddPage/DescriptionInput'
@@ -9,12 +9,24 @@ import TestcaseInput from '../../components/pages/problemAddPage/TestcaseInput'
 import OptionButton from '../../components/pages/problemAddPage/OptionButton'
 
 const Admin = () => {
-  const weekId = 1
+  const history = useHistory()
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
     weekName: '',
   })
+  
+  const [contentInput, setContentInput] = useState('')
+  const [tableInfo, setTableInfo] = useState([])
+
+  const classId = 1
+  const weekId = 1
+
+  useEffect(() => {
+    ;(async () => {
+      const { data } = await axios.get(`/api/v1/week/${weekId}`)
+      // const currentInfo = data.result[0]
+      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
 
   // 문제 제목
   const [title, setTitle] = useState('')
@@ -38,24 +50,34 @@ const Admin = () => {
     console.log('endTime', endTime)
     console.log('isPublic', isPublic)
     console.log('TC')
+//     history.push(history.goBack())
+//     ;(async () => {
+//       const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
+//         title: title,
+//         content: contentInput,
+//         table_info: tableInfo,
+//         start_time: startTime,
+//         end_time: endTime,
+//         is_public: isPublic,
+//       })
+//       console.log('handleUploadProblem => ', data)
+//     })()
   }
 
-  useEffect(() => {
-    ;(async () => {
-      // const { data } = await axios.get(`/api/v1/week/${weekId}`)
-      // console.log('useEffect add problem', data)
-      // await setProblemInfo({ className: data.class_name, weekName: data.week_name })
-    })()
-  }, [])
+  const handleCancel = () => {
+    alert('정말 취소하시겠습니까?')
+    // TODO 취소->유지, 확인->뒤로가기
+    history.goBack()
+  }
 
   return (
     <div>
       <Title problemInfo={problemInfo} />
-      <TitleInput title={title} setTitle={setTitle} />
-      <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
-      <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
+      <TitleInput setTitle={setTitle} />
+      <DescriptionInput description={description} setDescription={setDescription} contentInput={contentInput} setContentInput={setContentInput} tableInfo={tableInfo} setTableInfo={setTableInfo} />
+      <TimeInput startTime={startTime} setStartTime={setStartTime} endTime={endTime} setEndTime={setEndTime} />
       <TestcaseInput />
-      <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleAddProblem={handleAddProblem} />
+      <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )
 }

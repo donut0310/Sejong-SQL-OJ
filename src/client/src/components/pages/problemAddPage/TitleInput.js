@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
+
 const TitleInput = ({ title, setTitle }) => {
   const handleTitleChange = (e) => {
     setTitle(e.target.value)

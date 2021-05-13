@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { withStyles } from '@material-ui/core/styles'
 import { Grid, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 
-const OptionButton = ({ isPublic, setIsPublic, handleAddProblem }) => {
+const OptionButton = ({ isPublic, setIsPublic, handleCancel, handleSubmit }) => {
+
   const RedRadio = withStyles({
     root: {
       color: '#B41313',
@@ -28,8 +29,10 @@ const OptionButton = ({ isPublic, setIsPublic, handleAddProblem }) => {
         </RadioContainer>
       </Grid>
       <Grid item xs={12} sm={6} style={{ textAlign: 'end' }}>
-        <button id="submit-btn">취소</button>
-        <button id="submit-btn" onClick={handleAddProblem}>
+        <button id="submit-btn" onClick={handleCancel}>
+          취소
+        </button>
+        <button id="submit-btn" onClick={handleSubmit}>
           등록
         </button>
       </Grid>
