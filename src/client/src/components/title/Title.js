@@ -7,12 +7,14 @@ const Title = ({ problemInfo }) => {
 
   return (
     <TitleWrapper>
-      <ClassName>{problemInfo.classInfo}</ClassName>
-      <WeekName>{problemInfo.weekInfo}</WeekName>
-      {problemInfo.problemInfo && <ProblemName>문제: {problemInfo.problemInfo}</ProblemName>}
+      <ClassName>{problemInfo.className}</ClassName>
+      <WeekName>{problemInfo.weekName}</WeekName>
+
+      {problemInfo.problemName && <ProblemName>문제: {problemInfo.problemName}</ProblemName>}
+
       <TimeWrapper>
-        <StartTime>{problemInfo.startTime && <>StartTime: {problemInfo.startTime}</>}</StartTime>
-        <EndTime>{problemInfo.endTime && <>EndTime: {problemInfo.endTime}</>}</EndTime>
+        {problemInfo.startTime && <EndTime>StartTime: {problemInfo.startTime}</EndTime>}
+        {problemInfo.endTime && <EndTime>EndTime: {problemInfo.endTime}</EndTime>}
       </TimeWrapper>
       <CurrentTime>CurrentTime: {currentDate}</CurrentTime>
     </TitleWrapper>

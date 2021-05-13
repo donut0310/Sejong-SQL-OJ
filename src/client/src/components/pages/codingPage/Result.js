@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Result = () => {
+const Result = ({ execIsLoading, execIsError, execResult }) => {
   return <ResultWrapper>Result</ResultWrapper>
 }
 
