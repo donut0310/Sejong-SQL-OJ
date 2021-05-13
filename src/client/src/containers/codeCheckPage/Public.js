@@ -173,13 +173,10 @@ const Public = () => {
     ;(async () => {
       // TODO
       const submitId = '1'
-      await axios
-        .get(`/api/v1/user/code/${submitId}`)
-        .then((res) =>
-          // setCode(res.data.result)
-          setProblemInfo({ className: res.data.class_name, weekName: res.data.week_name, problemName: res.data.title })
-        )
-        .catch((err) => console.log(err))
+      const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
+      const result = data.result[0]
+      // setCode(result.code)
+      setProblemInfo({ className: result.class_name, weekName: result.week_name, problemName: result.title })
 
       setCode(dummyCode)
     })()

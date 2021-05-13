@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
-const TitleInput = () => {
+const TitleInput = ({ setTitle }) => {
   const handleTitleChange = (e) => {
-    console.log('title: ' + `${e.target.value}`)
+    setTitle(e.target.value)
   }
   return (
     <Wrapper>

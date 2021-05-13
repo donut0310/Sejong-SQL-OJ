@@ -16,10 +16,9 @@ const Admin = () => {
 
   useEffect(() => {
     ;(async () => {
-      await axios
-        .get(`/api/v1/user/status/${pId}`)
-        .then((res) => setProblemInfo({ className: res.data.class_name, weekName: res.data.week_name, problemName: res.data.title }))
-        .catch((err) => console.log('TITLE ERROR', err))
+      const { data } = await axios.get(`/api/v1/user/status/${pId}`)
+      const res = data.result[0]
+      setProblemInfo({ className: res.class_name, weekName: res.week_name, problemName: res.title })
     })()
   }, [])
 
