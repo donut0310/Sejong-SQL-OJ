@@ -15,12 +15,9 @@ const Admin = () => {
     className: '',
     weekName: '',
   })
-  const [title, setTitle] = useState('')
+  
   const [contentInput, setContentInput] = useState('')
   const [tableInfo, setTableInfo] = useState([])
-  const [startTime, setStartTime] = useState('Infinite')
-  const [endTime, setEndTime] = useState('Infinite')
-  const [isPublic, setIsPublic] = useState(true)
 
   const classId = 1
   const weekId = 1
@@ -30,8 +27,42 @@ const Admin = () => {
       const { data } = await axios.get(`/api/v1/week/${weekId}`)
       // const currentInfo = data.result[0]
       // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
-    })()
-  }, [])
+
+  // 문제 제목
+  const [title, setTitle] = useState('')
+  // 문제 내용 - 보낼 때 stringify
+  const [description, setDescription] = useState('')
+  const [tableInfo, setTableInfo] = useState([])
+  // 시작, 마감 일시
+  const [startTime, setStartTime] = useState('infinite')
+  const [endTime, setEndTime] = useState('infinite')
+  // 공개 / 비공개
+  const [isPublic, setIsPublic] = useState(true)
+  // 테스트 케이스
+  // TODO
+  // 제출 버튼 핸들러
+  const handleAddProblem = () => {
+    console.log('Submit add problem data')
+    console.log('title', title)
+    console.log('description', description)
+    console.log('tableInfo', tableInfo)
+    console.log('startTime', startTime)
+    console.log('endTime', endTime)
+    console.log('isPublic', isPublic)
+    console.log('TC')
+//     history.push(history.goBack())
+//     ;(async () => {
+//       const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
+//         title: title,
+//         content: contentInput,
+//         table_info: tableInfo,
+//         start_time: startTime,
+//         end_time: endTime,
+//         is_public: isPublic,
+//       })
+//       console.log('handleUploadProblem => ', data)
+//     })()
+  }
 
   const handleCancel = () => {
     alert('정말 취소하시겠습니까?')
@@ -39,29 +70,14 @@ const Admin = () => {
     history.goBack()
   }
 
-  const handleUploadProblem = async () => {
-    history.push(history.goBack())
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
-        title: title,
-        content: contentInput,
-        table_info: tableInfo,
-        start_time: startTime,
-        end_time: endTime,
-        is_public: isPublic,
-      })
-      console.log('handleUploadProblem => ', data)
-    })()
-  }
-
   return (
     <div>
       <Title problemInfo={problemInfo} />
       <TitleInput setTitle={setTitle} />
-      <DescriptionInput contentInput={contentInput} setContentInput={setContentInput} tableInfo={tableInfo} setTableInfo={setTableInfo} />
+      <DescriptionInput description={description} setDescription={setDescription} contentInput={contentInput} setContentInput={setContentInput} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput startTime={startTime} setStartTime={setStartTime} endTime={endTime} setEndTime={setEndTime} />
       <TestcaseInput />
-      <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleUploadProblem} />
+      <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )
 }

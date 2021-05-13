@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles'
 import { Grid, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 
 const OptionButton = ({ isPublic, setIsPublic, handleCancel, handleSubmit }) => {
+
   const RedRadio = withStyles({
     root: {
       color: '#B41313',
@@ -16,7 +17,7 @@ const OptionButton = ({ isPublic, setIsPublic, handleCancel, handleSubmit }) => 
 
   const handleChange = (e) => {
     setIsPublic(e.target.value)
-    console.log('Public? ' + `${e.target.value}`)
+    console.log('Public? ', `${e.target.value}`)
   }
 
   return (
