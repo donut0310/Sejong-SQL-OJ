@@ -15,9 +15,6 @@ const Admin = () => {
     className: '',
     weekName: '',
   })
-  
-  const [contentInput, setContentInput] = useState('')
-  const [tableInfo, setTableInfo] = useState([])
 
   const classId = 1
   const weekId = 1
@@ -27,11 +24,15 @@ const Admin = () => {
       const { data } = await axios.get(`/api/v1/week/${weekId}`)
       // const currentInfo = data.result[0]
       // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
+    })()
+  }, [])
 
   // 문제 제목
   const [title, setTitle] = useState('')
   // 문제 내용 - 보낼 때 stringify
   const [description, setDescription] = useState('')
+
+  const [contentInput, setContentInput] = useState('')
   const [tableInfo, setTableInfo] = useState([])
   // 시작, 마감 일시
   const [startTime, setStartTime] = useState('infinite')
@@ -50,18 +51,18 @@ const Admin = () => {
     console.log('endTime', endTime)
     console.log('isPublic', isPublic)
     console.log('TC')
-//     history.push(history.goBack())
-//     ;(async () => {
-//       const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
-//         title: title,
-//         content: contentInput,
-//         table_info: tableInfo,
-//         start_time: startTime,
-//         end_time: endTime,
-//         is_public: isPublic,
-//       })
-//       console.log('handleUploadProblem => ', data)
-//     })()
+    //     history.push(history.goBack())
+    //     ;(async () => {
+    //       const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
+    //         title: title,
+    //         content: contentInput,
+    //         table_info: tableInfo,
+    //         start_time: startTime,
+    //         end_time: endTime,
+    //         is_public: isPublic,
+    //       })
+    //       console.log('handleUploadProblem => ', data)
+    //     })()
   }
 
   const handleCancel = () => {
