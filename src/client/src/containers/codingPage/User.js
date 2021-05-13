@@ -14,6 +14,7 @@ const User = ({ user }) => {
   const history = useHistory()
   const { classId, weekId, pId } = useParams()
 
+  // Title.js
   const [problemInfo, setProblemInfo] = useState({
     className: '',
     weekName: '',
@@ -28,25 +29,45 @@ const User = ({ user }) => {
   const [paragraph, setParagraph] = useState([])
   const [paragraphCnt, setParagraphCnt] = useState(0)
 
+  // TODO Code.js
+  const input = 'select * from aaa'
+
   // Result.js
+  const [isExecuted, setIsExecuted] = useState(false)
   const [execIsLoading, setExecIsLoading] = useState(false)
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
 
-  // TODO
-  const input = 'select * from aaa'
+  // TODO delete dummydata
+  const dummyExecResult = [
+    { id: '1', name: 'Gob', value: '2', cnt: '5' },
+    { id: '2', name: 'Buster', value: '5', cnt: '5' },
+    { id: '3', name: 'George asdsadsadasdasMichael', value: '4', cnt: '5' },
+  ]
 
-  const handleExecCode = () => {
+  const handleExecCode = async () => {
     ;(async () => {
-      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      // const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      // console.log('handleExecCode data=> ', data)
+
       // data => result: {is_error, err_msg, exec_result}, message: "success"
-      console.log('handleExecCode data=> ', data)
 
       // TODO
+      console.log('exec code')
+      // 나중엔 parse 해서
+      setIsExecuted(true)
+      setExecIsLoading(true)
+
+      setTimeout(() => {
+        console.log('setTimeout ?')
+        setExecIsLoading(false)
+        setExecIsError(false)
+        setExecResult(dummyExecResult)
+      }, 1000)
     })()
   }
 
-  const handleSubmitCode = () => {
+  const handleSubmitCode = async () => {
     history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
     ;(async () => {
       const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
@@ -56,7 +77,6 @@ const User = ({ user }) => {
   }
 
   // TODO
-  //
   useEffect(() => {
     console.log('useEffect 실행')
     console.log('classId=>', classId)
@@ -91,7 +111,7 @@ const User = ({ user }) => {
       <Subtitle subtitle={'코드 작성'} />
       <Code handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
-      <Result execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
+      <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
     </PageWrapper>
   )
 }
