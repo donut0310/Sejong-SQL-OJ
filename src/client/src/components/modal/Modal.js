@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -12,42 +13,46 @@ import TreeItem from '@material-ui/lab/TreeItem'
 
 const ModalComponent = ({ user }) => {
   const history = useHistory()
+  const [userClassList, setUserClassList] = useState([{}])
   const [toggleMenu, setToggleMenu] = useState(false)
 
-  const classId = 1
-  const weekId = 1
+  useEffect(() => {
+    console.log('USE EFFECT 실행 - MODAL')
+    // ;(async () => {
+    //   await axios
+    //     .get(`/api/v1/user/${user.id}`)
+    //     .then((res) => setUserClassList(res.data))
+    //     .catch((err) => console.log(err))
+    // })()
+  }, [])
+
+  const dummyUserClassList = [
+    {
+      classId: 15,
+      className: '데이터베이스1 - 김지환',
+      weekList: [
+        { weekId: 3, weekName: '1주차 실습' },
+        { weekId: 5, weekName: '2주차 실습(분석)' },
+      ],
+    },
+    {
+      classId: 19,
+      className: '심화 데이터베이스3 (김지환)',
+      weekList: [
+        { weekId: 1, weekName: '1주차 실습' },
+        { weekId: 16, weekName: '2주차 실습' },
+      ],
+    },
+  ]
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
   }
 
-  const handleWeekInfo = () => {
-    history.push(`/${classId}/${weekId}/contents`)
+  const handleWeekInfo = (classID, weekID) => () => {
+    history.push(`/${classID}/${weekID}/contents`)
     handleToggleMenu()
   }
-
-  const userClassInfo = [
-    {
-      className: '데이터베이스1(김지환)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '4주차 실습(배열)', '5~6주차 실습(연결리스트)'],
-    },
-    {
-      className: '데이터베이스2(김지환)',
-      weekInfo: ['7주차 실습(집합)', '9주차 실습(스택(1))', '10주차 실습(스택(2))', '11주차 실습(큐)', '12주차 실습(트리(1))', '13주차 실습(트리(2))', '14주차 실습(트리(3))'],
-    },
-    {
-      className: '(2020-1학기)자료구조및실습001(이수정)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '12주차 실습(트리(1))', '13주차 실습(트리(2))', '14주차 실습(트리(3))'],
-    },
-    {
-      className: '(2019-2학기)알고리즘및실습001(국형준)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '4주차 실습(배열)', '11주차 실습(큐)', '12주차 실습(트리(1))'],
-    },
-    {
-      className: '고급C프로그래밍및실습002 (김지환)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '4주차 실습(배열)', '5~6주차 실습(연결리스트)', '7주차 실습(집합)', '9주차 실습(스택(1))'],
-    },
-  ]
 
   return (
     <>
@@ -76,11 +81,10 @@ const ModalComponent = ({ user }) => {
           {/* MY CLASS */}
           <Subtitle>My Class</Subtitle>
           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-            {userClassInfo.map((class_, i) => (
-              <StyledTreeItem nodeId={`${parseInt(i)}`} label={class_.className} key={i}>
-                {class_.weekInfo.map((week_, j) => (
-                  // TODO onClick event
-                  <StyledTreeItem label={week_} key={j} onClick={handleWeekInfo} />
+            {dummyUserClassList.map((class_) => (
+              <StyledTreeItem nodeId={`${class_.className}`} key={class_.classId} label={class_.className}>
+                {class_.weekList.map((week_) => (
+                  <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
                 ))}
               </StyledTreeItem>
             ))}
