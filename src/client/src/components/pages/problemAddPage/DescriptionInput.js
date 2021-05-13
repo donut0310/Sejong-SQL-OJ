@@ -4,7 +4,9 @@ import Preview from './Preview'
 import ContentInput from './ContentInput'
 import TableInput from './TableInput'
 
-const DescriptionInput = ({ description, setDescription, contentInput, setContentInput, tableInfo, setTableInfo }) => {
+const DescriptionInput = ({ description, setDescription, tableInfo, setTableInfo }) => {
+  const [contentInput, setContentInput] = useState('')
+
   const handleApplyContent = () => {
     setDescription(description + contentInput + '\n')
     setContentInput('')

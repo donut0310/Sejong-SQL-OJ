@@ -31,8 +31,6 @@ const Admin = () => {
   const [title, setTitle] = useState('')
   // 문제 내용 - 보낼 때 stringify
   const [description, setDescription] = useState('')
-
-  const [contentInput, setContentInput] = useState('')
   const [tableInfo, setTableInfo] = useState([])
   // 시작, 마감 일시
   const [startTime, setStartTime] = useState('infinite')
@@ -75,7 +73,7 @@ const Admin = () => {
     <div>
       <Title problemInfo={problemInfo} />
       <TitleInput title={title} setTitle={setTitle} />
-      <DescriptionInput description={description} setDescription={setDescription} contentInput={contentInput} setContentInput={setContentInput} tableInfo={tableInfo} setTableInfo={setTableInfo} />
+      <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
       <TestcaseInput />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
