@@ -2,10 +2,17 @@ import { Grid, TextField } from '@material-ui/core'
 import styled from 'styled-components'
 import React from 'react'
 
-const TimeInput = () => {
-  const handleDateTimeChange = (e) => {
-    console.log('Date & Time: ' + `${e.target.value}`)
+const TimeInput = ({ setStartTime, setEndTime }) => {
+  const handleStartTimeChange = (e) => {
+    setStartTime(e.target.value)
+    console.log('Time Input changed', e.target.value)
   }
+
+  const handleEndTimeChange = (e) => {
+    setEndTime(e.target.value)
+    console.log('Time Input changed', e.target.value)
+  }
+
   return (
     // TODO Time limit INFINITE 추가
     <Wrapper>
@@ -17,7 +24,7 @@ const TimeInput = () => {
             type="datetime-local"
             label="Start Time"
             variant="outlined"
-            onChange={handleDateTimeChange}
+            onChange={handleStartTimeChange}
             InputLabelProps={{
               shrink: true,
             }}
@@ -30,7 +37,7 @@ const TimeInput = () => {
             type="datetime-local"
             label="End Time"
             variant="outlined"
-            onChange={handleDateTimeChange}
+            onChange={handleEndTimeChange}
             InputLabelProps={{
               shrink: true,
             }}

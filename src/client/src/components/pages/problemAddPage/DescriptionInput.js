@@ -4,11 +4,7 @@ import Preview from './Preview'
 import ContentInput from './ContentInput'
 import TableInput from './TableInput'
 
-const DescriptionInput = () => {
-  const [description, setDescription] = useState('')
-  // 보낼 때 stringify
-  const [tableInfo, setTableInfo] = useState([])
-
+const DescriptionInput = ({ description, setDescription, tableInfo, setTableInfo }) => {
   const [contentInput, setContentInput] = useState('')
 
   const handleApplyContent = () => {
