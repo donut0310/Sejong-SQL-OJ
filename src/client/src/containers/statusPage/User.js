@@ -5,7 +5,7 @@ const User = () => {
   return (
     <>
       <span>
-        아이디:<input id="input-form" type="text" placeholder="아이디"></input>
+        아이디:<input className="input-form" type="text" placeholder="아이디"></input>
       </span>
       <span>
         결과:

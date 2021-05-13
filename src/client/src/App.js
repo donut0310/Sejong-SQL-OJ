@@ -70,7 +70,7 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  input#input-form {
+  input.input-form {
     padding: 5px;
     margin: 5px;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};

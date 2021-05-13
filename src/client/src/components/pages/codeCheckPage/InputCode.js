@@ -46,7 +46,6 @@ const InputCode = ({ theme, code }) => {
       {theme === 'light' ? (
         <AceEditor
           readOnly
-          placeholder="코드를 입력하세요."
           mode="mysql"
           theme="tomorrow"
           name="editor"
@@ -72,7 +71,6 @@ const InputCode = ({ theme, code }) => {
       ) : (
         <AceEditor
           readOnly
-          placeholder="코드를 입력하세요."
           mode="mysql"
           theme="tomorrow_night_bright"
           name="editor"
