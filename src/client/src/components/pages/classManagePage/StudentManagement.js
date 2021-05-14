@@ -3,63 +3,27 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
-const StudentManagement = () => {
-  // dummy data Student, classId
-  const [Student, setStudent] = useState([
-    '19010001',
-    '19010002',
-    '19010003',
-    '19010004',
-    '19010005',
-    '19010006',
-    '19010007',
-    '19010008',
-    '19010009',
-    '19010001',
-    '19010002',
-    '19010003',
-    '19010004',
-    '19010005',
-    '19010006',
-    '19010007',
-    '19010008',
-    '19010009',
-  ])
-  const classId = '1'
-  //
-
-  const textFieldStudent = Student.join('\r\n')
-
+const StudentManagement = ({ student, setStudent, handleSaveStudent }) => {
   const handleChangeStudent = (e) => {
     setStudent(e.target.value.split(/\r\n|\r|\n/))
-    console.log(Student)
-  }
-
-  const handleSaveStudent = () => {
-    console.log('Student List', Student)
-    ;(async () => {
-      await axios
-        .post(`/api/v1/course/enrollStd/${classId}`, { stds: Student })
-        .then((res) => console.log('Student List saved\n' + res))
-        .catch((err) => console.log(err))
-    })()
+    console.log(student)
   }
 
   return (
     <Wrapper>
       <StyledTextField
         id="outlined-basic"
-        label="학생 등록"
+        label="학생 목록"
         multiline
         rows={20}
         variant="outlined"
         placeholder="학번을 입력하세요."
-        value={textFieldStudent}
+        value={student.join('\r\n')}
         onChange={handleChangeStudent}
       ></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveStudent}>
-          저장
+          수정
         </button>
       </div>
     </Wrapper>
@@ -68,12 +32,17 @@ const StudentManagement = () => {
 
 export default StudentManagement
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  padding: 20px 10px 10px 10px;
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border-radius: 5px;
+`
 
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.INPUT_BACKGROUND};
+    background: ${(props) => props.theme.BACKGROUND};
   }
 
   .MuiInputBase-input {
