@@ -1,28 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded'
 import FileInput from './FileInput'
-import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 
-const TestcaseInput = ({ inputs, outputs }) => {
-  const [tcId, setTcId] = useState(1)
-  const [fileForms, setfileForms] = useState([{ id: 1, component: FileInput }])
-
-  const handleAddTC = () => {
-    setfileForms([...fileForms, { id: tcId + 1, component: FileInput }])
-    setTcId(tcId + 1)
-  }
-
+const TestcaseInput = ({ testcases }) => {
   return (
     <Wrapper>
-      <TitleContainer>
-        테스트케이스 추가
-        <StyledAddBtn onClick={handleAddTC} />
-      </TitleContainer>
+      <TitleContainer>테스트케이스 추가</TitleContainer>
       <FileContainer>
-        {fileForms.map((f, i) => (
-          <FileInput key={i} inputs={inputs} outputs={outputs} />
-        ))}
+        <FileInput testcases={testcases} />
       </FileContainer>
     </Wrapper>
   )
@@ -46,18 +31,6 @@ const TitleContainer = styled.div`
   justify-content: space-between;
 `
 
-const StyledAddBtn = styled(AddCircleOutlineRoundedIcon)`
-  &:hover {
-    cursor: pointer;
-    color: ${(props) => props.theme.SUB_FONT};
-  }
-`
-const StyledDeleteBtn = styled(HighlightOffIcon)`
-  &:hover {
-    cursor: pointer;
-    color: ${(props) => props.theme.SUB_FONT};
-  }
-`
 const FileContainer = styled.div`
   border-radius: 5px;
   width: 100%;

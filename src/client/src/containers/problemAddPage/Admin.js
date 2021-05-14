@@ -27,8 +27,7 @@ const Admin = () => {
   // 공개 / 비공개
   const [isPublic, setIsPublic] = useState(true)
   // 테스트 케이스
-  const inputs = new FormData()
-  const outputs = new FormData()
+  const testcases = new FormData()
 
   const classId = 1
   const weekId = 1
@@ -51,22 +50,9 @@ const Admin = () => {
     console.log('startTime', startTime)
     console.log('endTime', endTime)
     console.log('isPublic', isPublic)
-    for (const [index, input] of inputs.entries()) {
-      console.log('INPUT FILE', index, input)
+    for (const [index, file] of testcases.entries()) {
+      console.log('TC FILE', index, file)
     }
-    for (let output of outputs.values()) {
-      console.log('OUTPUT FILE', output)
-    }
-
-    // // testcase file 집합하는 연산
-
-    // for (let i of inputs.values()) {
-    //   testcases.append('inputFile', i)
-    //   testcases.append('outputFile', outputs.values(i))
-    // }
-    // for (let tc of testcases.values()) {
-    //   console.log('FILES', tc)
-    // }
 
     //     history.push(history.goBack())
     //     ;(async () => {
@@ -94,7 +80,7 @@ const Admin = () => {
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
-      <TestcaseInput inputs={inputs} outputs={outputs} />
+      <TestcaseInput testcases={testcases} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )
