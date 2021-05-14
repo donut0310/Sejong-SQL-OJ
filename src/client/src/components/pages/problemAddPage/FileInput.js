@@ -11,7 +11,7 @@ const FileInput = ({ cnt, setCnt, testcases }) => {
 
   useEffect(() => {
     return () => {
-      console.log('TC COUNT=>', cnt)
+      setCnt(printIn.length + 1)
     }
   }, [cnt.printIn, printOut])
 
@@ -23,7 +23,6 @@ const FileInput = ({ cnt, setCnt, testcases }) => {
 
       setPrintIn([...printIn, input.current.files[0]])
       setPrintOut([...printOut, output.current.files[0]])
-      setCnt(cnt + 1)
 
       for (const [index, file] of testcases.entries()) {
         console.log('파일 리스트', index, file)
