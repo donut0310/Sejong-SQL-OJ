@@ -28,6 +28,7 @@ const Admin = () => {
   const [isPublic, setIsPublic] = useState(true)
   // 테스트 케이스
   const testcases = new FormData()
+  const [tcCnt, setTcCnt] = useState(0)
 
   const classId = 1
   const weekId = 1
@@ -42,7 +43,6 @@ const Admin = () => {
 
   // 제출 버튼 핸들러
   const handleAddProblem = () => {
-    // ;(async () => {
     console.log('Submit add problem data')
     console.log('title', title)
     console.log('description', description)
@@ -50,6 +50,7 @@ const Admin = () => {
     console.log('startTime', startTime)
     console.log('endTime', endTime)
     console.log('isPublic', isPublic)
+    console.log('TC cnt', tcCnt)
     for (const [index, file] of testcases.entries()) {
       console.log('TC FILE', index, file)
     }
@@ -80,7 +81,7 @@ const Admin = () => {
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
-      <TestcaseInput testcases={testcases} />
+      <TestcaseInput cnt={tcCnt} setCnt={setTcCnt} testcases={testcases} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )
