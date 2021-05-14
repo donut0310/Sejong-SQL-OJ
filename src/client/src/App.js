@@ -68,6 +68,10 @@ const GlobalStyles = createGlobalStyle`
       cursor: pointer;
       background: #710f0f;
     }
+    &:disabled {
+      cursor: default;
+      background: ${(props) => props.theme.MAIN_BORDER};
+    }
   }
 
   input.input-form {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Grid } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
@@ -11,10 +11,12 @@ const FileInput = ({ testcases }) => {
 
   const handleUpload = (e) => {
     e.preventDefault()
-    testcases.append('Input', input.current.files[0])
-    testcases.append('Output', output.current.files[0])
-    setPrintIn(testcases.getAll('Input'))
-    setPrintOut(testcases.getAll('Output'))
+    if (input.current.files.length !== 0 && output.current.files.length !== 0) {
+      testcases.append('Input', input.current.files[0])
+      testcases.append('Output', output.current.files[0])
+      setPrintIn(testcases.getAll('Input'))
+      setPrintOut(testcases.getAll('Output'))
+    } else alert('파일을 입력해주세요.')
   }
 
   return (
