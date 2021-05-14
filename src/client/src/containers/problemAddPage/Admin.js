@@ -16,17 +16,6 @@ const Admin = () => {
     weekName: '',
   })
 
-  const classId = 1
-  const weekId = 1
-
-  useEffect(() => {
-    ;(async () => {
-      const { data } = await axios.get(`/api/v1/week/${weekId}`)
-      // const currentInfo = data.result[0]
-      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
-    })()
-  }, [])
-
   // 문제 제목
   const [title, setTitle] = useState('')
   // 문제 내용 - 보낼 때 stringify
@@ -38,9 +27,23 @@ const Admin = () => {
   // 공개 / 비공개
   const [isPublic, setIsPublic] = useState(true)
   // 테스트 케이스
-  // TODO
+  const inputs = new FormData()
+  const outputs = new FormData()
+
+  const classId = 1
+  const weekId = 1
+
+  useEffect(() => {
+    ;(async () => {
+      const { data } = await axios.get(`/api/v1/week/${weekId}`)
+      // const currentInfo = data.result[0]
+      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
+    })()
+  }, [])
+
   // 제출 버튼 핸들러
   const handleAddProblem = () => {
+    // ;(async () => {
     console.log('Submit add problem data')
     console.log('title', title)
     console.log('description', description)
@@ -48,7 +51,23 @@ const Admin = () => {
     console.log('startTime', startTime)
     console.log('endTime', endTime)
     console.log('isPublic', isPublic)
-    console.log('TC')
+    for (const [index, input] of inputs.entries()) {
+      console.log('INPUT FILE', index, input)
+    }
+    for (let output of outputs.values()) {
+      console.log('OUTPUT FILE', output)
+    }
+
+    // // testcase file 집합하는 연산
+
+    // for (let i of inputs.values()) {
+    //   testcases.append('inputFile', i)
+    //   testcases.append('outputFile', outputs.values(i))
+    // }
+    // for (let tc of testcases.values()) {
+    //   console.log('FILES', tc)
+    // }
+
     //     history.push(history.goBack())
     //     ;(async () => {
     //       const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
@@ -60,7 +79,7 @@ const Admin = () => {
     //         is_public: isPublic,
     //       })
     //       console.log('handleUploadProblem => ', data)
-    //     })()
+    // })()
   }
 
   const handleCancel = () => {
@@ -75,7 +94,7 @@ const Admin = () => {
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
-      <TestcaseInput />
+      <TestcaseInput inputs={inputs} outputs={outputs} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )
