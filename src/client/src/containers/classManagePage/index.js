@@ -52,21 +52,21 @@ const ClassManagePage = () => {
   const handleSaveStudent = () => {
     console.log('student List', student)
     ;(async () => {
-      const { data } = await axios.post(` /api/v1/course/stds/${classId}`, { stds: student })
+      const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: student })
       console.log('student List updated', data)
     })()
   }
 
   useEffect(() => {
     const fetchStudentData = async () => {
-      const { data } = await axios.get(`/api/v1/course/${classId}`)
+      const { data } = await axios.get(`/api/v1/course/user/${classId}`)
       console.log(data)
       setStudent(data.stds || [])
       setTA(data.assists || [])
     }
 
     const fetchTitleData = async () => {
-      // const { data } = await axios.get(`/api/v1/week/${weekId}`)
+      // const { data } = await axios.get(`/api/v1/course/:classId`)
     }
 
     // fetchTitleData()

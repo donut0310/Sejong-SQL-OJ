@@ -10,6 +10,10 @@ import OptionButton from '../../components/pages/problemAddPage/OptionButton'
 
 const Admin = () => {
   const history = useHistory()
+  // TODO
+  // weekId 파람으로 가져와
+  const weekId = 1
+  const classId = 1
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
@@ -27,11 +31,8 @@ const Admin = () => {
   // 공개 / 비공개
   const [isPublic, setIsPublic] = useState(true)
   // 테스트 케이스
+  // ! 이름 formData로 바꾸자
   const testcases = new FormData()
-  const [tcCnt, setTcCnt] = useState(0)
-
-  const classId = 1
-  const weekId = 1
 
   useEffect(() => {
     ;(async () => {
@@ -42,31 +43,32 @@ const Admin = () => {
   }, [])
 
   // 제출 버튼 핸들러
-  const handleAddProblem = () => {
+  const handleAddProblem = async () => {
     console.log('Submit add problem data')
-    console.log('title', title)
-    console.log('description', description)
-    console.log('tableInfo', tableInfo)
-    console.log('startTime', startTime)
-    console.log('endTime', endTime)
-    console.log('isPublic', isPublic)
-    console.log('TC cnt', tcCnt)
+
+    let cnt = 0
     for (const [index, file] of testcases.entries()) {
-      console.log('TC FILE', index, file)
+      cnt++
     }
 
-    //     history.push(history.goBack())
-    //     ;(async () => {
-    //       const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, {
-    //         title: title,
-    //         content: contentInput,
-    //         table_info: tableInfo,
-    //         start_time: startTime,
-    //         end_time: endTime,
-    //         is_public: isPublic,
-    //       })
-    //       console.log('handleUploadProblem => ', data)
-    // })()
+    testcases.append('week_id', weekId)
+    testcases.append('title', title)
+    testcases.append('content', description)
+    testcases.append('table_info', tableInfo)
+    testcases.append('start_time', startTime)
+    testcases.append('end_time', endTime)
+    testcases.append('is_public', isPublic)
+    testcases.append('tc_cnt', cnt / 2)
+
+    for (const [index, file] of testcases.entries()) {
+      console.log('formData', index, file)
+    }
+
+    // const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, testcases, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // })
   }
 
   const handleCancel = () => {
