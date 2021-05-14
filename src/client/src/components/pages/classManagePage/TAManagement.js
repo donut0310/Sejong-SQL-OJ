@@ -3,35 +3,27 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 
-const TAManagement = () => {
-  // dummy data TA, classId
-  const [TA, setTA] = useState(['16010001', '16010002'])
-  const classId = '1'
-  //
-
-  const textFieldTA = TA.join('\r\n')
-
+const TAManagement = ({ TA, setTA, handleSaveTA }) => {
   const handleChangeTA = (e) => {
     setTA(e.target.value.split(/\r\n|\r|\n/))
     console.log(TA)
   }
 
-  const handleSaveTA = () => {
-    console.log('TA List', TA)
-    ;(async () => {
-      await axios
-        .post(`/api/v1/course/enrollStd/${classId}`, { assists: TA })
-        .then((res) => console.log('TA List saved\n' + res))
-        .catch((err) => console.log(err))
-    })()
-  }
-
   return (
     <Wrapper>
-      <StyledTextField id="outlined-basic" label="조교 등록" multiline rows={20} variant="outlined" placeholder="학번을 입력하세요." value={textFieldTA} onChange={handleChangeTA}></StyledTextField>
+      <StyledTextField
+        id="outlined-basic"
+        label="조교 목록"
+        multiline
+        rows={20}
+        variant="outlined"
+        placeholder="학번을 입력하세요."
+        value={TA.join('\r\n')}
+        onChange={handleChangeTA}
+      ></StyledTextField>
       <div style={{ textAlign: 'end' }}>
         <button id="submit-btn" onClick={handleSaveTA}>
-          저장
+          수정
         </button>
       </div>
     </Wrapper>
@@ -40,12 +32,17 @@ const TAManagement = () => {
 
 export default TAManagement
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  padding: 20px 10px 10px 10px;
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border-radius: 5px;
+`
 
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.INPUT_BACKGROUND};
+    background: ${(props) => props.theme.BACKGROUND};
   }
 
   .MuiInputBase-input {
