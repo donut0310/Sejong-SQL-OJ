@@ -81,11 +81,11 @@ const ClassManagePage = () => {
       <WeekManagement />
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <Subtitle subtitle={'조교 등록'} />
+          <Subtitle subtitle={'조교 관리'} />
           <TAManagement TA={TA} setTA={setTA} handleSaveTA={handleSaveTA} />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Subtitle subtitle={'학생 등록'} />
+          <Subtitle subtitle={'학생 관리'} />
           <StudentManagement student={student} setStudent={setStudent} handleSaveStudent={handleSaveStudent} />
         </Grid>
       </Grid>
