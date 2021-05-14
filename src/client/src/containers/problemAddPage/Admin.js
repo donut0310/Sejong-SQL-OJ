@@ -81,7 +81,7 @@ const Admin = () => {
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
-      <TestcaseInput cnt={tcCnt} setCnt={setTcCnt} testcases={testcases} />
+      <TestcaseInput testcases={testcases} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )

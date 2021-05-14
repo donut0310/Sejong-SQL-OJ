@@ -2,12 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 import FileInput from './FileInput'
 
-const TestcaseInput = ({ cnt, setCnt, testcases }) => {
+const TestcaseInput = ({ testcases }) => {
   return (
     <Wrapper>
       <TitleContainer>테스트케이스 추가</TitleContainer>
       <FileContainer>
-        <FileInput cnt={cnt} setCnt={setCnt} testcases={testcases} />
+        <FileInput testcases={testcases} />
       </FileContainer>
     </Wrapper>
   )

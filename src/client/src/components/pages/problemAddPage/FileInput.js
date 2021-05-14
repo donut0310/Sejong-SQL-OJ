@@ -3,23 +3,17 @@ import styled from 'styled-components'
 import { Grid } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
-const FileInput = ({ cnt, setCnt, testcases }) => {
+const FileInput = ({ testcases }) => {
   const input = useRef()
   const output = useRef()
   const [printIn, setPrintIn] = useState([])
   const [printOut, setPrintOut] = useState([])
 
-  useEffect(() => {
-    return () => {
-      setCnt(printIn.length + 1)
-    }
-  }, [cnt.printIn, printOut])
-
   const handleUpload = (e) => {
     e.preventDefault()
     if (input.current.files.length !== 0 && output.current.files.length !== 0) {
-      testcases.append(`I${cnt}`, input.current.files[0])
-      testcases.append(`O${cnt}`, output.current.files[0])
+      testcases.append(`I${printIn.length}`, input.current.files[0])
+      testcases.append(`O${printOut.length}`, output.current.files[0])
 
       setPrintIn([...printIn, input.current.files[0]])
       setPrintOut([...printOut, output.current.files[0]])
