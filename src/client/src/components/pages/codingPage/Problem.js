@@ -91,6 +91,7 @@ const ProblemWrapper = styled.div`
 const Text = styled.div`
   line-height: '1.5em';
   margin-bottom: 20px;
+  color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const Table = styled.div`
