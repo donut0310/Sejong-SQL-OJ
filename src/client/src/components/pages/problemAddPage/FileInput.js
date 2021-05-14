@@ -3,19 +3,31 @@ import styled from 'styled-components'
 import { Grid } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
-const FileInput = ({ testcases }) => {
+const FileInput = ({ cnt, setCnt, testcases }) => {
   const input = useRef()
   const output = useRef()
   const [printIn, setPrintIn] = useState([])
   const [printOut, setPrintOut] = useState([])
 
+  useEffect(() => {
+    return () => {
+      console.log('TC COUNT=>', cnt)
+    }
+  }, [cnt.printIn, printOut])
+
   const handleUpload = (e) => {
     e.preventDefault()
     if (input.current.files.length !== 0 && output.current.files.length !== 0) {
-      testcases.append('Input', input.current.files[0])
-      testcases.append('Output', output.current.files[0])
-      setPrintIn(testcases.getAll('Input'))
-      setPrintOut(testcases.getAll('Output'))
+      testcases.append(`I${cnt}`, input.current.files[0])
+      testcases.append(`O${cnt}`, output.current.files[0])
+
+      setPrintIn([...printIn, input.current.files[0]])
+      setPrintOut([...printOut, output.current.files[0]])
+      setCnt(cnt + 1)
+
+      for (const [index, file] of testcases.entries()) {
+        console.log('파일 리스트', index, file)
+      }
     } else alert('파일을 입력해주세요.')
   }
 
@@ -27,14 +39,14 @@ const FileInput = ({ testcases }) => {
             <Arrow />
             Input
           </TitleContainer>
-          <StyledUploadContainer id={1} type="file" id="input-file" accept=".sql" ref={input} />
+          <StyledUploadContainer type="file" id="input-file" accept=".sql" ref={input} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TitleContainer style={{ margin: '0' }}>
             <Arrow />
             Output
           </TitleContainer>
-          <StyledUploadContainer id={2} type="file" id="output-file" accept=".json" ref={output} />
+          <StyledUploadContainer type="file" id="output-file" accept=".json" ref={output} />
           <div style={{ width: '100%', textAlign: 'end' }}>
             <button id="submit-btn" onClick={handleUpload}>
               추가
