@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useHistory, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 import { TextField } from '@material-ui/core'
@@ -11,57 +12,11 @@ import RemoveIcon from '@material-ui/icons/Remove'
 const classId = 1
 
 const WeekManagement = () => {
+  const history = useHistory()
+  const { classId } = useParams()
+
   const [isChanged, setIsChanged] = useState(false)
   const [newWeekName, setNewWeekName] = useState('')
-
-  const handleChangeNewWeekName = (e) => {
-    setNewWeekName(e.target.value)
-    console.log(newWeekName)
-  }
-
-  // TODO
-  const handleAddWeekBtn = () => {
-    console.log('handleAddWeekBtn 실행')
-
-    // ! POST /api/v1/course/week/:classId
-
-    setIsChanged(!isChanged)
-  }
-
-  // TODO
-  const handleDeleteWeekBtn = async (weekId) => {
-    console.log('handleDeleteWeekBtn 실행', weekId)
-
-    // DELETE /api/v1/course/week/:weekId
-    // const { data } = await axios.delete(`/api/v1/course/week/${weekId}`)
-
-    setIsChanged(!isChanged)
-  }
-
-  // TODO
-  const handleAddProblemBtn = async (weekId) => {
-    console.log('handleAddProblemBtn 실행', weekId)
-
-    // ! push =>
-
-    setIsChanged(!isChanged)
-  }
-
-  // TODO
-  const handleDeleteProblemBtn = async (pId) => {
-    console.log('handleDeleteProblemBtn 실행', pId)
-
-    // DELETE /api/v1/course/problem:/pId
-    // const { data } = await axios.delete(`/api/v1/course/problem/${pId}`)
-
-    setIsChanged(!isChanged)
-  }
-
-  // TODO
-  const handleProblemName = async (pId) => {
-    console.log('handleProblemName 실행', pId)
-    // push => status by pId
-  }
 
   const [classInfo, setClassInfo] = useState([
     {
@@ -92,12 +47,51 @@ const WeekManagement = () => {
     },
   ])
 
+  const handleChangeNewWeekName = (e) => {
+    setNewWeekName(e.target.value)
+    console.log(newWeekName)
+  }
+
+  const handleAddWeekBtn = async () => {
+    console.log('handleAddWeekBtn 실행')
+
+    const { data } = await axios.post(`/api/v1/course/week/${classId}`)
+    setIsChanged(!isChanged)
+  }
+
+  const handleDeleteWeekBtn = async (weekId) => {
+    console.log('handleDeleteWeekBtn 실행', weekId)
+
+    const { data } = await axios.delete(`/api/v1/course/week/${weekId}`)
+    setIsChanged(!isChanged)
+  }
+
+  const handleAddProblemBtn = async (weekId) => {
+    console.log('handleAddProblemBtn 실행', weekId)
+
+    history.push(`/manage/${classId}/${weekId}/addproblem`)
+  }
+
+  const handleDeleteProblemBtn = async (pId) => {
+    console.log('handleDeleteProblemBtn 실행', pId)
+
+    const { data } = await axios.delete(`/api/v1/course/problem/${pId}`)
+    setIsChanged(!isChanged)
+  }
+
+  const handleProblemName = async (weekId, pId) => {
+    console.log('handleProblemName 실행', pId)
+
+    history.push(`${classId}/${weekId}/problem/${pId}`)
+  }
+
   useEffect(() => {
     console.log('WeekManagement useEffect')
-    // const { data } = await axios.get(`/api/v1/##`, { classId })
 
     const fetchWeekList = async () => {
       const { data } = await axios.get(`/api/v1/course/problem/${classId}`)
+      console.log(data)
+      // TODO
       setClassInfo(data.zzzzzzzzzzzzz)
     }
 
@@ -137,7 +131,7 @@ const WeekManagement = () => {
               <ProblemWrapper key={j}>
                 <ProblemNameText
                   onClick={() => {
-                    handleProblemName(problem.pId)
+                    handleProblemName(week.weekId, problem.pId)
                   }}
                 >
                   {problem.pName}
