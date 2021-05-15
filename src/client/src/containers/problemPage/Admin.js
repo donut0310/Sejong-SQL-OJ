@@ -14,9 +14,12 @@ const Admin = () => {
   })
 
   const history = useHistory()
+  // TODO
+  const classId = 1
+  const weekId = 1
 
   const handleAddProblem = () => {
-    history.push('/addProblem')
+    history.push(`/manage/${classId}/${weekId}/addproblem`)
   }
 
   const [problemList, setProblemList] = useState([])
