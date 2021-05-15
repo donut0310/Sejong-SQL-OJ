@@ -18,11 +18,6 @@ const AdminTable = ({ problemList }) => {
     history.push(`/${classId}/${weekId}/status?userId=${userId}&pId=${pId}`)
   }
 
-  const handleEdit = () => {
-    // 협의 필요
-    history.push(`/manage/${classId}/${weekId}/addproblem`)
-  }
-
   const handleDelete = () => {
     console.log('delete problem')
   }
@@ -44,17 +39,14 @@ const AdminTable = ({ problemList }) => {
           <li id="content" style={{ width: '30%' }}>
             제목
           </li>
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '20%' }}>
             Start
           </li>
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '20%' }}>
             End
           </li>
           <li id="content" style={{ width: '10%' }}>
             Status
-          </li>
-          <li id="content" style={{ width: '10%' }}>
-            수정
           </li>
           <li id="content" style={{ width: '10%' }}>
             삭제
@@ -70,19 +62,14 @@ const AdminTable = ({ problemList }) => {
                 {problem.title}
               </button>
             </li>
-            <li id="content" style={{ width: '15%' }}>
+            <li id="content" style={{ width: '20%' }}>
               {parseDateTime(problem.start_time)}
             </li>
-            <li id="content" style={{ width: '15%' }}>
+            <li id="content" style={{ width: '20%' }}>
               {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
               <StyledButton onClick={handleStatus}>Status</StyledButton>
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <StyledButton style={{ color: 'red' }} onClick={handleEdit}>
-                수정
-              </StyledButton>
             </li>
             <li id="content" style={{ width: '10%' }}>
               <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
