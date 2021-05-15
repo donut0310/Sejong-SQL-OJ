@@ -1,10 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import Clock from 'react-live-clock'
 
 const Title = ({ problemInfo }) => {
-  // TODO
-  const currentDate = '2021-03-03 12:21:30'
-
   return (
     <TitleWrapper>
       <ClassName>{problemInfo.className}</ClassName>
@@ -16,7 +14,9 @@ const Title = ({ problemInfo }) => {
         {problemInfo.startTime && <EndTime>StartTime: {problemInfo.startTime}</EndTime>}
         {problemInfo.endTime && <EndTime>EndTime: {problemInfo.endTime}</EndTime>}
       </TimeWrapper>
-      <CurrentTime>CurrentTime: {currentDate}</CurrentTime>
+      <CurrentTime>
+        <Clock format={'YYYY년 MM월 DD 일 HH:mm:ss'} ticking={true} />
+      </CurrentTime>
     </TitleWrapper>
   )
 }
