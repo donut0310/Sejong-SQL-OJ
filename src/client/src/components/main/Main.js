@@ -20,8 +20,8 @@ const Main = () => {
       <Route path="/:classId/:weekId/contents" component={ProblemPage} />
       <Route path="/:classId/:weekId/status" component={StatusPage} />
       <Route path="/:classId/:weekId/code/:submitId" component={CodeCheckPage} />
-      <Route path="/addproblem" component={ProblemAddPage} />
-      <Route path="/manage" component={ClassManagePage} />
+      <Route path="/manage/:classId/:weekId/addproblem" component={ProblemAddPage} />
+      <Route exact path="/manage/:classId" component={ClassManagePage} />
     </MainWrapper>
   )
 }

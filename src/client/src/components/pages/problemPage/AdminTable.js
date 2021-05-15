@@ -19,7 +19,8 @@ const AdminTable = ({ problemList }) => {
   }
 
   const handleEdit = () => {
-    history.push('addProblem')
+    // 협의 필요
+    history.push(`/manage/${classId}/${weekId}/addproblem`)
   }
 
   const handleDelete = () => {
