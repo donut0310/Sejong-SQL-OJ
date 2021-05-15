@@ -54,7 +54,7 @@ const Admin = () => {
     testcases.append('week_id', weekId)
     testcases.append('title', title)
     testcases.append('content', description)
-    testcases.append('table_info', tableInfo)
+    testcases.append('table_info', JSON.stringify(tableInfo))
     testcases.append('start_time', startTime)
     testcases.append('end_time', endTime)
     testcases.append('is_public', isPublic)
