@@ -91,7 +91,7 @@ const ModalComponent = ({ user }) => {
           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
             {dummyUserClassList.map((class_) => (
               <TreeContainer key={class_.classId}>
-                <StyledTreeItem nodeId={`${class_.className}`} label={class_.className} labelInfo={SettingBtn}>
+                <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
                   {class_.weekList.map((week_) => (
                     <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
                   ))}

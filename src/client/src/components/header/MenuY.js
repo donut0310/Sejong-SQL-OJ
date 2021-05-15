@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -6,50 +6,63 @@ import TreeView from '@material-ui/lab/TreeView'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import TreeItem from '@material-ui/lab/TreeItem'
-
+import SettingsIcon from '@material-ui/icons/Settings'
 import {} from '../../redux'
 
 const Menu = ({ handleToggleMenu }) => {
   const history = useHistory()
 
-  const handleWeekInfo = () => {
-    history.push('/problems')
-    handleToggleMenu()
-  }
+  useEffect(() => {
+    console.log('USE EFFECT 실행 - MODAL')
+    // ;(async () => {
+    //   await axios
+    //     .get(`/api/v1/user/${user.id}`)
+    //     .then((res) => setUserClassList(res.data))
+    //     .catch((err) => console.log(err))
+    // })()
+  }, [])
 
-  const userClassInfo = [
+  const dummyUserClassList = [
     {
-      className: '데이터베이스1(김지환)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '4주차 실습(배열)', '5~6주차 실습(연결리스트)'],
+      classId: 15,
+      className: '데이터베이스1 - 김지환',
+      weekList: [
+        { weekId: 3, weekName: '1주차 실습' },
+        { weekId: 5, weekName: '2주차 실습(분석)' },
+      ],
     },
     {
-      className: '데이터베이스2(김지환)',
-      weekInfo: ['7주차 실습(집합)', '9주차 실습(스택(1))', '10주차 실습(스택(2))', '11주차 실습(큐)', '12주차 실습(트리(1))', '13주차 실습(트리(2))', '14주차 실습(트리(3))'],
-    },
-    {
-      className: '(2020-1학기)자료구조및실습001(이수정)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '12주차 실습(트리(1))', '13주차 실습(트리(2))', '14주차 실습(트리(3))'],
-    },
-    {
-      className: '(2019-2학기)알고리즘및실습001(국형준)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '4주차 실습(배열)', '11주차 실습(큐)', '12주차 실습(트리(1))'],
-    },
-    {
-      className: '고급C프로그래밍및실습002 (김지환)',
-      weekInfo: ['1주차 실습(C언어복습)', '2주차 실습(분석)', '3주차 실습(재귀)', '4주차 실습(배열)', '5~6주차 실습(연결리스트)', '7주차 실습(집합)', '9주차 실습(스택(1))'],
+      classId: 19,
+      className: '심화 데이터베이스3 (김지환)',
+      weekList: [
+        { weekId: 1, weekName: '1주차 실습' },
+        { weekId: 16, weekName: '2주차 실습' },
+      ],
     },
   ]
+
+  const handleWeekInfo = (classID, weekID) => () => {
+    history.push(`/${classID}/${weekID}/contents`)
+    handleToggleMenu()
+  }
+  const handleManageClass = (classID) => () => {
+    history.push(`/manage/${classID}`)
+    console.log('Go to settings (manage page) of class', classID)
+    handleToggleMenu()
+  }
 
   return (
     <MenuWrapper>
       <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-        {userClassInfo.map((class_, i) => (
-          <StyledTreeItem nodeId={i} label={class_.className}>
-            {class_.weekInfo.map((week_) => (
-              // TODO onClick event
-              <StyledTreeItem label={week_} onClick={handleWeekInfo} />
-            ))}
-          </StyledTreeItem>
+        {dummyUserClassList.map((class_) => (
+          <TreeContainer key={class_.classId}>
+            <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
+              {class_.weekList.map((week_) => (
+                <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
+              ))}
+            </StyledTreeItem>
+            <SettingBtn onClick={handleManageClass(class_.classId)} />
+          </TreeContainer>
         ))}
       </TreeView>
     </MenuWrapper>
@@ -79,17 +92,42 @@ const MenuWrapper = styled.ul`
   }
 `
 
+const SettingBtn = styled(SettingsIcon)`
+  && {
+    font-size: 1.3em;
+    margin-top: 7px;
+    color: ${(props) => props.theme.GENERAL_FONT};
+    &:hover {
+      color: ${(props) => props.theme.POINT};
+      cursor: pointer;
+    }
+  }
+`
+
+const TreeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
 const StyledTreeItem = styled(TreeItem)`
+  && {
+    box-sizing: border-box;
+    width: 100%;
+  }
   && .MuiTreeItem-content {
     path {
       color: ${(props) => props.theme.GENERAL_FONT};
     }
   }
   && .MuiTypography-root {
-    margin: 5px;
+    margin: 2px 0;
+    padding: 5px;
+    font-weight: 500;
     color: ${(props) => props.theme.GENERAL_FONT};
+    border-left: 4px solid ${(props) => props.theme.BACKGROUND};
     &:hover {
-      background: ${(props) => props.theme.SUB_BORDER};
+      border-left: 4px solid ${(props) => props.theme.POINT};
+      background: ${(props) => props.theme.MODAL_LIST_HOVER};
     }
   }
 `
