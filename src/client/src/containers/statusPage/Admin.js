@@ -12,13 +12,19 @@ const Admin = () => {
     endTime: '',
   })
 
+  const [problemList, setProblemList] = useState([])
+
+  const weekId = 1
   const pId = 1
 
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/user/status/${pId}`)
-      const res = data.result[0]
-      setProblemInfo({ className: res.class_name, weekName: res.week_name, problemName: res.title })
+      setProblemList(data.result)
+
+      const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
+      // const currentInfo = titleData.result[0]
+      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
     })()
   }, [])
 
@@ -35,7 +41,7 @@ const Admin = () => {
         </select>
       </span>
       <button id="submit-btn">조회</button>
-      <AdminTable />
+      <AdminTable problemList={problemList} />
     </>
   )
 }
