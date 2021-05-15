@@ -96,6 +96,7 @@ const SettingBtn = styled(SettingsIcon)`
   && {
     font-size: 1.3em;
     margin-top: 7px;
+    margin-left: 7px;
     color: ${(props) => props.theme.GENERAL_FONT};
     &:hover {
       color: ${(props) => props.theme.POINT};
