@@ -15,6 +15,8 @@ export const lightTheme = {
   BOARD_LIST_HOVER: '#ebebeb',
   BOARD_TITLE: '#d9d9d9',
 
+  MODAL_LIST_HOVER: '#f2f2f2',
+
   INPUT_BACKGROUND: '#f5f5f5',
 
   EDITOR_THEME: 'tomorrow',
@@ -40,6 +42,8 @@ export const darkTheme = {
 
   BOARD_LIST_HOVER: '#4d4d4d',
   BOARD_TITLE: '#626362',
+
+  MODAL_LIST_HOVER: '#4a4a4a',
 
   INPUT_BACKGROUND: '#222',
 

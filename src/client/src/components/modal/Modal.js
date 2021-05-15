@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { Hidden, Paper, SwipeableDrawer } from '@material-ui/core'
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight'
 import CloseIcon from '@material-ui/icons/Close'
+import RemoveIcon from '@material-ui/icons/Remove'
 import TreeView from '@material-ui/lab/TreeView'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
@@ -193,10 +194,6 @@ const UserInfo = styled.div`
   p {
     padding: 10px;
     width: 100%;
-    &:hover {
-      border-left: 5px solid ${(props) => props.theme.POINT};
-      background: ${(props) => props.theme.BOARD_LIST_HOVER};
-    }
   }
 `
 
@@ -205,6 +202,7 @@ const TreeContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `
+
 const StyledTreeItem = styled(TreeItem)`
   && {
     box-sizing: border-box;
@@ -221,9 +219,10 @@ const StyledTreeItem = styled(TreeItem)`
     padding: 5px;
     font-weight: 500;
     color: ${(props) => props.theme.GENERAL_FONT};
+    border-left: 4px solid ${(props) => props.theme.BACKGROUND};
     &:hover {
-      border-left: 5px solid ${(props) => props.theme.POINT};
-      background: ${(props) => props.theme.BOARD_LIST_HOVER};
+      border-left: 4px solid ${(props) => props.theme.POINT};
+      background: ${(props) => props.theme.MODAL_LIST_HOVER};
     }
   }
 `
