@@ -10,6 +10,7 @@ import TreeView from '@material-ui/lab/TreeView'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import TreeItem from '@material-ui/lab/TreeItem'
+import SettingsIcon from '@material-ui/icons/Settings'
 
 const ModalComponent = ({ user }) => {
   const history = useHistory()
@@ -54,6 +55,12 @@ const ModalComponent = ({ user }) => {
     handleToggleMenu()
   }
 
+  const handleManageClass = (classID) => () => {
+    history.push(`/manage/${classID}`)
+    console.log('Go to settings (manage page) of class', classID)
+    handleToggleMenu()
+  }
+
   return (
     <>
       <Hidden xsDown>
@@ -82,11 +89,14 @@ const ModalComponent = ({ user }) => {
           <Subtitle>My Class</Subtitle>
           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
             {dummyUserClassList.map((class_) => (
-              <StyledTreeItem nodeId={`${class_.className}`} key={class_.classId} label={class_.className}>
-                {class_.weekList.map((week_) => (
-                  <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
-                ))}
-              </StyledTreeItem>
+              <TreeContainer key={class_.classId}>
+                <StyledTreeItem nodeId={`${class_.className}`} label={class_.className} labelInfo={SettingBtn}>
+                  {class_.weekList.map((week_) => (
+                    <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
+                  ))}
+                </StyledTreeItem>
+                <SettingBtn onClick={handleManageClass(class_.classId)} />
+              </TreeContainer>
             ))}
           </TreeView>
         </StyledDrawer>
@@ -189,10 +199,17 @@ const UserInfo = styled.div`
     }
   }
 `
+
+const TreeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
 const StyledTreeItem = styled(TreeItem)`
   && {
     box-sizing: border-box;
     margin: 0 10px;
+    width: 100%;
   }
   && .MuiTreeItem-content {
     path {
@@ -207,6 +224,18 @@ const StyledTreeItem = styled(TreeItem)`
     &:hover {
       border-left: 5px solid ${(props) => props.theme.POINT};
       background: ${(props) => props.theme.BOARD_LIST_HOVER};
+    }
+  }
+`
+const SettingBtn = styled(SettingsIcon)`
+  && {
+    font-size: 1.3em;
+    margin-right: 15px;
+    margin-top: 7px;
+    color: ${(props) => props.theme.GENERAL_FONT};
+    &:hover {
+      color: ${(props) => props.theme.POINT};
+      cursor: pointer;
     }
   }
 `
