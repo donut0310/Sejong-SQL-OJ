@@ -14,6 +14,8 @@ const Public = () => {
 
   const [code, setCode] = useState('')
 
+  const weekId = 1
+
   const dummyCode = `#include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
@@ -174,11 +176,13 @@ const Public = () => {
       // TODO
       const submitId = '1'
       const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
-      const result = data.result[0]
+      const result = data.result
       // setCode(result.code)
-      setProblemInfo({ className: result.class_name, weekName: result.week_name, problemName: result.title })
-
       setCode(dummyCode)
+
+      const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
+      // const currentInfo = titleData.result[0]
+      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
     })()
   }, [])
 
