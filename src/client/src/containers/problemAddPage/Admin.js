@@ -10,6 +10,8 @@ import OptionButton from '../../components/pages/problemAddPage/OptionButton'
 
 const Admin = () => {
   const history = useHistory()
+  // const { classId, weekId } = useParams()
+
   // TODO
   // weekId 파람으로 가져와
   const weekId = 1
@@ -19,6 +21,8 @@ const Admin = () => {
     className: '',
     weekName: '',
   })
+
+  const formData = new FormData()
 
   // 문제 제목
   const [title, setTitle] = useState('')
@@ -30,9 +34,6 @@ const Admin = () => {
   const [endTime, setEndTime] = useState('infinite')
   // 공개 / 비공개
   const [isPublic, setIsPublic] = useState(true)
-  // 테스트 케이스
-  // ! 이름 formData로 바꾸자
-  const testcases = new FormData()
 
   useEffect(() => {
     ;(async () => {
@@ -47,28 +48,34 @@ const Admin = () => {
     console.log('Submit add problem data')
 
     let cnt = 0
-    for (const [index, file] of testcases.entries()) {
+    for (const [index, file] of formData.entries()) {
       cnt++
     }
 
-    testcases.append('week_id', weekId)
-    testcases.append('title', title)
-    testcases.append('content', description)
-    testcases.append('table_info', JSON.stringify(tableInfo))
-    testcases.append('start_time', startTime)
-    testcases.append('end_time', endTime)
-    testcases.append('is_public', isPublic)
-    testcases.append('tc_cnt', cnt / 2)
+    const temp = JSON.stringify({
+      week_id: weekId,
+      title: title,
+      content: description,
+      table_info: JSON.stringify(tableInfo),
+      start_time: startTime,
+      end_time: endTime,
+      is_public: isPublic,
+      tc_cnt: cnt / 2,
+    })
 
-    for (const [index, file] of testcases.entries()) {
+    formData.append('body', temp)
+
+    for (const [index, file] of formData.entries()) {
       console.log('formData', index, file)
     }
 
-    // const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, testcases, {
+    // const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, formData, {
     //   headers: {
     //     'Content-Type': 'multipart/form-data',
     //   },
     // })
+
+    // console.log('Submit add problem data', data)
   }
 
   const handleCancel = () => {
@@ -83,7 +90,7 @@ const Admin = () => {
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
-      <TestcaseInput testcases={testcases} />
+      <TestcaseInput formData={formData} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
     </div>
   )

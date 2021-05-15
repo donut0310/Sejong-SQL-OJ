@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Grid } from '@material-ui/core'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
-const FileInput = ({ testcases }) => {
+const FileInput = ({ formData }) => {
   const input = useRef()
   const output = useRef()
   const [printIn, setPrintIn] = useState([])
@@ -12,15 +12,11 @@ const FileInput = ({ testcases }) => {
   const handleUpload = (e) => {
     e.preventDefault()
     if (input.current.files.length !== 0 && output.current.files.length !== 0) {
-      testcases.append(`I${printIn.length}`, input.current.files[0])
-      testcases.append(`O${printOut.length}`, output.current.files[0])
+      formData.append(`I${printIn.length}`, input.current.files[0])
+      formData.append(`O${printOut.length}`, output.current.files[0])
 
       setPrintIn([...printIn, input.current.files[0]])
       setPrintOut([...printOut, output.current.files[0]])
-
-      for (const [index, file] of testcases.entries()) {
-        console.log('파일 리스트', index, file)
-      }
     } else alert('파일을 입력해주세요.')
   }
 
