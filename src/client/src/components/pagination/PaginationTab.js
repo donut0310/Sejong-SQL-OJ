@@ -17,7 +17,7 @@ export default PaginationTab
 
 const Wrapper = styled.div`
   margin: 20px;
-  width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;

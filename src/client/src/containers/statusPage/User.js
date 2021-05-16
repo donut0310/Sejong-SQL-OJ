@@ -3,7 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import Title from '../../components/title/Title'
 import UserTable from '../../components/pages/statusPage/UserTable'
-import PaginationTab from '../../components/pages/pagination/PaginationTab'
+import PaginationTab from '../../components/pagination/PaginationTab'
 
 const User = ({ user }) => {
   const [problemInfo, setProblemInfo] = useState({
