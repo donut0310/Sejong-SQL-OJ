@@ -195,4 +195,28 @@ export class UsersController {
       return false;
     }
   }
+  async getCourseAndWeek(req,res){
+    const database = new Database();
+    const userId = req.body.decoded.id;
+    let s="select class_id from u_c_bridge where user_id=?";
+    const c = await database.queryExecute(s, [userId]);
+    let result=[]
+    for(let i=0;i<c.length;i++){
+      let resultChild={}
+      let class_id=c[i].class_id
+      resultChild.classId=class_id
+      let s1="select week_id,week_title,class_name from week where class_id=?"
+      const d= await database.queryExecute(s1, [class_id]);
+      resultChild.className=d[0].class_name
+      resultChild.weekList=[]
+      for(let j=0;j<d.length;j++){
+        let weekListChild={}
+        weekListChild.weekId=d[j].week_id
+        weekListChild.weekName=d[j].week_title
+        resultChild.weekList.push(weekListChild)
+      }
+      result.push(resultChild)
+    }
+    res.status(200).send(result);
+  }
 }

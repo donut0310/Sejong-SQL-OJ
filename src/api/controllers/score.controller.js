@@ -6,7 +6,11 @@
 import { Database } from "../models/db.js";
 export class ScoreController {  
     async scoring(req,res) {
+      // 사용자가 입력한 정답에 ;가 있는지 판별 
       let userQuery=req.body.user_query;
+      if(userQuery.indexOf(';') == -1) {
+        userQuery=userQuery+';'  
+      }
       let sql = "select tc_cnt from problem where p_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=?  order by tc_id asc;"
       let sql3= "select tc_answer from testcase_problem where p_id=? order by tc_id asc;"
@@ -22,89 +26,76 @@ export class ScoreController {
       let params = [
         req.params.pId,
       ];
-      let params2 =[
-        req.params.pId
-      ]
       const database=new Database()
       let tcCnt= await database.queryExecute(sql,params);
-      console.log("tc",tcCnt)
       tcCnt=tcCnt[0].tc_cnt;
-      let rowsResult= await database.queryExecute(sql2,params2);
-      let tcAnswer=await database.queryExecute(sql3,params2);
+      let tcAnswer=await database.queryExecute(sql3,params);
       let score=0
-      for(var i=0;i<tcCnt;i++){
-        let sql4=rowsResult[i].tc_content
+      
+      for(var j=0;j<tcCnt;j++){
         try {
-          const connection = await database.pool.getConnection(async (conn) => conn);
+          const connection =await database.testCaseConnect(j)
           try {
             connection.beginTransaction();
-            await connection.query(sql4);
-            try{
-              let [userJson] = await connection.query(userQuery);
-              let answerString = tcAnswer[i].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
-              answerString=answerString.replace(/(\s*)/g, "");
-              if(JSON.stringify(userJson) === answerString){
-                score+= 100;
-              }
-              else if(userJson.length==0){
-                score+= 0;
-              }
-              else{
-                let answerJson=JSON.parse(answerString)
-                let correct=0;
-                let length=0;
-                  if (userJson.length<answerJson.length){
-                    length=answerJson.length
-                    answerJson=JSON.stringify(answerJson)
-                    for(var i=0; i<userJson.length; i++){
-                      if(answerJson.includes(JSON.stringify(userJson[i]))){
-                        i-=1;
-                        userJson.splice(i,1);
-                        correct+=1;
-                      }
-                    }
-                  }
-                  else{
-                    length=userJson.length
-                    userJson=JSON.stringify(userJson)
-                    for(var i=0; i<answerJson.length; i++){
-                      if(userJson.includes(JSON.stringify(answerJson[i]))){
-                        i-=1
-                        answerJson.splice(i,1);
-                        correct+=1
-                      }
-                    }
-                  }
-                  console.log(correct)
-                  // 순서만 다른 경우
-                  if (correct==length){
-                    score+= 50
-                  }
-                  else{
-                    score+= 100*(correct)/length;
-                  }
-              }
-              connection.rollback();
-              connection.release();
-            } catch (err2){
-              console.log(err2)
-              connection.rollback();
-              connection.release();
-              return err2
+            let [userJson] = await connection.query(userQuery);
+            let answerString = tcAnswer[j].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
+            answerString=answerString.replace(/(\s*)/g, "");
+            if(JSON.stringify(userJson) === answerString){
+              score+= 100;
             }
+            else if(userJson.length==0){
+              score+= 0;
+            }
+            else{
+              let answerJson=JSON.parse(answerString)
+              let correct=0;
+              let length=0;
+                if (userJson.length<answerJson.length){
+                  length=answerJson.length
+                  answerJson=JSON.stringify(answerJson)
+                  for(var i=0; i<userJson.length; i++){
+                    if(answerJson.includes(JSON.stringify(userJson[i]))){
+                      i-=1;
+                      userJson.splice(i,1);
+                      correct+=1;
+                    }
+                  }
+                }
+                else{
+                  length=userJson.length
+                  userJson=JSON.stringify(userJson)
+                  for(var i=0; i<answerJson.length; i++){
+                    if(userJson.includes(JSON.stringify(answerJson[i]))){
+                      i-=1
+                      answerJson.splice(i,1);
+                      correct+=1
+                    }
+                  }
+                }
+                // 순서만 다른 경우
+                if (correct==length){
+                  score+= 50
+                }
+                else{
+                  score+= 100*(correct)/length;
+                }
+            }
+            connection.rollback();
+            connection.release();
           } catch (err) {
-            console.log(err)
             console.log(err);
+            connection.rollback();
             connection.release();
             return err;
           }
-
-      } catch(err) {
-        console.log(err);
-        return err;
+        } catch (err) {
+          console.log(err);
+          return err;
+          }
+      
       }
-    }
     score=score/tcCnt;
+    console.log("score",score)
     return score;
   }
   async check_cost(userQuery){
@@ -126,7 +117,7 @@ export class ScoreController {
     else{
       let temp= userQuery.split(';');
       let userQueryLast=temp[temp.length-1]
-      userQuery="explain FORMAT=json "+userQueryLast
+      userQuery="explain FORMAT=json "+userQueryLast+";"
     }
     let query_cost=0
     try {

@@ -14,9 +14,8 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
-const Code = ({ theme }) => {
+const Code = ({ theme, handleExecCode, handleSubmitCode }) => {
   const [fontSize, setFontSize] = useState(14)
-  const history = useHistory()
 
   //ace.require('brace/ext/language_tools')
 
@@ -27,28 +26,9 @@ const Code = ({ theme }) => {
     setFontSize(parseInt(e.target.value))
   }
 
-  // TODO
-  const pId = '1'
-  const input = 'select * from aaa'
-
-  const handleExecCode = () => {
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-      // data => result: {is_error, err_msg, exec_result}, message: "success"
-      console.log('handleExecCode data=> ', data)
-    })()
-  }
-
-  const handleSubmitCode = () => {
-    history.push('/status')
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-      // data => message: string
-      console.log('handleSubmitCode=> ', data)
-    })()
-  }
-
   return (
+    // submitId !=== null -> 수정
+    // else -> 새로 작성
     <>
       <div style={{ width: 'auto', textAlign: 'end' }}>
         <select id="select-form" name="글자" onChange={handleFontSize}>
@@ -124,9 +104,10 @@ const Code = ({ theme }) => {
   )
 }
 
-const mapStateToProps = ({ theme }) => {
+const mapStateToProps = ({ theme, user }) => {
   return {
     theme: theme.mode,
+    user,
   }
 }
 

@@ -2,42 +2,24 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import axios from 'axios'
 import AdminTable from '../../components/pages/problemPage/AdminTable'
+import Title from '../../components/title/Title'
 
 const Admin = () => {
+  const [problemInfo, setProblemInfo] = useState({
+    className: '',
+    weekName: '',
+    problemName: '',
+    startTime: '',
+    endTime: '',
+  })
+
   const history = useHistory()
-  // const dummyDataList = [
-  //   {
-  //     p_id: '1',
-  //     week_id: '1',
-  //     class_id: '1',
-  //     title: '1번 문제',
-  //     content: '1+1은?',
-  //     start_time: '2021-01-14T21:17:00.000Z',
-  //     end_time: '2021-01-15T21:17:00.000Z',
-  //     tc_cnt: '3',
-  //     tc_id: '1',
-  //     table_info: '답은 3개',
-  //     table_create: 'create table',
-  //     week_title: '1주차 SELECT문',
-  //   },
-  //   {
-  //     p_id: '2',
-  //     week_id: '1',
-  //     class_id: '1',
-  //     title: '2번 문제',
-  //     content: '2+2은?',
-  //     start_time: '2021-01-14T21:17:00.000Z',
-  //     end_time: '2021-01-15T21:17:00.000Z',
-  //     tc_cnt: '3',
-  //     tc_id: '1',
-  //     table_info: '답은 3개',
-  //     table_create: 'create table',
-  //     week_title: '1주차 SELECT문',
-  //   },
-  // ]
+  // TODO
+  const classId = 1
+  const weekId = 1
 
   const handleAddProblem = () => {
-    history.push('/admin/addProblem')
+    history.push(`/manage/${classId}/${weekId}/addproblem`)
   }
 
   const [problemList, setProblemList] = useState([])
@@ -52,11 +34,16 @@ const Admin = () => {
       console.log('get problem list info data=>', data)
       console.log('data.result =>', data.result)
       setProblemList(data.result)
+
+      const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
+      // const currentInfo = titleData.result[0]
+      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
     })()
   }, [])
 
   return (
     <>
+      <Title problemInfo={problemInfo} />
       <AdminTable problemList={problemList} />
       <button id="submit-btn" style={{ width: '80px', marginRight: '10px' }} onClick={handleAddProblem}>
         문제 추가

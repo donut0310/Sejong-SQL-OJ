@@ -3,6 +3,10 @@ import { useHistory } from 'react-router'
 import styled from 'styled-components'
 
 const UserTable = () => {
+  const classId = 1
+  const weekId = 1
+  const submitId = 1
+
   const history = useHistory()
 
   const scores = [
@@ -12,7 +16,7 @@ const UserTable = () => {
   ]
 
   const handleCodeCheck = () => {
-    history.push('/check')
+    history.push(`/${classId}/${weekId}/code/${submitId}`)
     // TODO 자기 코드만 볼 수 있어야함.
   }
 

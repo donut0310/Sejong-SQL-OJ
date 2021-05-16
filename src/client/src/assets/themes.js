@@ -3,7 +3,7 @@ export const lightTheme = {
   SUB_FONT: '#636363',
 
   POINT: '#B41313',
-  BACKGROUND: '#f7f7f7',
+  BACKGROUND: '#ffffff',
   CONTENTS: '#f6f6f6',
 
   HEADER_BACKGROUND: '#fafafa',
@@ -15,14 +15,22 @@ export const lightTheme = {
   BOARD_LIST_HOVER: '#ebebeb',
   BOARD_TITLE: '#d9d9d9',
 
+  MODAL_LIST_HOVER: '#f2f2f2',
+
+  INPUT_BACKGROUND: '#f5f5f5',
+
   EDITOR_THEME: 'tomorrow',
   EDITOR_BACKGROUND: '#efefef',
+
+  INPUT_TABLE_TITLE: '#d9d9d9',
+  INPUT_TABLE_CONTENTS: '#ffffff',
 }
 
 export const darkTheme = {
   GENERAL_FONT: '#F3F6F2',
   SUB_FONT: '#F3F6F2',
 
+  POINT: '#B41313',
   BACKGROUND: '#393938',
   CONTENTS: '#40403e',
 
@@ -32,10 +40,16 @@ export const darkTheme = {
   SUB_BORDER: '#757575',
   MAIN_BORDER: '#b3b3b1',
 
-  POINT: '#B41313',
   BOARD_LIST_HOVER: '#4d4d4d',
   BOARD_TITLE: '#626362',
 
+  MODAL_LIST_HOVER: '#4a4a4a',
+
+  INPUT_BACKGROUND: '#222',
+
   EDITOR_THEME: 'tomorrow_night',
   EDITOR_BACKGROUND: '#2a2a2a',
+
+  INPUT_TABLE_TITLE: '#737373',
+  INPUT_TABLE_CONTENTS: '#a1a1a1',
 }
