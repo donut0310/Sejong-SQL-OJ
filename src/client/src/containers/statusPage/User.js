@@ -23,10 +23,12 @@ const User = ({ user }) => {
 
   const weekId = 1
   const pId = 1
+  const result = 'all'
+  const page = 1
 
   useEffect(() => {
     ;(async () => {
-      const { data } = await axios.get(`/api/v1/user/status?userId=${user.id}&pId=${pId}&result&page`)
+      const { data } = await axios.get(`/api/v1/user/status?userId=${user.id}&pId=${pId}&result=${result}&page=${page}`)
       // setStatusList(data.result)
       setStatusList(dummyResultList)
 
