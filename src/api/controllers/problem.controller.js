@@ -64,7 +64,7 @@ export class ProblemController {
     const database = new Database();
     const pId = req.params.pId;
     let data = {};
-
+    let classId;
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -75,10 +75,35 @@ export class ProblemController {
         let params = [pId];
         const a = await connection.query(sql, params);
         connection.release();
-
+        classId=a[0][0].class_id;
         data.result = a[0];
         data.message = "success";
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+    }
 
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        // 문제 목록 요청
+        let sql = "select class_name from course where class_id = ?";
+        let params = [classId];
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        console.log(a)
+        data.result[0].class_name=a[0].class_name;
         res.status(200).send(data);
       } catch (err) {
         connection.release();
@@ -92,7 +117,6 @@ export class ProblemController {
       data.message = "fail";
       data.error = err;
       res.status(400).send(data);
-      return false;
     }
   }
   //사용자가 문제 실행시 테스트케이스 결과 보여주고 롤백
