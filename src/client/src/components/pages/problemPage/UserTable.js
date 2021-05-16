@@ -1,15 +1,19 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
-const UserTable = ({ problemList }) => {
+const UserTable = ({ problemList, user }) => {
   const history = useHistory()
 
-  const handleProblemName = () => {
-    history.push('/coding')
+  const classId = 1
+  const weekId = 1
+
+  const handleProblemName = (pId) => {
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
-  const handleStatus = () => {
-    history.push('status')
+  const handleStatus = (pId) => {
+    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
   }
 
   const parseDateTime = (data) => {
@@ -50,7 +54,12 @@ const UserTable = ({ problemList }) => {
               {problem.p_id}
             </li>
             <li id="content" style={{ width: '20%' }}>
-              <button id="problem" onClick={handleProblemName}>
+              <button
+                id="problem"
+                onClick={() => {
+                  handleProblemName(problem.p_id)
+                }}
+              >
                 {problem.title}
               </button>
             </li>
@@ -69,7 +78,13 @@ const UserTable = ({ problemList }) => {
               {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              <StyledButton onClick={handleStatus}>Status</StyledButton>
+              <StyledButton
+                onClick={() => {
+                  handleStatus(problem.p_id)
+                }}
+              >
+                Status
+              </StyledButton>
             </li>
           </ul>
         ))}
@@ -78,7 +93,13 @@ const UserTable = ({ problemList }) => {
   )
 }
 
-export default UserTable
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  }
+}
+
+export default connect(mapStateToProps)(UserTable)
 
 const Container = styled.div`
   display: flex;

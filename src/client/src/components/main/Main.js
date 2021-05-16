@@ -10,16 +10,18 @@ import MainPage from '../../containers/mainPage'
 import CodeCheckPage from '../../containers/codeCheckPage'
 
 import ProblemAddPage from '../../containers/problemAddPage'
+import ClassManagePage from '../../containers/classManagePage'
 
 const Main = () => {
   return (
     <MainWrapper maxWidth="md">
       <Route exact path="/" component={MainPage} />
-      <Route path="/coding" component={CodingPage} />
-      <Route path="/problems" component={ProblemPage} />
-      <Route path="/status" component={StatusPage} />
-      <Route path="/check" component={CodeCheckPage} />
-      <Route path="/admin/addproblem" component={ProblemAddPage} />
+      <Route path="/:classId/:weekId/problem/:pId" component={CodingPage} />
+      <Route path="/:classId/:weekId/contents" component={ProblemPage} />
+      <Route path="/:classId/:weekId/status" component={StatusPage} />
+      <Route path="/:classId/:weekId/code/:submitId" component={CodeCheckPage} />
+      <Route path="/manage/:classId/:weekId/addproblem" component={ProblemAddPage} />
+      <Route exact path="/manage/:classId" component={ClassManagePage} />
     </MainWrapper>
   )
 }
