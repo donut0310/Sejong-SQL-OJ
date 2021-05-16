@@ -31,16 +31,16 @@ const UserTable = ({ problemList, user }) => {
           <li id="content" style={{ width: '20%' }}>
             제목
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '5%' }}>
             제출
           </li>
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '10%' }}>
             점수
           </li>
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '22.5%' }}>
             Start
           </li>
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '22.5%' }}>
             End
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -63,18 +63,25 @@ const UserTable = ({ problemList, user }) => {
                 {problem.title}
               </button>
             </li>
-            <li id="content" style={{ width: '10%' }}>
+            <li id="content" style={{ width: '5%' }}>
               {/* 사용자 제출 횟수 가져와야함 */}
               {problem.submit_cnt}
             </li>
-            <li id="content" style={{ width: '15%' }}>
-              {/* 사용자 점수 가져와야함 */}
-              {problem.score} / 100
+            <li id="content" style={{ width: '10%' }}>
+              {problem.score === '100' ? (
+                <>
+                  <span style={{ color: 'green' }}>{problem.score}</span> / 100
+                </>
+              ) : (
+                <>
+                  <span style={{ color: 'red' }}>{problem.score}</span> / 100
+                </>
+              )}
             </li>
-            <li id="content" style={{ width: '15%' }}>
+            <li id="content" style={{ width: '22.5%' }}>
               {parseDateTime(problem.start_time)}
             </li>
-            <li id="content" style={{ width: '15%' }}>
+            <li id="content" style={{ width: '22.5%' }}>
               {parseDateTime(problem.end_time)}
             </li>
             <li id="content" style={{ width: '10%' }}>
