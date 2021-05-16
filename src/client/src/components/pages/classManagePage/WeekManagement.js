@@ -8,9 +8,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
-// TODO
-const classId = 1
-
 const WeekManagement = () => {
   const history = useHistory()
   const { classId } = useParams()
@@ -82,7 +79,7 @@ const WeekManagement = () => {
   const handleProblemName = async (weekId, pId) => {
     console.log('handleProblemName 실행', pId)
 
-    history.push(`${classId}/${weekId}/problem/${pId}`)
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
 
   useEffect(() => {
@@ -164,9 +161,12 @@ const Wrapper = styled.div`
 `
 
 const WeekListWrapper = styled.div`
-  border: 1px solid pink;
-  width: 100%;
-  /* background: ${(props) => props.theme.BACKGROUND}; */
+  background: ${(props) => props.theme.HEADER_BACKGROUND};
+
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  border-radius: 5px;
+
+  padding: 10px;
 `
 
 const AddWeekWrapper = styled.div`
@@ -256,7 +256,7 @@ const ProblemWrapper = styled.div`
   align-items: center;
 
   padding: 3px;
-  border-left: 4px solid ${(props) => props.theme.INPUT_BACKGROUND};
+  border-left: 4px solid ${(props) => props.theme.HEADER_BACKGROUND};
 
   :hover {
     border-left: 4px solid ${(props) => props.theme.POINT};
