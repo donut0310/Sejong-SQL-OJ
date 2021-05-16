@@ -9,9 +9,9 @@ const AdminTable = () => {
 
   const history = useHistory()
   const scores = [
-    { id: '1701', name: '홍ㅇㅇ', score: '100', query_cost: '3.42' },
-    { id: '1801', name: '김ㅇㅇ', score: '30', query_cost: '-' },
-    { id: '1901', name: '이ㅇㅇ', score: '100', query_cost: '4.08' },
+    { id: '17010000', name: '홍ㅇㅇ', score: '100', query_cost: '3.42' },
+    { id: '18010000', name: '김ㅇㅇ', score: '30', query_cost: '-' },
+    { id: '19010000', name: '이ㅇㅇ', score: '100', query_cost: '4.08' },
   ]
   // TODO test case 별로 점수 나타내기
 
@@ -23,39 +23,47 @@ const AdminTable = () => {
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '10%' }}>
-            ID
+          <li id="content" style={{ width: '15%' }}>
+            아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
             이름
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '15%' }}>
             총점
           </li>
           <li id="content" style={{ width: '10%' }}>
             코드
           </li>
-          <li id="content" style={{ width: '60%' }}>
+          <li id="content" style={{ width: '50%' }}>
             Query Cost
           </li>
         </ul>
         {scores.map((score, i) => (
           <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '10%' }}>
+            <li id="content" style={{ width: '15%' }}>
               {score.id}
             </li>
             <li id="content" style={{ width: '10%' }}>
               {score.name}
             </li>
-            <li id="content" style={{ width: '10%' }}>
-              {score.score}/100
+            <li id="content" style={{ width: '15%' }}>
+              {score.score === '100' ? (
+                <>
+                  <span style={{ color: 'green' }}>{score.score}</span> / 100
+                </>
+              ) : (
+                <>
+                  <span style={{ color: 'red' }}>{score.score}</span> / 100
+                </>
+              )}
             </li>
             <li id="content" style={{ width: '10%' }}>
               <button id="problem" onClick={handleCodeCheck}>
                 Code
               </button>
             </li>
-            <li id="content" style={{ width: '60%' }}>
+            <li id="content" style={{ width: '50%' }}>
               {score.query_cost}
             </li>
           </ul>
