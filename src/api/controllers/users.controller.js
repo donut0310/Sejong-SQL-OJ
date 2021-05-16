@@ -144,4 +144,16 @@ export class UsersController {
       return false;
     }
   }
+  async getCourseAndWeek(req,res){
+    const database = new Database();
+    const userId = req.body.decoded.id;
+    console.log(userId)
+    let s="select class_id from u_c_bridge where user_id=?";
+    const c = await database.queryExecute(s, [userId]);
+    console.log(c)
+    for( i=0;i<c.length;i++){
+
+    }
+    res.status(200).send("suc");
+  }
 }
