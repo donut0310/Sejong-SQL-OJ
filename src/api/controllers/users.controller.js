@@ -75,27 +75,34 @@ export class UsersController {
           arr.push(a[i].class_id);
           arr2.push(a[i].class_id);
         }
+
+        data.result = a[0];
+
         for (let i in arr2) {
           arr2[i] = JSON.stringify(arr[i]);
         }
+
         let sql2 =
           "select admin_id from course where class_id in (" + arr2 + ")";
 
         const [b] = await connection.query(sql2);
+        connection.release();
+
+        const regex =
+          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
         for (let i in b) {
           let admin_id = b[i].admin_id.split(",");
-          if (userId in admin_id) {
-            data.result.role = 0;
+
+          if (admin_id.includes(userId)) {
+            if (regex.test(userId)) {
+              data.result.role = 1;
+            } else {
+              data.result.role = 0;
+            }
           }
         }
-        // let admin_id = b.split(",");
-        console.log(admin_id);
-        // for (let i in b) {
-        // }
-        connection.release();
 
-        data.result = a[0];
         data.result.class_id = arr;
         data.message = "success";
         data.result.isAuth = true;
@@ -195,27 +202,28 @@ export class UsersController {
       return false;
     }
   }
-  async getCourseAndWeek(req,res){
+  async getCourseAndWeek(req, res) {
     const database = new Database();
     const userId = req.body.decoded.id;
-    let s="select class_id from u_c_bridge where user_id=?";
+    let s = "select class_id from u_c_bridge where user_id=?";
     const c = await database.queryExecute(s, [userId]);
-    let result=[]
-    for(let i=0;i<c.length;i++){
-      let resultChild={}
-      let class_id=c[i].class_id
-      resultChild.classId=class_id
-      let s1="select week_id,week_title,class_name from week where class_id=?"
-      const d= await database.queryExecute(s1, [class_id]);
-      resultChild.className=d[0].class_name
-      resultChild.weekList=[]
-      for(let j=0;j<d.length;j++){
-        let weekListChild={}
-        weekListChild.weekId=d[j].week_id
-        weekListChild.weekName=d[j].week_title
-        resultChild.weekList.push(weekListChild)
+    let result = [];
+    for (let i = 0; i < c.length; i++) {
+      let resultChild = {};
+      let class_id = c[i].class_id;
+      resultChild.classId = class_id;
+      let s1 =
+        "select week_id,week_title,class_name from week where class_id=?";
+      const d = await database.queryExecute(s1, [class_id]);
+      resultChild.className = d[0].class_name;
+      resultChild.weekList = [];
+      for (let j = 0; j < d.length; j++) {
+        let weekListChild = {};
+        weekListChild.weekId = d[j].week_id;
+        weekListChild.weekName = d[j].week_title;
+        resultChild.weekList.push(weekListChild);
       }
-      result.push(resultChild)
+      result.push(resultChild);
     }
     res.status(200).send(result);
   }
