@@ -115,6 +115,8 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
     box-sizing: border-box;
     background: ${(props) => props.theme.BOARD_TITLE};
@@ -126,6 +128,8 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
     background: ${(props) => props.theme.CONTENTS};
     font-weight: 400;
