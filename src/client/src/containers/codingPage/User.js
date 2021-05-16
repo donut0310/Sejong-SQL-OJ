@@ -29,8 +29,8 @@ const User = ({ user }) => {
   const [paragraph, setParagraph] = useState([])
   const [paragraphCnt, setParagraphCnt] = useState(0)
 
-  // TODO Code.js
-  const input = 'select * from aaa'
+  // Code.js
+  const [input, setInput] = useState('select * from patient_info limit 10;')
 
   // Result.js
   const [isExecuted, setIsExecuted] = useState(false)
@@ -38,41 +38,33 @@ const User = ({ user }) => {
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
 
-  // TODO delete dummydata
-  const dummyExecResult = [
-    { id: '1', name: 'Gob', value: '2', cnt: '5' },
-    { id: '2', name: 'Buster', value: '5', cnt: '5' },
-    { id: '3', name: 'George asdsadsadasdasMichael', value: '4', cnt: '5' },
-  ]
-
+  // TODO 에러일 경우 처리
   const handleExecCode = async () => {
     ;(async () => {
-      // const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-      // console.log('handleExecCode data=> ', data)
-
-      // data => result: {is_error, err_msg, exec_result}, message: "success"
-
-      // TODO
-      console.log('exec code')
-      // 나중엔 parse 해서
+      console.log('handleExecCode', input)
       setIsExecuted(true)
       setExecIsLoading(true)
+      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
 
-      setTimeout(() => {
-        console.log('setTimeout ?')
-        setExecIsLoading(false)
+      if (data.message === 'success') {
+        setExecResult(data.result)
         setExecIsError(false)
-        setExecResult(dummyExecResult)
-      }, 1000)
+      } else {
+        // setExecResult(data.result)
+        setExecIsError(true)
+      }
+
+      setExecIsLoading(false)
     })()
   }
 
   const handleSubmitCode = async () => {
-    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+    // TODO
+    // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+
     ;(async () => {
       const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-      // data => message: string
-      console.log('handleSubmitCode=> ', data)
+      console.log('handleSubmitCode', data)
     })()
   }
 
@@ -109,7 +101,7 @@ const User = ({ user }) => {
       <Subtitle subtitle={'문제 내용'} />
       {!isLoading && <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />}
       <Subtitle subtitle={'코드 작성'} />
-      <Code handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
+      <Code input={input} setInput={setInput} handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
     </PageWrapper>
