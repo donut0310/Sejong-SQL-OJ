@@ -15,17 +15,16 @@ import SettingsIcon from '@material-ui/icons/Settings'
 
 const ModalComponent = ({ user }) => {
   const history = useHistory()
-  const [userClassList, setUserClassList] = useState([{}])
+  const [userClassList, setUserClassList] = useState([])
   const [toggleMenu, setToggleMenu] = useState(false)
 
   useEffect(() => {
     console.log('USE EFFECT 실행 - MODAL')
-    // ;(async () => {
-    //   await axios
-    //     .get(`/api/v1/user/${user.id}`)
-    //     .then((res) => setUserClassList(res.data))
-    //     .catch((err) => console.log(err))
-    // })()
+    ;(async () => {
+      const { data } = await axios.get(`/api/v1/user/${user.id}`)
+      // console.log(data)
+      setUserClassList(data)
+    })()
   }, [])
 
   const dummyUserClassList = [
@@ -89,7 +88,7 @@ const ModalComponent = ({ user }) => {
           {/* MY CLASS */}
           <Subtitle>My Class</Subtitle>
           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-            {dummyUserClassList.map((class_) => (
+            {userClassList.map((class_) => (
               <TreeContainer key={class_.classId}>
                 <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
                   {class_.weekList.map((week_) => (
