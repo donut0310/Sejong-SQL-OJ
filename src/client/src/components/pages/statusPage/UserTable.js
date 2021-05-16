@@ -6,19 +6,12 @@ import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 
-const UserTable = () => {
+const UserTable = ({ statusList }) => {
   const classId = 1
   const weekId = 1
   const submitId = 1
 
   const history = useHistory()
-
-  const scores = [
-    { submit_id: '4', id: '16010000', result: 'loading', score: '100', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '3', id: '17010000', result: 'accept', score: '100', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '2', id: '18010000', result: 'wa', score: '30', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '1', id: '19010000', result: 'error', score: '100', submit_time: '2000-01-01 00:00:00' },
-  ]
 
   const handleCodeCheck = () => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
@@ -55,25 +48,25 @@ const UserTable = () => {
             제출시각
           </li>
         </ul>
-        {scores.map((score, i) => (
+        {statusList.map((status, i) => (
           <ul id="content-list" key={i}>
             <li id="content" style={{ width: '10%' }}>
-              {score.submit_id}
+              {status.submit_id}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {score.id}
+              {status.user_id}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              <IconResult result={score.result} />
+              <IconResult result={status.result} />
             </li>
             <li id="content" style={{ width: '20%' }}>
-              {score.score === '100' ? (
+              {status.score === '100' ? (
                 <>
-                  <span style={{ color: 'green' }}>{score.score}</span> / 100
+                  <span style={{ color: 'green' }}>{status.score}</span> / 100
                 </>
               ) : (
                 <>
-                  <span style={{ color: 'red' }}>{score.score}</span> / 100
+                  <span style={{ color: 'red' }}>{status.score}</span> / 100
                 </>
               )}
             </li>
@@ -83,7 +76,7 @@ const UserTable = () => {
               </button>
             </li>
             <li id="content" style={{ width: '30%' }}>
-              {score.submit_time}
+              {status.submit_time}
             </li>
           </ul>
         ))}
