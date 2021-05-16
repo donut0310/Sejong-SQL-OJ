@@ -53,15 +53,66 @@ export class UsersController {
 
   // 로그인시 정보 유지
   async getProfile(req, res) {
-    const userModel = new UsersModel();
-    // const user = await userModel.readByEmail(req.body.decoded.email);
-    // -password, -salt
+    const database = new Database();
+    const userId = req.body.decoded.id;
 
-    res.status(200).send(user);
+    let data = {};
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql =
+          "select user.user_id, user.user_name, u_c_bridge.class_id from u_c_bridge join user on user.user_id = ? and u_c_bridge.user_id = ?";
+        let params = [userId, userId];
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        let arr = [];
+        let arr2 = [];
+        for (let i in a) {
+          arr.push(a[i].class_id);
+          arr2.push(a[i].class_id);
+        }
+        for (let i in arr2) {
+          arr2[i] = JSON.stringify(arr[i]);
+        }
+        let sql2 =
+          "select admin_id from course where class_id in (" + arr2 + ")";
+
+        const [b] = await connection.query(sql2);
+
+        for (let i in b) {
+          let admin_id = b[i].admin_id.split(",");
+          if (userId in admin_id) {
+            data.result.role = 0;
+          }
+        }
+        // let admin_id = b.split(",");
+        console.log(admin_id);
+        // for (let i in b) {
+        // }
+        connection.release();
+
+        data.result = a[0];
+        data.result.class_id = arr;
+        data.message = "success";
+        data.result.isAuth = true;
+        res.status(200).send(data);
+      } catch (err) {
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+    }
   }
-
-  
-  // 사용자가 입력한 정답 쿼리문 실행
 
   // 제출한 코드 요청
   async getSubmittedCode(req, res) {

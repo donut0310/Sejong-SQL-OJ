@@ -16,11 +16,10 @@ export class UsersRoute {
     this.app.post("/api/v1/user/signup", [usersController.createUser]);
 
     // 로그인시 유저정보 유지
-    this.app.get("/api/v1/user/signin", [
+    this.app.get("/api/v1/user", [
       authMiddleware.verifyToken,
       usersController.getProfile,
     ]);
-
 
     // 제출한 코드 요청
     this.app.get("/api/v1/user/code/:submitId", [
