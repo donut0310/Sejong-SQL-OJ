@@ -5,8 +5,12 @@ import styled from 'styled-components'
 const IncompleteTable = () => {
   const history = useHistory()
 
+  const classId = 1
+  const weekId = 1
+  const pId = 1
+
   const handleProblemName = () => {
-    history.push('/coding')
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
 
   const incomplete = [

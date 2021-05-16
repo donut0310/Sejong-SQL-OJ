@@ -52,6 +52,7 @@ const GlobalStyles = createGlobalStyle`
   html, body {
     width: 100%;
     height: 100%;
+    background: ${(props) => props.theme.BACKGROUND};
   };
 
   button#submit-btn {
@@ -59,7 +60,7 @@ const GlobalStyles = createGlobalStyle`
     height: 30px;
     border: 0px;
     border-radius: 5px;
-    margin: 5px;
+    margin: 5px 0px 5px 5px;
     padding: 5px;
     color: white;
     background: ${(props) => props.theme.POINT};
@@ -67,9 +68,13 @@ const GlobalStyles = createGlobalStyle`
       cursor: pointer;
       background: #710f0f;
     }
+    &:disabled {
+      cursor: default;
+      background: ${(props) => props.theme.MAIN_BORDER};
+    }
   }
 
-  input#input-form {
+  input.input-form {
     padding: 5px;
     margin: 5px;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
@@ -142,6 +147,43 @@ const GlobalStyles = createGlobalStyle`
       }
     }
   }
+
+/* // ! table  */
+  ul#table-table-list {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 10px;
+    color: ${(props) => props.theme.GENERAL_FONT};
+    overflow:auto;
+  }
+
+  ul#table-title-tab {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    box-sizing: border-box;
+    background: ${(props) => props.theme.BOARD_TITLE};
+    font-weight: 600;
+    text-align: center;
+  }
+
+  ul#table-content-list {
+    box-sizing: border-box;
+    display: flex;
+    padding: 10px;
+    background: ${(props) => props.theme.CONTENTS};
+    font-weight: 400;
+  }
+
+  li#table-content {
+    width:140px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    overflow:auto;
+  }
+  /* // ! table  */
 `
 
 const MainWrapper = styled.div`
