@@ -207,6 +207,7 @@ export class UsersController {
   async getCourseAndWeek(req, res) {
     const database = new Database();
     const userId = req.body.decoded.id;
+    let answer={}
     let s = "select class_id from u_c_bridge where user_id=?";
     const c = await database.queryExecute(s, [userId]);
     let result = [];
@@ -227,6 +228,8 @@ export class UsersController {
       }
       result.push(resultChild);
     }
-    res.status(200).send(result);
+    answer.message="success"
+    answer.result=result
+    res.status(200).send(answer);
   }
 }
