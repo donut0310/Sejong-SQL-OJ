@@ -285,20 +285,19 @@ export class CourseController {
   // 수업 이름 요청
   async getClassName(req, res) {
     const database = new Database();
-    const weekId = req.params.weekId;
+    const classId = req.params.classId;
     let data = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-        let sql =
-          "select class_id,class_name from course where class_id = (select class_id from week where week_id = ?)";
-        let params = [weekId];
+        let sql = "select class_id,class_name from course where class_id = ?";
+        let params = [classId];
 
         const [a] = await connection.query(sql, params);
         connection.release();
-        data.result = null;
+        data.result = a;
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
