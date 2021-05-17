@@ -215,7 +215,7 @@ export class UsersController {
     if(Array.isArray(c) && c.length==0){
       answer.message="fail"
       answer.result=null
-      answer.error="Cannot set headers after they are sent to the client"
+      answer.error="Invalid approach."
       res.status(400).send(answer);
     }
     let result = [];
