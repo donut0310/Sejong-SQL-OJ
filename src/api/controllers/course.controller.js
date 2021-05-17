@@ -57,60 +57,42 @@ export class CourseController {
     }
   }
 
-  // 교수: 학생 조교 등록
-  async profEnrollStdToClass(req, res) {
+  // 교수: 조교 목록 추가
+  async updateAssistsList(req, res) {
     const database = new Database();
-
-    const stdList = req.body.stds;
     const assistsList = req.body.assists;
     const classId = req.params.classId;
-
-    let assists = "";
-
-    for (let i in assistsList) {
-      if (i == assistsList.length - 1) {
-        assists += assistsList[i];
-      } else assists += assistsList[i] + ",";
-    }
 
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-        //학생에게 분반 할당
-        for (let i in stdList) {
-          let sql = "insert into u_c_bridge (user_id,class_id) values(?,?)";
-          let params = [stdList[i], classId];
-          const a = await connection.query(sql, params);
-          connection.release();
-          console.log("학생 등록:", a[0].info);
+        let sql = "select user_id from u_c_bridge where class_id = ?";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        let reValue = [];
+        let inputArr = [];
+
+        for (let i in a) {
+          reValue.push(a[i].user_id);
         }
 
-        //조교 등록
-        let sql2 = "select admin_id from course where class_id = ?";
-        let params2 = [classId];
-        const admin_id = await connection.query(sql2, params2);
-        connection.release();
-
-        let updated_admin_id = admin_id[0][0].admin_id + "," + assists;
-        let sql3 = "update course set admin_id = ? where class_id = ?";
-        let params3 = [updated_admin_id, classId];
-        const b = await connection.query(sql3, params3);
-        connection.release();
-        console.log("조교 등록:", b[0].info);
-
-        //조교에게 분반 할당
+        // 데이터에 class_id 와 author 를 지정해준다
         for (let i in assistsList) {
-          let sql4 =
-            "insert into u_c_bridge(user_id,class_id,author) values(?,?,?)";
-          let params4 = [assistsList[i], classId, 1];
-          const c = await connection.query(sql4, params4);
-          connection.release();
-          console.log("학생, 조교 분반 할당:", c[0].info);
+          if (!reValue.includes(assistsList[i])) {
+            inputArr.push([assistsList[i], classId, 1]);
+          }
         }
 
-        res.status(200).send("학생, 조교 등록이 완료되었습니다.");
+        let sql2 = "insert into u_c_bridge(user_id,class_id,author) values ?";
+        let params2 = [inputArr];
+        const [b] = await connection.query(sql2, params2);
+        connection.release();
+        res.status(200).send("success");
       } catch (err) {
         connection.release();
         res.status(400).send(err);
@@ -120,7 +102,7 @@ export class CourseController {
       return false;
     }
   }
-
+  // 교수: 학생 목록 수정
   async getCourseList(req, res) {
     const database = new Database();
     let classId = req.params.classId;
