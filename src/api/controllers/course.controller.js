@@ -92,7 +92,7 @@ export class CourseController {
         let params2 = [inputArr];
         const [b] = await connection.query(sql2, params2);
         connection.release();
-        res.status(200).send("success");
+        res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
         res.status(400).send(err);
@@ -127,7 +127,7 @@ export class CourseController {
         const [a] = await connection.query(sql, params);
         connection.release();
 
-        res.status(200).send("success");
+        res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
         res.status(400).send(err);
@@ -173,7 +173,7 @@ export class CourseController {
         let params2 = [inputArr];
         const [b] = await connection.query(sql2, params2);
         connection.release();
-        res.status(200).send("success");
+        res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
         res.status(400).send(err);
@@ -208,7 +208,7 @@ export class CourseController {
         const [a] = await connection.query(sql, params);
         connection.release();
 
-        res.status(200).send("success");
+        res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
         res.status(400).send(err);
