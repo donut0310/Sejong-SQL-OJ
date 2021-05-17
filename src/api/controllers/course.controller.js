@@ -120,4 +120,81 @@ export class CourseController {
       return false;
     }
   }
+
+  async getCourseList(req, res) {
+    const database = new Database();
+    let classId = req.params.classId;
+    let result = [];
+    let answer = {};
+    let s = "select week_id,week_title from week where class_id= ?;";
+    const c = await database.queryExecute(s, [classId]);
+    if (Array.isArray(c) && c.length == 0) {
+      answer.message = "fail";
+      answer.result = null;
+      answer.error = "Cannot set headers after they are sent to the client";
+      res.status(400).send(answer);
+    }
+    for (let i = 0; i < c.length; i++) {
+      let resultChild = {};
+      let weekId = c[i].week_id;
+      resultChild.weekId = weekId;
+      resultChild.weekName = c[i].week_title;
+      let params = [weekId, classId];
+      s = "select p_id, title from problem where week_id= ? and class_id= ? ;";
+      let a = await database.queryExecute(s, params);
+      let problemList = [];
+      for (let j = 0; j < a.length; j++) {
+        let problemChild = {};
+        problemChild.pId = a[j].p_id;
+        problemChild.title = a[j].title;
+        problemList.push(problemChild);
+      }
+      resultChild.problemList = problemList;
+      result.push(resultChild);
+    }
+    answer.message = "success";
+    answer.result = result;
+    res.status(200).send(answer);
+  }
+  //학생,조교 목록 요청
+  async getStudentAndAssists(req, res) {
+    const database = new Database();
+    let classId = req.params.classId;
+    let answer = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select * from u_c_bridge where class_id=?";
+        let params = [classId];
+        const [a] = await connection.query(sql, params);
+        let stds = [];
+        let assists = [];
+        for (let i = 0; i < a.length; i++) {
+          if (a[i].author == 0) {
+            stds.push(a[i].user_id);
+          } else if (a[i].author == 1) {
+            assists.push(a[i].user_id);
+          }
+        }
+        answer.stds = stds;
+        answer.assists = assists;
+        answer.message = "success";
+        res.status(200).send(answer);
+      } catch (err) {
+        connection.release();
+        console.log(err);
+        answer.message = "fail";
+        answer.result = null;
+        answer.error = "Cannot set headers after they are sent to the client";
+        res.status(400).send(answer);
+      }
+    } catch (err) {
+      answer.message = "fail";
+      answer.result = null;
+      answer.error = "Cannot Connected";
+      res.status(400).send(answer);
+    }
+  }
 }

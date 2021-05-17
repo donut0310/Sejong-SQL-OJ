@@ -23,5 +23,18 @@ export class CourseRoute {
     this.app.post("/api/v1/course/enrollStd", [
       courseController.profEnrollStdToClass,
     ]);
+
+    // 교수: 학생, 조교 등록 해제
+    this.app.delete("/api/v1/course/enrollStd", [
+      courseController.profDeleteStdInClass,
+    ]);
+    //해당 수업 문제 목록 요청
+    this.app.get("/api/v1/course/problem/:classId", [
+      courseController.getCourseList,
+    ]);
+    //교수: 학생, 조교 목록 요청
+    this.app.get("/api/v1/course/user/:classId", [
+      courseController.getStudentAndAssists,
+    ]);
   }
 }
