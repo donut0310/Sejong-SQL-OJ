@@ -1,17 +1,16 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
 const UserTable = ({ problemList, user }) => {
   const history = useHistory()
-
-  const classId = 1
-  const weekId = 1
+  const { classId, weekId } = useParams()
 
   const handleProblemName = (pId) => {
     history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
+
   const handleStatus = (pId) => {
     history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
   }
