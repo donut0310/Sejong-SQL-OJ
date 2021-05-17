@@ -20,9 +20,9 @@ export class AuthRoute {
 
     this.app.get("/api/v1/auth/signout", [authController.logout]);
 
-    // this.app.get("/api/v1/auth/access-token", [
-    //   authMiddleware.verifyToken,
-    //   authController.refreshAccessToken,
-    // ]);
+    this.app.get("/api/v1/auth/access-token", [
+      authMiddleware.verifyToken,
+      authController.refreshAccessToken,
+    ]);
   }
 }
