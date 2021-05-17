@@ -141,7 +141,7 @@ export class CourseController {
   // 교수: 학생 목록 추가
   async addStdsList(req, res) {
     const database = new Database();
-    const stdList = req.body.stds;
+    const stdsList = req.body.stds;
     const classId = req.params.classId;
 
     try {
@@ -163,9 +163,9 @@ export class CourseController {
         }
 
         // 데이터에 class_id 와 author 를 지정해준다
-        for (let i in stdList) {
-          if (!reValue.includes(stdList[i])) {
-            inputArr.push([stdList[i], classId, 0]);
+        for (let i in stdsList) {
+          if (!reValue.includes(stdsList[i])) {
+            inputArr.push([stdsList[i], classId, 0]);
           }
         }
 
@@ -183,6 +183,42 @@ export class CourseController {
       return false;
     }
   }
+
+  // 교수: 학생 목록 제거
+  async deleteStdsList(req, res) {
+    const database = new Database();
+    const stdsList = req.body.stds;
+    const classId = req.params.classId;
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        for (let i in stdsList) {
+          stdsList[i] = JSON.stringify(stdsList[i]);
+        }
+
+        let sql =
+          "delete from u_c_bridge where class_id = ? and user_id in (" +
+          stdsList +
+          ")";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        res.status(200).send("success");
+      } catch (err) {
+        connection.release();
+        res.status(400).send(err);
+      }
+    } catch (err) {
+      res.status(400).send(err);
+      return false;
+    }
+  }
+
   async getCourseList(req, res) {
     const database = new Database();
     let classId = req.params.classId;

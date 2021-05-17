@@ -30,6 +30,11 @@ export class CourseRoute {
       courseController.addStdsList,
     ]);
 
+    // 교수: 학생 목록 제거
+    this.app.delete("/api/v1/course/stds/delete/:classId", [
+      courseController.deleteStdsList,
+    ]);
+
     //해당 수업 문제 목록 요청
     this.app.get("/api/v1/course/problem/:classId", [
       courseController.getCourseList,
