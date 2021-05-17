@@ -28,7 +28,7 @@ export class CourseRoute {
     this.app.get("/api/v1/course/problem/:classId", [
       courseController.getCourseList,
     ]);
-    
+    //교수: 학생, 조교 목록 요청
     this.app.get("/api/v1/course/user/:classId", [
       courseController.getStudentAndAssists,
     ]);

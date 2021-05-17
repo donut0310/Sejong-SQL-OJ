@@ -165,7 +165,47 @@ export class CourseController {
     answer.result=result
     res.status(200).send(answer);
   }
+  //학생,조교 목록 요청
   async getStudentAndAssists(req,res){
-
+    const database = new Database();
+    let classId = req.params.classId;
+    let answer={}
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select * from u_c_bridge where class_id=?";
+        let params = [classId];
+        const [a] = await connection.query(sql, params);
+        let stds=[]
+        let assists=[]
+        for(let i=0;i<a.length;i++){
+          if(a[i].author==0){
+            stds.push(a[i].user_id)
+          }
+          else if (a[i].author==1){
+            assists.push(a[i].user_id)
+          }
+        }
+        answer.stds=stds
+        answer.assists=assists
+        answer.message="success"
+        res.status(200).send(answer);
+      } catch (err) {
+        connection.release();
+        console.log(err)
+        answer.message="fail"
+        answer.result=null
+        answer.error="Cannot set headers after they are sent to the client"
+        res.status(400).send(answer);
+      }
+    } catch (err) {
+      answer.message="fail"
+      answer.result=null
+      answer.error="Cannot Connected"
+      res.status(400).send(answer);
+    }
+    
   }
 }
