@@ -79,7 +79,7 @@ const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
-          value={``}
+          value={input}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,

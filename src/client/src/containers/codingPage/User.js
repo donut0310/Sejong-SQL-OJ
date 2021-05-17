@@ -82,7 +82,7 @@ const User = ({ user }) => {
       console.log('codingpage get problem info data.result[0] =>', problem)
 
       // Title
-      setProblemInfo({ ...problemInfo, className: problem.class_name, weekName: problem.week_name, problemName: problem.title })
+      setProblemInfo({ ...problemInfo, className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
 
       // Problem
       setTable_info(JSON.parse(problem.table_info))
