@@ -86,11 +86,12 @@ export class AuthController {
 
         if (!a) {
           const error = jwtUtil.invalidTokenError;
-          res.status(error.status).send(ResponseUtil.successFalse(error));
+          console.log("error:", error);
+          res.status(error.status).send(error);
         }
 
         const accessPayload = {
-          id: user[0][0].user_id,
+          id: a.user_id,
           issuer: "http://13.125.85.53/",
         };
 
@@ -103,7 +104,7 @@ export class AuthController {
             maxAge: 1000 * parseInt(jwtUtil.accessTokenLife),
           });
 
-          res.status(200).send(ResponseUtil.successTrue({}));
+          res.status(200).send({ result: null, message: "success" });
         } catch (err) {
           res.status(500).send(err);
         }
