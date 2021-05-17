@@ -16,7 +16,7 @@ export class UsersRoute {
     this.app.post("/api/v1/user/signup", [usersController.createUser]);
 
     // 로그인시 유저정보 유지
-    this.app.get("/api/v1/user", [
+    this.app.get("/api/v1/user/auth", [
       authMiddleware.verifyToken,
       usersController.getProfile,
     ]);

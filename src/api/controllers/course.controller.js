@@ -282,6 +282,41 @@ export class CourseController {
     }
   }
 
+  // 수업 이름 요청
+  async getClassName(req, res) {
+    const database = new Database();
+    const weekId = req.params.weekId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql =
+          "select class_id,class_name from course where class_id = (select class_id from week where week_id = ?)";
+        let params = [weekId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+
   async getCourseList(req, res) {
     const database = new Database();
     let classId = req.params.classId;
