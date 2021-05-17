@@ -137,10 +137,10 @@ export class UsersController {
         let sql =
           "select user_query,p_id from submit_answer where user_id = ? and submit_id = ?";
         let params = [userId, submitId];
-        const a = await connection.query(sql, params);
+        const [a] = await connection.query(sql, params);
         connection.release();
 
-        data.result = a[0];
+        data.result = a;
         data.message = "success";
         res.status(200).send(data);
       } catch (err) {
