@@ -24,5 +24,9 @@ export class CourseRoute {
     this.app.delete("/api/v1/course/enrollStd", [
       courseController.profDeleteStdInClass,
     ]);
+    //해당 수업 문제 목록 요청
+    this.app.get("/api/v1/course/problem/:classId", [
+      courseController.getCourseList,
+    ]);
   }
 }
