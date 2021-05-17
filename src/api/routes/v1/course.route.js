@@ -28,5 +28,9 @@ export class CourseRoute {
     this.app.get("/api/v1/course/problem/:classId", [
       courseController.getCourseList,
     ]);
+    
+    this.app.get("/api/v1/course/user/:classId", [
+      courseController.getStudentAndAssists,
+    ]);
   }
 }
