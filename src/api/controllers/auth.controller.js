@@ -113,6 +113,9 @@ export class AuthController {
       maxAge: 0,
     });
 
-    res.status(200).send(ResponseUtil.successTrue({}));
+    let data = {};
+    data.result = {};
+    data.message = "success";
+    res.status(200).send(data);
   }
 }

@@ -32,18 +32,9 @@ export class UsersRoute {
       usersController.postAddProblem,
     ]);
     //사용자 소속 강의, 주차 목록 요청
-    this.app.get("/api/v1/user/:userId",[
+    this.app.get("/api/v1/user/:userId", [
       authMiddleware.verifyToken,
       usersController.getCourseAndWeek,
     ]);
-
-    // // 아이디 중복검사
-    // this.app.post("/api/v1/user/id", [
-    //   usersMiddleware.validatePostIsAlreadyID,
-    //   usersMiddleware.isNull,
-    //   usersMiddleware.checkAlreadyID,
-    //   usersController.assureUniqueValue,
-    // ]);
-    
   }
 }

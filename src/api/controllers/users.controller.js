@@ -100,6 +100,8 @@ export class UsersController {
             } else {
               data.result.role = 0;
             }
+          } else {
+            data.result.role = 0;
           }
         }
 

@@ -18,7 +18,7 @@ export class AuthRoute {
       authController.createJWT,
     ]);
 
-    // this.app.get("/api/v1/auth/signout", [authController.logout]);
+    this.app.get("/api/v1/auth/signout", [authController.logout]);
 
     // this.app.get("/api/v1/auth/access-token", [
     //   authMiddleware.verifyToken,
