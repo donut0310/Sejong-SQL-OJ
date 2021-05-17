@@ -95,10 +95,16 @@ export class CourseController {
         res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
@@ -130,10 +136,16 @@ export class CourseController {
         res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
@@ -176,10 +188,16 @@ export class CourseController {
         res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
@@ -211,10 +229,16 @@ export class CourseController {
         res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
