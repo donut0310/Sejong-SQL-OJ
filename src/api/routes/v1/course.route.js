@@ -48,11 +48,18 @@ export class CourseRoute {
       courseController.deleteWeekData,
     ]);
 
+    // 교수: 문제 삭제
+    this.app.delete("/api/v1/course/problem/:pId", [
+      authMiddleware.verifyToken,
+      courseController.deleteProblem,
+    ]);
+
     // 수업 이름 요청
     this.app.get("/api/v1/course/:classId", [
       authMiddleware.verifyToken,
       courseController.getClassName,
     ]);
+
     //해당 수업 문제 목록 요청
     this.app.get("/api/v1/course/problem/:classId", [
       authMiddleware.verifyToken,

@@ -282,6 +282,39 @@ export class CourseController {
     }
   }
 
+  // 교수: 문제 삭제
+  async deleteProblem(req, res) {
+    const database = new Database();
+    const pId = req.params.pId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "delete from problem where p_id = ?";
+        let params = [pId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
   // 수업 이름 요청
   async getClassName(req, res) {
     const database = new Database();
