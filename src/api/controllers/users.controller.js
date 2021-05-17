@@ -135,7 +135,7 @@ export class UsersController {
       );
       try {
         let sql =
-          "select user_query from submit_answer where user_id = ? and submit_id = ?";
+          "select user_query,p_id from submit_answer where user_id = ? and submit_id = ?";
         let params = [userId, submitId];
         const a = await connection.query(sql, params);
         connection.release();
@@ -208,14 +208,14 @@ export class UsersController {
   async getCourseAndWeek(req, res) {
     const database = new Database();
     const userId = req.body.decoded.id;
-    console.log(userId)
-    let answer={}
+    console.log(userId);
+    let answer = {};
     let s = "select class_id from u_c_bridge where user_id=?";
     const c = await database.queryExecute(s, [userId]);
-    if(Array.isArray(c) && c.length==0){
-      answer.message="fail"
-      answer.result=null
-      answer.error="Invalid approach."
+    if (Array.isArray(c) && c.length == 0) {
+      answer.message = "fail";
+      answer.result = null;
+      answer.error = "Invalid approach.";
       res.status(400).send(answer);
     }
     let result = [];
@@ -236,8 +236,8 @@ export class UsersController {
       }
       result.push(resultChild);
     }
-    answer.message="success"
-    answer.result=result
+    answer.message = "success";
+    answer.result = result;
     res.status(200).send(answer);
   }
 }
