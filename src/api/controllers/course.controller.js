@@ -114,7 +114,7 @@ export class CourseController {
     const database = new Database();
     const assistsList = req.body.assists;
     const classId = req.params.classId;
-
+    let data = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -133,7 +133,9 @@ export class CourseController {
         const [a] = await connection.query(sql, params);
         connection.release();
 
-        res.status(200).send({ result: null, message: "success" });
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
       } catch (err) {
         connection.release();
         data.result = null;
@@ -155,7 +157,7 @@ export class CourseController {
     const database = new Database();
     const stdsList = req.body.stds;
     const classId = req.params.classId;
-
+    let data = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -185,7 +187,9 @@ export class CourseController {
         let params2 = [inputArr];
         const [b] = await connection.query(sql2, params2);
         connection.release();
-        res.status(200).send({ result: null, message: "success" });
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
       } catch (err) {
         connection.release();
         data.result = null;
@@ -207,7 +211,7 @@ export class CourseController {
     const database = new Database();
     const stdsList = req.body.stds;
     const classId = req.params.classId;
-
+    let data = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -225,8 +229,43 @@ export class CourseController {
 
         const [a] = await connection.query(sql, params);
         connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
 
-        res.status(200).send({ result: null, message: "success" });
+  // 교수: 주차 삭제
+  async deleteWeekData(req, res) {
+    const database = new Database();
+    const weekId = req.params.weekId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "delete from week where week_id = ?;";
+        let params = [weekId, weekId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
       } catch (err) {
         connection.release();
         data.result = null;

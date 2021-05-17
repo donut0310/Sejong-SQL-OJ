@@ -42,11 +42,18 @@ export class CourseRoute {
       courseController.deleteStdsList,
     ]);
 
+    // 교수: 주차 삭제
+    this.app.delete("/api/v1/course/week/:weekId", [
+      authMiddleware.verifyToken,
+      courseController.deleteWeekData,
+    ]);
+
     //해당 수업 문제 목록 요청
     this.app.get("/api/v1/course/problem/:classId", [
       authMiddleware.verifyToken,
       courseController.getCourseList,
     ]);
+
     //교수: 학생, 조교 목록 요청
     this.app.get("/api/v1/course/user/:classId", [
       authMiddleware.verifyToken,
