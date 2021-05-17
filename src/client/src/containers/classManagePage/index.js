@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useHistory, useParams } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
 import axios from 'axios'
 
@@ -10,19 +11,19 @@ import TAManagement from '../../components/pages/classManagePage/TAManagement'
 import StudentManagement from '../../components/pages/classManagePage/StudentManagement'
 
 const ClassManagePage = () => {
+  const history = useHistory()
+  const { classId } = useParams()
+
   const [problemInfo, setProblemInfo] = useState({
     className: '',
   })
 
-  // TODO
-  const classId = '1'
-
   // TAManagement
-  const [currentTA, setCurrentTA] = useState(['16010001', '16010002', '16010003'])
+  const [currentTA, setCurrentTA] = useState([])
   const [updateTA, setUpdateTA] = useState([])
 
   // StudentManagement
-  const [currentStd, setCurrentStd] = useState(['19010001', '19010002', '19010003', '19010004', '19010005', '19010006', '19010007', '19010008', '19010009', '19010001', '19010002'])
+  const [currentStd, setCurrentStd] = useState([])
   const [updateStd, setUpdateStd] = useState([])
 
   const handleAddTA = () => {
@@ -65,8 +66,8 @@ const ClassManagePage = () => {
       // const { data } = await axios.get(`/api/v1/course/:classId`)
     }
 
+    fetchStudentData()
     // fetchTitleData()
-    // fetchStudentData()
   }, [])
 
   // TODO index -> admin.js생성 후 옮겨야됨

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
-const StudentManagement = ({ currentStd, setCurrentStd, updateStd, setUpdateStd, handleAddTa, handleDeleteStd }) => {
+const StudentManagement = ({ currentStd, setCurrentStd, updateStd, setUpdateStd, handleAddStd, handleDeleteStd }) => {
   const handleChangeCurStd = (e) => {
     setCurrentStd(e.target.value.split(/\r\n|\r|\n/))
     console.log('currentStd', currentStd)
@@ -45,12 +45,12 @@ const StudentManagement = ({ currentStd, setCurrentStd, updateStd, setUpdateStd,
       </ListWrapper>
       <BtnWrapper>
         <div style={{ textAlign: 'end' }}>
-          <button id="submit-btn" onClick={handleAddTa}>
+          <button id="submit-btn" onClick={handleDeleteStd}>
             제거
           </button>
         </div>
         <div style={{ textAlign: 'end' }}>
-          <button id="submit-btn" onClick={handleDeleteStd}>
+          <button id="submit-btn" onClick={handleAddStd}>
             추가
           </button>
         </div>

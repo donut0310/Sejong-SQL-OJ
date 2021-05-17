@@ -36,12 +36,12 @@ const TAManagement = ({ currentTA, setCurrentTA, updateTA, setUpdateTA, handleAd
       </ListWrapper>
       <BtnWrapper>
         <div style={{ textAlign: 'end' }}>
-          <button id="submit-btn" onClick={handleAddTa}>
+          <button id="submit-btn" onClick={handleDeleteTA}>
             제거
           </button>
         </div>
         <div style={{ textAlign: 'end' }}>
-          <button id="submit-btn" onClick={handleDeleteTA}>
+          <button id="submit-btn" onClick={handleAddTa}>
             추가
           </button>
         </div>
