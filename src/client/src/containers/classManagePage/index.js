@@ -14,46 +14,42 @@ const ClassManagePage = () => {
     className: '',
   })
 
+  // TODO
   const classId = '1'
 
-  // StudentManagement
-  const [student, setStudent] = useState([
-    '19010001',
-    '19010002',
-    '19010003',
-    '19010004',
-    '19010005',
-    '19010006',
-    '19010007',
-    '19010008',
-    '19010009',
-    '19010001',
-    '19010002',
-    '19010003',
-    '19010004',
-    '19010005',
-    '19010006',
-    '19010007',
-    '19010008',
-    '19010009',
-  ])
-
   // TAManagement
-  const [TA, setTA] = useState(['16010001', '16010002'])
+  const [currentTA, setCurrentTA] = useState(['16010001', '16010002', '16010003'])
+  const [updateTA, setUpdateTA] = useState([])
 
-  const handleSaveTA = () => {
-    console.log('TA List', TA)
+  // StudentManagement
+  const [currentStd, setCurrentStd] = useState(['19010001', '19010002', '19010003', '19010004', '19010005', '19010006', '19010007', '19010008', '19010009', '19010001', '19010002'])
+  const [updateStd, setUpdateStd] = useState([])
+
+  const handleAddTA = () => {
     ;(async () => {
-      const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: TA })
-      console.log('TA List updated', data)
+      const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: updateTA })
+      console.log('Add TA List', data)
     })()
   }
 
-  const handleSaveStudent = () => {
-    console.log('student List', student)
+  const handleDeleteTA = () => {
     ;(async () => {
-      const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: student })
-      console.log('student List updated', data)
+      const { data } = await axios.delete(`/api/v1/course/assists/${classId}`, { data: { assists: updateTA } })
+      console.log('Delete TA List', data)
+    })()
+  }
+
+  const handleAddStd = () => {
+    ;(async () => {
+      const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: updateStd })
+      console.log('Add Std List', data)
+    })()
+  }
+
+  const handleDeleteStd = () => {
+    ;(async () => {
+      const { data } = await axios.delete(`/api/v1/course/stds/${classId}`, { data: { stds: updateStd } })
+      console.log('Delete Std List', data)
     })()
   }
 
@@ -61,8 +57,8 @@ const ClassManagePage = () => {
     const fetchStudentData = async () => {
       const { data } = await axios.get(`/api/v1/course/user/${classId}`)
       console.log(data)
-      setStudent(data.stds || [])
-      setTA(data.assists || [])
+      setCurrentStd(data.stds || [])
+      setCurrentTA(data.assists || [])
     }
 
     const fetchTitleData = async () => {
@@ -82,11 +78,11 @@ const ClassManagePage = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Subtitle subtitle={'조교 관리'} />
-          <TAManagement TA={TA} setTA={setTA} handleSaveTA={handleSaveTA} />
+          <TAManagement currentTA={currentTA} setCurrentTA={setCurrentTA} updateTA={updateTA} setUpdateTA={setUpdateTA} handleAddTA={handleAddTA} handleDeleteTA={handleDeleteTA} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Subtitle subtitle={'학생 관리'} />
-          <StudentManagement student={student} setStudent={setStudent} handleSaveStudent={handleSaveStudent} />
+          <StudentManagement currentStd={currentStd} setCurrentStd={setCurrentStd} updateStd={updateStd} setUpdateStd={setUpdateStd} handleAddStd={handleAddStd} handleDeleteStd={handleDeleteStd} />
         </Grid>
       </Grid>
     </PageWrapper>
