@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 
 import CodingPage from '../../containers/codingPage'
+import CodingEditPage from '../../containers/codingEditPage'
 import ProblemPage from '../../containers/problemPage'
 import StatusPage from '../../containers/statusPage'
 import MainPage from '../../containers/mainPage'
@@ -17,6 +18,7 @@ const Main = () => {
     <MainWrapper maxWidth="md">
       <Route exact path="/" component={MainPage} />
       <Route path="/:classId/:weekId/problem/:pId" component={CodingPage} />
+      <Route path="/:classId/:weekId/problem/:pId/:submitId" component={CodingEditPage} />
       <Route path="/:classId/:weekId/contents" component={ProblemPage} />
       <Route path="/:classId/:weekId/status" component={StatusPage} />
       <Route path="/:classId/:weekId/code/:submitId" component={CodeCheckPage} />

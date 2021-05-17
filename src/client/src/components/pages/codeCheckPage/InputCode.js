@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import AceEditor from 'react-ace'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import 'ace-builds/src-noconflict/ace'
 import 'ace-builds/src-noconflict/mode-mysql'
@@ -12,20 +12,20 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
-const InputCode = ({ theme, code }) => {
-  const classId = 1
-  const weekId = 1
-  const pId = 1
-  const submitId = 1
-
-  const [fontSize, setFontSize] = useState(14)
+const InputCode = ({ theme, pId, code }) => {
   const history = useHistory()
+  const { classId, weekId, submitId } = useParams()
+
+  const [fontSize, setFontSize] = useState(16)
+
   const handleEditCode = () => {
     history.push(`/${classId}/${weekId}/problem/${pId}/${submitId}`)
   }
+
   const onChange = (input) => {
     console.log(input)
   }
+
   const handleFontSize = (e) => {
     setFontSize(parseInt(e.target.value))
   }

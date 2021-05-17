@@ -18,14 +18,14 @@ const ModalComponent = ({ user }) => {
   const [userClassList, setUserClassList] = useState([])
   const [toggleMenu, setToggleMenu] = useState(false)
 
-  useEffect(() => {
-    console.log('USE EFFECT 실행 - MODAL')
-    ;(async () => {
-      const { data } = await axios.get(`/api/v1/user/${user.id}`)
-      // console.log(data)
-      setUserClassList(data)
-    })()
-  }, [])
+  // useEffect(() => {
+  //   console.log('USE EFFECT 실행 - MODAL')
+  //   ;(async () => {
+  //     const { data } = await axios.get(`/api/v1/user/${user.id}`)
+  //     console.log(data)
+  //     setUserClassList(data)
+  //   })()
+  // }, [])
 
   const dummyUserClassList = [
     {
@@ -88,7 +88,7 @@ const ModalComponent = ({ user }) => {
           {/* MY CLASS */}
           <Subtitle>My Class</Subtitle>
           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-            {userClassList.map((class_) => (
+            {dummyUserClassList.map((class_) => (
               <TreeContainer key={class_.classId}>
                 <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
                   {class_.weekList.map((week_) => (
