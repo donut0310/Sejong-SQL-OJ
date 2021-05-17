@@ -130,4 +130,30 @@ export class CourseController {
     // UPDATE course SET course.class_id = @CNT:=@CNT+1;
   }
   async allocClassToStd() {}
+  async getCourseList(req, res){
+    const database = new Database();
+    let classId = req.params.classId;
+    let result=[]
+    let s="select week_id,week_title from week where class_id= ?;";
+    const c = await database.queryExecute(s, [classId]);
+    for(let i=0;i<c.length;i++){
+      let resultChild={}
+      let weekId=c[i].week_id;
+      resultChild.weekId=weekId;
+      resultChild.weekName=c[i].week_title;
+      let params=[weekId,classId]
+      s="select p_id, title from problem where week_id= ? and class_id= ? ;";
+      let a= await database.queryExecute(s,params);
+      let problemList=[]
+      for( let j=0;j<a.length;j++){
+        let problemChild={};
+        problemChild.pId=a[j].p_id;
+        problemChild.title=a[j].title;
+        problemList.push(problemChild);
+      }
+      resultChild.problemList=problemList
+      result.push(resultChild)
+    }
+    res.status(200).send(result);
+  }
 }
