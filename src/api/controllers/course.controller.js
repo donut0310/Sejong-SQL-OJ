@@ -134,6 +134,7 @@ export class CourseController {
     const database = new Database();
     let classId = req.params.classId;
     let result=[]
+    let answer={}
     let s="select week_id,week_title from week where class_id= ?;";
     const c = await database.queryExecute(s, [classId]);
     for(let i=0;i<c.length;i++){
@@ -154,6 +155,8 @@ export class CourseController {
       resultChild.problemList=problemList
       result.push(resultChild)
     }
-    res.status(200).send(result);
+    answer.message="success"
+    answer.result=result
+    res.status(200).send(answer);
   }
 }
