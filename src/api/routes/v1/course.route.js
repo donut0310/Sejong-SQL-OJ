@@ -17,7 +17,12 @@ export class CourseRoute {
 
     // 교수: 조교 목록 추가
     this.app.post("/api/v1/course/assists/:classId", [
-      courseController.updateAssistsList,
+      courseController.addAssistsList,
+    ]);
+
+    // 교수: 조교 목록 제거
+    this.app.delete("/api/v1/course/assists/delete/:classId", [
+      courseController.deleteAssistsList,
     ]);
 
     // 교수: 학생 목록 추가

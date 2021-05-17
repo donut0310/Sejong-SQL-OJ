@@ -58,7 +58,7 @@ export class CourseController {
   }
 
   // 교수: 조교 목록 추가
-  async updateAssistsList(req, res) {
+  async addAssistsList(req, res) {
     const database = new Database();
     const assistsList = req.body.assists;
     const classId = req.params.classId;
@@ -102,7 +102,42 @@ export class CourseController {
       return false;
     }
   }
-  // 교수: 학생 목록 수정
+
+  // 교수: 조교 목록 제거
+  async deleteAssistsList(req, res) {
+    const database = new Database();
+    const assistsList = req.body.assists;
+    const classId = req.params.classId;
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        for (let i in assistsList) {
+          assistsList[i] = JSON.stringify(assistsList[i]);
+        }
+
+        let sql =
+          "delete from u_c_bridge where class_id = ? and user_id in (" +
+          assistsList +
+          ")";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        res.status(200).send("success");
+      } catch (err) {
+        connection.release();
+        res.status(400).send(err);
+      }
+    } catch (err) {
+      res.status(400).send(err);
+      return false;
+    }
+  }
+
   async getCourseList(req, res) {
     const database = new Database();
     let classId = req.params.classId;
