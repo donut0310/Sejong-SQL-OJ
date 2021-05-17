@@ -53,15 +53,75 @@ export class UsersController {
 
   // 로그인시 정보 유지
   async getProfile(req, res) {
-    const userModel = new UsersModel();
-    // const user = await userModel.readByEmail(req.body.decoded.email);
-    // -password, -salt
+    const database = new Database();
+    const userId = req.body.decoded.id;
 
-    res.status(200).send(user);
+    let data = {};
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql =
+          "select user.user_id, user.user_name, u_c_bridge.class_id from u_c_bridge join user on user.user_id = ? and u_c_bridge.user_id = ?";
+        let params = [userId, userId];
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        let arr = [];
+        let arr2 = [];
+        for (let i in a) {
+          arr.push(a[i].class_id);
+          arr2.push(a[i].class_id);
+        }
+
+        data.result = a[0];
+
+        for (let i in arr2) {
+          arr2[i] = JSON.stringify(arr[i]);
+        }
+
+        let sql2 =
+          "select admin_id from course where class_id in (" + arr2 + ")";
+
+        const [b] = await connection.query(sql2);
+        connection.release();
+
+        const regex =
+          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+        for (let i in b) {
+          let admin_id = b[i].admin_id.split(",");
+
+          if (admin_id.includes(userId)) {
+            if (regex.test(userId)) {
+              data.result.role = 1;
+            } else {
+              data.result.role = 0;
+            }
+          } else {
+            data.result.role = 0;
+          }
+        }
+
+        data.result.class_id = arr;
+        data.message = "success";
+        data.result.isAuth = true;
+        res.status(200).send(data);
+      } catch (err) {
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+    }
   }
-
-  
-  // 사용자가 입력한 정답 쿼리문 실행
 
   // 제출한 코드 요청
   async getSubmittedCode(req, res) {
@@ -144,27 +204,28 @@ export class UsersController {
       return false;
     }
   }
-  async getCourseAndWeek(req,res){
+  async getCourseAndWeek(req, res) {
     const database = new Database();
     const userId = req.body.decoded.id;
-    let s="select class_id from u_c_bridge where user_id=?";
+    let s = "select class_id from u_c_bridge where user_id=?";
     const c = await database.queryExecute(s, [userId]);
-    let result=[]
-    for(let i=0;i<c.length;i++){
-      let resultChild={}
-      let class_id=c[i].class_id
-      resultChild.classId=class_id
-      let s1="select week_id,week_title,class_name from week where class_id=?"
-      const d= await database.queryExecute(s1, [class_id]);
-      resultChild.className=d[0].class_name
-      resultChild.weekList=[]
-      for(let j=0;j<d.length;j++){
-        let weekListChild={}
-        weekListChild.weekId=d[j].week_id
-        weekListChild.weekName=d[j].week_title
-        resultChild.weekList.push(weekListChild)
+    let result = [];
+    for (let i = 0; i < c.length; i++) {
+      let resultChild = {};
+      let class_id = c[i].class_id;
+      resultChild.classId = class_id;
+      let s1 =
+        "select week_id,week_title,class_name from week where class_id=?";
+      const d = await database.queryExecute(s1, [class_id]);
+      resultChild.className = d[0].class_name;
+      resultChild.weekList = [];
+      for (let j = 0; j < d.length; j++) {
+        let weekListChild = {};
+        weekListChild.weekId = d[j].week_id;
+        weekListChild.weekName = d[j].week_title;
+        resultChild.weekList.push(weekListChild);
       }
-      result.push(resultChild)
+      result.push(resultChild);
     }
     res.status(200).send(result);
   }

@@ -19,9 +19,7 @@ export class AuthMiddleware {
     const verifyResult = jwtUtil.verifyToken(token, type);
 
     if (!verifyResult.success) {
-      res
-        .status(verifyResult.err.status)
-        .send(ResponseUtil.successFalse(verifyResult.err));
+      res.status(verifyResult.err.status).send(verifyResult.err);
     } else {
       req.body.decoded = verifyResult.decoded;
       next();

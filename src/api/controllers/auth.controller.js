@@ -72,32 +72,43 @@ export class AuthController {
   async refreshAccessToken(req, res) {
     const jwtUtil = new JWTUtil();
 
-    const usersModel = new UsersModel();
-    const user = await usersModel.read("user_id", req.body.decoded.id);
-
-    if (!user) {
-      const error = jwtUtil.invalidTokenError;
-      res.status(error.status).send(ResponseUtil.successFalse(error));
-    }
-
-    const accessPayload = {
-      id: user[0][0].user_id,
-      issuer: "http://13.125.85.53/",
-    };
+    const database = new Database();
 
     try {
-      const accessToken = jwtUtil.sign(accessPayload, "access");
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select user_id,user_name from user where user_id = ?";
+        let params = [req.body.decoded.id];
+        const [a] = await connection.query(sql, params);
+        connection.release();
 
-      res.cookie("access-token", accessToken, {
-        secure: false,
-        httpOnly: true,
-        maxAge: 1000 * parseInt(jwtUtil.accessTokenLife),
-      });
+        if (!a) {
+          const error = jwtUtil.invalidTokenError;
+          res.status(error.status).send(ResponseUtil.successFalse(error));
+        }
 
-      res.status(200).send(ResponseUtil.successTrue({}));
-    } catch (err) {
-      res.status(500).send(err);
-    }
+        const accessPayload = {
+          id: user[0][0].user_id,
+          issuer: "http://13.125.85.53/",
+        };
+
+        try {
+          const accessToken = jwtUtil.sign(accessPayload, "access");
+
+          res.cookie("access-token", accessToken, {
+            secure: false,
+            httpOnly: true,
+            maxAge: 1000 * parseInt(jwtUtil.accessTokenLife),
+          });
+
+          res.status(200).send(ResponseUtil.successTrue({}));
+        } catch (err) {
+          res.status(500).send(err);
+        }
+      } catch (err) {}
+    } catch (err) {}
   }
 
   async logout(req, res) {
@@ -113,6 +124,9 @@ export class AuthController {
       maxAge: 0,
     });
 
-    res.status(200).send(ResponseUtil.successTrue({}));
+    let data = {};
+    data.result = {};
+    data.message = "success";
+    res.status(200).send(data);
   }
 }
