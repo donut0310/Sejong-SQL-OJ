@@ -15,14 +15,13 @@ export class CourseRoute {
       courseController.adminEnrollProfToClass,
     ]);
 
+    // 교수: 조교 목록 수정
+
+    // 교수: 학생 목록 수정
+
     // 교수: 학생, 조교 등록
     this.app.post("/api/v1/course/enrollStd", [
       courseController.profEnrollStdToClass,
-    ]);
-
-    // 교수: 학생, 조교 등록 해제
-    this.app.delete("/api/v1/course/enrollStd", [
-      courseController.profDeleteStdInClass,
     ]);
   }
 }

@@ -120,14 +120,4 @@ export class CourseController {
       return false;
     }
   }
-
-  // 교수: 학생, 조교 등록 해제
-  async profDeleteStdInClass(req, res) {
-    //기능 정의 전
-    // 삭제 후
-    // ALTER TABLE course AUTO_INCREMENT=1;
-    // SET @CNT = 0;
-    // UPDATE course SET course.class_id = @CNT:=@CNT+1;
-  }
-  async allocClassToStd() {}
 }
