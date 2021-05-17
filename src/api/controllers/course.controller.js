@@ -138,6 +138,51 @@ export class CourseController {
     }
   }
 
+  // 교수: 학생 목록 추가
+  async addStdsList(req, res) {
+    const database = new Database();
+    const stdList = req.body.stds;
+    const classId = req.params.classId;
+
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select user_id from u_c_bridge where class_id = ?";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        let reValue = [];
+        let inputArr = [];
+
+        for (let i in a) {
+          reValue.push(a[i].user_id);
+        }
+
+        // 데이터에 class_id 와 author 를 지정해준다
+        for (let i in stdList) {
+          if (!reValue.includes(stdList[i])) {
+            inputArr.push([stdList[i], classId, 0]);
+          }
+        }
+
+        let sql2 = "insert into u_c_bridge(user_id,class_id,author) values ?";
+        let params2 = [inputArr];
+        const [b] = await connection.query(sql2, params2);
+        connection.release();
+        res.status(200).send("success");
+      } catch (err) {
+        connection.release();
+        res.status(400).send(err);
+      }
+    } catch (err) {
+      res.status(400).send(err);
+      return false;
+    }
+  }
   async getCourseList(req, res) {
     const database = new Database();
     let classId = req.params.classId;

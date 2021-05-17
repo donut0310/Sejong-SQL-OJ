@@ -26,7 +26,9 @@ export class CourseRoute {
     ]);
 
     // 교수: 학생 목록 추가
-    this.app.post("/api/v1/course/stds/:classId", []);
+    this.app.post("/api/v1/course/stds/:classId", [
+      courseController.addStdsList,
+    ]);
 
     //해당 수업 문제 목록 요청
     this.app.get("/api/v1/course/problem/:classId", [
