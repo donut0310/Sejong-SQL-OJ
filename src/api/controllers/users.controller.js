@@ -204,12 +204,20 @@ export class UsersController {
       return false;
     }
   }
+  //사용자 소속 강의, 주차 목록 요청
   async getCourseAndWeek(req, res) {
     const database = new Database();
     const userId = req.body.decoded.id;
+    console.log(userId)
     let answer={}
     let s = "select class_id from u_c_bridge where user_id=?";
     const c = await database.queryExecute(s, [userId]);
+    if(Array.isArray(c) && c.length==0){
+      answer.message="fail"
+      answer.result=null
+      answer.error="Cannot set headers after they are sent to the client"
+      res.status(400).send(answer);
+    }
     let result = [];
     for (let i = 0; i < c.length; i++) {
       let resultChild = {};

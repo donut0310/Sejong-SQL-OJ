@@ -137,6 +137,12 @@ export class CourseController {
     let answer={}
     let s="select week_id,week_title from week where class_id= ?;";
     const c = await database.queryExecute(s, [classId]);
+    if(Array.isArray(c) && c.length==0){
+      answer.message="fail"
+      answer.result=null
+      answer.error="Cannot set headers after they are sent to the client"
+      res.status(400).send(answer);
+    }
     for(let i=0;i<c.length;i++){
       let resultChild={}
       let weekId=c[i].week_id;
@@ -158,5 +164,8 @@ export class CourseController {
     answer.message="success"
     answer.result=result
     res.status(200).send(answer);
+  }
+  async getStudentAndAssists(req,res){
+
   }
 }
