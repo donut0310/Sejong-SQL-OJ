@@ -67,15 +67,16 @@ export class UsersController {
       );
       try {
         let sql =
-          "select user.user_id, user.user_name, u_c_bridge.class_id from u_c_bridge join user on user.user_id = ? and u_c_bridge.user_id = ?";
+          "select user.user_id, user.user_name, u_c_bridge.class_id, u_c_bridge.author from u_c_bridge join user on user.user_id = ? and u_c_bridge.user_id = ?";
         let params = [userId, userId];
         const [a] = await connection.query(sql, params);
         connection.release();
 
         let arr = [];
 
+        console.log(a);
         for (let i in a) {
-          arr.push(a[i].class_id);
+          if (a[i].author != 0) arr.push(a[i].class_id);
         }
         data.result = a[0];
         const regex_email =
