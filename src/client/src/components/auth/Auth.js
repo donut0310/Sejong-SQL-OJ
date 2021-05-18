@@ -17,11 +17,10 @@ const Auth = (SpecificComponent, option, adminRoute = null) => {
       ;(async () => {
         const response = await dispatch(auth())
         // Logged out
-        console.log('auth response.result.isAuth', response.result.isAuth)
-        if (!response.result.isAuth) {
-          if (option) {
-            history.push('/login')
-          }
+        console.log('auth response', response)
+
+        if (!response || !response.result) {
+          history.push('/login')
         } else {
           // Logged in
           if (adminRoute && !response.isAdmin) {
