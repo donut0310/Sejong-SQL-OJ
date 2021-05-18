@@ -1,4 +1,7 @@
 import * as crypto from "crypto";
+import { query } from "express";
+import fs from "fs";
+
 import { Database } from "../models/db.js";
 import { HashUtil } from "../utils/hash.util.js";
 
@@ -162,33 +165,61 @@ export class UsersController {
   //문제 추가 요청
   async postAddProblem(req, res) {
     const database = new Database();
-    const classId = req.params.classId;
-    const weekId = req.params.weekId;
     let data = {};
+    const values={
+      classId : req.params.classId,
+      weekId : req.params.weekId,
+      file : req.files,
+      title : req.body.title,
+      content : req.body.content,
+      table_info : req.body.table_info,
+      start_time : req.body.start_time,
+      end_time : req.body.end_time,
+      is_public : req.body.is_public,
+      tc_cnt : req.body.tc_cnt,
+      week_title:req.body.week_title
+    }
+
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-        let sql =
-          "insert into problem\
-          (class_id,week_id,title,content,table_info,start_time,end_time,is_public)\
-          values (?,?,?,?,?,?,?,?)";
-        let params = [
-          classId,
-          weekId,
-          req.body.title,
-          req.body.content,
-          req.body.table_info,
-          req.body.start_time,
-          req.body.end_time,
-          req.body.is_public,
-        ];
-        const a = await connection.query(sql, params);
-        connection.release();
-        data.result = null;
-        data.message = "success";
-        res.status(200).send(data);
+    // 1. input.sql의 바디 데이터 삽입 
+    // problem 테이블에 데이터 삽입 
+    let sql =
+    "insert into problem\
+    (class_id,week_id,title,content,table_info,start_time,end_time,is_public,tc_cnt,week_title)\
+    values (?,?,?,?,?,?,?,?,?,?)";
+    let params = [
+      values.classId,
+      values.weekId,
+      values.title,
+      values.content,
+      values.table_info,
+      values.start_time,
+      values.end_time,
+      values.is_public,
+      values.tc_cnt,
+      values.week_title
+    ];
+
+    const sql_rows = await connection.query(sql,params);
+
+
+    let sql2 = 'select problem.p_id, week.week_title from problem,week where (problem.title = ?) and week.week_id = ?';
+    let params2 = [values.title,values.weekId]
+
+    let sql2_rows = await connection.query(sql2,params2);
+    connection.release();
+    let values2 = {
+      p_id: sql2_rows.p_id,
+      week_title: sql2_rows.week_title,
+      tc_id:0,
+      tc_answer:''
+    }
+    console.log(values2)
+        res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
         data.result = null;
@@ -203,7 +234,38 @@ export class UsersController {
       res.status(400).send(data);
       return false;
     }
+
+
+    // console.log("문제 추가 성공!")
+    // console.log(values2)
+    // // 문제 테스트 케이스 테이블 생성 
+    // for (let i =0;i<values.tc_cnt;i++){
+    //   // file read
+    //   let input_data = values.file[2*i].buffer.toString() //sql 파일 내 데이터
+    //   let output_data = values.file[2*i+1].buffer.toString() //json 파일 내 데이터
+      
+    //   // 1. 테스트 케이스 테이블 생성
+    //   // sql 파일내 오류 발생시 트라이 캐치 구문 추가하기
+    //   let input_connection = await database.testCaseConnect(i);
+    //   await input_connection.query(input_data);
+    //   input_connection.release();
+    //   console.log("인풋파일 성공!!",i)
+      
+    //   // 2. output.json 데이터 삽입
+    //   values2.tc_answer = output_data;
+    //   values2.tc_id = i;
+    //   let sql3 = 'insert into testcase_problem (p_id,tc_answer,week_title,tc_id) values(?,?,?,?)';
+    //   let params3 = [values2.p_id,values2.week_title,values2.tc_id,values2.tc_answer];
+    //   let sql3_rows = await database.queryExecute(sql3,params3);
+    //   console.log("아웃풋 파일 성공!",i)
+    // }
+
+    // data.result = null;
+    // data.message = "success";
+    
+    // res.status(200).send(data);
   }
+
   //사용자 소속 강의, 주차 목록 요청
   async getCourseAndWeek(req, res) {
     const database = new Database();
