@@ -6,7 +6,7 @@ import ResultTable from './ResultTable'
 
 const Result = ({ isExecuted, execIsLoading, execIsError, execResult }) => {
   useEffect(() => {
-    console.log('REseult useEffect execResult', execResult)
+    console.log('ExecResult', execResult)
   }, [isExecuted, execIsLoading, execIsError, execResult])
 
   return <ResultWrapper>{isExecuted ? execIsLoading ? <>로딩중</> : execIsError ? <>에러</> : execResult && <ResultTable execResult={execResult} /> : <>실행버튼눌러</>}</ResultWrapper>
