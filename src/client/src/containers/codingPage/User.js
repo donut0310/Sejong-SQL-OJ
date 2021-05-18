@@ -30,7 +30,7 @@ const User = ({ user }) => {
   const [paragraphCnt, setParagraphCnt] = useState(0)
 
   // Code.js
-  const [input, setInput] = useState('select * from patient_info limit 10;')
+  const [input, setInput] = useState('')
 
   // Result.js
   const [isExecuted, setIsExecuted] = useState(false)
@@ -38,21 +38,23 @@ const User = ({ user }) => {
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
 
-  // TODO 에러일 경우 처리
   const handleExecCode = async () => {
     ;(async () => {
       console.log('handleExecCode', input)
       setIsExecuted(true)
       setExecIsLoading(true)
-      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      // const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      const res = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
 
-      if (data.message === 'success') {
-        setExecResult(data.result)
-        setExecIsError(false)
-      } else {
-        // setExecResult(data.result)
-        setExecIsError(true)
-      }
+      // TODO 에러일 경우 처리
+      console.log('제출 결과', res)
+      // if (data.message === 'success') {
+      //   setExecResult(data.result)
+      //   setExecIsError(false)
+      // } else {
+      //   // setExecResult(data.result)
+      //   setExecIsError(true)
+      // }
 
       setExecIsLoading(false)
     })()
@@ -66,6 +68,19 @@ const User = ({ user }) => {
       const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
       console.log('handleSubmitCode', data)
     })()
+  }
+
+  // 새로고침 방지 코드
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+
+  const alertUser = (e) => {
+    e.preventDefault()
+    e.returnValue = ''
   }
 
   // TODO
