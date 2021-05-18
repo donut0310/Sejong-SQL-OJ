@@ -22,13 +22,15 @@ const WeekManagement = () => {
     console.log(newWeekName)
   }
 
+  // TODO API 변수명 뭐로 보낼지 확인
   const handleAddWeekBtn = async () => {
     console.log('handleAddWeekBtn 실행')
 
-    const { data } = await axios.post(`/api/v1/course/week/${classId}`)
+    const { data } = await axios.post(`/api/v1/course/week/${classId}`, { week_title: newWeekName })
     setIsChanged(!isChanged)
   }
 
+  // TODO API 요청 아직 안함
   const handleDeleteWeekBtn = async (weekId) => {
     console.log('handleDeleteWeekBtn 실행', weekId)
 
@@ -42,6 +44,7 @@ const WeekManagement = () => {
     history.push(`/manage/${classId}/${weekId}/addproblem`)
   }
 
+  // TODO 테스트 필요
   const handleDeleteProblemBtn = async (pId) => {
     console.log('handleDeleteProblemBtn 실행', pId)
 
