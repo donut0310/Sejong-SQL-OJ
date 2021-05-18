@@ -40,22 +40,24 @@ const User = ({ user }) => {
 
   // TODO 에러일 경우 처리
   const handleExecCode = async () => {
-    ;(async () => {
-      console.log('handleExecCode', input)
-      setIsExecuted(true)
-      setExecIsLoading(true)
-      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+    if (input) {
+      ;(async () => {
+        console.log('handleExecCode', input)
+        setIsExecuted(true)
+        setExecIsLoading(true)
+        const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
 
-      if (data.message === 'success') {
-        setExecResult(data.result)
-        setExecIsError(false)
-      } else {
-        // setExecResult(data.result)
-        setExecIsError(true)
-      }
+        if (data.message === 'success') {
+          setExecResult(data.result)
+          setExecIsError(false)
+        } else {
+          // setExecResult(data.result)
+          setExecIsError(true)
+        }
 
-      setExecIsLoading(false)
-    })()
+        setExecIsLoading(false)
+      })()
+    } else alert('코드를 작성해주세요.')
   }
 
   // 새로고침 방지 코드
@@ -71,13 +73,15 @@ const User = ({ user }) => {
     e.returnValue = ''
   }
   const handleSubmitCode = async () => {
-    // TODO
-    // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+    if (input) {
+      // TODO
+      // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
 
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-      console.log('handleSubmitCode', data)
-    })()
+      ;(async () => {
+        const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
+        console.log('handleSubmitCode', data)
+      })()
+    } else alert('코드를 입력해주세요.')
   }
 
   // TODO
