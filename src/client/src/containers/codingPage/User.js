@@ -44,18 +44,18 @@ const User = ({ user }) => {
         console.log('handleExecCode', input)
         setIsExecuted(true)
         setExecIsLoading(true)
-        // const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-        const res = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+        const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+        // const res = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
 
-        // TODO 에러일 경우 처리
-        console.log('제출 결과', res)
-        // if (data.message === 'success') {
-        //   setExecResult(data.result)
-        //   setExecIsError(false)
-        // } else {
-        //   // setExecResult(data.result)
-        //   setExecIsError(true)
-        // }
+        // TODO 에러일 경우 처리 해야함
+        // console.log('제출 결과', res)
+        if (data.message === 'success') {
+          setExecResult(data.result)
+          setExecIsError(false)
+        } else {
+          // setExecResult(data.result)
+          setExecIsError(true)
+        }
 
         setExecIsLoading(false)
       })()
