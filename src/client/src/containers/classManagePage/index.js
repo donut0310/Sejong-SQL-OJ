@@ -57,17 +57,18 @@ const ClassManagePage = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       const { data } = await axios.get(`/api/v1/course/user/${classId}`)
-      console.log(data)
+      console.log('Fetch stds, TA list=>', data)
       setCurrentStd(data.stds || [])
       setCurrentTA(data.assists || [])
     }
 
     const fetchTitleData = async () => {
-      // const { data } = await axios.get(`/api/v1/course/:classId`)
+      const res = await axios.get(`/api/v1/course/:classId`)
+      console.log('Fetch title date=>', res)
     }
 
     fetchStudentData()
-    // fetchTitleData()
+    fetchTitleData()
   }, [])
 
   // TODO index -> admin.js생성 후 옮겨야됨

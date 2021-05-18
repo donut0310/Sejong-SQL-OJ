@@ -56,11 +56,9 @@ const WeekManagement = () => {
   }
 
   useEffect(() => {
-    console.log('WeekManagement useEffect')
-
     const fetchWeekList = async () => {
       const { data } = await axios.get(`/api/v1/course/problem/${classId}`)
-      console.log('data.result', data.result)
+      console.log('Fetch Week&problem List', data.result)
 
       setClassInfo(data.result)
     }
