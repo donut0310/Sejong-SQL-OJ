@@ -73,39 +73,26 @@ export class UsersController {
         connection.release();
 
         let arr = [];
-        let arr2 = [];
+
         for (let i in a) {
           arr.push(a[i].class_id);
-          arr2.push(a[i].class_id);
         }
 
         data.result = a[0];
 
-        for (let i in arr2) {
-          arr2[i] = JSON.stringify(arr[i]);
-        }
-
-        let sql2 =
-          "select admin_id from course where class_id in (" + arr2 + ")";
-
-        const [b] = await connection.query(sql2);
-        connection.release();
-
-        const regex =
+        const regex_email =
           /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        const regex_stdnum = /^[0-9]/g;
 
-        for (let i in b) {
-          let admin_id = b[i].admin_id.split(",");
-
-          if (admin_id.includes(userId)) {
-            if (regex.test(userId)) {
-              data.result.role = 1;
-            } else {
-              data.result.role = 0;
-            }
-          } else {
-            data.result.role = 0;
-          }
+        // user_id 가 이메일이 아닐경우 학생, 조교
+        // user_id 가 학번일 경우 교수
+        // user_id 가 이메일, 학번이 모두 아닐경우 관리자
+        if (regex_stdnum.test(userId)) {
+          data.result.role = 0;
+        } else if (regex_email.text(userId)) {
+          data.result.role = 1;
+        } else {
+          data.result.role = 2;
         }
 
         data.result.class_id = arr;
@@ -166,59 +153,59 @@ export class UsersController {
   async postAddProblem(req, res) {
     const database = new Database();
     let data = {};
-    const values={
-      classId : req.params.classId,
-      weekId : req.params.weekId,
-      file : req.files,
-      title : req.body.title,
-      content : req.body.content,
-      table_info : req.body.table_info,
-      start_time : req.body.start_time,
-      end_time : req.body.end_time,
-      is_public : req.body.is_public,
-      tc_cnt : req.body.tc_cnt,
-      week_title:req.body.week_title
-    }
+    const values = {
+      classId: req.params.classId,
+      weekId: req.params.weekId,
+      file: req.files,
+      title: req.body.title,
+      content: req.body.content,
+      table_info: req.body.table_info,
+      start_time: req.body.start_time,
+      end_time: req.body.end_time,
+      is_public: req.body.is_public,
+      tc_cnt: req.body.tc_cnt,
+      week_title: req.body.week_title,
+    };
 
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-    // 1. input.sql의 바디 데이터 삽입 
-    // problem 테이블에 데이터 삽입 
-    let sql =
-    "insert into problem\
+        // 1. input.sql의 바디 데이터 삽입
+        // problem 테이블에 데이터 삽입
+        let sql =
+          "insert into problem\
     (class_id,week_id,title,content,table_info,start_time,end_time,is_public,tc_cnt,week_title)\
     values (?,?,?,?,?,?,?,?,?,?)";
-    let params = [
-      values.classId,
-      values.weekId,
-      values.title,
-      values.content,
-      values.table_info,
-      values.start_time,
-      values.end_time,
-      values.is_public,
-      values.tc_cnt,
-      values.week_title
-    ];
+        let params = [
+          values.classId,
+          values.weekId,
+          values.title,
+          values.content,
+          values.table_info,
+          values.start_time,
+          values.end_time,
+          values.is_public,
+          values.tc_cnt,
+          values.week_title,
+        ];
 
-    const sql_rows = await connection.query(sql,params);
+        const sql_rows = await connection.query(sql, params);
 
+        let sql2 =
+          "select problem.p_id, week.week_title from problem,week where (problem.title = ?) and week.week_id = ?";
+        let params2 = [values.title, values.weekId];
 
-    let sql2 = 'select problem.p_id, week.week_title from problem,week where (problem.title = ?) and week.week_id = ?';
-    let params2 = [values.title,values.weekId]
-
-    let sql2_rows = await connection.query(sql2,params2);
-    connection.release();
-    let values2 = {
-      p_id: sql2_rows.p_id,
-      week_title: sql2_rows.week_title,
-      tc_id:0,
-      tc_answer:''
-    }
-    console.log(values2)
+        let sql2_rows = await connection.query(sql2, params2);
+        connection.release();
+        let values2 = {
+          p_id: sql2_rows.p_id,
+          week_title: sql2_rows.week_title,
+          tc_id: 0,
+          tc_answer: "",
+        };
+        console.log(values2);
         res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
@@ -235,22 +222,21 @@ export class UsersController {
       return false;
     }
 
-
     // console.log("문제 추가 성공!")
     // console.log(values2)
-    // // 문제 테스트 케이스 테이블 생성 
+    // // 문제 테스트 케이스 테이블 생성
     // for (let i =0;i<values.tc_cnt;i++){
     //   // file read
     //   let input_data = values.file[2*i].buffer.toString() //sql 파일 내 데이터
     //   let output_data = values.file[2*i+1].buffer.toString() //json 파일 내 데이터
-      
+
     //   // 1. 테스트 케이스 테이블 생성
     //   // sql 파일내 오류 발생시 트라이 캐치 구문 추가하기
     //   let input_connection = await database.testCaseConnect(i);
     //   await input_connection.query(input_data);
     //   input_connection.release();
     //   console.log("인풋파일 성공!!",i)
-      
+
     //   // 2. output.json 데이터 삽입
     //   values2.tc_answer = output_data;
     //   values2.tc_id = i;
@@ -262,7 +248,7 @@ export class UsersController {
 
     // data.result = null;
     // data.message = "success";
-    
+
     // res.status(200).send(data);
   }
 
