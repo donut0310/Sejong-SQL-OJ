@@ -31,13 +31,11 @@ const RegisterForm = () => {
       <SubTitle>회원가입</SubTitle>
       <StyledForm maxWidth="lg">
         <RegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <RegisterTextField name="id" label="아이디" inputRef={register({ required: true, maxLength: 10 })} placeholder="아이디를 입력하세요." variant="outlined" size="small" />
+          <RegisterTextField name="id" label="아이디" inputRef={register({ required: true })} placeholder="아이디를 입력하세요." variant="outlined" size="small" />
           {errors.id && errors.id.type === 'required' && <ErrorMessage> This ID field is required</ErrorMessage>}
-          {errors.id && errors.id.type === 'maxLength' && <ErrorMessage> Your input exceed maximum length</ErrorMessage>}
 
-          <RegisterTextField name="name" label="이름" inputRef={register({ required: true, maxLength: 10 })} placeholder="이름을 입력하세요." variant="outlined" size="small" />
+          <RegisterTextField name="name" label="이름" inputRef={register({ required: true })} placeholder="이름을 입력하세요." variant="outlined" size="small" />
           {errors.name && errors.name.type === 'required' && <ErrorMessage> This name field is required</ErrorMessage>}
-          {errors.name && errors.name.type === 'maxLength' && <ErrorMessage> Your input exceed maximum length</ErrorMessage>}
 
           <RegisterTextField
             name="password"

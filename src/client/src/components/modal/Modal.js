@@ -75,7 +75,7 @@ const ModalComponent = ({ user }) => {
                     <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
                   ))}
                 </StyledTreeItem>
-                <SettingBtn onClick={handleManageClass(class_.classId)} />
+                {(user.role === 1 || class_.classId in user.class_id) && <SettingBtn onClick={handleManageClass(class_.classId)} />}
               </TreeContainer>
             ))}
           </TreeView>
