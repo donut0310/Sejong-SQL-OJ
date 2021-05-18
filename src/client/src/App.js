@@ -15,7 +15,23 @@ import RegisterPage from './containers/registerPage'
 import AutoScrollUp from './AutoScrollUp'
 import ScrollUp from './ScrollUp'
 
+import Auth from './components/auth/Auth'
+
 const App = ({ theme }) => {
+  const MainComponent = () => {
+    return (
+      <>
+        <MainWrapper>
+          <Modal />
+          <Header />
+          <Main />
+          <Footer />
+        </MainWrapper>
+        <ScrollUp />
+      </>
+    )
+  }
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <AutoScrollUp>
@@ -23,14 +39,14 @@ const App = ({ theme }) => {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route path="/">
-            <MainWrapper>
+          <Route path="/" component={Auth(MainComponent, true)}>
+            {/* <MainWrapper>
               <Modal />
               <Header />
               <Main />
               <Footer />
             </MainWrapper>
-            <ScrollUp />
+            <ScrollUp /> */}
           </Route>
         </Switch>
       </AutoScrollUp>

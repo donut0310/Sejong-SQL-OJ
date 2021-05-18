@@ -1,5 +1,50 @@
-import { LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE } from './types'
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_IN_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, LOG_OUT_FAILURE } from './types'
 import axios from 'axios'
+
+// Auth
+export const authRequest = () => {
+  console.log('authRequest Start')
+  return {
+    type: AUTH_REQUEST,
+  }
+}
+
+export const authSuccess = (data) => {
+  console.log('authSuccess')
+  return {
+    type: AUTH_SUCCESS,
+    payload: data,
+  }
+}
+
+export const authFailure = (err) => {
+  console.log('authFailure')
+  return {
+    type: AUTH_FAILURE,
+    payload: err,
+  }
+}
+
+export const auth = () => {
+  return async (dispatch) => {
+    try {
+      console.log('auth Start')
+      const response = await axios.get('/api/v1/user/auth')
+
+      console.log('auth get response.data.result=>', response.data.result)
+
+      if (!response.data) throw new Error('로그인 정보 없음')
+
+      dispatch(authSuccess(response.data.result))
+      return response.data
+    } catch (error) {
+      dispatch(authFailure(error))
+      return {
+        isAuth: false,
+      }
+    }
+  }
+}
 
 // Log in
 export const logInRequest = () => {

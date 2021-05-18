@@ -57,13 +57,12 @@ const ModalComponent = ({ user }) => {
           <Subtitle>My Info</Subtitle>
           <UserInfo>
             <ChevronRightIcon style={{ width: '18px', height: '18px' }} />
-            <p>{user.id}</p>
+            <p>{user.user_id}</p>
           </UserInfo>
 
           <UserInfo>
-            {/* Dummy user name */}
             <ChevronRightIcon style={{ width: '18px', height: '18px' }} />
-            <p>김지환</p>
+            <p>{user.user_name}</p>
           </UserInfo>
 
           {/* MY CLASS */}
