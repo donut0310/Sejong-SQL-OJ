@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { useLocation } from 'react-router'
 import Title from '../../components/title/Title'
 import UserTable from '../../components/pages/statusPage/UserTable'
 import PaginationTab from '../../components/pagination/PaginationTab'
+import queryString from 'query-string'
 
-const User = ({ user }) => {
+const User = ({ user, match }) => {
+  const history = useHistory()
+  const { classId, weekId } = useParams()
+
+  // WIP
+  const location = useLocation()
+  console.log('location', location)
+  console.log('location.search', location.search)
+  const query = queryString.parse(location.search)
+  console.log('query', query)
+
+  const pId = query.pId
+
   const [problemInfo, setProblemInfo] = useState({
     className: '',
     weekName: '',
@@ -13,6 +28,7 @@ const User = ({ user }) => {
     startTime: '',
     endTime: '',
   })
+
   const [statusList, setStatusList] = useState([])
 
   const dummyResultList = [
@@ -23,8 +39,6 @@ const User = ({ user }) => {
     { submit_id: '1', user_id: '19010000', result: 'error', score: '100', submit_time: '2000-01-01 00:00:00' },
   ]
 
-  const weekId = 1
-  const pId = 1
   const result = 'all'
   const [page, setPage] = useState(1)
   console.log('이동 페이지 ', page)

@@ -23,13 +23,13 @@ const User = () => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/problem/${classId}/${weekId}`)
       // res => result(obj), message("success")
-      console.log('get problem list info data=>', data)
+      console.log('Get problem list =>', data)
       setProblemList(data.result)
 
-      const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
-      console.log('titleData', titleData)
-      // const currentInfo = titleData.result[0]
-      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
+      const res = await axios.get(`/api/v1/week/${weekId}`)
+      const currentInfo = res.data.result[0]
+      console.log('Get week Info =>', currentInfo)
+      setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.week_title })
     })()
   }, [])
 
