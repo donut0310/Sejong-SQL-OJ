@@ -1,6 +1,8 @@
+import multer from "multer";
+
 import { AuthMiddleware } from "../../middlewares/auth.middleware.js";
-// import { UsersMiddleware } from "../../middlewares/users.middleware";
 import { UsersController } from "../../controllers/users.controller.js";
+
 export class UsersRoute {
   app;
 
@@ -12,6 +14,10 @@ export class UsersRoute {
   configure() {
     const usersController = new UsersController();
     const authMiddleware = new AuthMiddleware();
+    let storage = multer.memoryStorage()
+    let upload = multer({ storage: storage })
+    let uploadFile = upload.any();
+
     // 회원가입
     this.app.post("/api/v1/user/signup", [usersController.createUser]);
 
@@ -26,9 +32,10 @@ export class UsersRoute {
       authMiddleware.verifyToken,
       usersController.getSubmittedCode,
     ]);
-
+    
     // 문제 추가 요청
-    this.app.post("/api/v1/user/:classId/:weekId", [
+    this.app.post("/api/v1/user/:classId/:weekId",uploadFile, [
+      authMiddleware.verifyToken,
       usersController.postAddProblem,
     ]);
     //사용자 소속 강의, 주차 목록 요청
