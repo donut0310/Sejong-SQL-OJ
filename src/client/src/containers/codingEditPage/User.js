@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, Prompt } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Title from '../../components/title/Title'
@@ -58,6 +58,18 @@ const User = ({ user }) => {
     })()
   }
 
+  // 새로고침 방지 코드
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+
+  const alertUser = (e) => {
+    e.preventDefault()
+    e.returnValue = ''
+  }
   const handleSubmitCode = async () => {
     // TODO
     // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
@@ -109,6 +121,8 @@ const User = ({ user }) => {
       <Code input={input} setInput={setInput} handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
+      {/* 페이지 이동 시 alert */}
+      <Prompt when={input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
     </PageWrapper>
   )
 }
