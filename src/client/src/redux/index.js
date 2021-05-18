@@ -1,2 +1,2 @@
 export { toggleTheme } from './theme/actions'
-export { logIn, logOut } from './user/actions'
+export { auth, logIn, logOut } from './user/actions'

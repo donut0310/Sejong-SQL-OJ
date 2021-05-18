@@ -14,14 +14,15 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
-const Code = ({ theme, handleExecCode, handleSubmitCode }) => {
+const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
   const [fontSize, setFontSize] = useState(14)
 
   //ace.require('brace/ext/language_tools')
 
   const onChange = (input) => {
-    console.log(input)
+    setInput(input)
   }
+
   const handleFontSize = (e) => {
     setFontSize(parseInt(e.target.value))
   }
@@ -53,7 +54,7 @@ const Code = ({ theme, handleExecCode, handleSubmitCode }) => {
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
-          value={``}
+          value={input}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
@@ -78,7 +79,7 @@ const Code = ({ theme, handleExecCode, handleSubmitCode }) => {
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
-          value={``}
+          value={input}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,

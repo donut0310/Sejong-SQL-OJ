@@ -22,29 +22,10 @@ const ModalComponent = ({ user }) => {
     console.log('USE EFFECT 실행 - MODAL')
     ;(async () => {
       const { data } = await axios.get(`/api/v1/user/${user.id}`)
-      // console.log(data)
-      setUserClassList(data)
+      console.log(data)
+      setUserClassList(data.result)
     })()
   }, [])
-
-  const dummyUserClassList = [
-    {
-      classId: 15,
-      className: '데이터베이스1 - 김지환',
-      weekList: [
-        { weekId: 3, weekName: '1주차 실습' },
-        { weekId: 5, weekName: '2주차 실습(분석)' },
-      ],
-    },
-    {
-      classId: 19,
-      className: '심화 데이터베이스3 (김지환)',
-      weekList: [
-        { weekId: 1, weekName: '1주차 실습' },
-        { weekId: 16, weekName: '2주차 실습' },
-      ],
-    },
-  ]
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
@@ -76,13 +57,12 @@ const ModalComponent = ({ user }) => {
           <Subtitle>My Info</Subtitle>
           <UserInfo>
             <ChevronRightIcon style={{ width: '18px', height: '18px' }} />
-            <p>{user.id}</p>
+            <p>{user.user_id}</p>
           </UserInfo>
 
           <UserInfo>
-            {/* Dummy user name */}
             <ChevronRightIcon style={{ width: '18px', height: '18px' }} />
-            <p>김지환</p>
+            <p>{user.user_name}</p>
           </UserInfo>
 
           {/* MY CLASS */}

@@ -54,7 +54,15 @@ const IncompleteTable = () => {
               {problem.submit}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {problem.score}/100
+              {problem.score === '100' ? (
+                <>
+                  <span style={{ color: 'green' }}>{problem.score}</span> / 100
+                </>
+              ) : (
+                <>
+                  <span style={{ color: 'red' }}>{problem.score}</span> / 100
+                </>
+              )}
             </li>
             <li id="content" style={{ width: '20%' }}>
               {problem.start}

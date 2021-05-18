@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import { useHistory, useParams } from 'react-router-dom'
 import { Grid } from '@material-ui/core'
 import axios from 'axios'
 
@@ -10,67 +11,64 @@ import TAManagement from '../../components/pages/classManagePage/TAManagement'
 import StudentManagement from '../../components/pages/classManagePage/StudentManagement'
 
 const ClassManagePage = () => {
+  const history = useHistory()
+  const { classId } = useParams()
+
   const [problemInfo, setProblemInfo] = useState({
     className: '',
   })
 
-  const classId = '1'
+  // TAManagement
+  const [currentTA, setCurrentTA] = useState([])
+  const [updateTA, setUpdateTA] = useState([])
 
   // StudentManagement
-  const [student, setStudent] = useState([
-    '19010001',
-    '19010002',
-    '19010003',
-    '19010004',
-    '19010005',
-    '19010006',
-    '19010007',
-    '19010008',
-    '19010009',
-    '19010001',
-    '19010002',
-    '19010003',
-    '19010004',
-    '19010005',
-    '19010006',
-    '19010007',
-    '19010008',
-    '19010009',
-  ])
+  const [currentStd, setCurrentStd] = useState([])
+  const [updateStd, setUpdateStd] = useState([])
 
-  // TAManagement
-  const [TA, setTA] = useState(['16010001', '16010002'])
-
-  const handleSaveTA = () => {
-    console.log('TA List', TA)
+  const handleAddTA = () => {
     ;(async () => {
-      const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: TA })
-      console.log('TA List updated', data)
+      const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: updateTA })
+      console.log('Add TA List', data)
     })()
   }
 
-  const handleSaveStudent = () => {
-    console.log('student List', student)
+  const handleDeleteTA = () => {
     ;(async () => {
-      const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: student })
-      console.log('student List updated', data)
+      const { data } = await axios.delete(`/api/v1/course/assists/${classId}`, { data: { assists: updateTA } })
+      console.log('Delete TA List', data)
+    })()
+  }
+
+  const handleAddStd = () => {
+    ;(async () => {
+      const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: updateStd })
+      console.log('Add Std List', data)
+    })()
+  }
+
+  const handleDeleteStd = () => {
+    ;(async () => {
+      const { data } = await axios.delete(`/api/v1/course/stds/${classId}`, { data: { stds: updateStd } })
+      console.log('Delete Std List', data)
     })()
   }
 
   useEffect(() => {
     const fetchStudentData = async () => {
       const { data } = await axios.get(`/api/v1/course/user/${classId}`)
-      console.log(data)
-      setStudent(data.stds || [])
-      setTA(data.assists || [])
+      console.log('Fetch stds, TA list=>', data)
+      setCurrentStd(data.stds || [])
+      setCurrentTA(data.assists || [])
     }
 
     const fetchTitleData = async () => {
-      // const { data } = await axios.get(`/api/v1/course/:classId`)
+      const res = await axios.get(`/api/v1/course/:classId`)
+      console.log('Fetch title date=>', res)
     }
 
-    // fetchTitleData()
-    // fetchStudentData()
+    fetchStudentData()
+    fetchTitleData()
   }, [])
 
   // TODO index -> admin.js생성 후 옮겨야됨
@@ -82,11 +80,11 @@ const ClassManagePage = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Subtitle subtitle={'조교 관리'} />
-          <TAManagement TA={TA} setTA={setTA} handleSaveTA={handleSaveTA} />
+          <TAManagement currentTA={currentTA} setCurrentTA={setCurrentTA} updateTA={updateTA} setUpdateTA={setUpdateTA} handleAddTA={handleAddTA} handleDeleteTA={handleDeleteTA} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <Subtitle subtitle={'학생 관리'} />
-          <StudentManagement student={student} setStudent={setStudent} handleSaveStudent={handleSaveStudent} />
+          <StudentManagement currentStd={currentStd} setCurrentStd={setCurrentStd} updateStd={updateStd} setUpdateStd={setUpdateStd} handleAddStd={handleAddStd} handleDeleteStd={handleDeleteStd} />
         </Grid>
       </Grid>
     </PageWrapper>
