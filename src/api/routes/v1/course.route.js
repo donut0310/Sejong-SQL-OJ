@@ -71,5 +71,9 @@ export class CourseRoute {
       authMiddleware.verifyToken,
       courseController.getStudentAndAssists,
     ]);
+    //교수: 주차 추가
+    this.app.post("/api/v1/course/week/:classId", [
+      courseController.addWeek,
+    ]);
   }
 }

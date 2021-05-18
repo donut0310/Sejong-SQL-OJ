@@ -397,13 +397,15 @@ export class CourseController {
         let sql = "select * from u_c_bridge where class_id=?";
         let params = [classId];
         const [a] = await connection.query(sql, params);
-        let stds = [];
-        let assists = [];
-        for (let i = 0; i < a.length; i++) {
-          if (a[i].author == 0) {
-            stds.push(a[i].user_id);
-          } else if (a[i].author == 1) {
-            assists.push(a[i].user_id);
+        connection.release();
+        let stds=[]
+        let assists=[]
+        for(let i=0;i<a.length;i++){
+          if(a[i].author==0){
+            stds.push(a[i].user_id)
+          }
+          else if (a[i].author==1){
+            assists.push(a[i].user_id)
           }
         }
         answer.stds = stds;
@@ -424,5 +426,63 @@ export class CourseController {
       answer.error = "Cannot Connected";
       res.status(400).send(answer);
     }
+  }
+  async addWeek(req,res){
+    const database = new Database();
+    let classId = req.params.classId;
+    let weekTitle = req.body.week_title;
+    let answer={}
+    let className;
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select class_name from course where class_id=?";
+        let params = [classId];
+        let [a]= await connection.query(sql, params);
+        className=a[0].class_name
+        connection.release();
+        try {
+          const connection2 = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            let sql = "insert into week(class_id,week_title,class_name) values(?,?,?)";
+            let params = [classId,weekTitle,className];
+            const [a] = await connection2.query(sql, params);
+            connection2.release();
+            answer.result=null
+            answer.message="success"
+            res.status(200).send(answer);
+          } catch (err) {
+            connection.release();
+            console.log(err)
+            answer.message="fail"
+            answer.result=null
+            answer.error="Cannot set headers after they are sent to the client"
+            res.status(400).send(answer);
+          }
+        } catch (err) {
+          answer.message="fail"
+          answer.result=null
+          answer.error="Cannot Connected"
+          res.status(400).send(answer);
+        }
+      } catch (err) {
+        connection.release();
+        console.log(err)
+        answer.message="fail"
+        answer.result=null
+        answer.error="Cannot set headers after they are sent to the client"
+        res.status(400).send(answer);
+      }
+    } catch (err) {
+      answer.message="fail"
+      answer.result=null
+      answer.error="Cannot Connected"
+      res.status(400).send(answer);
+    }
+
   }
 }
