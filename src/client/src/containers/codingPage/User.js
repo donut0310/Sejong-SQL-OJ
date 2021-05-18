@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, Prompt } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Title from '../../components/title/Title'
@@ -30,7 +30,7 @@ const User = ({ user }) => {
   const [paragraphCnt, setParagraphCnt] = useState(0)
 
   // Code.js
-  const [input, setInput] = useState('select * from patient_info limit 10;')
+  const [input, setInput] = useState('')
 
   // Result.js
   const [isExecuted, setIsExecuted] = useState(false)
@@ -38,34 +38,53 @@ const User = ({ user }) => {
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
 
-  // TODO 에러일 경우 처리
   const handleExecCode = async () => {
-    ;(async () => {
-      console.log('handleExecCode', input)
-      setIsExecuted(true)
-      setExecIsLoading(true)
-      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+    if (input) {
+      ;(async () => {
+        console.log('handleExecCode', input)
+        setIsExecuted(true)
+        setExecIsLoading(true)
+        // const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+        const res = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
 
-      if (data.message === 'success') {
-        setExecResult(data.result)
-        setExecIsError(false)
-      } else {
-        // setExecResult(data.result)
-        setExecIsError(true)
-      }
+        // TODO 에러일 경우 처리
+        console.log('제출 결과', res)
+        // if (data.message === 'success') {
+        //   setExecResult(data.result)
+        //   setExecIsError(false)
+        // } else {
+        //   // setExecResult(data.result)
+        //   setExecIsError(true)
+        // }
 
-      setExecIsLoading(false)
-    })()
+        setExecIsLoading(false)
+      })()
+    } else alert('코드를 작성해주세요.')
   }
 
   const handleSubmitCode = async () => {
-    // TODO
-    // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+    if (input) {
+      // TODO
+      // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
 
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-      console.log('handleSubmitCode', data)
-    })()
+      ;(async () => {
+        const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
+        console.log('handleSubmitCode', data)
+      })()
+    } else alert('코드를 작성해주세요.')
+  }
+
+  // 새로고침 방지 코드
+  useEffect(() => {
+    window.addEventListener('beforeunload', alertUser)
+    return () => {
+      window.removeEventListener('beforeunload', alertUser)
+    }
+  }, [])
+
+  const alertUser = (e) => {
+    e.preventDefault()
+    e.returnValue = ''
   }
 
   // TODO
@@ -104,6 +123,8 @@ const User = ({ user }) => {
       <Code input={input} setInput={setInput} handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
+      {/* 페이지 이동 시 alert */}
+      <Prompt when={input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
     </PageWrapper>
   )
 }
