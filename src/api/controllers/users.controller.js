@@ -77,23 +77,21 @@ export class UsersController {
         for (let i in a) {
           arr.push(a[i].class_id);
         }
-
         data.result = a[0];
-
         const regex_email =
           /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
         const regex_stdnum = /^[0-9]/g;
 
         // user_id 가 이메일이 아닐경우 학생, 조교
         // user_id 가 학번일 경우 교수
         // user_id 가 이메일, 학번이 모두 아닐경우 관리자
-        if (regex_stdnum.test(userId)) {
-          data.result.role = 0;
-        } else if (regex_email.text(userId)) {
-          data.result.role = 1;
-        } else {
-          data.result.role = 2;
-        }
+
+        let isStd = regex_stdnum.test(userId);
+        let isProf = regex_email.test(userId);
+        if (isStd) data.result.role = 0;
+        else if (isProf) data.result.role = 1;
+        else data.result.role = 2;
 
         data.result.class_id = arr;
         data.message = "success";
