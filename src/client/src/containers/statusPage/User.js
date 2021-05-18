@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useLocation } from 'react-router'
@@ -57,7 +58,7 @@ const User = ({ user, match }) => {
   }, [])
 
   return (
-    <>
+    <Container>
       <Title problemInfo={problemInfo} />
       <div id="search-form" style={{ marginBottom: '20px' }}>
         <span>
@@ -73,7 +74,7 @@ const User = ({ user, match }) => {
       </div>
       <UserTable statusList={statusList} />
       <PaginationTab setPage={setPage} maxPage={maxPage} />
-    </>
+    </Container>
   )
 }
 
@@ -84,3 +85,8 @@ const mapStateToProps = ({ user }) => {
 }
 
 export default connect(mapStateToProps)(User)
+
+const Container = styled.div`
+  text-align: center;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

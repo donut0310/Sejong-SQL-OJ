@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import Title from '../../components/title/Title'
 import UserTable from '../../components/pages/problemPage/UserTable'
@@ -34,11 +35,16 @@ const User = () => {
   }, [])
 
   return (
-    <div>
+    <Container>
       <Title problemInfo={problemInfo} />
       <UserTable problemList={problemList} />
-    </div>
+    </Container>
   )
 }
 
 export default User
+
+const Container = styled.div`
+  text-align: end;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`
