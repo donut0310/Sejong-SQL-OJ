@@ -12,7 +12,7 @@ const UserTable = ({ problemList, user }) => {
   }
 
   const handleStatus = (pId) => {
-    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+    history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
   }
 
   const parseDateTime = (data) => {

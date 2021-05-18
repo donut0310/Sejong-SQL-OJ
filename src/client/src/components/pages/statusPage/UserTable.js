@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router'
+import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import acceptIcon from '../../../assets/resultIcons/accept_icon.png'
 import errorIcon from '../../../assets/resultIcons/error_icon.png'
@@ -7,13 +7,10 @@ import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 
 const UserTable = ({ statusList }) => {
-  const classId = 1
-  const weekId = 1
-  const submitId = 1
-
   const history = useHistory()
+  const { classId, weekId } = useParams()
 
-  const handleCodeCheck = () => {
+  const handleCodeCheck = (submitId) => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
     // TODO 자기 코드만 볼 수 있어야함.
   }
@@ -71,7 +68,12 @@ const UserTable = ({ statusList }) => {
               )}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              <button id="problem" onClick={handleCodeCheck}>
+              <button
+                id="problem"
+                onClick={() => {
+                  handleCodeCheck(status.submitId)
+                }}
+              >
                 Code
               </button>
             </li>
