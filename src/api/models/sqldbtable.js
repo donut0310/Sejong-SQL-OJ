@@ -3,6 +3,7 @@
 //   비밀번호 입력
 //   CREATE DATABASE SQL_DB;
 //   use SQL_DB;
+// fix;
 
 export const query_example = `
 CREATE DATABASE sql_db default CHARACTER SET UTF8;
