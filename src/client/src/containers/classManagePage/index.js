@@ -26,32 +26,24 @@ const ClassManagePage = () => {
   const [currentStd, setCurrentStd] = useState([])
   const [updateStd, setUpdateStd] = useState([])
 
-  const handleAddTA = () => {
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: updateTA })
-      console.log('Add TA List', data)
-    })()
+  const handleAddTA = async () => {
+    const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: updateTA })
+    console.log('Add TA List', data)
   }
 
-  const handleDeleteTA = () => {
-    ;(async () => {
-      const { data } = await axios.delete(`/api/v1/course/assists/${classId}`, { data: { assists: updateTA } })
-      console.log('Delete TA List', data)
-    })()
+  const handleDeleteTA = async () => {
+    const { data } = await axios.delete(`/api/v1/course/assists/delete/${classId}`, { data: { assists: updateTA } })
+    console.log('Delete TA List', data)
   }
 
-  const handleAddStd = () => {
-    ;(async () => {
-      const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: updateStd })
-      console.log('Add Std List', data)
-    })()
+  const handleAddStd = async () => {
+    const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: updateStd })
+    console.log('Add Std List', data)
   }
 
-  const handleDeleteStd = () => {
-    ;(async () => {
-      const { data } = await axios.delete(`/api/v1/course/stds/${classId}`, { data: { stds: updateStd } })
-      console.log('Delete Std List', data)
-    })()
+  const handleDeleteStd = async () => {
+    const { data } = await axios.delete(`/api/v1/course/stds/delete/${classId}`, { data: { stds: updateStd } })
+    console.log('Delete Std List', data)
   }
 
   useEffect(() => {
