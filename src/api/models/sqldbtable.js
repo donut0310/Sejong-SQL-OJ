@@ -251,11 +251,11 @@ values(1,1,'목동 나누리 병원 성별 인구조사','"patient_info" 테이�
   [
     {
       "patient_sex": "Female",
-      "count(patient_sex)": "2",
+      "count(patient_sex)": "2"
     },
     {
       "patient_sex": "Male",
-      "count(patient_sex)": "1",
+      "count(patient_sex)": "1"
     }
   ]
 ]',"(홍길동) 1주차 기초 select문",1);
@@ -327,11 +327,11 @@ values(1,2,'목동 나누리 병원 성별 인구조사','"patient_info" 테이�
   [
     {
       "patient_sex": "Female",
-      "count(patient_sex)": "2",
+      "count(patient_sex)": "2"
     },
     {
       "patient_sex": "Male",
-      "count(patient_sex)": "1",
+      "count(patient_sex)": "1"
     }
   ]
 ]',"(박길동) 1주차 기초 select문",1);
@@ -403,11 +403,11 @@ values(1,3,'목동 나누리 병원 성별 인구조사','"patient_info" 테이�
   [
     {
       "patient_sex": "Female",
-      "count(patient_sex)": "2",
+      "count(patient_sex)": "2"
     },
     {
       "patient_sex": "Male",
-      "count(patient_sex)": "1",
+      "count(patient_sex)": "1"
     }
   ]
 ]',"(김길동) 1주차 기초 select문",1);
