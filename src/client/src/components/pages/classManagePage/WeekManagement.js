@@ -15,34 +15,7 @@ const WeekManagement = () => {
   const [isChanged, setIsChanged] = useState(false)
   const [newWeekName, setNewWeekName] = useState('')
 
-  const [classInfo, setClassInfo] = useState([
-    {
-      weekName: '1주차 실습 SELECT 문 연습',
-      weekId: 1,
-      pList: [
-        { pId: 1, pName: '이름이 없는 동물의 아이디' },
-        { pId: 2, pName: '모든 동물 조회하기' },
-        { pId: 3, pName: '루시와 엘라 찾기' },
-      ],
-    },
-    {
-      weekName: '2주차 실습 table 다루기',
-      weekId: 4,
-      pList: [
-        { pId: 4, pName: '역순 정렬하기' },
-        { pId: 5, pName: '없어진 기록 찾기' },
-        { pId: 6, pName: '야식으로 치킨, 햄버거 중에 뭐가 좋을지' },
-      ],
-    },
-    {
-      weekName: '3주차 실습',
-      weekId: 7,
-      pList: [
-        { pId: 8, pName: '입양 시각 구하기(1)' },
-        { pId: 12, pName: '중성화 여부 파악하기' },
-      ],
-    },
-  ])
+  const [classInfo, setClassInfo] = useState([])
 
   const handleChangeNewWeekName = (e) => {
     setNewWeekName(e.target.value)
@@ -83,16 +56,14 @@ const WeekManagement = () => {
   }
 
   useEffect(() => {
-    console.log('WeekManagement useEffect')
-
     const fetchWeekList = async () => {
       const { data } = await axios.get(`/api/v1/course/problem/${classId}`)
-      console.log(data)
-      // TODO
-      setClassInfo(data.zzzzzzzzzzzzz)
+      console.log('Fetch Week&problem List', data.result)
+
+      setClassInfo(data.result)
     }
 
-    // fetchWeekList()
+    fetchWeekList()
   }, [, isChanged])
 
   return (
@@ -107,43 +78,44 @@ const WeekManagement = () => {
 
       <SubTitle>주차 목록</SubTitle>
       <WeekListWrapper>
-        {classInfo.map((week, i) => (
-          <WeekWrapper key={i}>
-            <WeepNameWrapper>
-              <WeekNameText>{week.weekName}</WeekNameText>
-              <BtnBox>
-                <WeekAddBtn
-                  onClick={() => {
-                    handleAddProblemBtn(week.weekId)
-                  }}
-                />
-                <WeekDeleteBtn
-                  onClick={() => {
-                    handleDeleteWeekBtn(week.weekId)
-                  }}
-                />
-              </BtnBox>
-            </WeepNameWrapper>
-            {week.pList.map((problem, j) => (
-              <ProblemWrapper key={j}>
-                <ProblemNameText
-                  onClick={() => {
-                    handleProblemName(week.weekId, problem.pId)
-                  }}
-                >
-                  {problem.pName}
-                </ProblemNameText>
+        {classInfo &&
+          classInfo.map((week, i) => (
+            <WeekWrapper key={i}>
+              <WeepNameWrapper>
+                <WeekNameText>{week.weekName}</WeekNameText>
                 <BtnBox>
-                  <ProblemDeleteBtn
+                  <WeekAddBtn
                     onClick={() => {
-                      handleDeleteProblemBtn(problem.pId)
+                      handleAddProblemBtn(week.weekId)
+                    }}
+                  />
+                  <WeekDeleteBtn
+                    onClick={() => {
+                      handleDeleteWeekBtn(week.weekId)
                     }}
                   />
                 </BtnBox>
-              </ProblemWrapper>
-            ))}
-          </WeekWrapper>
-        ))}
+              </WeepNameWrapper>
+              {week.problemList.map((problem, j) => (
+                <ProblemWrapper key={j}>
+                  <ProblemNameText
+                    onClick={() => {
+                      handleProblemName(week.weekId, problem.pId)
+                    }}
+                  >
+                    {problem.title}
+                  </ProblemNameText>
+                  <BtnBox>
+                    <ProblemDeleteBtn
+                      onClick={() => {
+                        handleDeleteProblemBtn(problem.pId)
+                      }}
+                    />
+                  </BtnBox>
+                </ProblemWrapper>
+              ))}
+            </WeekWrapper>
+          ))}
       </WeekListWrapper>
     </Wrapper>
   )

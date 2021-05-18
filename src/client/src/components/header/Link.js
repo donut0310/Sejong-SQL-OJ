@@ -17,8 +17,7 @@ const NavLink = ({ toggleTheme, user, logOut }) => {
 
   return (
     <LinkWrapper>
-      {/* //TODO id => name ? */}
-      <Name>{user.id}</Name>
+      <Name>{user.user_name}</Name>
       <LinkBtn onClick={handleLogOutBtn}>
         <Li>Logout</Li>
       </LinkBtn>
