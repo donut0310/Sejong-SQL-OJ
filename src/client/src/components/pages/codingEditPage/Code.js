@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import AceEditor from 'react-ace'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
+import axios from 'axios'
+
 import 'ace-builds/src-noconflict/ace'
 import 'ace-builds/src-noconflict/mode-mysql'
 import 'ace-builds/src-noconflict/snippets/mysql'
@@ -12,18 +14,13 @@ import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
 import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
 
-const InputCode = ({ theme, pId, code }) => {
-  const history = useHistory()
-  const { classId, weekId, submitId } = useParams()
+const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
+  const [fontSize, setFontSize] = useState(14)
 
-  const [fontSize, setFontSize] = useState(16)
-
-  const handleEditCode = () => {
-    history.push(`/${classId}/${weekId}/problem/${pId}/${submitId}`)
-  }
+  //ace.require('brace/ext/language_tools')
 
   const onChange = (input) => {
-    console.log(input)
+    setInput(input)
   }
 
   const handleFontSize = (e) => {
@@ -31,6 +28,8 @@ const InputCode = ({ theme, pId, code }) => {
   }
 
   return (
+    // submitId !=== null -> 수정
+    // else -> 새로 작성
     <>
       <div style={{ width: 'auto', textAlign: 'end' }}>
         <select id="select-form" name="글자" onChange={handleFontSize}>
@@ -45,7 +44,7 @@ const InputCode = ({ theme, pId, code }) => {
       </div>
       {theme === 'light' ? (
         <AceEditor
-          readOnly
+          placeholder="코드를 입력하세요."
           mode="mysql"
           theme="tomorrow"
           name="editor"
@@ -55,7 +54,7 @@ const InputCode = ({ theme, pId, code }) => {
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
-          value={`${code}`}
+          value={input}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
@@ -70,7 +69,7 @@ const InputCode = ({ theme, pId, code }) => {
         />
       ) : (
         <AceEditor
-          readOnly
+          placeholder="코드를 입력하세요."
           mode="mysql"
           theme="tomorrow_night_bright"
           name="editor"
@@ -80,7 +79,7 @@ const InputCode = ({ theme, pId, code }) => {
           showPrintMargin={true}
           showGutter={true}
           highlightActiveLine={true}
-          value={`${code}`}
+          value={``}
           setOptions={{
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true,
@@ -94,20 +93,23 @@ const InputCode = ({ theme, pId, code }) => {
           }}
         />
       )}
-
       <div style={{ width: '100%', textAlign: 'end', margin: '10px 0' }}>
-        <button id="submit-btn" onClick={handleEditCode}>
-          수정
+        <button id="submit-btn" onClick={handleExecCode}>
+          실행
+        </button>
+        <button id="submit-btn" onClick={handleSubmitCode}>
+          제출
         </button>
       </div>
     </>
   )
 }
 
-const mapStateToProps = ({ theme }) => {
+const mapStateToProps = ({ theme, user }) => {
   return {
     theme: theme.mode,
+    user,
   }
 }
 
-export default connect(mapStateToProps)(InputCode)
+export default connect(mapStateToProps)(Code)

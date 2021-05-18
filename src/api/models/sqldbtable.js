@@ -78,11 +78,13 @@ create table problem(
 create table testcase_problem(
 	  p_id int not null,
     tc_answer MEDIUMTEXT DEFAULT NULL,
-    week_title varchar(255) DEFAULT NULL,
-    tc_id int DEFAULT 0,
+    tc_content MEDIUMTEXT DEFAULT NULL,
+    week_info varchar(255) DEFAULT NULL,
     FOREIGN KEY (p_id) REFERENCES problem (p_id)
-)engine=innodb default charset=utf8;
-
+    on delete cascade
+    on update cascade,
+);
+# week_info 가 기본키가 되면 주차별 문제가 1개씩만 생성가능 
 create table submit_answer(
   submit_id int not null auto_increment primary key,
   week_id int default 0,

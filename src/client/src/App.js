@@ -15,7 +15,23 @@ import RegisterPage from './containers/registerPage'
 import AutoScrollUp from './AutoScrollUp'
 import ScrollUp from './ScrollUp'
 
+import Auth from './components/auth/Auth'
+
 const App = ({ theme }) => {
+  const MainComponent = () => {
+    return (
+      <>
+        <MainWrapper>
+          <Modal />
+          <Header />
+          <Main />
+          <Footer />
+        </MainWrapper>
+        <ScrollUp />
+      </>
+    )
+  }
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <AutoScrollUp>
@@ -23,14 +39,14 @@ const App = ({ theme }) => {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route path="/">
-            <MainWrapper>
+          <Route path="/" component={Auth(MainComponent, true)}>
+            {/* <MainWrapper>
               <Modal />
               <Header />
               <Main />
               <Footer />
             </MainWrapper>
-            <ScrollUp />
+            <ScrollUp /> */}
           </Route>
         </Switch>
       </AutoScrollUp>
@@ -115,6 +131,8 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
     box-sizing: border-box;
     background: ${(props) => props.theme.BOARD_TITLE};
@@ -126,6 +144,8 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
     background: ${(props) => props.theme.CONTENTS};
     font-weight: 400;

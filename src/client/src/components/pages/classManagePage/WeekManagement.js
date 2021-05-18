@@ -8,9 +8,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import AddIcon from '@material-ui/icons/Add'
 import RemoveIcon from '@material-ui/icons/Remove'
 
-// TODO
-const classId = 1
-
 const WeekManagement = () => {
   const history = useHistory()
   const { classId } = useParams()
@@ -18,34 +15,7 @@ const WeekManagement = () => {
   const [isChanged, setIsChanged] = useState(false)
   const [newWeekName, setNewWeekName] = useState('')
 
-  const [classInfo, setClassInfo] = useState([
-    {
-      weekName: '1주차 실습 SELECT 문 연습',
-      weekId: 1,
-      pList: [
-        { pId: 1, pName: '이름이 없는 동물의 아이디' },
-        { pId: 2, pName: '모든 동물 조회하기' },
-        { pId: 3, pName: '루시와 엘라 찾기' },
-      ],
-    },
-    {
-      weekName: '2주차 실습 table 다루기',
-      weekId: 4,
-      pList: [
-        { pId: 4, pName: '역순 정렬하기' },
-        { pId: 5, pName: '없어진 기록 찾기' },
-        { pId: 6, pName: '야식으로 치킨, 햄버거 중에 뭐가 좋을지' },
-      ],
-    },
-    {
-      weekName: '3주차 실습',
-      weekId: 7,
-      pList: [
-        { pId: 8, pName: '입양 시각 구하기(1)' },
-        { pId: 12, pName: '중성화 여부 파악하기' },
-      ],
-    },
-  ])
+  const [classInfo, setClassInfo] = useState([])
 
   const handleChangeNewWeekName = (e) => {
     setNewWeekName(e.target.value)
@@ -82,20 +52,18 @@ const WeekManagement = () => {
   const handleProblemName = async (weekId, pId) => {
     console.log('handleProblemName 실행', pId)
 
-    history.push(`${classId}/${weekId}/problem/${pId}`)
+    history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
 
   useEffect(() => {
-    console.log('WeekManagement useEffect')
-
     const fetchWeekList = async () => {
       const { data } = await axios.get(`/api/v1/course/problem/${classId}`)
-      console.log(data)
-      // TODO
-      setClassInfo(data.zzzzzzzzzzzzz)
+      console.log('Fetch Week&problem List', data.result)
+
+      setClassInfo(data.result)
     }
 
-    // fetchWeekList()
+    fetchWeekList()
   }, [, isChanged])
 
   return (
@@ -110,43 +78,44 @@ const WeekManagement = () => {
 
       <SubTitle>주차 목록</SubTitle>
       <WeekListWrapper>
-        {classInfo.map((week, i) => (
-          <WeekWrapper key={i}>
-            <WeepNameWrapper>
-              <WeekNameText>{week.weekName}</WeekNameText>
-              <BtnBox>
-                <WeekAddBtn
-                  onClick={() => {
-                    handleAddProblemBtn(week.weekId)
-                  }}
-                />
-                <WeekDeleteBtn
-                  onClick={() => {
-                    handleDeleteWeekBtn(week.weekId)
-                  }}
-                />
-              </BtnBox>
-            </WeepNameWrapper>
-            {week.pList.map((problem, j) => (
-              <ProblemWrapper key={j}>
-                <ProblemNameText
-                  onClick={() => {
-                    handleProblemName(week.weekId, problem.pId)
-                  }}
-                >
-                  {problem.pName}
-                </ProblemNameText>
+        {classInfo &&
+          classInfo.map((week, i) => (
+            <WeekWrapper key={i}>
+              <WeepNameWrapper>
+                <WeekNameText>{week.weekName}</WeekNameText>
                 <BtnBox>
-                  <ProblemDeleteBtn
+                  <WeekAddBtn
                     onClick={() => {
-                      handleDeleteProblemBtn(problem.pId)
+                      handleAddProblemBtn(week.weekId)
+                    }}
+                  />
+                  <WeekDeleteBtn
+                    onClick={() => {
+                      handleDeleteWeekBtn(week.weekId)
                     }}
                   />
                 </BtnBox>
-              </ProblemWrapper>
-            ))}
-          </WeekWrapper>
-        ))}
+              </WeepNameWrapper>
+              {week.problemList.map((problem, j) => (
+                <ProblemWrapper key={j}>
+                  <ProblemNameText
+                    onClick={() => {
+                      handleProblemName(week.weekId, problem.pId)
+                    }}
+                  >
+                    {problem.title}
+                  </ProblemNameText>
+                  <BtnBox>
+                    <ProblemDeleteBtn
+                      onClick={() => {
+                        handleDeleteProblemBtn(problem.pId)
+                      }}
+                    />
+                  </BtnBox>
+                </ProblemWrapper>
+              ))}
+            </WeekWrapper>
+          ))}
       </WeekListWrapper>
     </Wrapper>
   )
@@ -164,9 +133,12 @@ const Wrapper = styled.div`
 `
 
 const WeekListWrapper = styled.div`
-  border: 1px solid pink;
-  width: 100%;
-  /* background: ${(props) => props.theme.BACKGROUND}; */
+  background: ${(props) => props.theme.HEADER_BACKGROUND};
+
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  border-radius: 5px;
+
+  padding: 10px;
 `
 
 const AddWeekWrapper = styled.div`
@@ -256,7 +228,7 @@ const ProblemWrapper = styled.div`
   align-items: center;
 
   padding: 3px;
-  border-left: 4px solid ${(props) => props.theme.INPUT_BACKGROUND};
+  border-left: 4px solid ${(props) => props.theme.HEADER_BACKGROUND};
 
   :hover {
     border-left: 4px solid ${(props) => props.theme.POINT};

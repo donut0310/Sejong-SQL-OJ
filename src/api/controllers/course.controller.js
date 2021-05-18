@@ -57,119 +57,338 @@ export class CourseController {
     }
   }
 
-  // 교수: 학생 조교 등록
-  async profEnrollStdToClass(req, res) {
+  // 교수: 조교 목록 추가
+  async addAssistsList(req, res) {
     const database = new Database();
-
-    const stdList = req.body.stds;
     const assistsList = req.body.assists;
     const classId = req.params.classId;
-
-    let assists = "";
-
-    for (let i in assistsList) {
-      if (i == assistsList.length - 1) {
-        assists += assistsList[i];
-      } else assists += assistsList[i] + ",";
-    }
 
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-        //학생에게 분반 할당
-        for (let i in stdList) {
-          let sql = "insert into u_c_bridge (user_id,class_id) values(?,?)";
-          let params = [stdList[i], classId];
-          const a = await connection.query(sql, params);
-          connection.release();
-          console.log("학생 등록:", a[0].info);
+        let sql = "select user_id from u_c_bridge where class_id = ?";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        let reValue = [];
+        let inputArr = [];
+
+        for (let i in a) {
+          reValue.push(a[i].user_id);
         }
 
-        //조교 등록
-        let sql2 = "select admin_id from course where class_id = ?";
-        let params2 = [classId];
-        const admin_id = await connection.query(sql2, params2);
-        connection.release();
-
-        let updated_admin_id = admin_id[0][0].admin_id + "," + assists;
-        let sql3 = "update course set admin_id = ? where class_id = ?";
-        let params3 = [updated_admin_id, classId];
-        const b = await connection.query(sql3, params3);
-        connection.release();
-        console.log("조교 등록:", b[0].info);
-
-        //조교에게 분반 할당
+        // 데이터에 class_id 와 author 를 지정해준다
         for (let i in assistsList) {
-          let sql4 =
-            "insert into u_c_bridge(user_id,class_id,author) values(?,?,?)";
-          let params4 = [assistsList[i], classId, 1];
-          const c = await connection.query(sql4, params4);
-          connection.release();
-          console.log("학생, 조교 분반 할당:", c[0].info);
+          if (!reValue.includes(assistsList[i])) {
+            inputArr.push([assistsList[i], classId, 1]);
+          }
         }
 
-        res.status(200).send("학생, 조교 등록이 완료되었습니다.");
+        let sql2 = "insert into u_c_bridge(user_id,class_id,author) values ?";
+        let params2 = [inputArr];
+        const [b] = await connection.query(sql2, params2);
+        connection.release();
+        res.status(200).send({ result: null, message: "success" });
       } catch (err) {
         connection.release();
-        res.status(400).send(err);
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
       return false;
     }
   }
 
-  // 교수: 학생, 조교 등록 해제
-  async profDeleteStdInClass(req, res) {
-    //기능 정의 전
-    // 삭제 후
-    // ALTER TABLE course AUTO_INCREMENT=1;
-    // SET @CNT = 0;
-    // UPDATE course SET course.class_id = @CNT:=@CNT+1;
+  // 교수: 조교 목록 제거
+  async deleteAssistsList(req, res) {
+    const database = new Database();
+    const assistsList = req.body.assists;
+    const classId = req.params.classId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        for (let i in assistsList) {
+          assistsList[i] = JSON.stringify(assistsList[i]);
+        }
+
+        let sql =
+          "delete from u_c_bridge where class_id = ? and user_id in (" +
+          assistsList +
+          ")";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
   }
-  async allocClassToStd() {}
-  async getCourseList(req, res){
+
+  // 교수: 학생 목록 추가
+  async addStdsList(req, res) {
+    const database = new Database();
+    const stdsList = req.body.stds;
+    const classId = req.params.classId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select user_id from u_c_bridge where class_id = ?";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+
+        let reValue = [];
+        let inputArr = [];
+
+        for (let i in a) {
+          reValue.push(a[i].user_id);
+        }
+
+        // 데이터에 class_id 와 author 를 지정해준다
+        for (let i in stdsList) {
+          if (!reValue.includes(stdsList[i])) {
+            inputArr.push([stdsList[i], classId, 0]);
+          }
+        }
+
+        let sql2 = "insert into u_c_bridge(user_id,class_id,author) values ?";
+        let params2 = [inputArr];
+        const [b] = await connection.query(sql2, params2);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+
+  // 교수: 학생 목록 제거
+  async deleteStdsList(req, res) {
+    const database = new Database();
+    const stdsList = req.body.stds;
+    const classId = req.params.classId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        for (let i in stdsList) {
+          stdsList[i] = JSON.stringify(stdsList[i]);
+        }
+
+        let sql =
+          "delete from u_c_bridge where class_id = ? and user_id in (" +
+          stdsList +
+          ")";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+
+  // 교수: 주차 삭제
+  async deleteWeekData(req, res) {
+    const database = new Database();
+    const weekId = req.params.weekId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "delete from week where week_id = ?;";
+        let params = [weekId, weekId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+
+  // 교수: 문제 삭제
+  async deleteProblem(req, res) {
+    const database = new Database();
+    const pId = req.params.pId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "delete from problem where p_id = ?";
+        let params = [pId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+  // 수업 이름 요청
+  async getClassName(req, res) {
+    const database = new Database();
+    const classId = req.params.classId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql = "select class_id,class_name from course where class_id = ?";
+        let params = [classId];
+
+        const [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = a;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+
+  async getCourseList(req, res) {
     const database = new Database();
     let classId = req.params.classId;
-    let result=[]
-    let answer={}
-    let s="select week_id,week_title from week where class_id= ?;";
+    let result = [];
+    let answer = {};
+    let s = "select week_id,week_title from week where class_id= ?;";
     const c = await database.queryExecute(s, [classId]);
-    if(Array.isArray(c) && c.length==0){
-      answer.message="fail"
-      answer.result=null
-      answer.error="Cannot set headers after they are sent to the client"
+    if (Array.isArray(c) && c.length == 0) {
+      answer.message = "fail";
+      answer.result = null;
+      answer.error = "Cannot set headers after they are sent to the client";
       res.status(400).send(answer);
     }
-    for(let i=0;i<c.length;i++){
-      let resultChild={}
-      let weekId=c[i].week_id;
-      resultChild.weekId=weekId;
-      resultChild.weekName=c[i].week_title;
-      let params=[weekId,classId]
-      s="select p_id, title from problem where week_id= ? and class_id= ? ;";
-      let a= await database.queryExecute(s,params);
-      let problemList=[]
-      for( let j=0;j<a.length;j++){
-        let problemChild={};
-        problemChild.pId=a[j].p_id;
-        problemChild.title=a[j].title;
+    for (let i = 0; i < c.length; i++) {
+      let resultChild = {};
+      let weekId = c[i].week_id;
+      resultChild.weekId = weekId;
+      resultChild.weekName = c[i].week_title;
+      let params = [weekId, classId];
+      s = "select p_id, title from problem where week_id= ? and class_id= ? ;";
+      let a = await database.queryExecute(s, params);
+      let problemList = [];
+      for (let j = 0; j < a.length; j++) {
+        let problemChild = {};
+        problemChild.pId = a[j].p_id;
+        problemChild.title = a[j].title;
         problemList.push(problemChild);
       }
-      resultChild.problemList=problemList
-      result.push(resultChild)
+      resultChild.problemList = problemList;
+      result.push(resultChild);
     }
-    answer.message="success"
-    answer.result=result
+    answer.message = "success";
+    answer.result = result;
     res.status(200).send(answer);
   }
   //학생,조교 목록 요청
-  async getStudentAndAssists(req,res){
+  async getStudentAndAssists(req, res) {
     const database = new Database();
     let classId = req.params.classId;
-    let answer={}
+    let answer = {};
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -189,25 +408,24 @@ export class CourseController {
             assists.push(a[i].user_id)
           }
         }
-        answer.stds=stds
-        answer.assists=assists
-        answer.message="success"
+        answer.stds = stds;
+        answer.assists = assists;
+        answer.message = "success";
         res.status(200).send(answer);
       } catch (err) {
         connection.release();
-        console.log(err)
-        answer.message="fail"
-        answer.result=null
-        answer.error="Cannot set headers after they are sent to the client"
+        console.log(err);
+        answer.message = "fail";
+        answer.result = null;
+        answer.error = "Cannot set headers after they are sent to the client";
         res.status(400).send(answer);
       }
     } catch (err) {
-      answer.message="fail"
-      answer.result=null
-      answer.error="Cannot Connected"
+      answer.message = "fail";
+      answer.result = null;
+      answer.error = "Cannot Connected";
       res.status(400).send(answer);
     }
-    
   }
   async addWeek(req,res){
     const database = new Database();

@@ -12,7 +12,7 @@ import Result from '../../components/pages/codingPage/Result'
 
 const User = ({ user }) => {
   const history = useHistory()
-  const { classId, weekId, pId } = useParams()
+  const { classId, weekId, pId, submitId } = useParams()
 
   // Title.js
   const [problemInfo, setProblemInfo] = useState({
@@ -76,6 +76,11 @@ const User = ({ user }) => {
     console.log('pId=>', pId)
     ;(async () => {
       setIsLoading(true)
+
+      // TODO api 완료되면 지우기
+      // const { submittedData } = await axios.get(`/api/v1/user/code/${submitId}`)
+      // console.log("submittedData", submittedData);
+      // setInput(submittedData.user_query)
 
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
       const problem = data.result[0]

@@ -1,21 +1,20 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 
-const AdminTable = () => {
+const AdminTable = ({ user }) => {
   const history = useHistory()
 
   const classId = 1
   const weekId = 1
   const pId = 1
-  // admin userId
-  const userId = 1
 
   const handleProblemName = () => {
     history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
   const handleStatus = () => {
-    history.push(`/${classId}/${weekId}/status?userId=${userId}&pId=${pId}`)
+    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
   }
 
   const problems = [
@@ -69,7 +68,13 @@ const AdminTable = () => {
   )
 }
 
-export default AdminTable
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  }
+}
+
+export default connect(mapStateToProps)(AdminTable)
 
 const Container = styled.div`
   display: flex;
