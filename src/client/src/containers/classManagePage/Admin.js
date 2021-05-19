@@ -21,30 +21,51 @@ const Admin = () => {
   // TAManagement
   const [currentTA, setCurrentTA] = useState([])
   const [updateTA, setUpdateTA] = useState([])
+  const [isChangedTA, setIsChangedTA] = useState(false)
 
   // StudentManagement
   const [currentStd, setCurrentStd] = useState([])
   const [updateStd, setUpdateStd] = useState([])
+  const [isChangedStd, setIsChangedStd] = useState(false)
 
   const handleAddTA = async () => {
     const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: updateTA })
     console.log('Add TA List', data)
+    setUpdateTA([])
+    setIsChangedTA(!isChangedTA)
   }
 
   const handleDeleteTA = async () => {
     const { data } = await axios.delete(`/api/v1/course/assists/delete/${classId}`, { data: { assists: updateTA } })
     console.log('Delete TA List', data)
+    setUpdateTA([])
+    setIsChangedTA(!isChangedTA)
   }
 
   const handleAddStd = async () => {
     const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: updateStd })
     console.log('Add Std List', data)
+    setUpdateStd([])
+    setIsChangedStd(!isChangedStd)
   }
 
   const handleDeleteStd = async () => {
     const { data } = await axios.delete(`/api/v1/course/stds/delete/${classId}`, { data: { stds: updateStd } })
     console.log('Delete Std List', data)
+    setUpdateStd([])
+    setIsChangedStd(!isChangedStd)
   }
+
+  useEffect(() => {
+    console.log('내용 바뀜')
+    const fetchStudentData = async () => {
+      const { data } = await axios.get(`/api/v1/course/user/${classId}`)
+      setCurrentStd(data.stds || [])
+      setCurrentTA(data.assists || [])
+    }
+
+    fetchStudentData()
+  }, [isChangedTA, isChangedStd])
 
   useEffect(() => {
     const fetchStudentData = async () => {
