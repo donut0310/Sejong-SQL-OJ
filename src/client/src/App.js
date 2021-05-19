@@ -194,12 +194,15 @@ const GlobalStyles = createGlobalStyle`
     background: ${(props) => props.theme.CONTENTS};
     font-weight: 400;
   }
+
   ul#table-content-list-coding {
     box-sizing: border-box;
     display: flex;
     padding: 10px;
     background: ${(props) => props.theme.BACKGROUND};
     font-weight: 400;
+    /* 행 줄 */
+    border-bottom: 0.3px solid ${(props) => props.theme.BOARD_LIST_HOVER};
   }
 
   li#table-content {
