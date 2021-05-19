@@ -32,6 +32,8 @@ const User = ({ match }) => {
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
 
+  const [tmpResult, setTMPResult] = useState(0)
+
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
@@ -51,19 +53,25 @@ const User = ({ match }) => {
     setUserId(e.target.value)
   }
 
-  const [tmpResult, setTMPResult] = useState()
   const handleResultChange = (e) => {
     setTMPResult(e.target.value)
   }
 
   const handleSearch = () => {
     setResult(tmpResult)
+    console.log('Search ID:', userId, 'result:', result)
     ;(async () => {
-      const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
-      console.log('Get status', data)
-
-      setStatusList(data.result)
-      setMaxPage(data.maxpage)
+      if (userId === '') {
+        const { data } = await axios.get(`/api/v1/user/status/option?pId=${pId}&result=${result}&page=${page}`)
+        console.log('Get status', data)
+        setStatusList(data.result)
+        setMaxPage(data.maxpage)
+      } else {
+        const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
+        console.log('Get status', data)
+        setStatusList(data.result)
+        setMaxPage(data.maxpage)
+      }
     })()
   }
 
@@ -72,7 +80,7 @@ const User = ({ match }) => {
       <Title problemInfo={problemInfo} />
       <div id="search-form" style={{ marginBottom: '20px' }}>
         <span>
-          아이디:<input className="input-form" type="text" placeholder="아이디" onChange={handleInputID}></input>
+          아이디:<input className="input-form" type="text" placeholder="아이디" value={userId} onChange={handleInputID}></input>
         </span>
         <span>
           결과:
