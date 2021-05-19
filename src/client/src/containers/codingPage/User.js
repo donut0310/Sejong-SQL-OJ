@@ -37,6 +37,7 @@ const User = ({ user }) => {
   const [execIsLoading, setExecIsLoading] = useState(false)
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const handleExecCode = async () => {
     if (input) {
@@ -60,6 +61,7 @@ const User = ({ user }) => {
 
   const handleSubmitCode = async () => {
     if (input) {
+      setIsSubmit(true)
       ;(async () => {
         const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
         console.log('handleSubmitCode', data)
@@ -123,8 +125,7 @@ const User = ({ user }) => {
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
       {/* 페이지 이동 시 alert */}
-      {/* TODO 제출할 때도 떠버림 ㅅㅂ */}
-      <Prompt when={!!input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
+      <Prompt when={!!input && isSubmit === false} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
     </PageWrapper>
   )
 }
