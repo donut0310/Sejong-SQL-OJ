@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
@@ -7,8 +7,15 @@ import { Switch } from '@material-ui/core'
 
 import { toggleTheme, logOut } from '../../redux'
 
-const NavLink = ({ toggleTheme, user, logOut }) => {
+const NavLink = ({ theme, toggleTheme, user, logOut }) => {
+  const [checked, setChecked] = useState(false)
+
   const history = useHistory()
+
+  useEffect(() => {
+    if (theme.mode === 'dark') setChecked(true)
+    else setChecked(false)
+  }, [])
 
   const handleLogOutBtn = async () => {
     const result = await logOut()
@@ -21,13 +28,14 @@ const NavLink = ({ toggleTheme, user, logOut }) => {
       <LinkBtn onClick={handleLogOutBtn}>
         <Li>Logout</Li>
       </LinkBtn>
-      <ThemeSwitch onClick={toggleTheme} size="small" color="default" />
+      <ThemeSwitch checked={checked} onClick={toggleTheme} size="small" color="default" />
     </LinkWrapper>
   )
 }
 
-const mapStateToProps = ({ user }) => {
+const mapStateToProps = ({ theme, user }) => {
   return {
+    theme,
     user,
   }
 }
