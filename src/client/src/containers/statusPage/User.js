@@ -2,25 +2,24 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
 import { useLocation } from 'react-router'
 import Title from '../../components/title/Title'
 import UserTable from '../../components/pages/statusPage/UserTable'
 import PaginationTab from '../../components/pagination/PaginationTab'
 import queryString from 'query-string'
 
-const User = ({ user, match }) => {
+const User = ({ match }) => {
   const history = useHistory()
   const { classId, weekId } = useParams()
 
   // WIP
   const location = useLocation()
-  console.log('location', location)
-  console.log('location.search', location.search)
+  // console.log('location', location)
+  // console.log('location.search', location.search)
   const query = queryString.parse(location.search)
-  console.log('query', query)
-
-  const pId = query.pId
+  // console.log('query', query)
+  const pId = parseInt(query.pId)
+  const userId = parseInt(query.userId)
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
@@ -32,30 +31,46 @@ const User = ({ user, match }) => {
 
   const [statusList, setStatusList] = useState([])
 
-  const dummyResultList = [
-    { submit_id: '5', user_id: '16010000', result: 'wa', score: '50', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '4', user_id: '16010000', result: 'loading', score: '100', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '3', user_id: '17010000', result: 'accept', score: '100', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '2', user_id: '18010000', result: 'wa', score: '30', submit_time: '2000-01-01 00:00:00' },
-    { submit_id: '1', user_id: '19010000', result: 'error', score: '100', submit_time: '2000-01-01 00:00:00' },
-  ]
-
-  const result = 'all'
+  const result = 1
   const [page, setPage] = useState(1)
   console.log('이동 페이지 ', page)
-  const maxPage = 5
+  const maxPage = 2
+
+  const params = {
+    userId: userId,
+    pId: pId,
+    result: result,
+    page: page,
+  }
 
   useEffect(() => {
     ;(async () => {
-      // const { data } = await axios.get(`/api/v1/user/status?userId=${user.id}&pId=${pId}&result=${result}&page=${page}`)
-      // setStatusList(data.result)
-      setStatusList(dummyResultList)
+      const data = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      })
 
-      // const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
-      // const currentInfo = titleData.result[0]
-      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
+      // const data = await axios.get(`/api/v1/user/status/option`, {
+      //   params,
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     Accept: 'application/json',
+      //   },
+      // })
+
+      console.log('status?', params, data.data)
+
+      // setStatusList(data.data.result)
+
+      // 제목에 문제내용 없어어어어서 이거 .. 좀그런가
+      // const titleData = await axios.get(`/api/v1/problem/${pId}`)
+      // const problem = titleData.data.result[0]
+      // // Title
+      // setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
     })()
-  }, [])
+  }, [page])
 
   return (
     <Container>
@@ -78,13 +93,7 @@ const User = ({ user, match }) => {
   )
 }
 
-const mapStateToProps = ({ user }) => {
-  return {
-    user,
-  }
-}
-
-export default connect(mapStateToProps)(User)
+export default User
 
 const Container = styled.div`
   text-align: center;
