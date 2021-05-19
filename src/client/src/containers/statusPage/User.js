@@ -32,7 +32,7 @@ const User = ({ match }) => {
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
 
-  const [tmpResult, setTMPResult] = useState(0)
+  const [isChanged, setIsChanged] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -63,6 +63,7 @@ const User = ({ match }) => {
   }
 
   const handleSearch = () => {
+    setIsChanged(true)
     setPage(1)
     console.log('Search ID:', userId, 'result:', result, 'page:', page)
     ;(async () => {
@@ -77,7 +78,7 @@ const User = ({ match }) => {
         setStatusList(data.result)
         setMaxPage(data.maxpage)
       }
-    })()
+    })(isChanged)
   }
 
   return (
