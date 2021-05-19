@@ -150,7 +150,7 @@ const PageWrapper = styled.div`
 
 const ProblemWrapper = styled.div`
   border: 1px solid ${(props) => props.theme.SUB_BORDER};
-  /* background: ${(props) => props.theme.INPUT_BACKGROUND}; */
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
   border-radius: 5px;
   padding: 15px;
 `

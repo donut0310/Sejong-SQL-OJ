@@ -120,7 +120,11 @@ const User = ({ user }) => {
     <PageWrapper>
       <Title problemInfo={problemInfo} />
       <Subtitle subtitle={'문제 내용'} />
-      {!isLoading && <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />}
+      {!isLoading && (
+        <ProblemWrapper>
+          <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />
+        </ProblemWrapper>
+      )}
       <Subtitle subtitle={'코드 작성'} />
       <Code input={input} setInput={setInput} handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
@@ -148,4 +152,11 @@ const PageWrapper = styled.div`
   padding: 15px;
   border-radius: 5px;
   min-height: 250px;
+`
+
+const ProblemWrapper = styled.div`
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border-radius: 5px;
+  padding: 15px;
 `

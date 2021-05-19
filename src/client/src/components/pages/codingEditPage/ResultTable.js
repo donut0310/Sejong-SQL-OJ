@@ -26,7 +26,7 @@ const ResultTable = ({ execResult }) => {
           ))}
         </ul>
         {execResult.map((row, j) => (
-          <ul id="table-content-list" key={j}>
+          <ul id="table-content-list-coding" key={j}>
             {attributes.map((attribute, k) => (
               <li id="table-content" key={k}>
                 {row[attribute]}

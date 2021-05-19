@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { CircularProgress } from '@material-ui/core'
+import { CircularProgress, Collapse } from '@material-ui/core'
 
 import Problem from '../codingPage/Problem'
 import ResultTable from './ResultTable'
@@ -11,25 +11,27 @@ const Result = ({ isExecuted, execIsLoading, execIsError, execResult }) => {
   }, [isExecuted, execIsLoading, execIsError, execResult])
 
   return (
-    <ResultWrapper>
-      {isExecuted ? (
-        execIsLoading ? (
-          <SpinnerWrapper>
-            <StyledCircularProgress />
-          </SpinnerWrapper>
-        ) : execIsError ? (
-          <>
-            <ErrorResultWrapper>
-              <WarningText>Error</WarningText>
-              <ErrorResult>{execResult}</ErrorResult>
-            </ErrorResultWrapper>
-          </>
+    <ResultWrapper id="wrapper">
+      <Collapse in={isExecuted}>
+        {isExecuted ? (
+          execIsLoading ? (
+            <SpinnerWrapper>
+              <StyledCircularProgress />
+            </SpinnerWrapper>
+          ) : execIsError ? (
+            <>
+              <ErrorResultWrapper>
+                <WarningText>Error</WarningText>
+                <ErrorResult>{execResult}</ErrorResult>
+              </ErrorResultWrapper>
+            </>
+          ) : (
+            execResult && <ResultTable execResult={execResult} />
+          )
         ) : (
-          execResult && <ResultTable execResult={execResult} />
-        )
-      ) : (
-        <>실행버튼눌러</>
-      )}
+          <></>
+        )}{' '}
+      </Collapse>
     </ResultWrapper>
   )
 }
@@ -41,7 +43,8 @@ const ResultWrapper = styled.div`
   margin-bottom: 20px;
   border-radius: 5px;
   box-sizing: border-box;
-  background: ${(props) => props.theme.EDITOR_BACKGROUND};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
   color: ${(props) => props.theme.GENERAL_FONT};
 `
 
