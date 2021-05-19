@@ -16,10 +16,10 @@ const UserTable = ({ statusList }) => {
   }
 
   const IconResult = ({ result }) => {
-    if (result === 'accept') return <img src={acceptIcon} alt="accept" />
-    else if (result === 'wa') return <img src={wrongAnswerIcon} alt="accept" />
-    else if (result === 'error') return <img src={errorIcon} alt="accept" />
-    else if (result === 'loading') return <img src={loadingIcon} alt="accept" />
+    if (result === 1) return <img src={acceptIcon} alt="accept" />
+    else if (result === 2) return <img src={wrongAnswerIcon} alt="accept" />
+    else if (result === 3) return <img src={errorIcon} alt="accept" />
+    else return <img src={loadingIcon} alt="accept" />
   }
 
   return (
