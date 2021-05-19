@@ -65,6 +65,7 @@ const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
           style={{
             borderRadius: '5px',
             boxSizing: 'border-box',
+            border: `1px solid #c4c4c4`,
           }}
         />
       ) : (
@@ -90,6 +91,7 @@ const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
           style={{
             borderRadius: '5px',
             boxSizing: 'border-box',
+            border: `1px solid #c4c4c4`,
           }}
         />
       )}
