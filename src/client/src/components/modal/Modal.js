@@ -70,12 +70,9 @@ const ModalComponent = ({ user }) => {
             {userClassList &&
               userClassList.map((class_) => (
                 <TreeContainer key={class_.classId}>
-                  <StyledTreeItem nodeId={toString(class_.classId)} label={class_.className}>
+                  <StyledTreeItem nodeId={`${(class_.classId + 5) * 100}`} label={class_.className}>
                     {class_.weekList.map((week_) => (
-                      <StyledLi key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)}>
-                        {week_.weekName}
-                      </StyledLi>
-                      // <StyledTreeItem nodeId={toString(week_.weekId)} label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
+                      <StyledTreeItem nodeId={`${(week_.weekId + 3) * 10}`} label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
                     ))}
                   </StyledTreeItem>
                   {(user.role === 1 || user.class_id.includes(class_.classId)) && <SettingBtn onClick={handleManageClass(class_.classId)} />}
