@@ -172,7 +172,6 @@ const GlobalStyles = createGlobalStyle`
   ul#table-table-list {
     display: flex;
     flex-direction: column;
-    margin: 10px;
     border-radius: 10px;
     color: ${(props) => props.theme.GENERAL_FONT};
     overflow:auto;

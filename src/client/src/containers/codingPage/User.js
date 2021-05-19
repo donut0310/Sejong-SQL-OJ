@@ -40,25 +40,21 @@ const User = ({ user }) => {
 
   const handleExecCode = async () => {
     if (input) {
-      ;(async () => {
-        console.log('handleExecCode', input)
-        setIsExecuted(true)
-        setExecIsLoading(true)
-        const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-        // const res = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      console.log('handleExecCode', input)
+      setIsExecuted(true)
+      setExecIsLoading(true)
+      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      console.log('Exec data', data)
 
-        // TODO 에러일 경우 처리 해야함
-        // console.log('제출 결과', res)
-        if (data.message === 'success') {
-          setExecResult(data.result)
-          setExecIsError(false)
-        } else {
-          // setExecResult(data.result)
-          setExecIsError(true)
-        }
+      if (data.message === 'success') {
+        setExecIsError(false)
+        setExecResult(data.result)
+      } else {
+        setExecIsError(true)
+        setExecResult(data.error)
+      }
 
-        setExecIsLoading(false)
-      })()
+      setExecIsLoading(false)
     } else alert('코드를 작성해주세요.')
   }
 
@@ -118,7 +114,11 @@ const User = ({ user }) => {
     <PageWrapper>
       <Title problemInfo={problemInfo} />
       <Subtitle subtitle={'문제 내용'} />
-      {!isLoading && <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />}
+      {!isLoading && (
+        <ProblemWrapper>
+          <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />
+        </ProblemWrapper>
+      )}
       <Subtitle subtitle={'코드 작성'} />
       <Code input={input} setInput={setInput} handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
@@ -146,4 +146,11 @@ const PageWrapper = styled.div`
   padding: 15px;
   border-radius: 5px;
   min-height: 250px;
+`
+
+const ProblemWrapper = styled.div`
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  /* background: ${(props) => props.theme.INPUT_BACKGROUND}; */
+  border-radius: 5px;
+  padding: 15px;
 `

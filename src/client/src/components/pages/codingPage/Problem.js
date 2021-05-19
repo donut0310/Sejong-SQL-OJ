@@ -89,13 +89,12 @@ const ProblemWrapper = styled.div`
 `
 
 const Text = styled.div`
-  line-height: '1.5em';
-  margin-bottom: 20px;
+  line-height: 1.5em;
+  margin-bottom: 10px;
   color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const Table = styled.div`
   display: flex;
-  /* width: 100%; */
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `
