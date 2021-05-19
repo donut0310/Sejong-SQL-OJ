@@ -36,30 +36,35 @@ const User = ({ match }) => {
 
   useEffect(() => {
     ;(async () => {
-      const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
-      console.log('Get status', data)
-
-      setStatusList(data.result)
-      setMaxPage(data.maxpage)
-
+      if (userId === '') {
+        const { data } = await axios.get(`/api/v1/user/status/option?pId=${pId}&result=${result}&page=${page}`)
+        console.log('Get status', data)
+        setStatusList(data.result)
+        setMaxPage(data.maxpage)
+      } else {
+        const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
+        console.log('Get status', data)
+        setStatusList(data.result)
+        setMaxPage(data.maxpage)
+      }
       const titleData = await axios.get(`/api/v1/problem/${pId}`)
       const problem = titleData.data.result[0]
       // Title
       setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
     })()
-  }, [page, result])
+  }, [page])
 
   const handleInputID = (e) => {
     setUserId(e.target.value)
   }
 
   const handleResultChange = (e) => {
-    setTMPResult(e.target.value)
+    setResult(e.target.value)
   }
 
   const handleSearch = () => {
-    setResult(tmpResult)
-    console.log('Search ID:', userId, 'result:', result)
+    setPage(1)
+    console.log('Search ID:', userId, 'result:', result, 'page:', page)
     ;(async () => {
       if (userId === '') {
         const { data } = await axios.get(`/api/v1/user/status/option?pId=${pId}&result=${result}&page=${page}`)
