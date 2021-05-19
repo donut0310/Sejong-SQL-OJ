@@ -37,25 +37,36 @@ const User = ({ user }) => {
   const [execIsLoading, setExecIsLoading] = useState(false)
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
+  const [isSubmit, setIsSubmit] = useState(false)
 
-  // TODO 에러일 경우 처리
   const handleExecCode = async () => {
     if (input) {
+      console.log('handleExecCode', input)
+      setIsExecuted(true)
+      setExecIsLoading(true)
+      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      console.log('Exec data', data)
+
+      if (data.message === 'success') {
+        setExecIsError(false)
+        setExecResult(data.result)
+      } else {
+        setExecIsError(true)
+        setExecResult(data.error)
+      }
+
+      setExecIsLoading(false)
+    } else alert('코드를 작성해주세요.')
+  }
+
+  const handleSubmitCode = async () => {
+    if (input) {
+      setIsSubmit(true)
       ;(async () => {
-        console.log('handleExecCode', input)
-        setIsExecuted(true)
-        setExecIsLoading(true)
-        const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+        const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
+        console.log('handleSubmitCode', data)
 
-        if (data.message === 'success') {
-          setExecResult(data.result)
-          setExecIsError(false)
-        } else {
-          // setExecResult(data.result)
-          setExecIsError(true)
-        }
-
-        setExecIsLoading(false)
+        await history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
       })()
     } else alert('코드를 작성해주세요.')
   }
@@ -72,17 +83,6 @@ const User = ({ user }) => {
     e.preventDefault()
     e.returnValue = ''
   }
-  const handleSubmitCode = async () => {
-    if (input) {
-      // TODO
-      // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
-
-      ;(async () => {
-        const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-        console.log('handleSubmitCode', data)
-      })()
-    } else alert('코드를 입력해주세요.')
-  }
 
   // TODO
   useEffect(() => {
@@ -93,7 +93,6 @@ const User = ({ user }) => {
     ;(async () => {
       setIsLoading(true)
 
-      // TODO api 완료되면 지우기
       const submittedData = await axios.get(`/api/v1/user/code/${submitId}`)
       console.log('submittedData', submittedData.data.result[0])
       setInput(submittedData.data.result[0].user_query)
@@ -130,7 +129,7 @@ const User = ({ user }) => {
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
       {/* 페이지 이동 시 alert */}
-      <Prompt when={!!input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
+      <Prompt when={!!input && isSubmit === false} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
     </PageWrapper>
   )
 }
