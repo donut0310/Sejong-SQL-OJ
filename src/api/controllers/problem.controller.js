@@ -149,7 +149,7 @@ export class ProblemController {
         data.result= null;
         data.error = err.sqlMessage;
         data.message = "fail";
-        res.status(400).send(data);
+        res.status(200).send(data);
         return;
       }
     } catch (err) {
