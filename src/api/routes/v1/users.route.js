@@ -33,7 +33,7 @@ export class UsersRoute {
       usersController.getSubmittedCode,
     ]);
     // 학생: 코드 제출 status 목록 요청
-    this.app.get("/api/v1/user/status", [
+    this.app.get("/api/v1/user/status/option", [
       authMiddleware.verifyToken,
       usersController.getStatusList,
     ]);

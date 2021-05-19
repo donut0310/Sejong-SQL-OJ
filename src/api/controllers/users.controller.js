@@ -542,7 +542,6 @@ export class UsersController {
             connection.release();
             data.result = null;
             data.message = "fail";
-            console.log(err)
             res.status(400).send(data);
           }
         } catch (err) {
@@ -552,8 +551,5 @@ export class UsersController {
         }
       }
     }
-    data.result = null;
-    data.message = "fail";
-    res.status(400).send(data);
   }
 }
