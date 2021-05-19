@@ -57,7 +57,7 @@ const UserTable = ({ statusList }) => {
               <IconResult result={status.result} />
             </li>
             <li id="content" style={{ width: '20%' }}>
-              {status.score === '100' ? (
+              {status.score === 100 ? (
                 <>
                   <span style={{ color: 'green' }}>{status.score}</span> / 100
                 </>

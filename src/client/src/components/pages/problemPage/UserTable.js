@@ -67,7 +67,7 @@ const UserTable = ({ problemList, user }) => {
               {problem.submit_cnt}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {problem.score === '100' ? (
+              {problem.score === 100 ? (
                 <>
                   <span style={{ color: 'green' }}>{problem.score}</span> / 100
                 </>
