@@ -8,7 +8,14 @@ import Admin from './Admin'
 const ProblemPage = ({ user }) => {
   const { classId } = useParams()
 
-  return <>{user.role === 1 || user.class_id.includes(classId) ? <Admin /> : <User />}</>
+  // TODO
+  // return <>{user.role === 1 || user.class_id.includes(classId) ? <Admin /> : <User />}</>
+  return (
+    <>
+      <User />
+      <Admin />
+    </>
+  )
 }
 
 const mapStateToProps = ({ user }) => {
