@@ -62,7 +62,6 @@ export class CourseController {
     const database = new Database();
     const assistsList = req.body.assists;
     const classId = req.params.classId;
-
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
@@ -73,8 +72,8 @@ export class CourseController {
 
         const [a] = await connection.query(sql, params);
         connection.release();
-
         let reValue = [];
+
         let inputArr = [];
 
         for (let i in a) {

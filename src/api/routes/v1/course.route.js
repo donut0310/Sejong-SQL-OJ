@@ -18,16 +18,16 @@ export class CourseRoute {
       courseController.adminEnrollProfToClass,
     ]);
 
-    // 교수: 조교 목록 추가
-    this.app.post("/api/v1/course/assists/:classId", [
-      authMiddleware.verifyToken,
-      courseController.addAssistsList,
-    ]);
 
     // 교수: 조교 목록 제거
     this.app.delete("/api/v1/course/assists/delete/:classId", [
       authMiddleware.verifyToken,
       courseController.deleteAssistsList,
+    ]);
+    // 교수: 조교 목록 추가
+    this.app.post("/api/v1/course/assists/:classId", [
+      authMiddleware.verifyToken,
+      courseController.addAssistsList,
     ]);
 
     // 교수: 학생 목록 추가

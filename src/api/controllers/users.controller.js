@@ -74,7 +74,6 @@ export class UsersController {
 
         let arr = [];
 
-        console.log(a);
         for (let i in a) {
           if (a[i].author != 0) arr.push(a[i].class_id);
         }
@@ -283,5 +282,278 @@ export class UsersController {
     answer.message = "success";
     answer.result = result;
     res.status(200).send(answer);
+  }
+  //학생: 코드 제출 status 목록 요청
+  async getStatusList(req,res){
+    const database = new Database();
+    let queryData=req.query;
+    let userId=queryData.userId;
+    let pId=queryData.pId;
+    let result=queryData.result;
+    let page=(queryData.page-1)*10;
+    let s;
+    let data = {};
+    if (queryData.userId==undefined){
+      if(result==0){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            let [a]=await connection.query(s, [pId,page]);
+            connection.release();
+            data.result = a;
+            s="select count(*) from submit_answer where p_id=? ;"
+            let [b]=await connection.query(s, [pId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            data.message = "success";
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      if(result==1){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and
+        result="Accept" order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            const [a]=await connection.query(s, [pId,page]);
+            connection.release();
+            data.result = a;
+            s=`select count(*) from submit_answer where p_id=? and result="Accept";`
+            let [b]=await connection.query(s, [pId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            data.message = "success";
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      if(result==2){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and
+        result="WA" order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            const [a]=await connection.query(s, [pId,page]);
+            connection.release();
+            data.result = a;
+            data.message = "success";
+            s=`select count(*) from submit_answer where p_id=? and result="WA";`
+            let [b]=await connection.query(s, [pId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      if(result==3){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and
+        result="Error" order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            const [a]=await connection.query(s, [pId,page]);
+            connection.release();
+            data.result = a;
+            s=`select count(*) from submit_answer where p_id=? and result="Error";`
+            let [b]=await connection.query(s, [pId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            data.message = "success";
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      
+    }
+    else{
+      if(result==0){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and user_id=? order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            let [a]=await connection.query(s, [pId,userId,page]);
+            connection.release();
+            data.result = a;
+            s="select count(*) from submit_answer where p_id=? and user_id=?;"
+            let [b]=await connection.query(s, [pId,userId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            data.message = "success";
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      if(result==1){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and user_id=? and
+        result="Accept" order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            const [a]=await connection.query(s, [pId,userId,page]);
+            connection.release();
+            data.result = a;
+            s=`select count(*) from submit_answer where p_id=? and user_id=? and result="Accept";`
+            let [b]=await connection.query(s, [pId,userId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            data.message = "success";
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      if(result==2){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and user_id=? and
+        result="WA" order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            const [a]=await connection.query(s, [pId,userId,page]);
+            connection.release();
+            data.result = a;
+            data.message = "success";
+            s=`select count(*) from submit_answer where p_id=? and result="WA" and user_id=?;`
+            let [b]=await connection.query(s, [pId,userId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+      if(result==3){
+        s =`select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and user_id=? and
+        result="Error" order by submit_id DESC LIMIT ?, 10;`
+        try {
+          const connection = await database.pool.getConnection(
+            async (conn) => conn
+          );
+          try {
+            const [a]=await connection.query(s, [pId,userId,page]);
+            connection.release();
+            data.result = a;
+            s=`select count(*) from submit_answer where p_id=? and result="Error" and user_id=? ;`
+            let [b]=await connection.query(s, [pId,userId]);
+            connection.release();
+            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
+            data.maxpage = b
+            data.message = "success";
+            res.status(200).send(data);
+          } catch (err) {
+            connection.release();
+            data.result = null;
+            data.message = "fail";
+            console.log(err)
+            res.status(400).send(data);
+          }
+        } catch (err) {
+          data.result = null;
+          data.message = "fail";
+          res.status(400).send(data);
+        }
+      }
+    }
+    data.result = null;
+    data.message = "fail";
+    res.status(400).send(data);
   }
 }
