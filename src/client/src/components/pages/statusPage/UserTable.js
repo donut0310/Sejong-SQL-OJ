@@ -19,7 +19,8 @@ const UserTable = ({ statusList }) => {
     if (result === 'Accept') return <img src={acceptIcon} alt="accept" />
     else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" />
     // else if (result === 'Wrong Answer') return <img src={wrongAnswerIcon} alt="wrongAnswer" />
-    else if (result === 'error') return <img src={errorIcon} alt="error" />
+    else if (result === 'Error') return <img src={errorIcon} alt="error" />
+    // else if (result === 'error') return <img src={errorIcon} alt="error" />
     else return <img src={loadingIcon} alt="loading" />
   }
   const parseDateTime = (data) => {
