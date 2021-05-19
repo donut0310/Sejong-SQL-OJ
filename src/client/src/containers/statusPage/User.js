@@ -10,7 +10,6 @@ import queryString from 'query-string'
 
 const User = ({ match }) => {
   const history = useHistory()
-  const { classId, weekId } = useParams()
 
   // WIP
   const location = useLocation()
@@ -19,7 +18,7 @@ const User = ({ match }) => {
   const query = queryString.parse(location.search)
   // console.log('query', query)
   const pId = parseInt(query.pId)
-  const userId = parseInt(query.userId)
+  const [userId, setUserId] = useState(parseInt(query.userId))
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
@@ -31,7 +30,7 @@ const User = ({ match }) => {
 
   const [statusList, setStatusList] = useState([])
 
-  const result = 1
+  const [result, setResult] = useState(0)
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
 
@@ -43,28 +42,56 @@ const User = ({ match }) => {
       setStatusList(data.result)
       setMaxPage(data.maxpage)
 
-      // 제목에 문제내용 없어어어어서 이거 .. 좀그런가
-      // const titleData = await axios.get(`/api/v1/problem/${pId}`)
-      // const problem = titleData.data.result[0]
-      // // Title
-      // setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
+      const titleData = await axios.get(`/api/v1/problem/${pId}`)
+      const problem = titleData.data.result[0]
+      // Title
+      setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
     })()
-  }, [page])
+  }, [page, result])
+
+  const handleInputID = (e) => {
+    setUserId(e.target.value)
+  }
+
+  const [tmpResult, setTMPResult] = useState()
+  const handleResultChange = (e) => {
+    setTMPResult(e.target.value)
+  }
+
+  const handleSearch = () => {
+    setResult(tmpResult)
+    ;(async () => {
+      const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
+      console.log('Get status', data)
+
+      setStatusList(data.result)
+      setMaxPage(data.maxpage)
+    })()
+  }
 
   return (
     <Container>
       <Title problemInfo={problemInfo} />
       <div id="search-form" style={{ marginBottom: '20px' }}>
         <span>
-          아이디:<input className="input-form" type="text" placeholder="아이디"></input>
+          아이디:<input className="input-form" type="text" placeholder="아이디" onChange={handleInputID}></input>
         </span>
         <span>
           결과:
-          <select id="select-form" name="결과">
-            <option value="">결과</option>
+          <select id="select-form" name="결과" onChange={handleResultChange}>
+            <option value={0}>결과</option>
+            <option value={0} defaultValue>
+              All
+            </option>
+            <option value={1}>Accept</option>
+            <option value={2}>Wrong Answer</option>
+            <option value={3}>Error</option>
+            {/* <option value="">Loading</option> */}
           </select>
         </span>
-        <button id="submit-btn">조회</button>
+        <button id="submit-btn" onClick={handleSearch}>
+          조회
+        </button>
       </div>
       <UserTable statusList={statusList} />
       <PaginationTab setPage={setPage} maxPage={maxPage} />
