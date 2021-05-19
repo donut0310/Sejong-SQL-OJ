@@ -18,7 +18,6 @@ const Public = () => {
 
   const [code, setCode] = useState('')
 
-  //   TODO
   const [pId, setPId] = useState(0)
 
   const dummyCode = `
@@ -27,8 +26,8 @@ const Public = () => {
   useEffect(() => {
     ;(async () => {
       // TODO
-      // const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
-      // console.log("submitted data", data);
+      const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
+      console.log('submitted data', data)
       // setPId(data.pId)
       // setCode(data.user_query)
 

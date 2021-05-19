@@ -13,7 +13,7 @@ const ProblemPage = ({ user }) => {
   return (
     <>
       <User />
-      <Admin />
+      {/* <Admin /> */}
     </>
   )
 }

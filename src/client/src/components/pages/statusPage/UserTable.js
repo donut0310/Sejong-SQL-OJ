@@ -11,8 +11,8 @@ const UserTable = ({ statusList }) => {
   const { classId, weekId } = useParams()
 
   const handleCodeCheck = (submitId) => {
+    // TODO 자기 코드 or 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
-    // TODO 자기 코드만 볼 수 있어야함.
   }
 
   const IconResult = ({ result }) => {
@@ -77,7 +77,7 @@ const UserTable = ({ statusList }) => {
               <button
                 id="problem"
                 onClick={() => {
-                  handleCodeCheck(status.submitId)
+                  handleCodeCheck(status.submit_id)
                 }}
               >
                 Code

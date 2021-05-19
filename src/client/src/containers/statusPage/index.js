@@ -13,7 +13,7 @@ const StatusPage = ({ user }) => {
   return (
     <>
       <User />
-      <Admin />
+      {/* <Admin /> */}
     </>
   )
 }
