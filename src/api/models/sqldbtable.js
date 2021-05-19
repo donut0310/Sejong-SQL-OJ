@@ -551,53 +551,6 @@ INSERT INTO testcase_problem(p_id,tc_answer,week_title,tc_id) values(3,'[
 ]',"(김길동) 1주차 기초 select문",1);
 `;
 
-
-// 테스트 데이터 예시
-// 문제 호출 관련
-
-// week table
-`
-
-` // problem table
-`
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,1,"1번 문제","아래 테이블 구조는 동물 보호소에 들어온 동물의 정보를 담은  테이블입니다.  ^&^ 동물 보호소에 가장 먼저 들어온 동물의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,1,"2번 문제","아래 테이블 구조는 구치소에 들어온 범인의 정보를 담은  테이블입니다.  ^&^ 구치소에 가장 먼저 들어온 범인의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,1,"3번 문제","아래 테이블 구조는 은행에 들어온 고객의 정보를 담은  테이블입니다.  ^&^ 은행에 가장 먼저 들어온 고객의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,1,"1번 문제","아래 테이블 구조는 학교에 들어온 외부인의 정보를 담은  테이블입니다.  ^&^ 학교에 가장 먼저 들어온 외부인의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,1,"2번 문제","아래 테이블 구조는 한국에 들어온 수입품의 정보를 담은  테이블입니다.  ^&^ 한국에 가장 먼저 들어온 수입품의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,1,"3번 문제","아래 테이블 구조는 공항에 들어온 항공사의 정보를 담은  테이블입니다.  ^&^ 공항에 가장 많이 들어온 항공사의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (1,2,"1번 문제","아래 테이블 구조는 동물원에 들어온 고객의 정보를 담은  테이블입니다.  ^&^ 동물원에 가장 먼저 들어온 고객의 이름 3개를 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","1주차 SELECT문");
-insert into problem (week_id, class_id,title,content,start_time,end_time,tc_cnt,tc_id,table_info,table_create,week_title) values (2,2,"2번 문제","아래 테이블 구조는 유치원에 등록된 교사의 정보를 담은  테이블입니다.  ^&^ 유치원에서 가장 나이가 많은 교사의 이름을 조회하는 SQL 문을 작성해주세요. ^&^","2021-01-15 06:17:00","2021-01-16 06:17:00",3,1,"답은 3개","create table","2주차 DELETE문");
-
-``ALTER TABLE problem AUTO_INCREMENT=1;
-SET @CNT = 0;
-UPDATE problem SET problem.class_id = @CNT:=@CNT+1;`;
-
-// top_submit_answer table
-`
-insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,1,"16011076",1,"select * from user;",0.5,50,"2021-02-15 13:17:00","W/A","1주차 SELECT문",2);
-insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,1,"16011088",2,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문",4);
-insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,2,"16011076",1,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문",1);
-insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(1,2,"16011088",2,"select * from user;",0.5,30,"2021-02-15 13:17:00","W/A","1주차 SELECT문",5);
-insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(2,1,"17011585",1,"select * from user;",0.5,10,"2021-02-15 13:17:00","W/A","2주차 DELETE문",4);
-insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values(2,1,"17011585",2,"select * from user;",0.5,80,"2021-02-15 13:17:00","W/A","2주차 DELETE문",8);
-
-` // submit_answer table
-`
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"16011076",1,"select * from user;",0.5,50,"2021-02-15 13:17:00","W/A","1주차 SELECT문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"16011088",1,"select * from user22;",0.5,20,"2021-02-15 13:17:00","W/A","1주차 SELECT문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"16011076",2,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,1,"16011088",2,"select * from user11afsd;",0.5,80,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,2,"16011088",1,"select * from user;",0.5,100,"2021-02-15 13:17:00","ACCEPT","1주차 SELECT문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(1,2,"17011585",2,"select * from user;",0.5,30,"2021-02-15 13:17:00","W/A","1주차 SELECT문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(2,1,"17011585",1,"select * from user;",0.5,10,"2021-02-15 13:17:00","W/A","2주차 DELETE문");
-insert into submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) values(2,1,"17011585",2,"select * from user;",0.5,80,"2021-02-15 13:17:00","W/A","2주차 DELETE문");
-
-` // auto incremeat init
-`ALTER TABLE submit_answer AUTO_INCREMENT=1;
-SET @CNT = 0;
-UPDATE course SET course.class_id = @CNT:=@CNT+1;`;
-
 ` // create patient _table
 create table patient_info(
   patient_id varchar(255) not null,

@@ -50,6 +50,7 @@ export class ScoreController {
               let answerJson=JSON.parse(answerString)
               let correct=0;
               let length=0;
+              console.log(userJson.length,answerJson.length)
                 if (userJson.length<answerJson.length){
                   length=answerJson.length
                   answerJson=JSON.stringify(answerJson)
@@ -64,6 +65,8 @@ export class ScoreController {
                 else{
                   length=userJson.length
                   userJson=JSON.stringify(userJson)
+                  console.log(userJson)
+                  console.log("1213" , JSON.stringify(answerJson[0]))
                   for(var i=0; i<answerJson.length; i++){
                     if(userJson.includes(JSON.stringify(answerJson[i]))){
                       i-=1
@@ -72,6 +75,7 @@ export class ScoreController {
                     }
                   }
                 }
+                
                 // 순서만 다른 경우
                 if (correct==length){
                   score+= 50
@@ -121,7 +125,7 @@ export class ScoreController {
     }
     let query_cost=0
     try {
-      const connection = await database.pool.getConnection(async (conn) => conn);
+      const connection = await database.tc0_pool.getConnection(async (conn) => conn);
       try{
         connection.beginTransaction();
         let [userJson] = await connection.query(userQuery);
