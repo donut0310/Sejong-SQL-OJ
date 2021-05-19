@@ -60,11 +60,11 @@ const User = ({ user }) => {
 
   const handleSubmitCode = async () => {
     if (input) {
-      // TODO
-      history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
       ;(async () => {
         const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
         console.log('handleSubmitCode', data)
+
+        await history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
       })()
     } else alert('코드를 작성해주세요.')
   }
