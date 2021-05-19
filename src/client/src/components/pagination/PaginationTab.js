@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import Pagination from '@material-ui/lab/Pagination'
 
-const PaginationTab = ({ setPage, maxPage }) => {
+const PaginationTab = ({ currentPage, setPage, maxPage }) => {
   const handlePageClick = (e, page) => {
     setPage(page)
   }
   return (
     <Wrapper>
-      <StyledPagination count={maxPage} shape="rounded" showFirstButton showLastButton onChange={handlePageClick} />
+      <StyledPagination page={currentPage} count={maxPage} shape="rounded" showFirstButton showLastButton onChange={handlePageClick} />
     </Wrapper>
   )
 }

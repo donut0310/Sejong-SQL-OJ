@@ -30,32 +30,43 @@ const User = ({ user }) => {
   const [paragraphCnt, setParagraphCnt] = useState(0)
 
   // Code.js
-  const [input, setInput] = useState('select * from patient_info limit 10;')
+  const [input, setInput] = useState('')
 
   // Result.js
   const [isExecuted, setIsExecuted] = useState(false)
   const [execIsLoading, setExecIsLoading] = useState(false)
   const [execIsError, setExecIsError] = useState(false)
   const [execResult, setExecResult] = useState('')
+  const [isSubmit, setIsSubmit] = useState(false)
 
-  // TODO 에러일 경우 처리
   const handleExecCode = async () => {
     if (input) {
+      console.log('handleExecCode', input)
+      setIsExecuted(true)
+      setExecIsLoading(true)
+      const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+      console.log('Exec data', data)
+
+      if (data.message === 'success') {
+        setExecIsError(false)
+        setExecResult(data.result)
+      } else {
+        setExecIsError(true)
+        setExecResult(data.error)
+      }
+
+      setExecIsLoading(false)
+    } else alert('코드를 작성해주세요.')
+  }
+
+  const handleSubmitCode = async () => {
+    if (input) {
+      setIsSubmit(true)
       ;(async () => {
-        console.log('handleExecCode', input)
-        setIsExecuted(true)
-        setExecIsLoading(true)
-        const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
+        const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
+        console.log('handleSubmitCode', data)
 
-        if (data.message === 'success') {
-          setExecResult(data.result)
-          setExecIsError(false)
-        } else {
-          // setExecResult(data.result)
-          setExecIsError(true)
-        }
-
-        setExecIsLoading(false)
+        await history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
       })()
     } else alert('코드를 작성해주세요.')
   }
@@ -72,17 +83,6 @@ const User = ({ user }) => {
     e.preventDefault()
     e.returnValue = ''
   }
-  const handleSubmitCode = async () => {
-    if (input) {
-      // TODO
-      // history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
-
-      ;(async () => {
-        const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-        console.log('handleSubmitCode', data)
-      })()
-    } else alert('코드를 입력해주세요.')
-  }
 
   // TODO
   useEffect(() => {
@@ -93,10 +93,9 @@ const User = ({ user }) => {
     ;(async () => {
       setIsLoading(true)
 
-      // TODO api 완료되면 지우기
-      // const { submittedData } = await axios.get(`/api/v1/user/code/${submitId}`)
-      // console.log("submittedData", submittedData);
-      // setInput(submittedData.user_query)
+      const submittedData = await axios.get(`/api/v1/user/code/${submitId}`)
+      console.log('submittedData', submittedData.data.result[0])
+      setInput(submittedData.data.result[0].user_query)
 
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
       const problem = data.result[0]
@@ -120,13 +119,17 @@ const User = ({ user }) => {
     <PageWrapper>
       <Title problemInfo={problemInfo} />
       <Subtitle subtitle={'문제 내용'} />
-      {!isLoading && <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />}
+      {!isLoading && (
+        <ProblemWrapper>
+          <Problem table_info={table_info} paragraph={paragraph} paragraphCnt={paragraphCnt} />
+        </ProblemWrapper>
+      )}
       <Subtitle subtitle={'코드 작성'} />
       <Code input={input} setInput={setInput} handleExecCode={handleExecCode} handleSubmitCode={handleSubmitCode} />
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
       {/* 페이지 이동 시 alert */}
-      <Prompt when={input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
+      <Prompt when={!!input && isSubmit === false} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
     </PageWrapper>
   )
 }
@@ -148,4 +151,11 @@ const PageWrapper = styled.div`
   padding: 15px;
   border-radius: 5px;
   min-height: 250px;
+`
+
+const ProblemWrapper = styled.div`
+  border: 1px solid ${(props) => props.theme.SUB_BORDER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  border-radius: 5px;
+  padding: 15px;
 `

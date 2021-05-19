@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 import Title from '../../components/title/Title'
 import TitleInput from '../../components/pages/problemAddPage/TitleInput'
 import DescriptionInput from '../../components/pages/problemAddPage/DescriptionInput'
@@ -85,15 +86,19 @@ const Admin = () => {
   }
 
   return (
-    <div>
+    <Container>
       <Title problemInfo={problemInfo} />
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
       <TestcaseInput formData={formData} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
-    </div>
+    </Container>
   )
 }
 
 export default Admin
+
+const Container = styled.div`
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

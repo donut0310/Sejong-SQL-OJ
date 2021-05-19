@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import Title from '../../components/title/Title'
 import UserTable from '../../components/pages/problemPage/UserTable'
@@ -23,22 +24,27 @@ const User = () => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/problem/${classId}/${weekId}`)
       // res => result(obj), message("success")
-      console.log('get problem list info data=>', data)
+      console.log('Get problem list =>', data)
       setProblemList(data.result)
 
-      const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
-      console.log('titleData', titleData)
-      // const currentInfo = titleData.result[0]
-      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
+      const res = await axios.get(`/api/v1/week/${weekId}`)
+      const currentInfo = res.data.result[0]
+      console.log('Get week Info =>', currentInfo)
+      setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.week_title })
     })()
-  }, [])
+  }, [classId, weekId])
 
   return (
-    <div>
+    <Container>
       <Title problemInfo={problemInfo} />
       <UserTable problemList={problemList} />
-    </div>
+    </Container>
   )
 }
 
 export default User
+
+const Container = styled.div`
+  text-align: end;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

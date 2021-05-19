@@ -172,7 +172,6 @@ const GlobalStyles = createGlobalStyle`
   ul#table-table-list {
     display: flex;
     flex-direction: column;
-    margin: 10px;
     border-radius: 10px;
     color: ${(props) => props.theme.GENERAL_FONT};
     overflow:auto;
@@ -194,6 +193,16 @@ const GlobalStyles = createGlobalStyle`
     padding: 10px;
     background: ${(props) => props.theme.CONTENTS};
     font-weight: 400;
+  }
+
+  ul#table-content-list-coding {
+    box-sizing: border-box;
+    display: flex;
+    padding: 10px;
+    background: ${(props) => props.theme.BACKGROUND};
+    font-weight: 400;
+    /* 행 줄 */
+    border-bottom: 0.3px solid ${(props) => props.theme.BOARD_LIST_HOVER};
   }
 
   li#table-content {

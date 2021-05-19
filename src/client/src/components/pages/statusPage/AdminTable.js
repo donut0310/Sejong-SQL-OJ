@@ -48,7 +48,7 @@ const AdminTable = () => {
               {score.name}
             </li>
             <li id="content" style={{ width: '15%' }}>
-              {score.score === '100' ? (
+              {score.score === 100 ? (
                 <>
                   <span style={{ color: 'green' }}>{score.score}</span> / 100
                 </>

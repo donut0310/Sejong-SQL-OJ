@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { TextField } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 
-const TAManagement = ({ currentTA, setCurrentTA, updateTA, setUpdateTA, handleAddTa, handleDeleteTA }) => {
+const TAManagement = ({ currentTA, setCurrentTA, updateTA, setUpdateTA, handleAddTA, handleDeleteTA }) => {
   const handleChangeCurTA = (e) => {
     setCurrentTA(e.target.value.split(/\r\n|\r|\n/))
     console.log('currentTA', currentTA)
@@ -41,7 +41,7 @@ const TAManagement = ({ currentTA, setCurrentTA, updateTA, setUpdateTA, handleAd
           </button>
         </div>
         <div style={{ textAlign: 'end' }}>
-          <button id="submit-btn" onClick={handleAddTa}>
+          <button id="submit-btn" onClick={handleAddTA}>
             추가
           </button>
         </div>
