@@ -30,7 +30,7 @@ const User = ({ user }) => {
   const [paragraphCnt, setParagraphCnt] = useState(0)
 
   // Code.js
-  const [input, setInput] = useState('select * from patient_info limit 10;')
+  const [input, setInput] = useState('')
 
   // Result.js
   const [isExecuted, setIsExecuted] = useState(false)
@@ -94,9 +94,9 @@ const User = ({ user }) => {
       setIsLoading(true)
 
       // TODO api 완료되면 지우기
-      // const { submittedData } = await axios.get(`/api/v1/user/code/${submitId}`)
-      // console.log("submittedData", submittedData);
-      // setInput(submittedData.user_query)
+      const submittedData = await axios.get(`/api/v1/user/code/${submitId}`)
+      console.log('submittedData', submittedData.data.result[0])
+      setInput(submittedData.data.result[0].user_query)
 
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
       const problem = data.result[0]
