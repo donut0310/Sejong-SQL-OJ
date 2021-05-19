@@ -8,7 +8,7 @@ const Title = () => {
       {/* <TitleText1>Sejong SQL OJ</TitleText1> */}
       <TitleText1>WELCOME to</TitleText1>
       <TitleText2>Sejong SQL OJ</TitleText2>
-      <Clock format={'YYYY년 MM월 DD 일 HH:mm:ss'} ticking={true} />
+      <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
     </Wrapper>
   )
 }
