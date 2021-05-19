@@ -186,14 +186,14 @@ export class ProblemController {
         queryCost = await scoreController.check_cost(userQuery);
         result = "Accept";
       } else {
-        result = "Wrong Answer";
+        result = "WA";
       }
       data.message = "success";
     } else {
       errorkinds = score;
       score = 0;
       //에러 종류 추후에 나누기
-      result = "error";
+      result = "Error";
       data.result.err_msg = errorkinds;
       data.message = "fail";
     }
