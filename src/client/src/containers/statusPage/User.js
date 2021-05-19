@@ -13,12 +13,10 @@ const User = ({ match }) => {
 
   // WIP
   const location = useLocation()
-  // console.log('location', location)
-  // console.log('location.search', location.search)
   const query = queryString.parse(location.search)
   // console.log('query', query)
-  const pId = parseInt(query.pId)
-  const [userId, setUserId] = useState(parseInt(query.userId))
+  const pId = query.pId
+  const [userId, setUserId] = useState(query.userId)
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
