@@ -36,22 +36,10 @@ const User = ({ match }) => {
   console.log('이동 페이지 ', page)
   const maxPage = 2
 
-  const params = {
-    userId: userId,
-    pId: pId,
-    result: result,
-    page: page,
-  }
-
   useEffect(() => {
     ;(async () => {
-      const data = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      })
-
+      const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
+      console.log('Get status', data)
       // const data = await axios.get(`/api/v1/user/status/option`, {
       //   params,
       //   headers: {
@@ -59,8 +47,6 @@ const User = ({ match }) => {
       //     Accept: 'application/json',
       //   },
       // })
-
-      console.log('status?', params, data.data)
 
       // setStatusList(data.data.result)
 
