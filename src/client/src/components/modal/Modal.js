@@ -67,16 +67,20 @@ const ModalComponent = ({ user }) => {
           {/* MY CLASS */}
           <Subtitle>My Class</Subtitle>
           <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-            {userClassList.map((class_) => (
-              <TreeContainer key={class_.classId}>
-                <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
-                  {class_.weekList.map((week_) => (
-                    <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
-                  ))}
-                </StyledTreeItem>
-                {(user.role === 1 || user.class_id.includes(class_.classId)) && <SettingBtn onClick={handleManageClass(class_.classId)} />}
-              </TreeContainer>
-            ))}
+            {userClassList &&
+              userClassList.map((class_) => (
+                <TreeContainer key={class_.classId}>
+                  <StyledTreeItem nodeId={toString(class_.classId)} label={class_.className}>
+                    {class_.weekList.map((week_) => (
+                      <StyledLi key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)}>
+                        {week_.weekName}
+                      </StyledLi>
+                      // <StyledTreeItem nodeId={toString(week_.weekId)} label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
+                    ))}
+                  </StyledTreeItem>
+                  {(user.role === 1 || user.class_id.includes(class_.classId)) && <SettingBtn onClick={handleManageClass(class_.classId)} />}
+                </TreeContainer>
+              ))}
           </TreeView>
         </StyledDrawer>
       </Hidden>
@@ -204,6 +208,27 @@ const StyledTreeItem = styled(TreeItem)`
     }
   }
 `
+
+const StyledLi = styled.div`
+  width: 100%;
+  height: 30px;
+  box-sizing: border-box;
+  margin: 0 10px;
+
+  font-weight: 500;
+  color: ${(props) => props.theme.GENERAL_FONT};
+  cursor: pointer;
+
+  padding: 5px 5px 5px 15px;
+  color: ${(props) => props.theme.GENERAL_FONT};
+  border-left: 4px solid ${(props) => props.theme.BACKGROUND};
+
+  &:hover {
+    border-left: 4px solid ${(props) => props.theme.POINT};
+    background: ${(props) => props.theme.MODAL_LIST_HOVER};
+  }
+`
+
 const SettingBtn = styled(SettingsIcon)`
   && {
     font-size: 1.3em;
