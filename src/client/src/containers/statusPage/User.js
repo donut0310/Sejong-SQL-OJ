@@ -105,7 +105,7 @@ const User = ({ match }) => {
         </button>
       </div>
       <UserTable statusList={statusList} />
-      <PaginationTab setPage={setPage} maxPage={maxPage} />
+      <PaginationTab currentPage={page} setPage={setPage} maxPage={maxPage} />
     </Container>
   )
 }
