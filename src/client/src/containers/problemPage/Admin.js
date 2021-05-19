@@ -40,7 +40,7 @@ const Admin = () => {
       // const currentInfo = titleData.result[0]
       // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
     })()
-  }, [])
+  }, [classId, weekId])
 
   return (
     <Container>

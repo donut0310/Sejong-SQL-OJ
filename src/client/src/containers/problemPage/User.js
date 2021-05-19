@@ -32,7 +32,7 @@ const User = () => {
       console.log('Get week Info =>', currentInfo)
       setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.week_title })
     })()
-  }, [])
+  }, [classId, weekId])
 
   return (
     <Container>
