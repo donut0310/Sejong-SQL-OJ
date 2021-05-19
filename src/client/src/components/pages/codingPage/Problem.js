@@ -48,7 +48,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
               ))}
             </ul>
             {table_info[i - 1].map((row, j) => (
-              <ul id="table-content-list" key={j}>
+              <ul id="table-content-list-coding" key={j}>
                 {attributes[i - 1].map((attribute, k) => (
                   <li id="table-content" key={k}>
                     {row[attribute]}
