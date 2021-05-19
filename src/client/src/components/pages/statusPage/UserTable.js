@@ -16,10 +16,14 @@ const UserTable = ({ statusList }) => {
   }
 
   const IconResult = ({ result }) => {
-    if (result === 1) return <img src={acceptIcon} alt="accept" />
-    else if (result === 2) return <img src={wrongAnswerIcon} alt="accept" />
-    else if (result === 3) return <img src={errorIcon} alt="accept" />
+    if (result === 'Accept') return <img src={acceptIcon} alt="accept" />
+    else if (result === 'Wrong answer') return <img src={wrongAnswerIcon} alt="accept" />
+    else if (result === 'Error') return <img src={errorIcon} alt="accept" />
     else return <img src={loadingIcon} alt="accept" />
+  }
+  const parseDateTime = (data) => {
+    const dateTime = new Date(data)
+    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
   }
 
   return (
@@ -78,7 +82,7 @@ const UserTable = ({ statusList }) => {
               </button>
             </li>
             <li id="content" style={{ width: '30%' }}>
-              {status.submit_time}
+              {parseDateTime(status.submit_time)}
             </li>
           </ul>
         ))}

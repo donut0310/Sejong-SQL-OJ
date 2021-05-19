@@ -33,22 +33,15 @@ const User = ({ match }) => {
 
   const result = 1
   const [page, setPage] = useState(1)
-  console.log('이동 페이지 ', page)
-  const maxPage = 2
+  const [maxPage, setMaxPage] = useState(1)
 
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
       console.log('Get status', data)
-      // const data = await axios.get(`/api/v1/user/status/option`, {
-      //   params,
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Accept: 'application/json',
-      //   },
-      // })
 
-      // setStatusList(data.data.result)
+      setStatusList(data.result)
+      setMaxPage(data.maxpage)
 
       // 제목에 문제내용 없어어어어서 이거 .. 좀그런가
       // const titleData = await axios.get(`/api/v1/problem/${pId}`)
