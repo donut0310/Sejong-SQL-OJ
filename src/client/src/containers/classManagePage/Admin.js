@@ -49,14 +49,17 @@ const Admin = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       const { data } = await axios.get(`/api/v1/course/user/${classId}`)
-      console.log('Fetch stds, TA list=>', data)
+      // console.log('Fetch stds, TA list=>', data)
       setCurrentStd(data.stds || [])
       setCurrentTA(data.assists || [])
     }
 
     const fetchTitleData = async () => {
-      const res = await axios.get(`/api/v1/course/:classId`)
-      console.log('Fetch title date=>', res)
+      const { data } = await axios.get(`/api/v1/course/${classId}`)
+      // console.log('Fetch title date=>', data)
+      setProblemInfo({
+        className: data.result[0].class_name,
+      })
     }
 
     fetchStudentData()
