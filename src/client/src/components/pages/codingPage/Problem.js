@@ -24,7 +24,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
 
   const Contents = paragraph.map((p, i) => {
     return i === 0 ? (
-      <>
+      <div key={i}>
         <Text>
           {p.split('\n').map((line, j) => {
             return (
@@ -35,9 +35,9 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
             )
           })}
         </Text>
-      </>
+      </div>
     ) : (
-      <>
+      <div key={i}>
         <Table>
           <ul id="table-table-list" style={{ margin: '0' }}>
             <ul id="table-title-tab" style={{ marginTop: '5px' }}>
@@ -68,7 +68,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
             )
           })}
         </Text>
-      </>
+      </div>
     )
   })
 

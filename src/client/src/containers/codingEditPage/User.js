@@ -130,7 +130,7 @@ const User = ({ user }) => {
       <Subtitle subtitle={'실행 결과'} />
       <Result isExecuted={isExecuted} execIsLoading={execIsLoading} execIsError={execIsError} execResult={execResult} />
       {/* 페이지 이동 시 alert */}
-      <Prompt when={input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
+      <Prompt when={!!input} message={() => '페이지를 나가시겠습니까? 변경사항이 저장되지 않을 수 있습니다.'} />
     </PageWrapper>
   )
 }
