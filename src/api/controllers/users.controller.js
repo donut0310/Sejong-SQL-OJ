@@ -151,19 +151,19 @@ export class UsersController {
   async postAddProblem(req, res) {
     const database = new Database();
     let data = {};
-
+    req.body.body = JSON.parse(req.body.body);
     const values = {
       classId: req.params.classId,
       weekId: req.params.weekId,
       file: req.files,
-      title: req.body.title,
-      content: req.body.content,
-      table_info: req.body.table_info,
-      start_time: req.body.start_time,
-      end_time: req.body.end_time,
-      is_public: req.body.is_public,
-      tc_cnt: req.body.tc_cnt,
-      week_title: req.body.week_title,
+      title: req.body.body.title,
+      content: req.body.body.content,
+      table_info: req.body.body.table_info,
+      start_time: req.body.body.start_time,
+      end_time: req.body.body.end_time,
+      is_public: req.body.body.is_public,
+      tc_cnt: req.body.body.tc_cnt,
+      week_title: req.body.body.week_title,
     };
 
     try {
@@ -284,32 +284,32 @@ export class UsersController {
     res.status(200).send(answer);
   }
   //학생: 코드 제출 status 목록 요청
-  async getStatusList(req,res){
+  async getStatusList(req, res) {
     const database = new Database();
-    let queryData=req.query;
-    let userId=queryData.userId;
-    let pId=queryData.pId;
-    let result=queryData.result;
-    let page=(queryData.page-1)*10;
+    let queryData = req.query;
+    let userId = queryData.userId;
+    let pId = queryData.pId;
+    let result = queryData.result;
+    let page = (queryData.page - 1) * 10;
     let s;
     let data = {};
-    if (queryData.userId==undefined){
-      if(result==0){
-        s =`select user_id,submit_id,submit_time,result,score 
-        from submit_answer where p_id=? order by submit_id DESC LIMIT ?, 10;`
+    if (queryData.userId == undefined) {
+      if (result == 0) {
+        s = `select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            let [a]=await connection.query(s, [pId,page]);
+            let [a] = await connection.query(s, [pId, page]);
             connection.release();
             data.result = a;
-            s="select count(*) from submit_answer where p_id=? ;"
-            let [b]=await connection.query(s, [pId]);
+            s = "select count(*) from submit_answer where p_id=? ;";
+            let [b] = await connection.query(s, [pId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             data.message = "success";
             res.status(200).send(data);
           } catch (err) {
@@ -324,23 +324,23 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      if(result==1){
-        s =`select user_id,submit_id,submit_time,result,score 
+      if (result == 1) {
+        s = `select user_id,submit_id,submit_time,result,score 
         from submit_answer where p_id=? and
-        result="Accept" order by submit_id DESC LIMIT ?, 10;`
+        result="Accept" order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            const [a]=await connection.query(s, [pId,page]);
+            const [a] = await connection.query(s, [pId, page]);
             connection.release();
             data.result = a;
-            s=`select count(*) from submit_answer where p_id=? and result="Accept";`
-            let [b]=await connection.query(s, [pId]);
+            s = `select count(*) from submit_answer where p_id=? and result="Accept";`;
+            let [b] = await connection.query(s, [pId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             data.message = "success";
             res.status(200).send(data);
           } catch (err) {
@@ -355,24 +355,24 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      if(result==2){
-        s =`select user_id,submit_id,submit_time,result,score 
+      if (result == 2) {
+        s = `select user_id,submit_id,submit_time,result,score 
         from submit_answer where p_id=? and
-        result="WA" order by submit_id DESC LIMIT ?, 10;`
+        result="WA" order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            const [a]=await connection.query(s, [pId,page]);
+            const [a] = await connection.query(s, [pId, page]);
             connection.release();
             data.result = a;
             data.message = "success";
-            s=`select count(*) from submit_answer where p_id=? and result="WA";`
-            let [b]=await connection.query(s, [pId]);
+            s = `select count(*) from submit_answer where p_id=? and result="WA";`;
+            let [b] = await connection.query(s, [pId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             res.status(200).send(data);
           } catch (err) {
             connection.release();
@@ -386,23 +386,23 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      if(result==3){
-        s =`select user_id,submit_id,submit_time,result,score 
+      if (result == 3) {
+        s = `select user_id,submit_id,submit_time,result,score 
         from submit_answer where p_id=? and
-        result="Error" order by submit_id DESC LIMIT ?, 10;`
+        result="Error" order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            const [a]=await connection.query(s, [pId,page]);
+            const [a] = await connection.query(s, [pId, page]);
             connection.release();
             data.result = a;
-            s=`select count(*) from submit_answer where p_id=? and result="Error";`
-            let [b]=await connection.query(s, [pId]);
+            s = `select count(*) from submit_answer where p_id=? and result="Error";`;
+            let [b] = await connection.query(s, [pId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             data.message = "success";
             res.status(200).send(data);
           } catch (err) {
@@ -417,25 +417,24 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      
-    }
-    else{
-      if(result==0){
-        s =`select user_id,submit_id,submit_time,result,score 
-        from submit_answer where p_id=? and user_id=? order by submit_id DESC LIMIT ?, 10;`
+    } else {
+      if (result == 0) {
+        s = `select user_id,submit_id,submit_time,result,score 
+        from submit_answer where p_id=? and user_id=? order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            let [a]=await connection.query(s, [pId,userId,page]);
+            let [a] = await connection.query(s, [pId, userId, page]);
             connection.release();
             data.result = a;
-            s="select count(*) from submit_answer where p_id=? and user_id=?;"
-            let [b]=await connection.query(s, [pId,userId]);
+            s =
+              "select count(*) from submit_answer where p_id=? and user_id=?;";
+            let [b] = await connection.query(s, [pId, userId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             data.message = "success";
             res.status(200).send(data);
           } catch (err) {
@@ -450,23 +449,23 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      if(result==1){
-        s =`select user_id,submit_id,submit_time,result,score 
+      if (result == 1) {
+        s = `select user_id,submit_id,submit_time,result,score 
         from submit_answer where p_id=? and user_id=? and
-        result="Accept" order by submit_id DESC LIMIT ?, 10;`
+        result="Accept" order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            const [a]=await connection.query(s, [pId,userId,page]);
+            const [a] = await connection.query(s, [pId, userId, page]);
             connection.release();
             data.result = a;
-            s=`select count(*) from submit_answer where p_id=? and user_id=? and result="Accept";`
-            let [b]=await connection.query(s, [pId,userId]);
+            s = `select count(*) from submit_answer where p_id=? and user_id=? and result="Accept";`;
+            let [b] = await connection.query(s, [pId, userId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             data.message = "success";
             res.status(200).send(data);
           } catch (err) {
@@ -481,24 +480,24 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      if(result==2){
-        s =`select user_id,submit_id,submit_time,result,score 
+      if (result == 2) {
+        s = `select user_id,submit_id,submit_time,result,score 
         from submit_answer where p_id=? and user_id=? and
-        result="WA" order by submit_id DESC LIMIT ?, 10;`
+        result="WA" order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            const [a]=await connection.query(s, [pId,userId,page]);
+            const [a] = await connection.query(s, [pId, userId, page]);
             connection.release();
             data.result = a;
             data.message = "success";
-            s=`select count(*) from submit_answer where p_id=? and result="WA" and user_id=?;`
-            let [b]=await connection.query(s, [pId,userId]);
+            s = `select count(*) from submit_answer where p_id=? and result="WA" and user_id=?;`;
+            let [b] = await connection.query(s, [pId, userId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             res.status(200).send(data);
           } catch (err) {
             connection.release();
@@ -512,23 +511,23 @@ export class UsersController {
           res.status(400).send(data);
         }
       }
-      if(result==3){
-        s =`select user_id,submit_id,submit_time,result,score 
+      if (result == 3) {
+        s = `select user_id,submit_id,submit_time,result,score 
         from submit_answer where p_id=? and user_id=? and
-        result="Error" order by submit_id DESC LIMIT ?, 10;`
+        result="Error" order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            const [a]=await connection.query(s, [pId,userId,page]);
+            const [a] = await connection.query(s, [pId, userId, page]);
             connection.release();
             data.result = a;
-            s=`select count(*) from submit_answer where p_id=? and result="Error" and user_id=? ;`
-            let [b]=await connection.query(s, [pId,userId]);
+            s = `select count(*) from submit_answer where p_id=? and result="Error" and user_id=? ;`;
+            let [b] = await connection.query(s, [pId, userId]);
             connection.release();
-            b=Math.ceil(b[0]['count(*)']/10) || 1 ;
-            data.maxpage = b
+            b = Math.ceil(b[0]["count(*)"] / 10) || 1;
+            data.maxpage = b;
             data.message = "success";
             res.status(200).send(data);
           } catch (err) {
