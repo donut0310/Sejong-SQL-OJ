@@ -84,7 +84,6 @@ create table testcase_problem(
     on delete cascade
     on update cascade
 )engine=innodb default charset=utf8;
-
 # week_info 가 기본키가 되면 주차별 문제가 1개씩만 생성가능 
 create table submit_answer(
   submit_id int not null auto_increment primary key,
@@ -560,4 +559,15 @@ create table patient_info(
     patient_condition varchar(255) DEFAULT NULL,
     name varchar(255) DEFAULT NULL,
   PRIMARY KEY (patient_id)
-);`;
+);
+
+create table patient_chart(
+  patient_id varchar(255) not null,
+    patient_sex varchar(255) DEFAULT NULL,
+    datatime datetime DEFAULT NULL,
+    patient_condition varchar(255) DEFAULT NULL,
+    name varchar(255) DEFAULT NULL,
+  PRIMARY KEY (patient_id)
+);
+
+`;
