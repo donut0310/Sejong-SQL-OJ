@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import Title from '../../components/title/Title'
 import TitleInput from '../../components/pages/problemAddPage/TitleInput'
@@ -11,12 +11,9 @@ import OptionButton from '../../components/pages/problemAddPage/OptionButton'
 
 const Admin = () => {
   const history = useHistory()
-  // const { classId, weekId } = useParams()
+  const { classId, weekId } = useParams()
 
   // TODO
-  // weekId 파람으로 가져와
-  const weekId = 1
-  const classId = 1
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
