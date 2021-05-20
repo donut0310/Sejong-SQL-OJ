@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 import Title from '../../components/title/Title'
 import AdminTable from '../../components/pages/statusPage/AdminTable'
 
@@ -29,7 +30,7 @@ const Admin = () => {
   }, [])
 
   return (
-    <>
+    <Container>
       <Title problemInfo={problemInfo} />
       <div id="search-form" style={{ marginBottom: '20px' }}>
         <span>
@@ -44,8 +45,12 @@ const Admin = () => {
         <button id="submit-btn">조회</button>
       </div>
       <AdminTable problemList={problemList} />
-    </>
+    </Container>
   )
 }
 
 export default Admin
+const Container = styled.div`
+  text-align: center;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

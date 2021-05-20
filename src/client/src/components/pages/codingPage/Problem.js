@@ -24,7 +24,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
 
   const Contents = paragraph.map((p, i) => {
     return i === 0 ? (
-      <>
+      <div key={i}>
         <Text>
           {p.split('\n').map((line, j) => {
             return (
@@ -35,9 +35,9 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
             )
           })}
         </Text>
-      </>
+      </div>
     ) : (
-      <>
+      <div key={i}>
         <Table>
           <ul id="table-table-list" style={{ margin: '0' }}>
             <ul id="table-title-tab" style={{ marginTop: '5px' }}>
@@ -48,7 +48,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
               ))}
             </ul>
             {table_info[i - 1].map((row, j) => (
-              <ul id="table-content-list" key={j}>
+              <ul id="table-content-list-coding" key={j}>
                 {attributes[i - 1].map((attribute, k) => (
                   <li id="table-content" key={k}>
                     {row[attribute]}
@@ -68,7 +68,7 @@ const Problem = ({ paragraph, paragraphCnt, table_info }) => {
             )
           })}
         </Text>
-      </>
+      </div>
     )
   })
 
@@ -89,13 +89,12 @@ const ProblemWrapper = styled.div`
 `
 
 const Text = styled.div`
-  line-height: '1.5em';
-  margin-bottom: 20px;
+  line-height: 1.5em;
+  margin-bottom: 10px;
   color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const Table = styled.div`
   display: flex;
-  /* width: 100%; */
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `

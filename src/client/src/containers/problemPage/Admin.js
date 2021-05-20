@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 import axios from 'axios'
 import AdminTable from '../../components/pages/problemPage/AdminTable'
 import Title from '../../components/title/Title'
@@ -39,17 +40,22 @@ const Admin = () => {
       // const currentInfo = titleData.result[0]
       // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
     })()
-  }, [])
+  }, [classId, weekId])
 
   return (
-    <>
+    <Container>
       <Title problemInfo={problemInfo} />
       <AdminTable problemList={problemList} />
       <button id="submit-btn" style={{ width: '80px', marginRight: '10px' }} onClick={handleAddProblem}>
         문제 추가
       </button>
-    </>
+    </Container>
   )
 }
 
 export default Admin
+
+const Container = styled.div`
+  text-align: end;
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

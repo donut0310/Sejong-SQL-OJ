@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
+import styled from 'styled-components'
 import Title from '../../components/title/Title'
 import TitleInput from '../../components/pages/problemAddPage/TitleInput'
 import DescriptionInput from '../../components/pages/problemAddPage/DescriptionInput'
@@ -10,12 +11,9 @@ import OptionButton from '../../components/pages/problemAddPage/OptionButton'
 
 const Admin = () => {
   const history = useHistory()
-  // const { classId, weekId } = useParams()
+  const { classId, weekId } = useParams()
 
   // TODO
-  // weekId 파람으로 가져와
-  const weekId = 1
-  const classId = 1
 
   const [problemInfo, setProblemInfo] = useState({
     className: '',
@@ -45,8 +43,6 @@ const Admin = () => {
 
   // 제출 버튼 핸들러
   const handleAddProblem = async () => {
-    console.log('Submit add problem data')
-
     let cnt = 0
     for (const [index, file] of formData.entries()) {
       cnt++
@@ -65,17 +61,17 @@ const Admin = () => {
 
     formData.append('body', temp)
 
-    for (const [index, file] of formData.entries()) {
-      console.log('formData', index, file)
-    }
+    // for (const [index, file] of formData.entries()) {
+    //   console.log('formData', index, file)
+    // }
 
-    // const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // })
+    const { data } = await axios.post(`/api/v1/user/${classId}/${weekId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
 
-    // console.log('Submit add problem data', data)
+    console.log('Add problem data', data)
   }
 
   const handleCancel = () => {
@@ -85,15 +81,19 @@ const Admin = () => {
   }
 
   return (
-    <div>
+    <Container>
       <Title problemInfo={problemInfo} />
       <TitleInput title={title} setTitle={setTitle} />
       <DescriptionInput description={description} setDescription={setDescription} tableInfo={tableInfo} setTableInfo={setTableInfo} />
       <TimeInput setStartTime={setStartTime} setEndTime={setEndTime} />
       <TestcaseInput formData={formData} />
       <OptionButton isPublic={isPublic} setIsPublic={setIsPublic} handleCancel={handleCancel} handleSubmit={handleAddProblem} />
-    </div>
+    </Container>
   )
 }
 
 export default Admin
+
+const Container = styled.div`
+  color: ${(props) => props.theme.GENERAL_FONT};
+`

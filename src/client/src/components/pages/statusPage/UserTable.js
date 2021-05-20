@@ -11,15 +11,21 @@ const UserTable = ({ statusList }) => {
   const { classId, weekId } = useParams()
 
   const handleCodeCheck = (submitId) => {
+    // TODO 자기 코드 or 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
-    // TODO 자기 코드만 볼 수 있어야함.
   }
 
   const IconResult = ({ result }) => {
-    if (result === 'accept') return <img src={acceptIcon} alt="accept" />
-    else if (result === 'wa') return <img src={wrongAnswerIcon} alt="accept" />
-    else if (result === 'error') return <img src={errorIcon} alt="accept" />
-    else if (result === 'loading') return <img src={loadingIcon} alt="accept" />
+    if (result === 'Accept') return <img src={acceptIcon} alt="accept" />
+    else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" />
+    // else if (result === 'Wrong Answer') return <img src={wrongAnswerIcon} alt="wrongAnswer" />
+    else if (result === 'Error') return <img src={errorIcon} alt="error" />
+    // else if (result === 'error') return <img src={errorIcon} alt="error" />
+    else return <img src={loadingIcon} alt="loading" />
+  }
+  const parseDateTime = (data) => {
+    const dateTime = new Date(data)
+    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
   }
 
   return (
@@ -57,7 +63,7 @@ const UserTable = ({ statusList }) => {
               <IconResult result={status.result} />
             </li>
             <li id="content" style={{ width: '20%' }}>
-              {status.score === '100' ? (
+              {status.score === 100 ? (
                 <>
                   <span style={{ color: 'green' }}>{status.score}</span> / 100
                 </>
@@ -71,14 +77,14 @@ const UserTable = ({ statusList }) => {
               <button
                 id="problem"
                 onClick={() => {
-                  handleCodeCheck(status.submitId)
+                  handleCodeCheck(status.submit_id)
                 }}
               >
                 Code
               </button>
             </li>
             <li id="content" style={{ width: '30%' }}>
-              {status.submit_time}
+              {parseDateTime(status.submit_time)}
             </li>
           </ul>
         ))}

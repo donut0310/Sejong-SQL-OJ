@@ -1,22 +1,27 @@
 import React from 'react'
-import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
 import User from './User'
 import Admin from './Admin'
 
-const ProblemPage = () => {
+const ProblemPage = ({ user }) => {
+  const { classId } = useParams()
+
+  // TODO
+  // return <>{user.role === 1 || user.class_id.includes(classId) ? <Admin /> : <User />}</>
   return (
-    <Container>
-      <p>user</p>
+    <>
       <User />
-      <p>admin</p>
-      <Admin />
-    </Container>
+      {/* <Admin /> */}
+    </>
   )
 }
 
-export default ProblemPage
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  }
+}
 
-const Container = styled.div`
-  text-align: end;
-  color: ${(props) => props.theme.GENERAL_FONT};
-`
+export default connect(mapStateToProps)(ProblemPage)

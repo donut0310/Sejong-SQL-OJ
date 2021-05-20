@@ -16,30 +16,21 @@ const Public = () => {
     endTime: '',
   })
 
-  const [code, setCode] = useState('')
-
-  //   TODO
   const [pId, setPId] = useState(0)
-
-  const dummyCode = `
-  select * from hi;`
+  const [code, setCode] = useState('')
 
   useEffect(() => {
     ;(async () => {
-      // TODO
-      // const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
-      // console.log("submitted data", data);
-      // setPId(data.pId)
-      // setCode(data.user_query)
+      const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
+      console.log('submitted data', data.result[0])
+      await setPId(data.result[0].p_id)
+      setCode(data.result[0].user_query)
 
-      setCode(dummyCode)
+      const titleData = await axios.get(`/api/v1/problem/${data.result[0].p_id}`)
+      const problem = titleData.data.result[0]
+      console.log('titledata', problem)
 
-      // TODO
-      //   const { titleData } = await axios.get(`/api/v1/week/${weekId}`)
-      //   console.log('Title data', titleData)
-
-      // const currentInfo = titleData.result[0]
-      // setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.data.week_name })
+      setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
     })()
   }, [])
 

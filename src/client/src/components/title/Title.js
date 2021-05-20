@@ -15,7 +15,7 @@ const Title = ({ problemInfo }) => {
         {problemInfo.endTime && <EndTime>EndTime: {problemInfo.endTime}</EndTime>}
       </TimeWrapper>
       <CurrentTime>
-        <Clock format={'YYYY년 MM월 DD 일 HH:mm:ss'} ticking={true} />
+        <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
       </CurrentTime>
     </TitleWrapper>
   )

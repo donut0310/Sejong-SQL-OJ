@@ -2,8 +2,8 @@ import React from 'react'
 
 import User from './User'
 
-const CodingPage = () => {
+const CodingEditPage = () => {
   return <User />
 }
 
-export default CodingPage
+export default CodingEditPage
