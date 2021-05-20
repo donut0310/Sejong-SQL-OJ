@@ -544,8 +544,5 @@ export class UsersController {
         }
       }
     }
-    data.result = null;
-    data.message = "fail";
-    res.status(400).send(data);
   }
 }

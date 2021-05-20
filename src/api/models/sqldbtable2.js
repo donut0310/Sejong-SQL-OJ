@@ -1281,6 +1281,8 @@ INSERT INTO testcase_problem(p_id,tc_answer,week_title,tc_id) values(6,'[
 ]
 ',"(김길동) 1주차 기초 select문",1);
 
+
+
 `
 
 
