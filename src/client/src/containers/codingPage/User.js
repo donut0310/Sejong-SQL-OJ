@@ -158,4 +158,5 @@ const ProblemWrapper = styled.div`
   background: ${(props) => props.theme.INPUT_BACKGROUND};
   border-radius: 5px;
   padding: 15px;
+  margin-bottom: 20px;
 `
