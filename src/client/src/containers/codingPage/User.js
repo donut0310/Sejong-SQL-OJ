@@ -41,15 +41,19 @@ const User = ({ user }) => {
 
   const handleExecCode = async () => {
     if (input) {
-      console.log('handleExecCode', input)
+      console.log('Exec Code', input)
       setIsExecuted(true)
       setExecIsLoading(true)
       const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-      console.log('Exec data', data)
+      console.log('Exec result', data)
 
       if (data.message === 'success') {
         setExecIsError(false)
-        setExecResult(data.result)
+        if ('affectedRows' in data.result[0]) {
+          setExecResult(data.result[data.result.length - 1])
+        } else {
+          setExecResult(data.result)
+        }
       } else {
         setExecIsError(true)
         setExecResult(data.error)
