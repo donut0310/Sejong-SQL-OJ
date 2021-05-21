@@ -62,11 +62,11 @@ const Wrapper = styled.div`
 `
 
 const Section = styled.div`
-  /* border: 1px solid black; */
   margin-bottom: 30px;
 `
 
 const SubTitle = styled.div`
+  color: ${(props) => props.theme.GENERAL_FONT};
   white-space: pre-wrap;
   font-size: 1.2rem;
   font-weight: bold;
@@ -75,6 +75,7 @@ const SubTitle = styled.div`
 `
 
 const Text = styled.div`
+  color: ${(props) => props.theme.GENERAL_FONT};
   white-space: pre-wrap;
   font-size: 1rem;
   padding: 5px;

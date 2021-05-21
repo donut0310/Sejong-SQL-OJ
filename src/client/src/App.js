@@ -39,15 +39,7 @@ const App = ({ theme }) => {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route path="/" component={Auth(MainComponent, true)}>
-            {/* <MainWrapper>
-              <Modal />
-              <Header />
-              <Main />
-              <Footer />
-            </MainWrapper>
-            <ScrollUp /> */}
-          </Route>
+          <Route path="/" component={Auth(MainComponent, true)}></Route>
         </Switch>
       </AutoScrollUp>
     </ThemeProvider>

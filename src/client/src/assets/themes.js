@@ -37,7 +37,7 @@ export const darkTheme = {
   HEADER_BACKGROUND: '#333332',
   FOOTER_BACKGROUND: '#333332',
 
-  SUB_BORDER: '#757575',
+  SUB_BORDER: '#1c1c1c',
   MAIN_BORDER: '#b3b3b1',
 
   BOARD_LIST_HOVER: '#4d4d4d',
