@@ -102,9 +102,7 @@ const UserTable = ({ statusList }) => {
                   Code
                 </button>
               ) : (
-                <button id="problem" style={{ textDecoration: 'line-through', color: 'gray', cursor: 'default' }}>
-                  Code
-                </button>
+                <button id="problem-disable">Code</button>
               )}
             </li>
             <li id="content" style={{ width: '25%' }}>

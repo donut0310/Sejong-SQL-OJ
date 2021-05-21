@@ -166,6 +166,12 @@ const GlobalStyles = createGlobalStyle`
         font-weight: 600;
       }
     }
+    button#problem-disable {
+      background: none;
+      color: gray;
+      border: none;
+      text-decoration: line-through;
+    }
   }
 
 /* // ! table  */
