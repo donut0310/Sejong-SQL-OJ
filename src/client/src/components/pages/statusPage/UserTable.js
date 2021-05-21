@@ -111,15 +111,13 @@ const UserTable = ({ statusList }) => {
               {parseDateTime(status.submit_time)}
             </li>
             <li id="qna" style={{ width: '10%' }}>
-              {userId === status.user_id ? (
+              {userId === status.user_id && (
                 <>
                   <QnaIcon onClick={handleQNAClick} />
                   <Popper open={openQNA} anchorEl={anchorEl}>
                     <StyledPopper>성적 이의제기</StyledPopper>
                   </Popper>
                 </>
-              ) : (
-                <QnaIconDisable />
               )}
             </li>
           </ul>
@@ -137,16 +135,14 @@ const Container = styled.div`
   justify-content: center;
 `
 const QnaIcon = styled(HelpOutlineIcon)`
-  font-size: 1em;
+  && {
+    font-size: 1.6rem;
+  }
 
   &:hover {
     cursor: pointer;
     color: ${(props) => props.theme.POINT};
   }
-`
-const QnaIconDisable = styled(HelpOutlineIcon)`
-  font-size: 1em;
-  color: gray;
 `
 
 const StyledPopper = styled.div`
