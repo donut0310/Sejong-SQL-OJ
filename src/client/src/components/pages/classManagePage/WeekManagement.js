@@ -22,7 +22,6 @@ const WeekManagement = () => {
     console.log(newWeekName)
   }
 
-  // TODO API 변수명 뭐로 보낼지 확인
   const handleAddWeekBtn = async () => {
     console.log('handleAddWeekBtn 실행')
 
@@ -44,7 +43,6 @@ const WeekManagement = () => {
     history.push(`/manage/${classId}/${weekId}/addproblem`)
   }
 
-  // TODO 테스트 필요
   const handleDeleteProblemBtn = async (pId) => {
     console.log('handleDeleteProblemBtn 실행', pId)
 
@@ -67,7 +65,7 @@ const WeekManagement = () => {
     }
 
     fetchWeekList()
-  }, [, isChanged])
+  }, [classId, isChanged])
 
   return (
     <Wrapper>

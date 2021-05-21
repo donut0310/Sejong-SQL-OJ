@@ -19,11 +19,9 @@ const User = () => {
 
   const [problemList, setProblemList] = useState([])
 
-  // TODO
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/problem/${classId}/${weekId}`)
-      // res => result(obj), message("success")
       console.log('Get problem list =>', data)
       setProblemList(data.result)
 
