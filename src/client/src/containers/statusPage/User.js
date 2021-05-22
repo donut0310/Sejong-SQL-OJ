@@ -56,7 +56,7 @@ const User = ({ match }) => {
       console.log('Get titleData', data)
       const problem = data.result[0]
 
-      setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
+      setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title, startTime: problem.start_time, endTime: problem.end_time })
     }
 
     fetchTitleData()
