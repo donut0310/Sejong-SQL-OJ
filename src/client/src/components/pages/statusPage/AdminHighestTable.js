@@ -1,34 +1,14 @@
-import React, { useState } from 'react'
-import { useHistory, useParams, useLocation } from 'react-router-dom'
-import queryString from 'query-string'
+import React from 'react'
 import styled from 'styled-components'
+import { useParams, useHistory } from 'react-router-dom'
 import acceptIcon from '../../../assets/resultIcons/accept_icon.png'
 import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
-import { Popper } from '@material-ui/core'
 
-const AdminTable = ({ statusList }) => {
-  const history = useHistory()
+const AdminHighestTable = () => {
   const { classId, weekId } = useParams()
-
-  const location = useLocation()
-  const query = queryString.parse(location.search)
-  const userId = query.userId
-
-  const handleCodeCheck = (submitId) => {
-    // TODO 자신이 조교나 교수일 경우
-    history.push(`/${classId}/${weekId}/code/${submitId}`)
-  }
-
-  const [anchorEl, setAnchorEl] = useState(null)
-
-  const handleQNAClick = (e) => {
-    setAnchorEl(anchorEl ? null : e.currentTarget)
-  }
-
-  const openQNA = Boolean(anchorEl)
 
   const IconResult = ({ result }) => {
     if (result === 'Accept') return <img src={acceptIcon} alt="accept" />
@@ -38,25 +18,33 @@ const AdminTable = ({ statusList }) => {
     // else if (result === 'error') return <img src={errorIcon} alt="error" />
     else return <img src={loadingIcon} alt="loading" />
   }
-  const parseDateTime = (data) => {
-    const dateTime = new Date(data)
-    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
-  }
 
+  const statusList = [
+    { id: '11', name: '김동현', result: 'Accept', score: 100, submit_time: '2020-02-02 00:00:00', isQna: true },
+    { id: '12', name: '박동현', result: 'WA', score: 60, submit_time: '2020-02-02 00:00:00', isQna: false },
+    { id: '13', name: '최동현', result: 'Accept', score: 100, submit_time: '2020-02-02 00:00:00', isQna: false },
+    { id: '14', name: '이동현', result: 'Error', score: 70, submit_time: '2020-02-02 00:00:00', isQna: true },
+  ]
+  const history = useHistory()
+
+  const handleCodeCheck = (submitId) => {
+    // TODO 자신이 조교나 교수일 경우
+    history.push(`/${classId}/${weekId}/code/${submitId}`)
+  }
   return (
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '8.5%' }}>
-            제출번호
-          </li>
-          <li id="content" style={{ width: '16.5%' }}>
+          <li id="content" style={{ width: '15%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
+            이름
+          </li>
+          <li id="content" style={{ width: '15%' }}>
             결과
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '15%' }}>
             점수
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -65,22 +53,22 @@ const AdminTable = ({ statusList }) => {
           <li id="content" style={{ width: '25%' }}>
             제출시각
           </li>
-          <li id="qna" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '10%' }}>
             이의제기
           </li>
         </ul>
         {statusList.map((status, i) => (
           <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '8.5%' }}>
-              {status.submit_id}
-            </li>
-            <li id="content" style={{ width: '16.5%' }}>
-              {status.user_id}
+            <li id="content" style={{ width: '15%' }}>
+              {status.id}
             </li>
             <li id="content" style={{ width: '10%' }}>
+              {status.name}
+            </li>
+            <li id="content" style={{ width: '15%' }}>
               <IconResult result={status.result} />
             </li>
-            <li id="content" style={{ width: '20%' }}>
+            <li id="content" style={{ width: '15%' }}>
               {status.score === 100 ? (
                 <>
                   <span style={{ color: 'green' }}>{status.score}</span> / 100
@@ -102,17 +90,10 @@ const AdminTable = ({ statusList }) => {
               </button>
             </li>
             <li id="content" style={{ width: '25%' }}>
-              {parseDateTime(status.submit_time)}
+              {status.submit_time}
             </li>
-            <li id="qna" style={{ width: '10%' }}>
-              {userId === status.user_id && (
-                <>
-                  <QnaIcon onClick={handleQNAClick} />
-                  <Popper open={openQNA} anchorEl={anchorEl}>
-                    <StyledPopper>성적 이의제기</StyledPopper>
-                  </Popper>
-                </>
-              )}
+            <li id="content" style={{ width: '10%' }}>
+              {status.isQna ? <QnaIcon /> : <></>}
             </li>
           </ul>
         ))}
@@ -121,13 +102,15 @@ const AdminTable = ({ statusList }) => {
   )
 }
 
-export default AdminTable
+export default AdminHighestTable
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 20px;
 `
+
 const QnaIcon = styled(HelpOutlineIcon)`
   && {
     font-size: 1.6rem;
@@ -137,10 +120,4 @@ const QnaIcon = styled(HelpOutlineIcon)`
     cursor: pointer;
     color: ${(props) => props.theme.POINT};
   }
-`
-
-const StyledPopper = styled.div`
-  background: white;
-  padding: 10px;
-  margin: 5px;
 `
