@@ -25,9 +25,9 @@ const Wrapper = styled.div`
 
   color: ${(props) => props.theme.GENERAL_FONT};
 
-  border: 1.5px solid black;
-  border-radius: 10px;
-  background: ${(props) => props.theme.HEADER_BACKGROUND};
+  border: 2px solid ${(props) => props.theme.SUB_BORDER};
+  border-radius: 5px;
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
 `
 
 // const TitleText1 = styled.div`

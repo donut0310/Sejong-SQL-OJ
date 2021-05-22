@@ -8,7 +8,7 @@ const ProfessorManagement = ({ professor, setProfessor }) => {
     console.log('new professor', professor)
   }
 
-  return <StyledTextField disabled={true} id="outlined-basic" label="교수 입력" multiline rows={3} variant="outlined" placeholder="담당 교수를 입력하세요." onChange={handleChangeNewProfessor} />
+  return <StyledTextField id="outlined-basic" label="교수 입력" multiline rows={3} variant="outlined" placeholder="담당 교수를 입력하세요." onChange={handleChangeNewProfessor} />
 }
 
 export default ProfessorManagement
@@ -16,8 +16,9 @@ export default ProfessorManagement
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.HEADER_BACKGROUND};
+    background: ${(props) => props.theme.INPUT_BACKGROUND};
     margin-right: 5px;
+    margin-bottom: 10px;
     border-radius: 5px;
   }
 

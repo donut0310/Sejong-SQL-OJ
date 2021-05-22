@@ -16,8 +16,9 @@ export default TitleManagement
 const StyledTextField = styled(TextField)`
   && {
     width: 100%;
-    background: ${(props) => props.theme.HEADER_BACKGROUND};
+    background: ${(props) => props.theme.INPUT_BACKGROUND};
     margin-right: 5px;
+    margin-bottom: 10px;
     border-radius: 5px;
   }
 
