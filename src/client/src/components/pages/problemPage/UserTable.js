@@ -24,35 +24,35 @@ const UserTable = ({ problemList, user }) => {
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '7.5%' }}>
             번호
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '28%' }}>
             제목
           </li>
-          <li id="content" style={{ width: '5%' }}>
+          <li id="content" style={{ width: '7.5%' }}>
             제출
           </li>
           <li id="content" style={{ width: '10%' }}>
             점수
           </li>
-          <li id="content" style={{ width: '22.5%' }}>
+          <li id="content" style={{ width: '20%' }}>
             Start
           </li>
-          <li id="content" style={{ width: '22.5%' }}>
+          <li id="content" style={{ width: '20%' }}>
             End
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '7%' }}>
             Status
           </li>
         </ul>
 
         {problemList.map((problem, i) => (
           <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '10%' }}>
+            <li id="content" style={{ width: '7.5%' }}>
               {problem.p_id}
             </li>
-            <li id="content" style={{ width: '20%' }}>
+            <li id="content" style={{ width: '28%' }}>
               <button
                 id="problem"
                 onClick={() => {
@@ -62,8 +62,7 @@ const UserTable = ({ problemList, user }) => {
                 {problem.title}
               </button>
             </li>
-            <li id="content" style={{ width: '5%' }}>
-              {/* 사용자 제출 횟수 가져와야함 */}
+            <li id="content" style={{ width: '7.5%' }}>
               {problem.submit_cnt}
             </li>
             <li id="content" style={{ width: '10%' }}>
@@ -77,13 +76,13 @@ const UserTable = ({ problemList, user }) => {
                 </>
               )}
             </li>
-            <li id="content" style={{ width: '22.5%' }}>
+            <li id="content" style={{ width: '20%' }}>
               {parseDateTime(problem.start_time)}
             </li>
-            <li id="content" style={{ width: '22.5%' }}>
+            <li id="content" style={{ width: '20%' }}>
               {parseDateTime(problem.end_time)}
             </li>
-            <li id="content" style={{ width: '10%' }}>
+            <li id="content" style={{ width: '7%' }}>
               <StyledButton
                 onClick={() => {
                   handleStatus(problem.p_id)
