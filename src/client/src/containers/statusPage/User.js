@@ -9,8 +9,6 @@ import PaginationTab from '../../components/pagination/PaginationTab'
 import queryString from 'query-string'
 
 const User = ({ match }) => {
-  const history = useHistory()
-  const { classId, weekId } = useParams()
   const location = useLocation()
   const query = queryString.parse(location.search)
   const pId = query.pId

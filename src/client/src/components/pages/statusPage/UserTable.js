@@ -47,10 +47,10 @@ const UserTable = ({ statusList }) => {
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '8.5%' }}>
             제출번호
           </li>
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '16.5%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -71,10 +71,10 @@ const UserTable = ({ statusList }) => {
         </ul>
         {statusList.map((status, i) => (
           <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '10%' }}>
+            <li id="content" style={{ width: '8.5%' }}>
               {status.submit_id}
             </li>
-            <li id="content" style={{ width: '15%' }}>
+            <li id="content" style={{ width: '16.5%' }}>
               {status.user_id}
             </li>
             <li id="content" style={{ width: '10%' }}>

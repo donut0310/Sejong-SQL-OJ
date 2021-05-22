@@ -1,70 +1,122 @@
-import React from 'react'
-import { useHistory } from 'react-router'
+import React, { useState } from 'react'
+import { useHistory, useParams, useLocation } from 'react-router-dom'
+import queryString from 'query-string'
 import styled from 'styled-components'
+import acceptIcon from '../../../assets/resultIcons/accept_icon.png'
+import errorIcon from '../../../assets/resultIcons/error_icon.png'
+import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
+import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import { Popper } from '@material-ui/core'
 
-const AdminTable = () => {
-  const classId = 1
-  const weekId = 1
-  const submitId = 1
-
+const AdminTable = ({ statusList }) => {
   const history = useHistory()
-  const scores = [
-    { id: '17010000', name: '홍ㅇㅇ', score: '100', query_cost: '3.42' },
-    { id: '18010000', name: '김ㅇㅇ', score: '30', query_cost: '-' },
-    { id: '19010000', name: '이ㅇㅇ', score: '100', query_cost: '4.08' },
-  ]
-  // TODO test case 별로 점수 나타내기
+  const { classId, weekId } = useParams()
 
-  const handleCodeCheck = () => {
+  const location = useLocation()
+  const query = queryString.parse(location.search)
+  const userId = query.userId
+
+  const handleCodeCheck = (submitId) => {
+    // TODO 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
+  }
+
+  const [anchorEl, setAnchorEl] = useState(null)
+
+  const handleQNAClick = (e) => {
+    setAnchorEl(anchorEl ? null : e.currentTarget)
+  }
+
+  const openQNA = Boolean(anchorEl)
+
+  const IconResult = ({ result }) => {
+    if (result === 'Accept') return <img src={acceptIcon} alt="accept" />
+    else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" />
+    // else if (result === 'Wrong Answer') return <img src={wrongAnswerIcon} alt="wrongAnswer" />
+    else if (result === 'Error') return <img src={errorIcon} alt="error" />
+    // else if (result === 'error') return <img src={errorIcon} alt="error" />
+    else return <img src={loadingIcon} alt="loading" />
+  }
+  const parseDateTime = (data) => {
+    const dateTime = new Date(data)
+    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
   }
 
   return (
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '8.5%' }}>
+            제출번호
+          </li>
+          <li id="content" style={{ width: '16.5%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
-            이름
+            결과
           </li>
-          <li id="content" style={{ width: '15%' }}>
-            총점
+          <li id="content" style={{ width: '20%' }}>
+            점수
           </li>
           <li id="content" style={{ width: '10%' }}>
             코드
           </li>
-          <li id="content" style={{ width: '50%' }}>
-            Query Cost
+          <li id="content" style={{ width: '25%' }}>
+            제출시각
+          </li>
+          <li id="qna" style={{ width: '10%' }}>
+            이의제기
           </li>
         </ul>
-        {scores.map((score, i) => (
+        {statusList.map((status, i) => (
           <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '15%' }}>
-              {score.id}
+            <li id="content" style={{ width: '8.5%' }}>
+              {status.submit_id}
+            </li>
+            <li id="content" style={{ width: '16.5%' }}>
+              {status.user_id}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              {score.name}
+              <IconResult result={status.result} />
             </li>
-            <li id="content" style={{ width: '15%' }}>
-              {score.score === 100 ? (
+            <li id="content" style={{ width: '20%' }}>
+              {status.score === 100 ? (
                 <>
-                  <span style={{ color: 'green' }}>{score.score}</span> / 100
+                  <span style={{ color: 'green' }}>{status.score}</span> / 100
                 </>
               ) : (
                 <>
-                  <span style={{ color: 'red' }}>{score.score}</span> / 100
+                  <span style={{ color: 'red' }}>{status.score}</span> / 100
                 </>
               )}
             </li>
             <li id="content" style={{ width: '10%' }}>
-              <button id="problem" onClick={handleCodeCheck}>
-                Code
-              </button>
+              {status.user_id === userId ? (
+                <button
+                  id="problem"
+                  onClick={() => {
+                    handleCodeCheck(status.submit_id)
+                  }}
+                >
+                  Code
+                </button>
+              ) : (
+                <button id="problem-disable">Code</button>
+              )}
             </li>
-            <li id="content" style={{ width: '50%' }}>
-              {score.query_cost}
+            <li id="content" style={{ width: '25%' }}>
+              {parseDateTime(status.submit_time)}
+            </li>
+            <li id="qna" style={{ width: '10%' }}>
+              {userId === status.user_id && (
+                <>
+                  <QnaIcon onClick={handleQNAClick} />
+                  <Popper open={openQNA} anchorEl={anchorEl}>
+                    <StyledPopper>성적 이의제기</StyledPopper>
+                  </Popper>
+                </>
+              )}
             </li>
           </ul>
         ))}
@@ -79,4 +131,20 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+const QnaIcon = styled(HelpOutlineIcon)`
+  && {
+    font-size: 1.6rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.POINT};
+  }
+`
+
+const StyledPopper = styled.div`
+  background: white;
+  padding: 10px;
+  margin: 5px;
 `
