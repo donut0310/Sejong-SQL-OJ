@@ -36,12 +36,12 @@ const AdminLi = ({ status }) => {
   }
 
   const IconResult = ({ result }) => {
-    if (result === 'Accept') return <img src={acceptIcon} alt="accept" />
-    else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" />
+    if (result === 'Accept') return <img src={acceptIcon} alt="accept" style={{ width: '3rem' }} />
+    else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" style={{ width: '3rem' }} />
     // else if (result === 'Wrong Answer') return <img src={wrongAnswerIcon} alt="wrongAnswer" />
-    else if (result === 'Error') return <img src={errorIcon} alt="error" />
+    else if (result === 'Error') return <img src={errorIcon} alt="error" style={{ width: '3rem' }} />
     // else if (result === 'error') return <img src={errorIcon} alt="error" />
-    else return <img src={loadingIcon} alt="loading" />
+    else return <img src={loadingIcon} alt="loading" style={{ width: '3rem' }} />
   }
 
   const parseDateTime = (data) => {

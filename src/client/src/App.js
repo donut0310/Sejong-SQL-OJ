@@ -62,6 +62,12 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
     background: ${(props) => props.theme.BACKGROUND};
   };
+  @media all and (max-width: 550px) {
+    html { font-size: 70%; }
+  }
+  @media all and (max-width: 375px) {
+    html { font-size: 50%; }
+  }
 
   button#submit-btn {
     width: 60px;
@@ -71,6 +77,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 5px 0px 5px 5px;
     padding: 5px;
     color: white;
+    font-size: 1rem;
     background: ${(props) => props.theme.POINT};
     &:hover {
       cursor: pointer;
@@ -85,6 +92,7 @@ const GlobalStyles = createGlobalStyle`
   input.input-form {
     padding: 5px;
     margin: 5px;
+    font-size: 1rem;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
     background: ${(props) => props.theme.CONTENTS};
@@ -97,6 +105,7 @@ const GlobalStyles = createGlobalStyle`
   select#select-form {
     padding: 5px;
     margin: 5px;
+    font-size: 1rem;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
     background: ${(props) => props.theme.CONTENTS};
@@ -110,6 +119,7 @@ const GlobalStyles = createGlobalStyle`
   ul#table-list {
     width: 100%;
     display: flex;
+    font-size: 1rem;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     flex-direction: column;
     margin: 10px;
@@ -123,6 +133,7 @@ const GlobalStyles = createGlobalStyle`
   ul#title-tab {
     width: 100%;
     display: flex;
+    font-size: 1rem;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -138,6 +149,7 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
     padding: 10px;
@@ -153,6 +165,7 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
     padding: 10px;
@@ -166,10 +179,12 @@ const GlobalStyles = createGlobalStyle`
 
   li#content {
     text-align: center;
+    font-size: 1rem;
     button#problem {
       background: none;
       color: ${(props) => props.theme.GENERAL_FONT};
       border: none;
+      font-size: 0.8rem;
       &:hover {
         text-decoration: underline;
         cursor: pointer;
@@ -178,6 +193,7 @@ const GlobalStyles = createGlobalStyle`
     }
     button#problem-disable {
       background: none;
+      font-size: 0.8rem;
       color: gray;
       border: none;
       text-decoration: line-through;
