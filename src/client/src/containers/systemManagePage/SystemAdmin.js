@@ -20,11 +20,11 @@ const SystemAdmin = () => {
     if (className && professor) {
       ;(async () => {
         console.log('강좌 생성')
-        // const { data } = await axios.post(`/api/v1/course/enrollProf`, {
-        //   users: professor,
-        //   class_name: className,
-        // })
-        // console.log(data)
+        const { data } = await axios.post(`/api/v1/course/enrollProf`, {
+          users: professor,
+          class_name: className,
+        })
+        console.log(data)
       })()
     } else {
       alert('모두 입력해주세요.')
