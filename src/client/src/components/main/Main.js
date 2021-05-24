@@ -36,7 +36,7 @@ export default Main
 const MainWrapper = styled(Container)`
   flex: 1;
   /* border: 1px solid red; */
-
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
 

@@ -35,7 +35,7 @@ const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  justify-contents: center;
   padding: 30px;
   margin-bottom: 40px;
 
@@ -75,13 +75,13 @@ const TimeWrapper = styled.div`
 `
 
 const EndTime = styled.div`
-  font-size: 1.2em;
+  font-size: 1.2rem;
   padding: 10px;
   font-weight: 500;
 `
 
 const CurrentTime = styled.div`
-  font-size: 1.2em;
+  font-size: 1.2rem;
   font-weight: 500;
   justify-content: center;
   text-align: center;

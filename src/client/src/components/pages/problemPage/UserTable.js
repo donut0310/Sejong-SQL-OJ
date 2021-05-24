@@ -165,6 +165,7 @@ const StyledButton = styled.button`
   border: none;
   color: blue;
   background: none;
+  font-size: 0.8rem;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
