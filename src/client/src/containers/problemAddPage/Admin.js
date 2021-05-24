@@ -74,6 +74,7 @@ const Admin = () => {
 
     console.log('Add problem data', formData)
     console.log('Add problem res', data)
+    // history.goBack()
   }
 
   const handleCancel = () => {
