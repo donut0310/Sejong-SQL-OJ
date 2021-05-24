@@ -36,13 +36,13 @@ const UserTable = ({ problemList, user }) => {
           <li id="content" style={{ width: '10%' }}>
             점수
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '19%' }}>
             Start
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '19%' }}>
             End
           </li>
-          <li id="content" style={{ width: '7%' }}>
+          <li id="content" style={{ width: '10%' }}>
             Status
           </li>
         </ul>
@@ -78,13 +78,13 @@ const UserTable = ({ problemList, user }) => {
                     </>
                   )}
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '19%' }}>
                   {parseDateTime(problem.start_time)}
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '19%' }}>
                   {parseDateTime(problem.end_time)}
                 </li>
-                <li id="content" style={{ width: '7%' }}>
+                <li id="content" style={{ width: '10%' }}>
                   <StyledButton
                     onClick={() => {
                       handleStatus(problem.p_id)
