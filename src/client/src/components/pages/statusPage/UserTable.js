@@ -69,57 +69,112 @@ const UserTable = ({ statusList }) => {
             이의제기
           </li>
         </ul>
-        {statusList.map((status, i) => (
-          <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '8.5%' }}>
-              {status.submit_id}
-            </li>
-            <li id="content" style={{ width: '16.5%' }}>
-              {status.user_id}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <IconResult result={status.result} />
-            </li>
-            <li id="content" style={{ width: '20%' }}>
-              {status.score === 100 ? (
-                <>
-                  <span style={{ color: 'green' }}>{status.score}</span> / 100
-                </>
-              ) : (
-                <>
-                  <span style={{ color: 'red' }}>{status.score}</span> / 100
-                </>
-              )}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              {status.user_id === userId ? (
-                <button
-                  id="problem"
-                  onClick={() => {
-                    handleCodeCheck(status.submit_id)
-                  }}
-                >
-                  Code
-                </button>
-              ) : (
-                <button id="problem-disable">Code</button>
-              )}
-            </li>
-            <li id="content" style={{ width: '25%' }}>
-              {parseDateTime(status.submit_time)}
-            </li>
-            <li id="qna" style={{ width: '10%' }}>
-              {userId === status.user_id && (
-                <>
-                  <QnaIcon onClick={handleQNAClick} />
-                  <Popper open={openQNA} anchorEl={anchorEl}>
-                    <StyledPopper>성적 이의제기</StyledPopper>
-                  </Popper>
-                </>
-              )}
-            </li>
-          </ul>
-        ))}
+        {statusList.map((status, i) => {
+          if (i === statusList.length - 1) {
+            return (
+              <ul id="content-list-last" key={i}>
+                <li id="content" style={{ width: '8.5%' }}>
+                  {status.submit_id}
+                </li>
+                <li id="content" style={{ width: '16.5%' }}>
+                  {status.user_id}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <IconResult result={status.result} />
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {status.score === 100 ? (
+                    <>
+                      <span style={{ color: 'green' }}>{status.score}</span> / 100
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: 'red' }}>{status.score}</span> / 100
+                    </>
+                  )}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {status.user_id === userId ? (
+                    <button
+                      id="problem"
+                      onClick={() => {
+                        handleCodeCheck(status.submit_id)
+                      }}
+                    >
+                      Code
+                    </button>
+                  ) : (
+                    <button id="problem-disable">Code</button>
+                  )}
+                </li>
+                <li id="content" style={{ width: '25%' }}>
+                  {parseDateTime(status.submit_time)}
+                </li>
+                <li id="qna" style={{ width: '10%' }}>
+                  {userId === status.user_id && (
+                    <>
+                      <QnaIcon onClick={handleQNAClick} />
+                      <Popper open={openQNA} anchorEl={anchorEl}>
+                        <StyledPopper>성적 이의제기</StyledPopper>
+                      </Popper>
+                    </>
+                  )}
+                </li>
+              </ul>
+            )
+          } else
+            return (
+              <ul id="content-list" key={i}>
+                <li id="content" style={{ width: '8.5%' }}>
+                  {status.submit_id}
+                </li>
+                <li id="content" style={{ width: '16.5%' }}>
+                  {status.user_id}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <IconResult result={status.result} />
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {status.score === 100 ? (
+                    <>
+                      <span style={{ color: 'green' }}>{status.score}</span> / 100
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: 'red' }}>{status.score}</span> / 100
+                    </>
+                  )}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {status.user_id === userId ? (
+                    <button
+                      id="problem"
+                      onClick={() => {
+                        handleCodeCheck(status.submit_id)
+                      }}
+                    >
+                      Code
+                    </button>
+                  ) : (
+                    <button id="problem-disable">Code</button>
+                  )}
+                </li>
+                <li id="content" style={{ width: '25%' }}>
+                  {parseDateTime(status.submit_time)}
+                </li>
+                <li id="qna" style={{ width: '10%' }}>
+                  {userId === status.user_id && (
+                    <>
+                      <QnaIcon onClick={handleQNAClick} />
+                      <Popper open={openQNA} anchorEl={anchorEl}>
+                        <StyledPopper>성적 이의제기</StyledPopper>
+                      </Popper>
+                    </>
+                  )}
+                </li>
+              </ul>
+            )
+        })}
       </ul>
     </Container>
   )

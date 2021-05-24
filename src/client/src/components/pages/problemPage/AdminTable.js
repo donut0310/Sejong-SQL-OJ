@@ -51,32 +51,62 @@ const AdminTable = ({ user, problemList }) => {
             삭제
           </li>
         </ul>
-        {problemList.map((problem, i) => (
-          <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '10%' }}>
-              {problem.p_id}
-            </li>
-            <li id="content" style={{ width: '30%' }}>
-              <button id="problem" onClick={handleProblemName}>
-                {problem.title}
-              </button>
-            </li>
-            <li id="content" style={{ width: '20%' }}>
-              {parseDateTime(problem.start_time)}
-            </li>
-            <li id="content" style={{ width: '20%' }}>
-              {parseDateTime(problem.end_time)}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <StyledButton onClick={handleStatus}>Status</StyledButton>
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
-                삭제
-              </StyledButton>
-            </li>
-          </ul>
-        ))}
+        {problemList.map((problem, i) => {
+          if (i === problemList.length - 1) {
+            return (
+              <ul id="content-list-last" key={i}>
+                <li id="content" style={{ width: '10%' }}>
+                  {problem.p_id}
+                </li>
+                <li id="content" style={{ width: '30%' }}>
+                  <button id="problem" onClick={handleProblemName}>
+                    {problem.title}
+                  </button>
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {parseDateTime(problem.start_time)}
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {parseDateTime(problem.end_time)}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <StyledButton onClick={handleStatus}>Status</StyledButton>
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
+                    삭제
+                  </StyledButton>
+                </li>
+              </ul>
+            )
+          } else
+            return (
+              <ul id="content-list" key={i}>
+                <li id="content" style={{ width: '10%' }}>
+                  {problem.p_id}
+                </li>
+                <li id="content" style={{ width: '30%' }}>
+                  <button id="problem" onClick={handleProblemName}>
+                    {problem.title}
+                  </button>
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {parseDateTime(problem.start_time)}
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {parseDateTime(problem.end_time)}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <StyledButton onClick={handleStatus}>Status</StyledButton>
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
+                    삭제
+                  </StyledButton>
+                </li>
+              </ul>
+            )
+        })}
       </ul>
     </Container>
   )
