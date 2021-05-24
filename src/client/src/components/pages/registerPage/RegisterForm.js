@@ -26,8 +26,11 @@ const RegisterForm = () => {
 
   return (
     <PageWrapper>
-      <Title>SEJONG</Title>
-      <Title>ONLINE JUDGE</Title>
+      <Title>
+        SEJONG
+        <br />
+        ONLINE JUDGE
+      </Title>
       <SubTitle>회원가입</SubTitle>
       <StyledForm maxWidth="lg">
         <RegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>

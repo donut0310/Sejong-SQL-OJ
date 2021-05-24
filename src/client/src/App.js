@@ -110,9 +110,10 @@ const GlobalStyles = createGlobalStyle`
   ul#table-list {
     width: 100%;
     display: flex;
+    border: 1px solid ${(props) => props.theme.SUB_BORDER};
     flex-direction: column;
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: ${(props) => props.theme.GENERAL_FONT};
     &:hover {
       cursor: default;
@@ -126,6 +127,7 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     padding: 10px;
+    border-radius: 5px 5px 0 0 ;
     box-sizing: border-box;
     background: ${(props) => props.theme.BOARD_TITLE};
     font-weight: 600;
@@ -139,8 +141,24 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     padding: 10px;
+    border-bottom: 0.3px solid ${(props) => props.theme.BOARD_LIST_HOVER};
     background: ${(props) => props.theme.CONTENTS};
     font-weight: 400;
+    &:hover {
+      background: ${(props) => props.theme.BOARD_LIST_HOVER};
+    }
+  }
+
+  ul#content-list-last {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: ${(props) => props.theme.CONTENTS};
+    font-weight: 400;
+    border-radius: 0 0 5px 5px;
     &:hover {
       background: ${(props) => props.theme.BOARD_LIST_HOVER};
     }

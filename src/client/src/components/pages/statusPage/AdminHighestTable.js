@@ -57,46 +57,90 @@ const AdminHighestTable = () => {
             이의제기
           </li>
         </ul>
-        {statusList.map((status, i) => (
-          <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '15%' }}>
-              {status.id}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              {status.name}
-            </li>
-            <li id="content" style={{ width: '15%' }}>
-              <IconResult result={status.result} />
-            </li>
-            <li id="content" style={{ width: '15%' }}>
-              {status.score === 100 ? (
-                <>
-                  <span style={{ color: 'green' }}>{status.score}</span> / 100
-                </>
-              ) : (
-                <>
-                  <span style={{ color: 'red' }}>{status.score}</span> / 100
-                </>
-              )}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <button
-                id="problem"
-                onClick={() => {
-                  handleCodeCheck(status.submit_id)
-                }}
-              >
-                Code
-              </button>
-            </li>
-            <li id="content" style={{ width: '25%' }}>
-              {status.submit_time}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              {status.isQna ? <QnaIcon /> : <></>}
-            </li>
-          </ul>
-        ))}
+        {statusList.map((status, i) => {
+          if (i === statusList.length - 1) {
+            return (
+              <ul id="content-list-last" key={i}>
+                <li id="content" style={{ width: '15%' }}>
+                  {status.id}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {status.name}
+                </li>
+                <li id="content" style={{ width: '15%' }}>
+                  <IconResult result={status.result} />
+                </li>
+                <li id="content" style={{ width: '15%' }}>
+                  {status.score === 100 ? (
+                    <>
+                      <span style={{ color: 'green' }}>{status.score}</span> / 100
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: 'red' }}>{status.score}</span> / 100
+                    </>
+                  )}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <button
+                    id="problem"
+                    onClick={() => {
+                      handleCodeCheck(status.submit_id)
+                    }}
+                  >
+                    Code
+                  </button>
+                </li>
+                <li id="content" style={{ width: '25%' }}>
+                  {status.submit_time}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {status.isQna ? <QnaIcon /> : <></>}
+                </li>
+              </ul>
+            )
+          } else
+            return (
+              <ul id="content-list" key={i}>
+                <li id="content" style={{ width: '15%' }}>
+                  {status.id}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {status.name}
+                </li>
+                <li id="content" style={{ width: '15%' }}>
+                  <IconResult result={status.result} />
+                </li>
+                <li id="content" style={{ width: '15%' }}>
+                  {status.score === 100 ? (
+                    <>
+                      <span style={{ color: 'green' }}>{status.score}</span> / 100
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: 'red' }}>{status.score}</span> / 100
+                    </>
+                  )}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <button
+                    id="problem"
+                    onClick={() => {
+                      handleCodeCheck(status.submit_id)
+                    }}
+                  >
+                    Code
+                  </button>
+                </li>
+                <li id="content" style={{ width: '25%' }}>
+                  {status.submit_time}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {status.isQna ? <QnaIcon /> : <></>}
+                </li>
+              </ul>
+            )
+        })}
       </ul>
     </Container>
   )
