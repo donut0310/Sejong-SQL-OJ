@@ -114,15 +114,14 @@ const AdminLi = ({ status }) => {
           <li id="content" style={{ width: '8.5%' }}></li>
           <li id="content" style={{ width: '16.5%' }}></li>
           <li id="content" style={{ width: '12.5%' }}>
-            {/* // TODO */}
-            <FormControl variant="outlined" size="small">
-              <Select value={result} onChange={handleChangeResult}>
+            <StyledFormControl variant="outlined" size="small">
+              <StyledSelect value={result} onChange={handleChangeResult}>
                 {/* //TODO */}
-                <MenuItem value={'Accept'}>Accept</MenuItem>
-                <MenuItem value={'WA'}>WA</MenuItem>
-                <MenuItem value={'Error'}>Error</MenuItem>
-              </Select>
-            </FormControl>
+                <StyledMenuItem value={'Accept'}>AC</StyledMenuItem>
+                <StyledMenuItem value={'WA'}>WA</StyledMenuItem>
+                <StyledMenuItem value={'Error'}>ER</StyledMenuItem>
+              </StyledSelect>
+            </StyledFormControl>
           </li>
           <li id="content" style={{ width: '12.5%' }}>
             {/* // TODO */}
@@ -154,6 +153,33 @@ const Wrapper = styled.div`
     border-left: 5px solid #B41313;
   `}
 `
+
+const StyledFormControl = styled(FormControl)`
+  && {
+    background: ${(props) => props.theme.HEADER_BACKGROUND};
+  }
+
+  .MuiInputBase-input {
+    color: ${(props) => props.theme.GENERAL_FONT};
+  }
+  .MuiInputLabel-formControl {
+    color: ${(props) => props.theme.MAIN_BORDER};
+  }
+  .MuiFormLabel-root.Mui-focused {
+    color: ${(props) => props.theme.POINT};
+    font-weight: bold;
+  }
+  .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: ${(props) => props.theme.POINT};
+  }
+  .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+    border: 1.5px solid ${(props) => props.theme.SUB_BORDER};
+  }
+`
+
+const StyledSelect = styled(Select)``
+
+const StyledMenuItem = styled(MenuItem)``
 
 const StyledTextField = styled(TextField)`
   && {
