@@ -77,7 +77,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 5px 0px 5px 5px;
     padding: 5px;
     color: white;
-    font-size: 1rem;
+    font-size: 0.8rem;
     background: ${(props) => props.theme.POINT};
     &:hover {
       cursor: pointer;
