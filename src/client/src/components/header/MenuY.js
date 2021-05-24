@@ -61,7 +61,6 @@ export default connect(mapStateToProps)(Menu)
 const MenuWrapper = styled.ul`
   width: 100%;
   list-style: none;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +74,7 @@ const MenuWrapper = styled.ul`
 
 const SettingBtn = styled(SettingsIcon)`
   && {
-    font-size: 1.3em;
+    font-size: 2rem;
     margin-top: 7px;
     margin-left: 7px;
     color: ${(props) => props.theme.GENERAL_FONT};
@@ -104,6 +103,7 @@ const StyledTreeItem = styled(TreeItem)`
   && .MuiTypography-root {
     margin: 2px 0;
     padding: 5px;
+    font-size: 1.4rem;
     font-weight: 500;
     color: ${(props) => props.theme.GENERAL_FONT};
     border-left: 4px solid ${(props) => props.theme.BACKGROUND};
