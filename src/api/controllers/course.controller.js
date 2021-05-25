@@ -45,12 +45,72 @@ export class CourseController {
         let backParams = [CLASSID];
         const [backQuery] = await connection.query(backSql, backParams);
         connection.release();
-        data.success = "false";
+        data.message = "fail";
         data.err = err;
         res.status(400).send(data);
       }
     } catch (err) {
-      data.success = "false";
+      data.message = "fail";
+      data.err = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
+
+  // 분반 관리자: 특정 문제에 대한 분반 내 학생들의 최고점 status 목록 요청
+  async getTopStatusInClass(req, res) {
+    const database = new Database();
+    const classId = req.params.classId;
+    const pId = req.params.pId;
+    let data = {};
+    try {
+      const connection = await database.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        // top_submit_answer 테이블에서 class_id와 p_id로 조회
+        // user 테이블에서 user_id로 user_name 조회
+        // user_name => user
+        // user_id => top_submit_answer
+        // top_submit_id => top_submit_answer
+        // submit_time => top_submit_answer
+        // result => top_submit_answer
+        // score => top_submit_answer
+
+        let sql =
+          "select user_name,user_id from user where user_id in (select user_id from top_submit_answer where class_id = ? and p_id = ?) order by user_id";
+        let params = [classId, pId];
+        const [user_name_list] = await connection.query(sql, params);
+        connection.release();
+
+        let sql2 =
+          "select user_id, top_submit_id, submit_time, result, score from top_submit_answer where class_id = ? and p_id = ? order by user_id";
+        const [top_answer_list] = await connection.query(sql2, params);
+        connection.release();
+
+        if (user_name_list.length != top_answer_list.length) {
+          throw new Error("Data Count Incorrect!");
+        } else {
+          for (let i in user_name_list) {
+            if (user_name_list[i].user_id == top_answer_list[i].user_id) {
+              top_answer_list[i].user_name = user_name_list[i].user_name;
+            }
+          }
+        }
+        data.result = top_answer_list;
+        data.success = true;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.err = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
       data.err = err;
       res.status(400).send(data);
       return false;
@@ -314,6 +374,7 @@ export class CourseController {
       return false;
     }
   }
+
   // 수업 이름 요청
   async getClassName(req, res) {
     const database = new Database();
@@ -383,6 +444,7 @@ export class CourseController {
     answer.result = result;
     res.status(200).send(answer);
   }
+
   //학생,조교 목록 요청
   async getStudentAndAssists(req, res) {
     const database = new Database();
@@ -425,6 +487,7 @@ export class CourseController {
       res.status(400).send(answer);
     }
   }
+
   async addWeek(req, res) {
     const database = new Database();
     let classId = req.params.classId;

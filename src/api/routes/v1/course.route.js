@@ -18,6 +18,12 @@ export class CourseRoute {
       courseController.adminEnrollProfToClass,
     ]);
 
+    // 분반 관리자: 특정 문제에 대한 분반 내 학생들의 최고점 status 목록 요청
+    this.app.get("/api/v1/course/status/:classId/:pId", [
+      authMiddleware.verifyToken,
+      courseController.getTopStatusInClass,
+    ]);
+
     // 교수: 조교 목록 추가
     this.app.post("/api/v1/course/assists/:classId", [
       authMiddleware.verifyToken,
@@ -72,8 +78,6 @@ export class CourseRoute {
       courseController.getStudentAndAssists,
     ]);
     //교수: 주차 추가
-    this.app.post("/api/v1/course/week/:classId", [
-      courseController.addWeek,
-    ]);
+    this.app.post("/api/v1/course/week/:classId", [courseController.addWeek]);
   }
 }
