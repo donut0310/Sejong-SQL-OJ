@@ -10,49 +10,49 @@ export class CourseController {
     const profList = req.body.users;
     const className = req.body.class_name;
 
-    let professors = "";
-    for (let i in profList) {
-      if (i == profList.length - 1) {
-        professors += profList[i];
-      } else professors += profList[i] + ",";
-    }
+    let CLASSID;
+    let data = {};
+
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-        // 교수 등록
-        let sql = "insert into course(class_name,admin_id) values(?,?)";
-        let params = [className, professors];
-        const a = await connection.query(sql, params);
+        // 강좌 생성
+        let sql = "insert into course(class_name) values(?)";
+        let params = [className];
+        const [createCourse] = await connection.query(sql, params);
         connection.release();
-        console.log(a[0].info);
+        CLASSID = createCourse.insertId;
 
-        // 분반 id 가져오기
-        let sql2 = "select class_id from course where class_name = ?";
-        let params2 = [className];
+        // 교수 분반 배치
+        let sql2 = "insert into u_c_bridge values ?";
+        let params2 = [];
+        let inputArr = [];
 
-        const class_id = await connection.query(sql2, params2);
-        connection.release();
-
-        // 교수 분반 할당
         for (let i in profList) {
-          // u_c_bridge 테이블 업데이트
-          let sql3 =
-            "insert into u_c_bridge (user_id,class_id,author) values(?,?,?)";
-          let params3 = [profList[i], class_id[0][0].class_id, 2];
-
-          const b = await connection.query(sql3, params3);
-          connection.release();
-          console.log(b[0].info);
+          inputArr.push([profList[i], CLASSID, 1]);
         }
-        res.status(200).send("강좌 생성이 완료되었습니다.");
-      } catch (err) {
+        params2 = [inputArr];
+        const allocProf = await connection.query(sql2, params3);
         connection.release();
-        res.status(400).send(err);
+
+        data.success = true;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        let backSql = "delete from course where class_id = ?";
+        let backParams = [CLASSID];
+        const [backQuery] = await connection.query(backSql, backParams);
+        connection.release();
+        data.success = "false";
+        data.err = err;
+        res.status(400).send(data);
       }
     } catch (err) {
-      res.status(400).send(err);
+      data.success = "false";
+      data.err = err;
+      res.status(400).send(data);
       return false;
     }
   }
@@ -397,14 +397,13 @@ export class CourseController {
         let params = [classId];
         const [a] = await connection.query(sql, params);
         connection.release();
-        let stds=[]
-        let assists=[]
-        for(let i=0;i<a.length;i++){
-          if(a[i].author==0){
-            stds.push(a[i].user_id)
-          }
-          else if (a[i].author==1){
-            assists.push(a[i].user_id)
+        let stds = [];
+        let assists = [];
+        for (let i = 0; i < a.length; i++) {
+          if (a[i].author == 0) {
+            stds.push(a[i].user_id);
+          } else if (a[i].author == 1) {
+            assists.push(a[i].user_id);
           }
         }
         answer.stds = stds;
@@ -426,11 +425,11 @@ export class CourseController {
       res.status(400).send(answer);
     }
   }
-  async addWeek(req,res){
+  async addWeek(req, res) {
     const database = new Database();
     let classId = req.params.classId;
     let weekTitle = req.body.week_title;
-    let answer={}
+    let answer = {};
     let className;
     try {
       const connection = await database.pool.getConnection(
@@ -439,49 +438,50 @@ export class CourseController {
       try {
         let sql = "select class_name from course where class_id=?";
         let params = [classId];
-        let [a]= await connection.query(sql, params);
-        className=a[0].class_name
+        let [a] = await connection.query(sql, params);
+        className = a[0].class_name;
         connection.release();
         try {
           const connection2 = await database.pool.getConnection(
             async (conn) => conn
           );
           try {
-            let sql = "insert into week(class_id,week_title,class_name) values(?,?,?)";
-            let params = [classId,weekTitle,className];
+            let sql =
+              "insert into week(class_id,week_title,class_name) values(?,?,?)";
+            let params = [classId, weekTitle, className];
             const [a] = await connection2.query(sql, params);
             connection2.release();
-            answer.result=null
-            answer.message="success"
+            answer.result = null;
+            answer.message = "success";
             res.status(200).send(answer);
           } catch (err) {
             connection.release();
-            console.log(err)
-            answer.message="fail"
-            answer.result=null
-            answer.error="Cannot set headers after they are sent to the client"
+            console.log(err);
+            answer.message = "fail";
+            answer.result = null;
+            answer.error =
+              "Cannot set headers after they are sent to the client";
             res.status(400).send(answer);
           }
         } catch (err) {
-          answer.message="fail"
-          answer.result=null
-          answer.error="Cannot Connected"
+          answer.message = "fail";
+          answer.result = null;
+          answer.error = "Cannot Connected";
           res.status(400).send(answer);
         }
       } catch (err) {
         connection.release();
-        console.log(err)
-        answer.message="fail"
-        answer.result=null
-        answer.error="Cannot set headers after they are sent to the client"
+        console.log(err);
+        answer.message = "fail";
+        answer.result = null;
+        answer.error = "Cannot set headers after they are sent to the client";
         res.status(400).send(answer);
       }
     } catch (err) {
-      answer.message="fail"
-      answer.result=null
-      answer.error="Cannot Connected"
+      answer.message = "fail";
+      answer.result = null;
+      answer.error = "Cannot Connected";
       res.status(400).send(answer);
     }
-
   }
 }
