@@ -1,8 +1,3 @@
-// 케이스 생각
-// 들어온 값이 아에 없는 경우 (0)
-// 정답 값의 부모이거나 자손인 경우 (0)
-// 같은 데이터가 여러번 있는 경우 때매 중복값 제거 (0)
-// JSON 값은 같고 순서만 다를 경우 50점만 부여 (0)
 import { Database } from "../models/db.js";
 export class ScoreController {  
     async scoring(req,res) {
@@ -65,8 +60,6 @@ export class ScoreController {
                 else{
                   length=userJson.length
                   userJson=JSON.stringify(userJson)
-                  console.log(userJson)
-                  console.log("1213" , JSON.stringify(answerJson[0]))
                   for(var i=0; i<answerJson.length; i++){
                     if(userJson.includes(JSON.stringify(answerJson[i]))){
                       i-=1

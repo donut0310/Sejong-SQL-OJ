@@ -37,6 +37,16 @@ export class UsersRoute {
       authMiddleware.verifyToken,
       usersController.getStatusList,
     ]);
+    // 학생: 이의제기 토글 요청 
+    this.app.post("/api/v1/user/qna/:submitId",  [
+      authMiddleware.verifyToken,
+      usersController.getObjection,
+    ]);
+    // 분반관리자: 제출 결과 수정 
+    this.app.post("/api/v1/user/status/edit/:submitId",  [
+      authMiddleware.verifyToken,
+      usersController.modifyResult,
+    ]);
     // 문제 추가 요청
     this.app.post("/api/v1/user/problem/:classId/:weekId", uploadFile, [
       authMiddleware.verifyToken,
@@ -48,5 +58,6 @@ export class UsersRoute {
       authMiddleware.verifyToken,
       usersController.getCourseAndWeek,
     ]);
+
   }
 }
