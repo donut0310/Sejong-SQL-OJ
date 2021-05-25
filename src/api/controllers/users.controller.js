@@ -544,4 +544,87 @@ export class UsersController {
       }
     }
   }
+  async getObjection(req,res){
+    let dataBase = new Database();
+    let submitId = req.params.submitId;
+    let data={}
+    try {
+      const connection = await dataBase.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql ="select is_objection from submit_answer where submit_id=?;"
+        let params = [submitId];
+        let [a] = await connection.query(sql, params);
+        connection.release();
+        a=a[0].is_objection
+        let object= a ? 0: 1;
+        sql= "update submit_answer SET is_objection = ? WHERE submit_id = ?;"
+        params = [object,submitId];
+        [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+
+  }
+  async modifyResult(req,res){
+    let dataBase = new Database();
+    let submitId = req.params.submitId;
+    let result = req.body.result;
+    let score = req.body.score;
+    let data={}
+    try {
+      const connection = await dataBase.pool.getConnection(
+        async (conn) => conn
+      );
+      try {
+        let sql= `update submit_answer SET is_objection = 0
+        WHERE submit_id = ?;`
+        let params = [submitId];
+        let [a] = await connection.query(sql, params);
+        connection.release();
+        sql= `update submit_answer SET result=?
+        WHERE submit_id = ?;`
+        params = [result,submitId];
+        [a] = await connection.query(sql, params);
+        connection.release();
+        sql= `update submit_answer SET score=?
+        WHERE submit_id = ?;`
+        params = [score,submitId];
+        [a] = await connection.query(sql, params);
+        connection.release();
+        data.result = null;
+        data.message = "success";
+        res.status(200).send(data);
+      } catch (err) {
+        connection.release();
+        data.result = null;
+        data.message = "fail";
+        console.log(err)
+        data.error = err;
+        res.status(400).send(data);
+      }
+    } catch (err) {
+      data.result = null;
+      data.message = "fail";
+      data.error = err;
+      res.status(400).send(data);
+      return false;
+    }
+  }
 }
