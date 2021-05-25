@@ -63,7 +63,7 @@ create table problem(
     start_time DATETIME DEFAULT NULL,
     end_time DATETIME DEFAULT NULL,
     tc_cnt int DEFAULT NULL,
-    tc_id int DEFAULT NULL,
+    tc_id int DEFAULT 0 ,
     table_info MEDIUMTEXT DEFAULT NULL,
     week_title varchar(255) DEFAULT NULL,
     is_public tinyint(1) DEFAULT 0,
