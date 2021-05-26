@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, useParams, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
 import styled from 'styled-components'
@@ -9,10 +9,9 @@ import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 
-const UserTable = ({ statusList }) => {
+const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   const history = useHistory()
   const { classId, weekId } = useParams()
-
   const location = useLocation()
   const query = queryString.parse(location.search)
   const userId = query.userId
@@ -38,6 +37,7 @@ const UserTable = ({ statusList }) => {
   const handleQNAClick = (submitId) => async () => {
     const data = await axios.post(`/api/v1/user/qna/${submitId}`)
     console.log('이의제기 Toggle', data)
+    setIsChanged(!isChanged)
   }
 
   return (

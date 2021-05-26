@@ -98,7 +98,7 @@ const User = ({ match }) => {
           조회
         </button>
       </div>
-      <UserTable statusList={statusList} />
+      <UserTable statusList={statusList} isChanged={isChanged} setIsChanged={setIsChanged} />
       <PaginationTab currentPage={page} setPage={setPage} maxPage={maxPage} />
     </Container>
   )
