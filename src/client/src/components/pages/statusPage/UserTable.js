@@ -17,7 +17,7 @@ const UserTable = ({ statusList }) => {
   const query = queryString.parse(location.search)
   const userId = query.userId
 
-  const handleCodeCheck = (submitId) => {
+  const handleCodeCheck = (submitId) => () => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
 
@@ -92,12 +92,7 @@ const UserTable = ({ statusList }) => {
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   {status.user_id === userId ? (
-                    <button
-                      id="problem"
-                      onClick={() => {
-                        handleCodeCheck(status.submit_id)
-                      }}
-                    >
+                    <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
                       Code
                     </button>
                   ) : (
@@ -137,12 +132,7 @@ const UserTable = ({ statusList }) => {
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   {status.user_id === userId ? (
-                    <button
-                      id="problem"
-                      onClick={() => {
-                        handleCodeCheck(status.submit_id)
-                      }}
-                    >
+                    <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
                       Code
                     </button>
                   ) : (
