@@ -7,9 +7,8 @@ import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
-import { Popper } from '@material-ui/core'
 
-const UserTable = ({ statusList }) => {
+const UserTable = ({ statusList, handleQNAClick }) => {
   const history = useHistory()
   const { classId, weekId } = useParams()
 
@@ -18,17 +17,8 @@ const UserTable = ({ statusList }) => {
   const userId = query.userId
 
   const handleCodeCheck = (submitId) => {
-    // TODO 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
-
-  const [anchorEl, setAnchorEl] = useState(null)
-
-  const handleQNAClick = (e) => {
-    setAnchorEl(anchorEl ? null : e.currentTarget)
-  }
-
-  const openQNA = Boolean(anchorEl)
 
   const IconResult = ({ result }) => {
     if (result === 'Accept') return <img src={acceptIcon} alt="accept" style={{ width: '3rem' }} />
@@ -38,6 +28,7 @@ const UserTable = ({ statusList }) => {
     // else if (result === 'error') return <img src={errorIcon} alt="error" />
     else return <img src={loadingIcon} alt="loading" style={{ width: '3rem' }} />
   }
+
   const parseDateTime = (data) => {
     const dateTime = new Date(data)
     return dateTime.toISOString().substr(0, 19).replace('T', ' ')
@@ -112,12 +103,8 @@ const UserTable = ({ statusList }) => {
                 </li>
                 <li id="qna" style={{ width: '10%' }}>
                   {userId === status.user_id && (
-                    <>
-                      <QnaIcon onClick={handleQNAClick} />
-                      <Popper open={openQNA} anchorEl={anchorEl}>
-                        <StyledPopper>성적 이의제기</StyledPopper>
-                      </Popper>
-                    </>
+                    // todo
+                    <QnaIcon onClick={handleQNAClick} />
                   )}
                 </li>
               </ul>
@@ -166,9 +153,6 @@ const UserTable = ({ statusList }) => {
                   {userId === status.user_id && (
                     <>
                       <QnaIcon onClick={handleQNAClick} />
-                      <Popper open={openQNA} anchorEl={anchorEl}>
-                        <StyledPopper>성적 이의제기</StyledPopper>
-                      </Popper>
                     </>
                   )}
                 </li>

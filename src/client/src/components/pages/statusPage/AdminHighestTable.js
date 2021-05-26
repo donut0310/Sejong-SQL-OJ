@@ -7,9 +7,7 @@ import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 
-const AdminHighestTable = () => {
-  const { classId, weekId } = useParams()
-
+const AdminHighestTable = ({ statusList, classId, weekId }) => {
   const IconResult = ({ result }) => {
     if (result === 'Accept') return <img src={acceptIcon} alt="accept" style={{ width: '3rem' }} />
     else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" style={{ width: '3rem' }} />
@@ -19,18 +17,17 @@ const AdminHighestTable = () => {
     else return <img src={loadingIcon} alt="loading" style={{ width: '3rem' }} />
   }
 
-  const statusList = [
-    { id: '11', name: '김동현', result: 'Accept', score: 100, submit_time: '2020-02-02 00:00:00', isQna: true },
-    { id: '12', name: '박동현', result: 'WA', score: 60, submit_time: '2020-02-02 00:00:00', isQna: false },
-    { id: '13', name: '최동현', result: 'Accept', score: 100, submit_time: '2020-02-02 00:00:00', isQna: false },
-    { id: '14', name: '이동현', result: 'Error', score: 70, submit_time: '2020-02-02 00:00:00', isQna: true },
-  ]
   const history = useHistory()
 
   const handleCodeCheck = (submitId) => {
-    // TODO 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
+
+  const parseDateTime = (data) => {
+    const dateTime = new Date(data)
+    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+  }
+
   return (
     <Container>
       <ul id="table-list">
@@ -62,10 +59,10 @@ const AdminHighestTable = () => {
             return (
               <ul id="content-list-last" key={i}>
                 <li id="content" style={{ width: '15%' }}>
-                  {status.id}
+                  {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  {status.name}
+                  {status.user_name}
                 </li>
                 <li id="content" style={{ width: '15%' }}>
                   <IconResult result={status.result} />
@@ -92,7 +89,7 @@ const AdminHighestTable = () => {
                   </button>
                 </li>
                 <li id="content" style={{ width: '25%' }}>
-                  {status.submit_time}
+                  {parseDateTime(status.submit_time)}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   {status.isQna ? <QnaIcon /> : <></>}
@@ -103,10 +100,10 @@ const AdminHighestTable = () => {
             return (
               <ul id="content-list" key={i}>
                 <li id="content" style={{ width: '15%' }}>
-                  {status.id}
+                  {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  {status.name}
+                  {status.user_name}
                 </li>
                 <li id="content" style={{ width: '15%' }}>
                   <IconResult result={status.result} />
@@ -133,7 +130,7 @@ const AdminHighestTable = () => {
                   </button>
                 </li>
                 <li id="content" style={{ width: '25%' }}>
-                  {status.submit_time}
+                  {parseDateTime(status.submit_time)}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   {status.isQna ? <QnaIcon /> : <></>}

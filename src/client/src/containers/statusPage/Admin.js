@@ -12,6 +12,8 @@ import AdminHighestTable from '../../components/pages/statusPage/AdminHighestTab
 import { ButtonGroup, Button } from '@material-ui/core'
 
 const Admin = ({ match }) => {
+  const { classId, weekId } = useParams()
+
   const location = useLocation()
   const query = queryString.parse(location.search)
   const pId = query.pId
@@ -51,7 +53,9 @@ const Admin = ({ match }) => {
           setMaxPage(data.maxpage)
         }
       } else {
-        // TODO
+        const { data } = await axios.get(`/api/v1/course/status/${classId}/${pId}`)
+        console.log('Get status', data)
+        setStatusList(data.result)
       }
     })()
   }, [isChanged, viewType])
@@ -123,7 +127,7 @@ const Admin = ({ match }) => {
           <PaginationTab currentPage={page} setPage={setPage} maxPage={maxPage} />
         </>
       ) : (
-        <AdminHighestTable />
+        <AdminHighestTable statusList={statusList} classId={classId} weekId={weekId} />
       )}
     </Container>
   )

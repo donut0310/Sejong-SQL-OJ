@@ -74,6 +74,11 @@ const User = ({ match }) => {
     setPage(1)
   }
 
+  const handleQNAClick = async () => {
+    // const data = await axios.post(`/api/v1/user/qna/${submitId}`)
+    // console.log('이의제기 요청', data)
+  }
+
   return (
     <Container>
       <Title problemInfo={problemInfo} />
@@ -98,7 +103,7 @@ const User = ({ match }) => {
           조회
         </button>
       </div>
-      <UserTable statusList={statusList} />
+      <UserTable statusList={statusList} handleQNAClick={handleQNAClick} />
       <PaginationTab currentPage={page} setPage={setPage} maxPage={maxPage} />
     </Container>
   )
