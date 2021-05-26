@@ -58,7 +58,7 @@ const Admin = ({ match }) => {
         setStatusList(data.result)
       }
     })()
-  }, [isChanged, viewType])
+  }, [isChanged, viewType, page])
 
   // Title
   useEffect(() => {

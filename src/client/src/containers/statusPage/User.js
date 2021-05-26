@@ -45,7 +45,7 @@ const User = ({ match }) => {
         setMaxPage(data.maxpage)
       }
     })()
-  }, [isChanged])
+  }, [isChanged, page])
 
   // Title
   useEffect(() => {
