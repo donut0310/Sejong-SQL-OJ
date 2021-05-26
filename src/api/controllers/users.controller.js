@@ -251,7 +251,6 @@ export class UsersController {
   async getCourseAndWeek(req, res) {
     const database = new Database();
     const userId = req.body.decoded.id;
-    console.log(userId);
     let answer = {};
     let s = "select class_id from u_c_bridge where user_id=?";
     const c = await database.queryExecute(s, [userId]);
@@ -261,8 +260,9 @@ export class UsersController {
       answer.error = "Invalid approach.";
       res.status(400).send(answer);
     }
-    let result = [];
-    for (let i = 0; i < c.length; i++) {
+    else{
+      let result = [];
+      for (let i = 0; i < c.length; i++) {
       let resultChild = {};
       let class_id = c[i].class_id;
       resultChild.classId = class_id;
@@ -282,6 +282,7 @@ export class UsersController {
     answer.message = "success";
     answer.result = result;
     res.status(200).send(answer);
+    }
   }
   //학생: 코드 제출 status 목록 요청
   async getStatusList(req, res) {
