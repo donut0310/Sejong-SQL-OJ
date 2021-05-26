@@ -295,8 +295,8 @@ export class UsersController {
     let data = {};
     if (queryData.userId == undefined) {
       if (result == 0) {
-        s = `select user_id,submit_id,submit_time,result,score 
-        from submit_answer where p_id=? order by submit_id DESC LIMIT ?, 10;`;
+        s = `select user_id,submit_id,submit_time,result,score, is_objection  
+         from submit_answer where p_id=? order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
             async (conn) => conn
@@ -304,6 +304,7 @@ export class UsersController {
           try {
             let [a] = await connection.query(s, [pId, page]);
             connection.release();
+            console.log(a)
             data.result = a;
             s = "select count(*) from submit_answer where p_id=? ;";
             let [b] = await connection.query(s, [pId]);
@@ -314,6 +315,7 @@ export class UsersController {
             res.status(200).send(data);
           } catch (err) {
             connection.release();
+            console.log(err)
             data.result = null;
             data.message = "fail";
             res.status(400).send(data);
@@ -325,7 +327,7 @@ export class UsersController {
         }
       }
       if (result == 1) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and
         result="Accept" order by submit_id DESC LIMIT ?, 10;`;
         try {
@@ -356,7 +358,7 @@ export class UsersController {
         }
       }
       if (result == 2) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and
         result="WA" order by submit_id DESC LIMIT ?, 10;`;
         try {
@@ -387,7 +389,7 @@ export class UsersController {
         }
       }
       if (result == 3) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and
         result="Error" order by submit_id DESC LIMIT ?, 10;`;
         try {
@@ -419,7 +421,7 @@ export class UsersController {
       }
     } else {
       if (result == 0) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and user_id=? order by submit_id DESC LIMIT ?, 10;`;
         try {
           const connection = await database.pool.getConnection(
@@ -450,7 +452,7 @@ export class UsersController {
         }
       }
       if (result == 1) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and user_id=? and
         result="Accept" order by submit_id DESC LIMIT ?, 10;`;
         try {
@@ -481,7 +483,7 @@ export class UsersController {
         }
       }
       if (result == 2) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and user_id=? and
         result="WA" order by submit_id DESC LIMIT ?, 10;`;
         try {
@@ -512,7 +514,7 @@ export class UsersController {
         }
       }
       if (result == 3) {
-        s = `select user_id,submit_id,submit_time,result,score 
+        s = `select user_id,submit_id,submit_time,result,score , is_objection
         from submit_answer where p_id=? and user_id=? and
         result="Error" order by submit_id DESC LIMIT ?, 10;`;
         try {
