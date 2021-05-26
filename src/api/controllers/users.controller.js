@@ -115,7 +115,6 @@ export class UsersController {
   async getSubmittedCode(req, res) {
     const database = new Database();
     const submitId = req.params.submitId;
-    const userId = req.body.decoded.id;
     let data = {};
     try {
       const connection = await database.pool.getConnection(
@@ -123,7 +122,7 @@ export class UsersController {
       );
       try {
         let sql =
-          "select user_query,p_id from submit_answer where user_id = ? and submit_id = ?";
+          "select user_query,p_id from submit_answer where submit_id = ?";
         let params = [userId, submitId];
         const [a] = await connection.query(sql, params);
         connection.release();
