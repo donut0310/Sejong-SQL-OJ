@@ -104,7 +104,7 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
         <li id="qna" style={{ width: '10%' }}>
           {userId === status.user_id && <QnaIcon />}
         </li>
-        <li id="content" style={{ width: '10%' }}>
+        <li id="content" style={{ width: '10%', display: 'flex', justifyContent: 'center' }}>
           {isOpen ? (
             <CloseEditBtn
               onClick={() => {
@@ -127,7 +127,6 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
           <li id="content" style={{ width: '12.5%' }}>
             <StyledFormControl variant="outlined" size="small">
               <StyledSelect value={result} onChange={handleChangeResult}>
-                {/* //TODO */}
                 <StyledMenuItem value={'Accept'}>AC</StyledMenuItem>
                 <StyledMenuItem value={'WA'}>WA</StyledMenuItem>
                 <StyledMenuItem value={'Error'}>ER</StyledMenuItem>
@@ -135,14 +134,20 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
             </StyledFormControl>
           </li>
           <li id="content" style={{ width: '12.5%' }}>
-            {/* // TODO */}
-            <StyledTextField value={editScore} size="small" variant="outlined" type="text" onChange={handleChangeEditScore} />
+            <StyledTextField
+              value={editScore}
+              size="small"
+              variant="outlined"
+              type="text"
+              onChange={handleChangeEditScore}
+              // style={{ maxWidth: '65px', paddingRight: '20px' }}
+              // style={{ display: 'flex', justifyContent: 'center', paddingRight: '6px' }}
+            />
           </li>
           <li id="content" style={{ width: '10%' }}></li>
           <li id="content" style={{ width: '25%' }}></li>
           <li id="qna" style={{ width: '10%' }}></li>
-          <li id="content" style={{ width: '10%' }}>
-            {/* // TODO */}
+          <li id="content" style={{ width: '10%', display: 'flex', justifyContent: 'center', paddingRight: '6px' }}>
             <button id="submit-btn" onClick={handleEditBtn}>
               수정
             </button>
@@ -168,6 +173,7 @@ const Wrapper = styled.div`
 const StyledFormControl = styled(FormControl)`
   && {
     background: ${(props) => props.theme.HEADER_BACKGROUND};
+    margin-left: 7px;
   }
 
   .MuiInputBase-input {
@@ -194,9 +200,9 @@ const StyledMenuItem = styled(MenuItem)``
 
 const StyledTextField = styled(TextField)`
   && {
-    width: 90%;
+    width: 60%;
     background: ${(props) => props.theme.HEADER_BACKGROUND};
-    margin-right: 5px;
+    margin-right: 18px;
     border-radius: 5px;
   }
 
