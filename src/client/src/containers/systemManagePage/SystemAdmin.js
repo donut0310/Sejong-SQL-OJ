@@ -20,6 +20,9 @@ const SystemAdmin = () => {
     if (className && professor) {
       ;(async () => {
         console.log('강좌 생성')
+        console.log('className', className)
+        console.log('professor', professor)
+
         const { data } = await axios.post(`/api/v1/course/enrollProf`, {
           users: professor,
           class_name: className,

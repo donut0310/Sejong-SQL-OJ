@@ -123,7 +123,7 @@ const Admin = ({ match }) => {
               조회
             </button>
           </div>
-          <AdminTable statusList={statusList} />
+          <AdminTable isChanged={isChanged} setIsChanged={setIsChanged} statusList={statusList} />
           <PaginationTab currentPage={page} setPage={setPage} maxPage={maxPage} />
         </>
       ) : (

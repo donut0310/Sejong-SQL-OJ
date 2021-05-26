@@ -10,8 +10,9 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import { TextField, Collapse, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import axios from 'axios'
 
-const AdminLi = ({ status }) => {
+const AdminLi = ({ status, isChanged, setIsChanged }) => {
   const history = useHistory()
   const { classId, weekId } = useParams()
   const location = useLocation()
@@ -32,7 +33,17 @@ const AdminLi = ({ status }) => {
   }
 
   const handleEditBtn = async () => {
-    // TODO
+    console.log('Result ', result)
+    console.log('Score ', editScore)
+
+    const { data } = await axios.post(`/api/v1/user/status/edit/${status.submit_id}`, {
+      result: result,
+      score: editScore,
+    })
+
+    console.log('Edit submitted result', data)
+
+    setIsChanged(!isChanged)
   }
 
   const IconResult = ({ result }) => {

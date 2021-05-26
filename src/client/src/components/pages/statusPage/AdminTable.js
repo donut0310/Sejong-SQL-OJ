@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 import AdminLi from './AdminLi'
 
-const AdminTable = ({ statusList }) => {
+const AdminTable = ({ statusList, isChanged, setIsChanged }) => {
   const history = useHistory()
   const { classId, weekId } = useParams()
 
@@ -42,7 +42,7 @@ const AdminTable = ({ statusList }) => {
           </li>
         </ul>
         {statusList.map((status, i) => (
-          <AdminLi status={status} key={i} />
+          <AdminLi isChanged={isChanged} setIsChanged={setIsChanged} status={status} key={i} />
         ))}
       </ul>
     </Container>
