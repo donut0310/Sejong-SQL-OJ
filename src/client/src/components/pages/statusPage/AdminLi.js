@@ -60,7 +60,7 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
     return dateTime.toISOString().substr(0, 19).replace('T', ' ')
   }
 
-  const handleCodeCheck = (submitId) => {
+  const handleCodeCheck = (submitId) => () => {
     // TODO 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
@@ -89,12 +89,7 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
           )}
         </li>
         <li id="content" style={{ width: '10%' }}>
-          <button
-            id="problem"
-            onClick={() => {
-              handleCodeCheck(status.submit_id)
-            }}
-          >
+          <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
             Code
           </button>
         </li>

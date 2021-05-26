@@ -19,7 +19,7 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
 
   const history = useHistory()
 
-  const handleCodeCheck = (submitId) => {
+  const handleCodeCheck = (submitId) => () => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
 
@@ -79,12 +79,7 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
                   )}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  <button
-                    id="problem"
-                    onClick={() => {
-                      handleCodeCheck(status.submit_id)
-                    }}
-                  >
+                  <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
                     Code
                   </button>
                 </li>
@@ -120,12 +115,7 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
                   )}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  <button
-                    id="problem"
-                    onClick={() => {
-                      handleCodeCheck(status.submit_id)
-                    }}
-                  >
+                  <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
                     Code
                   </button>
                 </li>
