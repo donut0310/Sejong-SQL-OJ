@@ -32,9 +32,11 @@ export class CourseController {
 
         for (let i in profList) {
           inputArr.push([profList[i], CLASSID, 1]);
+          console.log(inputArr);
         }
+
         params2 = [inputArr];
-        const allocProf = await connection.query(sql2, params3);
+        const allocProf = await connection.query(sql2, params2);
         connection.release();
 
         data.success = true;
