@@ -31,7 +31,7 @@ export class CourseController {
         let inputArr = [];
 
         for (let i in profList) {
-          inputArr.push([profList[i], CLASSID, 1]);
+          inputArr.push([profList[i], CLASSID, 2]);
           console.log(inputArr);
         }
 
