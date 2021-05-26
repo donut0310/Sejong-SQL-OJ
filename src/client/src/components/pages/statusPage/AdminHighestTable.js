@@ -22,10 +22,9 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
   const handleCodeCheck = (submitId) => () => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
-
   const parseDateTime = (data) => {
-    const dateTime = new Date(data)
-    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+    const dateTime = new Date(data).toLocaleString('ko-KR')
+    return dateTime
   }
 
   return (

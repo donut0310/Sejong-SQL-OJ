@@ -14,10 +14,9 @@ const UserTable = ({ problemList, user }) => {
   const handleStatus = (pId) => {
     history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
   }
-
   const parseDateTime = (data) => {
-    const dateTime = new Date(data)
-    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+    const dateTime = new Date(data).toLocaleString('ko-KR')
+    return dateTime
   }
 
   return (

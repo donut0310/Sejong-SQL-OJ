@@ -30,8 +30,8 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   }
 
   const parseDateTime = (data) => {
-    const dateTime = new Date(data)
-    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+    const dateTime = new Date(data).toLocaleString('ko-KR')
+    return dateTime
   }
 
   const handleQNAClick = (submitId) => async () => {

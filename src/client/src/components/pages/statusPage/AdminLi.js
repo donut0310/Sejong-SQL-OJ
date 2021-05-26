@@ -54,10 +54,9 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
     // else if (result === 'error') return <img src={errorIcon} alt="error" />
     else return <img src={loadingIcon} alt="loading" style={{ width: '3rem' }} />
   }
-
   const parseDateTime = (data) => {
-    const dateTime = new Date(data)
-    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+    const dateTime = new Date(data).toLocaleString('ko-KR')
+    return dateTime
   }
 
   const handleCodeCheck = (submitId) => () => {
