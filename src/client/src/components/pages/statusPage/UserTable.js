@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useHistory, useParams, useLocation } from 'react-router-dom'
 import queryString from 'query-string'
 import styled from 'styled-components'
+import axios from 'axios'
 import acceptIcon from '../../../assets/resultIcons/accept_icon.png'
 import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 
-const UserTable = ({ statusList, handleQNAClick }) => {
+const UserTable = ({ statusList }) => {
   const history = useHistory()
   const { classId, weekId } = useParams()
 
@@ -32,6 +33,11 @@ const UserTable = ({ statusList, handleQNAClick }) => {
   const parseDateTime = (data) => {
     const dateTime = new Date(data)
     return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+  }
+
+  const handleQNAClick = (submitId) => async () => {
+    const data = await axios.post(`/api/v1/user/qna/${submitId}`)
+    console.log('이의제기 Toggle', data)
   }
 
   return (
@@ -102,10 +108,7 @@ const UserTable = ({ statusList, handleQNAClick }) => {
                   {parseDateTime(status.submit_time)}
                 </li>
                 <li id="qna" style={{ width: '10%' }}>
-                  {userId === status.user_id && (
-                    // todo
-                    <QnaIcon onClick={handleQNAClick} />
-                  )}
+                  {userId === status.user_id && (status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <QnaIconDisabled onClick={handleQNAClick(status.submit_id)} />)}
                 </li>
               </ul>
             )
@@ -150,11 +153,7 @@ const UserTable = ({ statusList, handleQNAClick }) => {
                   {parseDateTime(status.submit_time)}
                 </li>
                 <li id="qna" style={{ width: '10%' }}>
-                  {userId === status.user_id && (
-                    <>
-                      <QnaIcon onClick={handleQNAClick} />
-                    </>
-                  )}
+                  {userId === status.user_id && (status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <QnaIconDisabled onClick={handleQNAClick(status.submit_id)} />)}
                 </li>
               </ul>
             )
@@ -174,16 +173,20 @@ const Container = styled.div`
 const QnaIcon = styled(HelpOutlineIcon)`
   && {
     font-size: 1.6rem;
+    color: ${(props) => props.theme.POINT};
   }
-
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.GENERAL_FONT};
+  }
+`
+const QnaIconDisabled = styled(HelpOutlineIcon)`
+  && {
+    font-size: 1.6rem;
+    color: ${(props) => props.theme.GENERAL_FONT};
+  }
   &:hover {
     cursor: pointer;
     color: ${(props) => props.theme.POINT};
   }
-`
-
-const StyledPopper = styled.div`
-  background: white;
-  padding: 10px;
-  margin: 5px;
 `
