@@ -267,17 +267,25 @@ export class UsersController {
       resultChild.classId = class_id;
       let s1 =
         "select week_id,week_title,class_name from week where class_id=?";
-      const d = await database.queryExecute(s1, [class_id]);
-      resultChild.className = d[0].class_name;
-      resultChild.weekList = [];
-      for (let j = 0; j < d.length; j++) {
-        let weekListChild = {};
-        weekListChild.weekId = d[j].week_id;
-        weekListChild.weekName = d[j].week_title;
-        resultChild.weekList.push(weekListChild);
+        const d = await database.queryExecute(s1, [class_id]);
+        if (Array.isArray(d) && d.length == 0) {
+          s1 = "select class_name from course where class_id=?";
+          const e = await database.queryExecute(s1, [class_id]);
+          resultChild.className = e[0].class_name;
+          resultChild.weekList = [];
+          result.push(resultChild);
+          continue;
+        }
+        resultChild.className = d[0].class_name;
+        resultChild.weekList = [];
+        for (let j = 0; j < d.length; j++) {
+          let weekListChild = {};
+          weekListChild.weekId = d[j].week_id;
+          weekListChild.weekName = d[j].week_title;
+          resultChild.weekList.push(weekListChild);
+        }
+        result.push(resultChild);
       }
-      result.push(resultChild);
-    }
     answer.message = "success";
     answer.result = result;
     res.status(200).send(answer);
