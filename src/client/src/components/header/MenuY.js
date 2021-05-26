@@ -16,7 +16,7 @@ const Menu = ({ handleToggleMenu, user }) => {
 
   useEffect(() => {
     ;(async () => {
-      const { data } = await axios.get(`/api/v1/user/${user.id}`)
+      const { data } = await axios.get(`/api/v1/user/courses`)
       console.log('Modal useEffect', data.result)
       setUserClassList(data.result)
     })()
