@@ -61,8 +61,13 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
   }
 
   const handleCodeCheck = (submitId) => () => {
-    // TODO 자신이 조교나 교수일 경우
     history.push(`/${classId}/${weekId}/code/${submitId}`)
+  }
+
+  const handleQNAClick = (submitId) => async () => {
+    const data = await axios.post(`/api/v1/user/qna/${submitId}`)
+    console.log('이의제기 Toggle', data)
+    setIsChanged(!isChanged)
   }
 
   return (
@@ -97,7 +102,7 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
           {parseDateTime(status.submit_time)}
         </li>
         <li id="qna" style={{ width: '10%' }}>
-          {userId === status.user_id && <QnaIcon />}
+          {status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <></>}
         </li>
         <li id="content" style={{ width: '10%', display: 'flex', justifyContent: 'center' }}>
           {isOpen ? (
@@ -222,11 +227,12 @@ const StyledTextField = styled(TextField)`
 const QnaIcon = styled(HelpOutlineIcon)`
   && {
     font-size: 1.6rem;
+    color: ${(props) => props.theme.POINT};
   }
 
   &:hover {
     cursor: pointer;
-    color: ${(props) => props.theme.POINT};
+    color: ${(props) => props.theme.GENERAL_FONT};
   }
 `
 

@@ -17,7 +17,7 @@ const Admin = ({ match }) => {
   const location = useLocation()
   const query = queryString.parse(location.search)
   const pId = query.pId
-  const [userId, setUserId] = useState(query.userId)
+  const [userId, setUserId] = useState('')
 
   const [viewType, setViewType] = useState('all')
 
