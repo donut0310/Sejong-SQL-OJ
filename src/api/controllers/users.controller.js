@@ -123,7 +123,7 @@ export class UsersController {
       try {
         let sql =
           "select user_query,p_id from submit_answer where submit_id = ?";
-        let params = [userId, submitId];
+        let params = [submitId];
         const [a] = await connection.query(sql, params);
         connection.release();
 
