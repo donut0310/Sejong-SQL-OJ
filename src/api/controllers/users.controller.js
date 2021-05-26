@@ -262,10 +262,10 @@ export class UsersController {
     else{
       let result = [];
       for (let i = 0; i < c.length; i++) {
-        let resultChild = {};
-        let class_id = c[i].class_id;
-        resultChild.classId = class_id;
-        let s1 =
+      let resultChild = {};
+      let class_id = c[i].class_id;
+      resultChild.classId = class_id;
+      let s1 =
         "select week_id,week_title,class_name from week where class_id=?";
         const d = await database.queryExecute(s1, [class_id]);
         if (Array.isArray(d) && d.length == 0) {
