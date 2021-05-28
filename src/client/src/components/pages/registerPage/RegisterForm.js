@@ -85,6 +85,8 @@ const RegisterForm = () => {
           </SubmitBtn>
         </RegisterFormWrapper>
       </StyledForm>
+
+      <Footer>Copyright © 2021 세종컴공 All rights reserved.</Footer>
     </PageWrapper>
   )
 }
@@ -113,8 +115,7 @@ const Notice = styled.div`
 
   line-height: 130%;
 
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 30px;
 `
 
 const StyledForm = styled.div`
@@ -123,6 +124,13 @@ const StyledForm = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin-top: 30px;
+`
+
+const Footer = styled.div`
+  margin-top: 50px;
+  padding-top: 30px;
 `
 
 const Title = styled.div`
