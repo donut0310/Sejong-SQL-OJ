@@ -33,9 +33,8 @@ const RegisterForm = () => {
   return (
     <PageWrapper>
       <Title>
-        SEJONG
-        <br />
-        ONLINE JUDGE
+        <div style={{ fontSize: '2.7rem', margin: '5px 0' }}>SEJONG</div>
+        <div style={{ fontSize: '2.7rem' }}>ONLINE JUDGE</div>
       </Title>
       <SubTitle>회원가입</SubTitle>
 
@@ -109,14 +108,13 @@ const Notice = styled.div`
   padding: 15px;
   display: flex;
   align-items: center;
-
   color: #242323;
   background: ${(props) => props.theme.NOTICE_BACKGROUND};
   border-radius: 5px;
 
   line-height: 130%;
-
-  margin-top: 30px;
+  padding: 15px 30px;
+  margin-top: 20px;
 `
 
 const StyledForm = styled.div`
@@ -139,13 +137,14 @@ const Title = styled.div`
   font-size: 3em;
   text-align: center;
   margin-bottom: 30px;
-
+  font-family: Times New Roman, serif;
+  letter-spacing: 0.1rem;
   color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const SubTitle = styled.div`
-  font-size: 1.6em;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 400;
 
   color: ${(props) => props.theme.GENERAL_FONT};
 
@@ -155,7 +154,6 @@ const SubTitle = styled.div`
 
 const RegisterFormWrapper = styled.form`
   min-width: 300px;
-
   && {
     display: flex;
     flex-direction: column;
@@ -238,7 +236,7 @@ const CancelBtn = styled.button`
     outline: 0;
   }
   &:hover {
-    background: #710f0f;
+    background: #78746f;
     color: white;
     cursor: pointer;
   }
