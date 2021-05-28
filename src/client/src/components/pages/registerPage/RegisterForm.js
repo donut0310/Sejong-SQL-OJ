@@ -5,6 +5,7 @@ import { TextField, Button, Container } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace'
 
 const RegisterForm = () => {
   const history = useHistory()
@@ -45,10 +46,10 @@ const RegisterForm = () => {
       <StyledForm maxWidth="lg">
         <RegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
           <RegisterTextField name="id" label="아이디" inputRef={register({ required: true })} placeholder="아이디를 입력하세요." variant="outlined" size="small" />
-          {errors.id && errors.id.type === 'required' && <ErrorMessage> This ID field is required</ErrorMessage>}
+          {errors.id && errors.id.type === 'required' && <ErrorMessage> 아이디를 입력하세요.</ErrorMessage>}
 
           <RegisterTextField name="name" label="이름" inputRef={register({ required: true })} placeholder="이름을 입력하세요." variant="outlined" size="small" />
-          {errors.name && errors.name.type === 'required' && <ErrorMessage> This name field is required</ErrorMessage>}
+          {errors.name && errors.name.type === 'required' && <ErrorMessage> 이름을 입력하세요.</ErrorMessage>}
 
           <RegisterTextField
             name="password"
@@ -59,8 +60,8 @@ const RegisterForm = () => {
             variant="outlined"
             size="small"
           />
-          {errors.password && errors.password.type === 'required' && <ErrorMessage> This password field is required</ErrorMessage>}
-          {errors.password && errors.password.type === 'minLength' && <ErrorMessage> Password must have at least 4 characters</ErrorMessage>}
+          {errors.password && errors.password.type === 'required' && <ErrorMessage> 비밀번호를 입력하세요.</ErrorMessage>}
+          {errors.password && errors.password.type === 'minLength' && <ErrorMessage> 비밀번호는 최소 4자리로 입력하세요.</ErrorMessage>}
 
           <RegisterTextField
             name="password_confirm"
@@ -74,15 +75,15 @@ const RegisterForm = () => {
             variant="outlined"
             size="small"
           />
-          {errors.password_confirm && errors.password_confirm.type === 'required' && <ErrorMessage> This password confirm field is required</ErrorMessage>}
-          {errors.password_confirm && errors.password_confirm.type === 'validate' && <ErrorMessage>The passwords do not match</ErrorMessage>}
+          {errors.password_confirm && errors.password_confirm.type === 'required' && <ErrorMessage> 비밀번호 확인을 입력하세요.</ErrorMessage>}
+          {errors.password_confirm && errors.password_confirm.type === 'validate' && <ErrorMessage>비밀번호를 확인하세요.</ErrorMessage>}
 
           <SubmitBtn type="submit" onClick={handleSubmit(onSubmit)}>
             회원가입
           </SubmitBtn>
-          <SubmitBtn type="submit" onClick={handleGoBack}>
+          <CancelBtn type="submit" onClick={handleGoBack}>
             취소
-          </SubmitBtn>
+          </CancelBtn>
         </RegisterFormWrapper>
       </StyledForm>
 
@@ -109,7 +110,7 @@ const Notice = styled.div`
   display: flex;
   align-items: center;
 
-  color: ${(props) => props.theme.GENERAL_FONT};
+  color: #242323;
   background: ${(props) => props.theme.NOTICE_BACKGROUND};
   border-radius: 5px;
 
@@ -131,6 +132,7 @@ const StyledForm = styled.div`
 const Footer = styled.div`
   margin-top: 50px;
   padding-top: 30px;
+  color: ${(props) => props.theme.GENERAL_FONT};
 `
 
 const Title = styled.div`
@@ -197,17 +199,48 @@ const ErrorMessage = styled.p`
   margin-bottom: 4px;
 `
 
-const SubmitBtn = styled(Button)`
-  && {
-    margin-top: 10px;
+const SubmitBtn = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${(props) => props.theme.POINT};
+  color: white;
+  border: 0px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  margin-top: 8px;
+  padding: 10px;
+
+  &:focus {
+    outline: 0;
   }
-  .MuiButton-label {
-    /* color: ${(props) => props.theme.GENERAL_FONT}; */
+  &:hover {
+    background: #710f0f;
+    cursor: pointer;
+  }
+`
+
+const CancelBtn = styled.button`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${(props) => props.theme.NOTICE_BACKGROUND};
+  color: black;
+  border: 0px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  margin-top: 8px;
+  padding: 10px;
+
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    background: #710f0f;
     color: white;
-    z-index: 1;
-  }
-  .MuiTouchRipple-root {
-    background: ${(props) => props.theme.POINT};
+    cursor: pointer;
   }
 `
 
