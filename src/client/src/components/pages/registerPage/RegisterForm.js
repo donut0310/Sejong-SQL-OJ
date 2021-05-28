@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { TextField, Button, Container } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline'
 
 const RegisterForm = () => {
   const history = useHistory()
@@ -24,6 +25,10 @@ const RegisterForm = () => {
     }
   }
 
+  const handleGoBack = () => {
+    history.goBack()
+  }
+
   return (
     <PageWrapper>
       <Title>
@@ -32,6 +37,11 @@ const RegisterForm = () => {
         ONLINE JUDGE
       </Title>
       <SubTitle>회원가입</SubTitle>
+
+      <Notice>
+        <AlertIcon />
+        학생의 경우 학번으로, 교·강사의 경우 학교 E-mail의 아이디로 회원가입하시길 바랍니다.
+      </Notice>
       <StyledForm maxWidth="lg">
         <RegisterFormWrapper onSubmit={handleSubmit(onSubmit)}>
           <RegisterTextField name="id" label="아이디" inputRef={register({ required: true })} placeholder="아이디를 입력하세요." variant="outlined" size="small" />
@@ -70,8 +80,13 @@ const RegisterForm = () => {
           <SubmitBtn type="submit" onClick={handleSubmit(onSubmit)}>
             회원가입
           </SubmitBtn>
+          <SubmitBtn type="submit" onClick={handleGoBack}>
+            취소
+          </SubmitBtn>
         </RegisterFormWrapper>
       </StyledForm>
+
+      <Footer>Copyright © 2021 세종컴공 All rights reserved.</Footer>
     </PageWrapper>
   )
 }
@@ -81,7 +96,6 @@ export default RegisterForm
 const PageWrapper = styled.div`
   padding: 50px;
   border-radius: 5px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 
   display: flex;
   flex-direction: column;
@@ -90,12 +104,33 @@ const PageWrapper = styled.div`
   background: ${(props) => props.theme.BACKGROUND};
 `
 
+const Notice = styled.div`
+  padding: 15px;
+  display: flex;
+  align-items: center;
+
+  color: ${(props) => props.theme.GENERAL_FONT};
+  background: ${(props) => props.theme.NOTICE_BACKGROUND};
+  border-radius: 5px;
+
+  line-height: 130%;
+
+  margin-top: 30px;
+`
+
 const StyledForm = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin-top: 30px;
+`
+
+const Footer = styled.div`
+  margin-top: 50px;
+  padding-top: 30px;
 `
 
 const Title = styled.div`
@@ -170,5 +205,13 @@ const SubmitBtn = styled(Button)`
   }
   .MuiTouchRipple-root {
     background: ${(props) => props.theme.POINT};
+  }
+`
+
+const AlertIcon = styled(ErrorOutlineIcon)`
+  && {
+    margin-right: 10px;
+    font-size: 1.6rem;
+    color: ${(props) => props.theme.POINT};
   }
 `
