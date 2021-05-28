@@ -143,9 +143,12 @@ const Title = styled.div`
 
 const SubTitle = styled.div`
   font-size: 1.6em;
-  margin-bottom: 30px;
+  font-weight: bold;
 
   color: ${(props) => props.theme.GENERAL_FONT};
+
+  margin-top: 10px;
+  margin-bottom: 30px;
 `
 
 const RegisterFormWrapper = styled.form`

@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import sejongLogo from '../../../assets/sejong_logo.png'
 
 const Right = () => {
+  const [input, setInput] = useState('Hello world!')
+  const handleChangeInput = (e) => {
+    setInput(e.target.value)
+  }
+
   return (
     <Container>
       <img src={sejongLogo} alt="logo" style={{ width: '25%', position: 'fixed', top: '120px' }} />
@@ -13,7 +18,7 @@ const Right = () => {
           <GreenCircle />
         </Menu>
         <Code>
-          <StyledTextArea resize="none" defaultValue="hello" />
+          <StyledTextArea value={input} onChange={handleChangeInput} />
         </Code>
       </div>
     </Container>
@@ -77,7 +82,8 @@ const Code = styled.div`
   background: ${(props) => props.theme.BACKGROUND};
 `
 const StyledTextArea = styled.textarea`
-  color: ${(props) => props.GENERAL_FONT};
+  resize: none;
+  color: ${(props) => props.theme.GENERAL_FONT};
   background: ${(props) => props.theme.BACKGROUND};
   width: 100%;
   height: 300px;
