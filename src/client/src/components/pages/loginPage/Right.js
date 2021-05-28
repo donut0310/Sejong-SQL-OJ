@@ -40,7 +40,7 @@ const Container = styled.div`
 const Menu = styled.div`
   width: 100%;
   height: 30px;
-  background: ${(props) => props.theme.HEADER_BACKGROUND};
+  background: ${(props) => props.theme.TAB_BACKGROUND};
   border-radius: 5px 5px 0 0;
   display: flex;
   flex-direction: row;

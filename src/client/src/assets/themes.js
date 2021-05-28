@@ -26,6 +26,7 @@ export const lightTheme = {
   INPUT_TABLE_CONTENTS: '#ffffff',
 
   NOTICE_BACKGROUND: '#b7b1a9',
+  TAB_BACKGROUND: '#d9d9d9',
 }
 
 export const darkTheme = {
@@ -56,4 +57,5 @@ export const darkTheme = {
   INPUT_TABLE_CONTENTS: '#a1a1a1',
 
   NOTICE_BACKGROUND: '#b7b1a9',
+  TAB_BACKGROUND: '#2a2a2a',
 }
