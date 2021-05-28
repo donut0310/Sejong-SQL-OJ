@@ -10,6 +10,7 @@ const Login = () => {
       </Title>
       <SubTitle>로그인</SubTitle>
       <LoginForm />
+      <Footer>Copyright © 2021 세종컴공 All rights reserved.</Footer>
     </Container>
   )
 }
@@ -38,5 +39,11 @@ const SubTitle = styled.div`
   font-size: 1.6em;
   margin-bottom: 30px;
 
+  color: ${(props) => props.theme.GENERAL_FONT};
+`
+
+const Footer = styled.div`
+  margin-top: 50px;
+  padding-top: 30px;
   color: ${(props) => props.theme.GENERAL_FONT};
 `
