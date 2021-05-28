@@ -10,7 +10,7 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 // light mode
 import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
-import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
+import 'ace-builds/src-noconflict/theme-tomorrow_night_eighties'
 
 const InputCode = ({ theme, pId, code }) => {
   const history = useHistory()
@@ -72,7 +72,7 @@ const InputCode = ({ theme, pId, code }) => {
         <AceEditor
           readOnly
           mode="mysql"
-          theme="tomorrow_night_bright"
+          theme="tomorrow_night_eighties"
           name="editor"
           width="100%"
           onChange={onChange}
