@@ -6,8 +6,8 @@ const Login = () => {
   return (
     <Container>
       <Title>
-        <div style={{ fontSize: '2.7rem', margin: '5px 0' }}>SEJONG</div>
-        <div style={{ fontSize: '2.5rem' }}>ONLINE JUDGE</div>
+        <div style={{ fontSize: '3.4rem', margin: '5px 0' }}>SEJONG</div>
+        <div style={{ fontSize: '2.4rem' }}>ONLINE JUDGE</div>
       </Title>
       <SubTitle>로그인</SubTitle>
       <LoginForm />
