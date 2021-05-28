@@ -105,7 +105,7 @@ const GlobalStyles = createGlobalStyle`
   select#select-form {
     padding: 5px;
     margin: 5px;
-    font-size: 1rem;
+    font-size: 0.8rem;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
     background: ${(props) => props.theme.CONTENTS};
