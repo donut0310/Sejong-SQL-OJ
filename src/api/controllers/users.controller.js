@@ -59,41 +59,59 @@ export class UsersController {
     const database = new Database();
     const userId = req.body.decoded.id;
 
-    let data = {};
+    let data = {
+      result: {},
+      message: "",
+    };
 
     try {
       const connection = await database.pool.getConnection(
         async (conn) => conn
       );
       try {
-        let sql =
-          "select user.user_id, user.user_name, u_c_bridge.class_id, u_c_bridge.author from u_c_bridge join user on user.user_id = ? and u_c_bridge.user_id = ?";
-        let params = [userId, userId];
-        const [a] = await connection.query(sql, params);
+        // let sql =
+        //   "select user.user_id, user.user_name, u_c_bridge.class_id, u_c_bridge.author from u_c_bridge join user on user.user_id = ? and u_c_bridge.user_id = ?";
+        // let params = [userId, userId];
+        let sql = "select user_id,user_name from user where user_id = ?";
+        let params = [userId];
+        // user_id, user_name
+        const [userData] = await connection.query(sql, params);
         connection.release();
 
-        let arr = [];
+        let sql2 = "select class_id,author from u_c_bridge where user_id = ?";
+        // class_id, author
+        const [classData] = await connection.query(sql2, params);
+        connection.release();
 
-        for (let i in a) {
-          if (a[i].author != 0) arr.push(a[i].class_id);
+        // 소속된 강의가 없는경우 => class_id = [], role = 0
+        // 로그인 유저가 관리자로 소속된 강의가 존재하면 class_id_arr에 넣는다
+        // 학생인 경우에는 해당하지 않음
+        let class_id_arr = [];
+        if (classData.length != 0) {
+          for (let i in classData) {
+            if (classData[i].author != 0)
+              class_id_arr.push(classData[i].class_id);
+          }
         }
-        data.result = a[0];
+
+        // user_id 가 이메일이 아닐경우 학생, 조교
+        // user_id 가 학번일 경우 교수
+        // user_id 가 이메일, 학번이 모두 아닐경우 관리자
         const regex_email =
           /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
         const regex_stdnum = /^[0-9]/g;
 
-        // user_id 가 이메일이 아닐경우 학생, 조교
-        // user_id 가 학번일 경우 교수
-        // user_id 가 이메일, 학번이 모두 아닐경우 관리자
-
         let isStd = regex_stdnum.test(userId);
         let isProf = regex_email.test(userId);
+
         if (isStd) data.result.role = 0;
         else if (isProf) data.result.role = 1;
         else data.result.role = 2;
 
-        data.result.class_id = arr;
+        data.result.user_id = userData[0].user_id;
+        data.result.user_name = userData[0].user_name;
+        data.result.class_id = class_id_arr;
         data.message = "success";
         data.result.isAuth = true;
         res.status(200).send(data);
@@ -258,15 +276,14 @@ export class UsersController {
       answer.result = null;
       answer.error = "Invalid approach.";
       res.status(400).send(answer);
-    }
-    else{
+    } else {
       let result = [];
       for (let i = 0; i < c.length; i++) {
-      let resultChild = {};
-      let class_id = c[i].class_id;
-      resultChild.classId = class_id;
-      let s1 =
-        "select week_id,week_title,class_name from week where class_id=?";
+        let resultChild = {};
+        let class_id = c[i].class_id;
+        resultChild.classId = class_id;
+        let s1 =
+          "select week_id,week_title,class_name from week where class_id=?";
         const d = await database.queryExecute(s1, [class_id]);
         if (Array.isArray(d) && d.length == 0) {
           s1 = "select class_name from course where class_id=?";
@@ -286,9 +303,9 @@ export class UsersController {
         }
         result.push(resultChild);
       }
-    answer.message = "success";
-    answer.result = result;
-    res.status(200).send(answer);
+      answer.message = "success";
+      answer.result = result;
+      res.status(200).send(answer);
     }
   }
   //학생: 코드 제출 status 목록 요청
@@ -312,7 +329,7 @@ export class UsersController {
           try {
             let [a] = await connection.query(s, [pId, page]);
             connection.release();
-            console.log(a)
+            console.log(a);
             data.result = a;
             s = "select count(*) from submit_answer where p_id=? ;";
             let [b] = await connection.query(s, [pId]);
@@ -323,7 +340,7 @@ export class UsersController {
             res.status(200).send(data);
           } catch (err) {
             connection.release();
-            console.log(err)
+            console.log(err);
             data.result = null;
             data.message = "fail";
             res.status(400).send(data);
@@ -554,23 +571,23 @@ export class UsersController {
       }
     }
   }
-  async getObjection(req,res){
+  async getObjection(req, res) {
     let dataBase = new Database();
     let submitId = req.params.submitId;
-    let data={}
+    let data = {};
     try {
       const connection = await dataBase.pool.getConnection(
         async (conn) => conn
       );
       try {
-        let sql ="select is_objection from submit_answer where submit_id=?;"
+        let sql = "select is_objection from submit_answer where submit_id=?;";
         let params = [submitId];
         let [a] = await connection.query(sql, params);
         connection.release();
-        a=a[0].is_objection
-        let object= a ? 0: 1;
-        sql= "update submit_answer SET is_objection = ? WHERE submit_id = ?;"
-        params = [object,submitId];
+        a = a[0].is_objection;
+        let object = a ? 0 : 1;
+        sql = "update submit_answer SET is_objection = ? WHERE submit_id = ?;";
+        params = [object, submitId];
         [a] = await connection.query(sql, params);
         connection.release();
         data.result = null;
@@ -590,32 +607,31 @@ export class UsersController {
       res.status(400).send(data);
       return false;
     }
-
   }
-  async modifyResult(req,res){
+  async modifyResult(req, res) {
     let dataBase = new Database();
     let submitId = req.params.submitId;
     let result = req.body.result;
     let score = req.body.score;
-    let data={}
+    let data = {};
     try {
       const connection = await dataBase.pool.getConnection(
         async (conn) => conn
       );
       try {
-        let sql= `update submit_answer SET is_objection = 0
-        WHERE submit_id = ?;`
+        let sql = `update submit_answer SET is_objection = 0
+        WHERE submit_id = ?;`;
         let params = [submitId];
         let [a] = await connection.query(sql, params);
         connection.release();
-        sql= `update submit_answer SET result=?
-        WHERE submit_id = ?;`
-        params = [result,submitId];
+        sql = `update submit_answer SET result=?
+        WHERE submit_id = ?;`;
+        params = [result, submitId];
         [a] = await connection.query(sql, params);
         connection.release();
-        sql= `update submit_answer SET score=?
-        WHERE submit_id = ?;`
-        params = [score,submitId];
+        sql = `update submit_answer SET score=?
+        WHERE submit_id = ?;`;
+        params = [score, submitId];
         [a] = await connection.query(sql, params);
         connection.release();
         data.result = null;
@@ -625,7 +641,7 @@ export class UsersController {
         connection.release();
         data.result = null;
         data.message = "fail";
-        console.log(err)
+        console.log(err);
         data.error = err;
         res.status(400).send(data);
       }
