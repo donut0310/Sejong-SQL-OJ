@@ -37,16 +37,17 @@ const Menu = ({ handleToggleMenu, user }) => {
   return (
     <MenuWrapper>
       <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-        {userClassList.map((class_) => (
-          <TreeContainer key={class_.classId}>
-            <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
-              {class_.weekList.map((week_) => (
-                <StyledTreeItem label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
-              ))}
-            </StyledTreeItem>
-            <SettingBtn onClick={handleManageClass(class_.classId)} />
-          </TreeContainer>
-        ))}
+        {userClassList &&
+          userClassList.map((class_) => (
+            <TreeContainer key={class_.classId}>
+              <StyledTreeItem nodeId={`${(class_.classId + 5) * 100}`} label={class_.className}>
+                {class_.weekList.map((week_) => (
+                  <StyledTreeItem nodeId={`${(week_.weekId + 3) * 10}`} label={week_.weekName} key={week_.weekId} onClick={handleWeekInfo(class_.classId, week_.weekId)} />
+                ))}
+              </StyledTreeItem>
+              {(user.role === 1 || user.class_id.includes(class_.classId)) && <SettingBtn onClick={handleManageClass(class_.classId)} />}
+            </TreeContainer>
+          ))}
       </TreeView>
     </MenuWrapper>
   )
