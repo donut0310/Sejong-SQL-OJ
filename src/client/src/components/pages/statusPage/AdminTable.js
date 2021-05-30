@@ -19,7 +19,7 @@ const AdminTable = ({ statusList, isChanged, setIsChanged }) => {
           <li id="content" style={{ width: '8.5%' }}>
             제출번호
           </li>
-          <li id="content" style={{ width: '16.5%' }}>
+          <li id="content" style={{ width: '21.5%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -37,7 +37,7 @@ const AdminTable = ({ statusList, isChanged, setIsChanged }) => {
           <li id="qna" style={{ width: '10%' }}>
             이의제기
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '5%' }}>
             수정
           </li>
         </ul>

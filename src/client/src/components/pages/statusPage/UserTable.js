@@ -48,13 +48,13 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
           <li id="content" style={{ width: '8.5%' }}>
             제출번호
           </li>
-          <li id="content" style={{ width: '16.5%' }}>
+          <li id="content" style={{ width: '21.5%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
             결과
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '15%' }}>
             점수
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -74,13 +74,13 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
                 <li id="content" style={{ width: '8.5%' }}>
                   {status.submit_id}
                 </li>
-                <li id="content" style={{ width: '16.5%' }}>
+                <li id="content" style={{ width: '21.5%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   <IconResult result={status.result} />
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.score === 100 ? (
                     <>
                       <span style={{ color: 'green' }}>{status.score}</span> / 100
@@ -114,13 +114,13 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
                 <li id="content" style={{ width: '8.5%' }}>
                   {status.submit_id}
                 </li>
-                <li id="content" style={{ width: '16.5%' }}>
+                <li id="content" style={{ width: '21.5%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   <IconResult result={status.result} />
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.score === 100 ? (
                     <>
                       <span style={{ color: 'green' }}>{status.score}</span> / 100
