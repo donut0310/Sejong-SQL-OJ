@@ -2,6 +2,7 @@ import React from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 const UserTable = ({ problemList, user }) => {
   const history = useHistory()
@@ -15,8 +16,8 @@ const UserTable = ({ problemList, user }) => {
     history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
   }
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:mm:ss')
   }
 
   return (

@@ -6,6 +6,7 @@ import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import moment from 'moment'
 
 const AdminHighestTable = ({ statusList, classId, weekId }) => {
   const IconResult = ({ result }) => {
@@ -23,15 +24,15 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:mm:ss')
   }
 
   return (
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '20%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -46,18 +47,15 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
           <li id="content" style={{ width: '10%' }}>
             코드
           </li>
-          <li id="content" style={{ width: '25%' }}>
+          <li id="content" style={{ width: '30%' }}>
             제출시각
-          </li>
-          <li id="content" style={{ width: '10%' }}>
-            이의제기
           </li>
         </ul>
         {statusList.map((status, i) => {
           if (i === statusList.length - 1) {
             return (
               <ul id="content-list-last" key={i}>
-                <li id="content" style={{ width: '15%' }}>
+                <li id="content" style={{ width: '20%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
@@ -82,18 +80,15 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
                     Code
                   </button>
                 </li>
-                <li id="content" style={{ width: '25%' }}>
+                <li id="content" style={{ width: '30%' }}>
                   {parseDateTime(status.submit_time)}
-                </li>
-                <li id="content" style={{ width: '10%' }}>
-                  {status.isQna ? <QnaIcon /> : <></>}
                 </li>
               </ul>
             )
           } else
             return (
               <ul id="content-list" key={i}>
-                <li id="content" style={{ width: '15%' }}>
+                <li id="content" style={{ width: '20%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
@@ -118,11 +113,8 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
                     Code
                   </button>
                 </li>
-                <li id="content" style={{ width: '25%' }}>
+                <li id="content" style={{ width: '30%' }}>
                   {parseDateTime(status.submit_time)}
-                </li>
-                <li id="content" style={{ width: '10%' }}>
-                  {status.isQna ? <QnaIcon /> : <></>}
                 </li>
               </ul>
             )

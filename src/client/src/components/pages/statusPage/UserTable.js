@@ -8,6 +8,7 @@ import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import moment from 'moment'
 
 const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   const history = useHistory()
@@ -30,8 +31,8 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   }
 
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:mm:ss')
   }
 
   const handleQNAClick = (submitId) => async () => {
@@ -47,13 +48,13 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
           <li id="content" style={{ width: '8.5%' }}>
             제출번호
           </li>
-          <li id="content" style={{ width: '16.5%' }}>
+          <li id="content" style={{ width: '21.5%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
             결과
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '15%' }}>
             점수
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -73,13 +74,13 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
                 <li id="content" style={{ width: '8.5%' }}>
                   {status.submit_id}
                 </li>
-                <li id="content" style={{ width: '16.5%' }}>
+                <li id="content" style={{ width: '21.5%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   <IconResult result={status.result} />
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.score === 100 ? (
                     <>
                       <span style={{ color: 'green' }}>{status.score}</span> / 100
@@ -113,13 +114,13 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
                 <li id="content" style={{ width: '8.5%' }}>
                   {status.submit_id}
                 </li>
-                <li id="content" style={{ width: '16.5%' }}>
+                <li id="content" style={{ width: '21.5%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
                   <IconResult result={status.result} />
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.score === 100 ? (
                     <>
                       <span style={{ color: 'green' }}>{status.score}</span> / 100
