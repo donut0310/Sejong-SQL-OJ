@@ -101,10 +101,10 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
         <li id="content" style={{ width: '25%' }}>
           {parseDateTime(status.submit_time)}
         </li>
-        <li id="qna" style={{ width: '10%' }}>
+        <li id="qna" style={{ width: '5%' }}>
           {status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <></>}
         </li>
-        <li id="content" style={{ width: '5%', display: 'flex', justifyContent: 'center' }}>
+        <li id="content" style={{ width: '10%', display: 'flex', justifyContent: 'center' }}>
           {isOpen ? (
             <CloseEditBtn
               onClick={() => {
@@ -133,6 +133,7 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
               </StyledSelect>
             </StyledFormControl>
           </li>
+          <li id="content" style={{ width: '10%' }}></li>
           <li id="content" style={{ width: '12.5%' }}>
             <StyledTextField
               value={editScore}
@@ -144,10 +145,9 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
               // style={{ display: 'flex', justifyContent: 'center', paddingRight: '6px' }}
             />
           </li>
-          <li id="content" style={{ width: '10%' }}></li>
           <li id="content" style={{ width: '20%' }}></li>
-          <li id="qna" style={{ width: '10%' }}></li>
-          <li id="content" style={{ width: '10%', display: 'flex', justifyContent: 'center', paddingRight: '6px' }}>
+          <li id="qna" style={{ width: '0%' }}></li>
+          <li id="content" style={{ width: '20%', display: 'flex', justifyContent: 'center', paddingRight: '6px' }}>
             <button id="submit-btn" onClick={handleEditBtn}>
               수정
             </button>

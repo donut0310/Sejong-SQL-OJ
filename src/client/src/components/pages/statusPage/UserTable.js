@@ -37,7 +37,7 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
 
   const handleQNAClick = (submitId) => async () => {
     const data = await axios.post(`/api/v1/user/qna/${submitId}`)
-    console.log('이의제기 Toggle', data)
+    console.log('질문 Toggle', data)
     setIsChanged(!isChanged)
   }
 
@@ -46,7 +46,7 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
       <ul id="table-list">
         <ul id="title-tab">
           <li id="content" style={{ width: '8.5%' }}>
-            제출번호
+            번호
           </li>
           <li id="content" style={{ width: '21.5%' }}>
             아이디
@@ -64,7 +64,7 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
             제출시각
           </li>
           <li id="qna" style={{ width: '10%' }}>
-            이의제기
+            질문
           </li>
         </ul>
         {statusList.map((status, i) => {
