@@ -41,15 +41,19 @@ const User = ({ user }) => {
 
   const handleExecCode = async () => {
     if (input) {
-      console.log('handleExecCode', input)
+      console.log('Exec Code', input)
       setIsExecuted(true)
       setExecIsLoading(true)
       const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-      console.log('Exec data', data)
+      console.log('Exec result', data)
 
       if (data.message === 'success') {
         setExecIsError(false)
-        setExecResult(data.result)
+        if ('affectedRows' in data.result[0]) {
+          setExecResult(data.result[data.result.length - 1])
+        } else {
+          setExecResult(data.result)
+        }
       } else {
         setExecIsError(true)
         setExecResult(data.error)
@@ -98,7 +102,7 @@ const User = ({ user }) => {
       console.log('codingpage get problem info data.result[0] =>', problem)
 
       // Title
-      setProblemInfo({ ...problemInfo, className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
+      setProblemInfo({ ...problemInfo, className: problem.class_name, weekName: problem.week_title, problemName: problem.title, startTime: problem.start_time, endTime: problem.end_time })
 
       // Problem
       setTable_info(JSON.parse(problem.table_info))
@@ -154,4 +158,5 @@ const ProblemWrapper = styled.div`
   background: ${(props) => props.theme.INPUT_BACKGROUND};
   border-radius: 5px;
   padding: 15px;
+  margin-bottom: 20px;
 `

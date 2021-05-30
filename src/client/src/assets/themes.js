@@ -24,6 +24,9 @@ export const lightTheme = {
 
   INPUT_TABLE_TITLE: '#d9d9d9',
   INPUT_TABLE_CONTENTS: '#ffffff',
+
+  NOTICE_BACKGROUND: '#b7b1a9',
+  TAB_BACKGROUND: '#d9d9d9',
 }
 
 export const darkTheme = {
@@ -37,7 +40,7 @@ export const darkTheme = {
   HEADER_BACKGROUND: '#333332',
   FOOTER_BACKGROUND: '#333332',
 
-  SUB_BORDER: '#757575',
+  SUB_BORDER: '#1c1c1c',
   MAIN_BORDER: '#b3b3b1',
 
   BOARD_LIST_HOVER: '#4d4d4d',
@@ -52,4 +55,7 @@ export const darkTheme = {
 
   INPUT_TABLE_TITLE: '#737373',
   INPUT_TABLE_CONTENTS: '#a1a1a1',
+
+  NOTICE_BACKGROUND: '#b7b1a9',
+  TAB_BACKGROUND: '#2a2a2a',
 }

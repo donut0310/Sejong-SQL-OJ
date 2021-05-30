@@ -39,15 +39,7 @@ const App = ({ theme }) => {
         <Switch>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
-          <Route path="/" component={Auth(MainComponent, true)}>
-            {/* <MainWrapper>
-              <Modal />
-              <Header />
-              <Main />
-              <Footer />
-            </MainWrapper>
-            <ScrollUp /> */}
-          </Route>
+          <Route path="/" component={Auth(MainComponent, true)}></Route>
         </Switch>
       </AutoScrollUp>
     </ThemeProvider>
@@ -70,6 +62,12 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
     background: ${(props) => props.theme.BACKGROUND};
   };
+  @media all and (max-width: 550px) {
+    html { font-size: 70%; }
+  }
+  @media all and (max-width: 375px) {
+    html { font-size: 50%; }
+  }
 
   button#submit-btn {
     width: 60px;
@@ -79,6 +77,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 5px 0px 5px 5px;
     padding: 5px;
     color: white;
+    font-size: 0.8rem;
     background: ${(props) => props.theme.POINT};
     &:hover {
       cursor: pointer;
@@ -93,6 +92,7 @@ const GlobalStyles = createGlobalStyle`
   input.input-form {
     padding: 5px;
     margin: 5px;
+    font-size: 1rem;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
     background: ${(props) => props.theme.CONTENTS};
@@ -105,6 +105,7 @@ const GlobalStyles = createGlobalStyle`
   select#select-form {
     padding: 5px;
     margin: 5px;
+    font-size: 0.8rem;
     border: 1px solid ${(props) => props.theme.SUB_BORDER};
     border-radius: 5px;
     background: ${(props) => props.theme.CONTENTS};
@@ -118,9 +119,11 @@ const GlobalStyles = createGlobalStyle`
   ul#table-list {
     width: 100%;
     display: flex;
+    font-size: 1rem;
+    border: 1px solid ${(props) => props.theme.SUB_BORDER};
     flex-direction: column;
     margin: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: ${(props) => props.theme.GENERAL_FONT};
     &:hover {
       cursor: default;
@@ -130,10 +133,12 @@ const GlobalStyles = createGlobalStyle`
   ul#title-tab {
     width: 100%;
     display: flex;
+    font-size: 1rem;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     padding: 10px;
+    border-radius: 5px 5px 0 0 ;
     box-sizing: border-box;
     background: ${(props) => props.theme.BOARD_TITLE};
     font-weight: 600;
@@ -144,9 +149,11 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    font-size: 1rem;
     align-items: center;
     justify-content: center;
     padding: 10px;
+    border-bottom: 0.3px solid ${(props) => props.theme.BOARD_LIST_HOVER};
     background: ${(props) => props.theme.CONTENTS};
     font-weight: 400;
     &:hover {
@@ -154,17 +161,42 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
+  ul#content-list-last {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: ${(props) => props.theme.CONTENTS};
+    font-weight: 400;
+    border-radius: 0 0 5px 5px;
+    &:hover {
+      background: ${(props) => props.theme.BOARD_LIST_HOVER};
+    }
+  }
+
   li#content {
     text-align: center;
+    font-size: 1rem;
     button#problem {
       background: none;
       color: ${(props) => props.theme.GENERAL_FONT};
       border: none;
+      font-size: 0.8rem;
       &:hover {
         text-decoration: underline;
         cursor: pointer;
         font-weight: 600;
       }
+    }
+    button#problem-disable {
+      background: none;
+      font-size: 0.8rem;
+      color: gray;
+      border: none;
+      text-decoration: line-through;
     }
   }
 

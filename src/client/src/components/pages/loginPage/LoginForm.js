@@ -13,16 +13,18 @@ const LoginForm = ({ logIn }) => {
 
   const history = useHistory()
 
-  // TODO
   const onSubmit = async (data) => {
     console.log('data.id', data.id)
     console.log('data.password', data.password)
 
     const result = await logIn(data.id, data.password)
-    // const res = await axios.post(`/api/v1/auth/signin`, { user_id: data.id, user_pw: data.password })
 
     if (result.isCompleted) {
-      history.push('/')
+      const authResult = await axios.get('/api/v1/user/auth')
+      console.log('authResult', authResult)
+
+      if (authResult.data.result.role === 2) history.push('/admin')
+      else history.push('/')
     }
   }
 
@@ -36,9 +38,9 @@ const LoginForm = ({ logIn }) => {
       {errors.id && <ErrorMessage>아이디를 입력하세요</ErrorMessage>}
       <LoginTextField variant="outlined" size="small" name="password" label="비밀번호" placeholder="비밀번호" type="password" inputRef={register({ required: true })} />
       {errors.password && <ErrorMessage>비밀번호를 입력하세요</ErrorMessage>}
-      <SubmitBtn type="submit" onClick={handleSubmit(onSubmit)}>
+      <StyledButton type="submit" onClick={handleSubmit(onSubmit)}>
         로그인
-      </SubmitBtn>
+      </StyledButton>
       <StyledLink onClick={handleRegisterBtn}>회원가입</StyledLink>
     </StyledForm>
   )
@@ -111,16 +113,16 @@ const StyledLink = styled(Link)`
 
 const StyledButton = styled.button`
   width: 100%;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: ${(props) => props.theme.POINT};
   color: white;
   border: 0px;
-  border-radius: 10px;
+  font-size: 0.8rem;
+  border-radius: 4px;
   margin: 8px;
-  padding: 20px;
+  padding: 10px;
   &:focus {
     outline: 0;
   }

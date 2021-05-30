@@ -1,25 +1,13 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory, useParams, useLocation } from 'react-router-dom'
-import queryString from 'query-string'
+import React from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
+import { useParams, useHistory } from 'react-router-dom'
 import acceptIcon from '../../../assets/resultIcons/accept_icon.png'
 import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 
-const UserTable = ({ statusList, isChanged, setIsChanged }) => {
-  const history = useHistory()
-  const { classId, weekId } = useParams()
-  const location = useLocation()
-  const query = queryString.parse(location.search)
-  const userId = query.userId
-
-  const handleCodeCheck = (submitId) => () => {
-    history.push(`/${classId}/${weekId}/code/${submitId}`)
-  }
-
+const AdminHighestTable = ({ statusList, classId, weekId }) => {
   const IconResult = ({ result }) => {
     if (result === 'Accept') return <img src={acceptIcon} alt="accept" style={{ width: '3rem' }} />
     else if (result === 'WA') return <img src={wrongAnswerIcon} alt="wa" style={{ width: '3rem' }} />
@@ -29,31 +17,30 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
     else return <img src={loadingIcon} alt="loading" style={{ width: '3rem' }} />
   }
 
+  const history = useHistory()
+
+  const handleCodeCheck = (submitId) => () => {
+    history.push(`/${classId}/${weekId}/code/${submitId}`)
+  }
   const parseDateTime = (data) => {
     const dateTime = new Date(data).toLocaleString('ko-KR')
     return dateTime
-  }
-
-  const handleQNAClick = (submitId) => async () => {
-    const data = await axios.post(`/api/v1/user/qna/${submitId}`)
-    console.log('이의제기 Toggle', data)
-    setIsChanged(!isChanged)
   }
 
   return (
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '8.5%' }}>
-            제출번호
-          </li>
-          <li id="content" style={{ width: '16.5%' }}>
+          <li id="content" style={{ width: '15%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
+            이름
+          </li>
+          <li id="content" style={{ width: '15%' }}>
             결과
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '15%' }}>
             점수
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -62,7 +49,7 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
           <li id="content" style={{ width: '25%' }}>
             제출시각
           </li>
-          <li id="qna" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '10%' }}>
             이의제기
           </li>
         </ul>
@@ -70,16 +57,16 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
           if (i === statusList.length - 1) {
             return (
               <ul id="content-list-last" key={i}>
-                <li id="content" style={{ width: '8.5%' }}>
-                  {status.submit_id}
-                </li>
-                <li id="content" style={{ width: '16.5%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
+                  {status.user_name}
+                </li>
+                <li id="content" style={{ width: '15%' }}>
                   <IconResult result={status.result} />
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.score === 100 ? (
                     <>
                       <span style={{ color: 'green' }}>{status.score}</span> / 100
@@ -91,35 +78,31 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
                   )}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  {status.user_id === userId ? (
-                    <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
-                      Code
-                    </button>
-                  ) : (
-                    <button id="problem-disable">Code</button>
-                  )}
+                  <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
+                    Code
+                  </button>
                 </li>
                 <li id="content" style={{ width: '25%' }}>
                   {parseDateTime(status.submit_time)}
                 </li>
-                <li id="qna" style={{ width: '10%' }}>
-                  {userId === status.user_id && (status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <QnaIconDisabled onClick={handleQNAClick(status.submit_id)} />)}
+                <li id="content" style={{ width: '10%' }}>
+                  {status.isQna ? <QnaIcon /> : <></>}
                 </li>
               </ul>
             )
           } else
             return (
               <ul id="content-list" key={i}>
-                <li id="content" style={{ width: '8.5%' }}>
-                  {status.submit_id}
-                </li>
-                <li id="content" style={{ width: '16.5%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.user_id}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
+                  {status.user_name}
+                </li>
+                <li id="content" style={{ width: '15%' }}>
                   <IconResult result={status.result} />
                 </li>
-                <li id="content" style={{ width: '20%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   {status.score === 100 ? (
                     <>
                       <span style={{ color: 'green' }}>{status.score}</span> / 100
@@ -131,19 +114,15 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
                   )}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  {status.user_id === userId ? (
-                    <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
-                      Code
-                    </button>
-                  ) : (
-                    <button id="problem-disable">Code</button>
-                  )}
+                  <button id="problem" onClick={handleCodeCheck(status.submit_id)}>
+                    Code
+                  </button>
                 </li>
                 <li id="content" style={{ width: '25%' }}>
                   {parseDateTime(status.submit_time)}
                 </li>
-                <li id="qna" style={{ width: '10%' }}>
-                  {userId === status.user_id && (status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <QnaIconDisabled onClick={handleQNAClick(status.submit_id)} />)}
+                <li id="content" style={{ width: '10%' }}>
+                  {status.isQna ? <QnaIcon /> : <></>}
                 </li>
               </ul>
             )
@@ -153,28 +132,20 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   )
 }
 
-export default UserTable
+export default AdminHighestTable
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 20px;
 `
+
 const QnaIcon = styled(HelpOutlineIcon)`
   && {
     font-size: 1.6rem;
-    color: ${(props) => props.theme.POINT};
   }
-  &:hover {
-    cursor: pointer;
-    color: ${(props) => props.theme.GENERAL_FONT};
-  }
-`
-const QnaIconDisabled = styled(HelpOutlineIcon)`
-  && {
-    font-size: 1.6rem;
-    color: ${(props) => props.theme.GENERAL_FONT};
-  }
+
   &:hover {
     cursor: pointer;
     color: ${(props) => props.theme.POINT};

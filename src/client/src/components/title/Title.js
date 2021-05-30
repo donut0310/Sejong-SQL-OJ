@@ -3,17 +3,24 @@ import styled from 'styled-components'
 import Clock from 'react-live-clock'
 
 const Title = ({ problemInfo }) => {
+  const parseDateTime = (data) => {
+    const dateTime = new Date(data).toLocaleString('ko-KR')
+    return dateTime
+  }
+
   return (
     <TitleWrapper>
       <ClassName>{problemInfo.className}</ClassName>
       <WeekName>{problemInfo.weekName}</WeekName>
-
-      {problemInfo.problemName && <ProblemName>문제: {problemInfo.problemName}</ProblemName>}
-
-      <TimeWrapper>
-        {problemInfo.startTime && <EndTime>StartTime: {problemInfo.startTime}</EndTime>}
-        {problemInfo.endTime && <EndTime>EndTime: {problemInfo.endTime}</EndTime>}
-      </TimeWrapper>
+      {problemInfo.problemName && <ProblemName>문제 : {problemInfo.problemName}</ProblemName>}
+      {problemInfo.startTime ? (
+        <TimeWrapper>
+          {problemInfo.startTime && <EndTime>Start Time : {parseDateTime(problemInfo.startTime)}</EndTime>}
+          {problemInfo.endTime && <EndTime>End Time : {parseDateTime(problemInfo.endTime)}</EndTime>}
+        </TimeWrapper>
+      ) : (
+        <></>
+      )}
       <CurrentTime>
         <Clock format={'YYYY년 MM월 DD일 HH:mm:ss'} ticking={true} />
       </CurrentTime>
@@ -28,32 +35,38 @@ const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 20px;
+  justify-contents: center;
+  padding: 30px;
   margin-bottom: 40px;
 
   color: ${(props) => props.theme.GENERAL_FONT};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
 
-  border: 1.5px solid black;
+  border: 1.5px solid ${(props) => props.theme.SUB_BORDER};
+  // border-bottom: 4px solid ${(props) => props.theme.POINT};
+  // border-top: 4px solid ${(props) => props.theme.POINT};
+  // border-left: 4px solid ${(props) => props.theme.POINT};
+  // border-right: 4px solid ${(props) => props.theme.POINT};
   border-radius: 10px;
-  background: ${(props) => props.theme.HEADER_BACKGROUND};
 `
 
 const ClassName = styled.div`
   font-size: 1.8rem;
   font-weight: bold;
-  padding: 10px;
+  padding: 15px;
 `
 
 const WeekName = styled.div`
   font-size: 1.6rem;
   padding: 10px;
-  margin-bottom: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
 `
 
 const ProblemName = styled.div`
   font-size: 1.3rem;
-  padding: 10px;
+  padding: 5px;
+  font-weight: 600;
 `
 
 const TimeWrapper = styled.div`
@@ -61,20 +74,16 @@ const TimeWrapper = styled.div`
   padding: 10px;
 `
 
-const StartTime = styled.div`
-  font-size: 1.1rem;
-  padding: 10px;
-`
-
 const EndTime = styled.div`
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   padding: 10px;
+  font-weight: 500;
 `
 
 const CurrentTime = styled.div`
-  /* width: 600px;
+  font-size: 1.2rem;
+  font-weight: 500;
   justify-content: center;
   text-align: center;
-  padding-bottom: 30px;
-  border-bottom: 2px solid ${(props) => props.theme.POINT}; */
+  padding-bottom: 5px;
 `

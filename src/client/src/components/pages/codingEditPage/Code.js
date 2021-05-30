@@ -12,7 +12,7 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 // light mode
 import 'ace-builds/src-noconflict/theme-tomorrow'
 // dark mode
-import 'ace-builds/src-noconflict/theme-tomorrow_night_bright'
+import 'ace-builds/src-noconflict/theme-tomorrow_night_eighties'
 
 const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
   const [fontSize, setFontSize] = useState(14)
@@ -65,13 +65,14 @@ const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
           style={{
             borderRadius: '5px',
             boxSizing: 'border-box',
+            border: `1px solid #c4c4c4`,
           }}
         />
       ) : (
         <AceEditor
           placeholder="코드를 입력하세요."
           mode="mysql"
-          theme="tomorrow_night_bright"
+          theme="tomorrow_night_eighties"
           name="editor"
           width="100%"
           onChange={onChange}
@@ -88,6 +89,7 @@ const Code = ({ theme, input, setInput, handleExecCode, handleSubmitCode }) => {
             tabSize: 2,
           }}
           style={{
+            border: `1px solid #1c1c1c`,
             borderRadius: '5px',
             boxSizing: 'border-box',
           }}

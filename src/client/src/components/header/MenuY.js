@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -7,39 +7,22 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import TreeItem from '@material-ui/lab/TreeItem'
 import SettingsIcon from '@material-ui/icons/Settings'
-import {} from '../../redux'
+import axios from 'axios'
 
-const Menu = ({ handleToggleMenu }) => {
+const Menu = ({ handleToggleMenu, user }) => {
   const history = useHistory()
+  const [userClassList, setUserClassList] = useState([])
+  const [toggleMenu, setToggleMenu] = useState(true)
 
   useEffect(() => {
-    console.log('USE EFFECT 실행 - MODAL')
-    // ;(async () => {
-    //   await axios
-    //     .get(`/api/v1/user/${user.id}`)
-    //     .then((res) => setUserClassList(res.data))
-    //     .catch((err) => console.log(err))
-    // })()
+    ;(async () => {
+      if (user.isAuth && user.role !== 2) {
+        const { data } = await axios.get(`/api/v1/user/courses`)
+        console.log('Modal useEffect', data)
+        setUserClassList(data.result)
+      }
+    })()
   }, [])
-
-  const dummyUserClassList = [
-    {
-      classId: 15,
-      className: '데이터베이스1 - 김지환',
-      weekList: [
-        { weekId: 3, weekName: '1주차 실습' },
-        { weekId: 5, weekName: '2주차 실습(분석)' },
-      ],
-    },
-    {
-      classId: 19,
-      className: '심화 데이터베이스3 (김지환)',
-      weekList: [
-        { weekId: 1, weekName: '1주차 실습' },
-        { weekId: 16, weekName: '2주차 실습' },
-      ],
-    },
-  ]
 
   const handleWeekInfo = (classID, weekID) => () => {
     history.push(`/${classID}/${weekID}/contents`)
@@ -54,7 +37,7 @@ const Menu = ({ handleToggleMenu }) => {
   return (
     <MenuWrapper>
       <TreeView defaultCollapseIcon={<ExpandMoreIcon />} defaultExpandIcon={<ChevronRightIcon />}>
-        {dummyUserClassList.map((class_) => (
+        {userClassList.map((class_) => (
           <TreeContainer key={class_.classId}>
             <StyledTreeItem nodeId={`${class_.className}`} label={class_.className}>
               {class_.weekList.map((week_) => (
@@ -69,18 +52,17 @@ const Menu = ({ handleToggleMenu }) => {
   )
 }
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  }
 }
 
-const mapDispatchToProps = {}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Menu)
+export default connect(mapStateToProps)(Menu)
 
 const MenuWrapper = styled.ul`
   width: 100%;
   list-style: none;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,7 +76,7 @@ const MenuWrapper = styled.ul`
 
 const SettingBtn = styled(SettingsIcon)`
   && {
-    font-size: 1.3em;
+    font-size: 2rem;
     margin-top: 7px;
     margin-left: 7px;
     color: ${(props) => props.theme.GENERAL_FONT};
@@ -123,6 +105,7 @@ const StyledTreeItem = styled(TreeItem)`
   && .MuiTypography-root {
     margin: 2px 0;
     padding: 5px;
+    font-size: 1.4rem;
     font-weight: 500;
     color: ${(props) => props.theme.GENERAL_FONT};
     border-left: 4px solid ${(props) => props.theme.BACKGROUND};

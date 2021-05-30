@@ -9,12 +9,8 @@ import PaginationTab from '../../components/pagination/PaginationTab'
 import queryString from 'query-string'
 
 const User = ({ match }) => {
-  const history = useHistory()
-
-  // WIP
   const location = useLocation()
   const query = queryString.parse(location.search)
-  // console.log('query', query)
   const pId = query.pId
   const [userId, setUserId] = useState(query.userId)
 
@@ -26,14 +22,15 @@ const User = ({ match }) => {
     endTime: '',
   })
 
+  const [isChanged, setIsChanged] = useState(false)
+
   const [statusList, setStatusList] = useState([])
 
   const [result, setResult] = useState(0)
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
 
-  const [isChanged, setIsChanged] = useState(false)
-
+  // Status
   useEffect(() => {
     ;(async () => {
       if (userId === '') {
@@ -47,12 +44,21 @@ const User = ({ match }) => {
         setStatusList(data.result)
         setMaxPage(data.maxpage)
       }
-      const titleData = await axios.get(`/api/v1/problem/${pId}`)
-      const problem = titleData.data.result[0]
-      // Title
-      setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
     })()
-  }, [page])
+  }, [isChanged, page])
+
+  // Title
+  useEffect(() => {
+    const fetchTitleData = async () => {
+      const { data } = await axios.get(`/api/v1/problem/${pId}`)
+      console.log('Get titleData', data)
+      const problem = data.result[0]
+
+      setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title, startTime: problem.start_time, endTime: problem.end_time })
+    }
+
+    fetchTitleData()
+  }, [pId])
 
   const handleInputID = (e) => {
     setUserId(e.target.value)
@@ -63,22 +69,9 @@ const User = ({ match }) => {
   }
 
   const handleSearch = () => {
-    setIsChanged(true)
-    setPage(1)
     console.log('Search ID:', userId, 'result:', result, 'page:', page)
-    ;(async () => {
-      if (userId === '') {
-        const { data } = await axios.get(`/api/v1/user/status/option?pId=${pId}&result=${result}&page=${page}`)
-        console.log('Get status', data)
-        setStatusList(data.result)
-        setMaxPage(data.maxpage)
-      } else {
-        const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
-        console.log('Get status', data)
-        setStatusList(data.result)
-        setMaxPage(data.maxpage)
-      }
-    })(isChanged)
+    setIsChanged(!isChanged)
+    setPage(1)
   }
 
   return (
@@ -105,7 +98,7 @@ const User = ({ match }) => {
           조회
         </button>
       </div>
-      <UserTable statusList={statusList} />
+      <UserTable statusList={statusList} isChanged={isChanged} setIsChanged={setIsChanged} />
       <PaginationTab currentPage={page} setPage={setPage} maxPage={maxPage} />
     </Container>
   )

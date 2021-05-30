@@ -1,72 +1,48 @@
-import React from 'react'
-import { useHistory } from 'react-router'
+import React, { useState } from 'react'
+import { useHistory, useParams, useLocation } from 'react-router-dom'
+import queryString from 'query-string'
 import styled from 'styled-components'
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import AdminLi from './AdminLi'
 
-const AdminTable = () => {
-  const classId = 1
-  const weekId = 1
-  const submitId = 1
-
+const AdminTable = ({ statusList, isChanged, setIsChanged }) => {
   const history = useHistory()
-  const scores = [
-    { id: '17010000', name: '홍ㅇㅇ', score: '100', query_cost: '3.42' },
-    { id: '18010000', name: '김ㅇㅇ', score: '30', query_cost: '-' },
-    { id: '19010000', name: '이ㅇㅇ', score: '100', query_cost: '4.08' },
-  ]
-  // TODO test case 별로 점수 나타내기
+  const { classId, weekId } = useParams()
 
-  const handleCodeCheck = () => {
-    history.push(`/${classId}/${weekId}/code/${submitId}`)
-  }
+  const location = useLocation()
+  const query = queryString.parse(location.search)
 
   return (
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '15%' }}>
+          <li id="content" style={{ width: '8.5%' }}>
+            제출번호
+          </li>
+          <li id="content" style={{ width: '16.5%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
-            이름
+            결과
           </li>
-          <li id="content" style={{ width: '15%' }}>
-            총점
+          <li id="content" style={{ width: '10%' }}>
+            점수
           </li>
           <li id="content" style={{ width: '10%' }}>
             코드
           </li>
-          <li id="content" style={{ width: '50%' }}>
-            Query Cost
+          <li id="content" style={{ width: '25%' }}>
+            제출시각
+          </li>
+          <li id="qna" style={{ width: '10%' }}>
+            이의제기
+          </li>
+          <li id="content" style={{ width: '10%' }}>
+            수정
           </li>
         </ul>
-        {scores.map((score, i) => (
-          <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '15%' }}>
-              {score.id}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              {score.name}
-            </li>
-            <li id="content" style={{ width: '15%' }}>
-              {score.score === 100 ? (
-                <>
-                  <span style={{ color: 'green' }}>{score.score}</span> / 100
-                </>
-              ) : (
-                <>
-                  <span style={{ color: 'red' }}>{score.score}</span> / 100
-                </>
-              )}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <button id="problem" onClick={handleCodeCheck}>
-                Code
-              </button>
-            </li>
-            <li id="content" style={{ width: '50%' }}>
-              {score.query_cost}
-            </li>
-          </ul>
+        {statusList.map((status, i) => (
+          <AdminLi isChanged={isChanged} setIsChanged={setIsChanged} status={status} key={i} />
         ))}
       </ul>
     </Container>
@@ -79,4 +55,20 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+const QnaIcon = styled(HelpOutlineIcon)`
+  && {
+    font-size: 1.6rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.POINT};
+  }
+`
+
+const StyledPopper = styled.div`
+  background: white;
+  padding: 10px;
+  margin: 5px;
 `

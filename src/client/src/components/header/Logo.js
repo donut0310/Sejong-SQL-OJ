@@ -1,18 +1,27 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-const Logo = () => {
+const Logo = ({ user }) => {
   const history = useHistory()
 
   const handleLogo = () => {
-    history.push('/')
+    if (user.role !== 2) {
+      history.push('/')
+    }
   }
 
   return <LogoWrapper onClick={handleLogo}>Sejong SQL OJ</LogoWrapper>
 }
 
-export default Logo
+const mapStateToProps = ({ user }) => {
+  return {
+    user,
+  }
+}
+
+export default connect(mapStateToProps)(Logo)
 
 const LogoWrapper = styled.div`
   height: 90px;

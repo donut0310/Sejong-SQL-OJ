@@ -20,11 +20,14 @@ const SystemAdmin = () => {
     if (className && professor) {
       ;(async () => {
         console.log('강좌 생성')
-        // const { data } = await axios.post(`/api/v1/course/enrollProf`, {
-        //   users: professor,
-        //   class_name: className,
-        // })
-        // console.log(data)
+        console.log('className', className)
+        console.log('professor', professor)
+
+        const { data } = await axios.post(`/api/v1/course/enrollProf`, {
+          users: professor,
+          class_name: className,
+        })
+        console.log(data)
       })()
     } else {
       alert('모두 입력해주세요.')
@@ -57,10 +60,14 @@ const Wrapper = styled.div`
 `
 const Title = styled.div`
   width: 100%;
-  height: 100px;
-  margin-top: 30px;
-  text-align: center;
+  height: 150px;
+  border-radius: 5px;
+  border: 2px solid ${(props) => props.theme.SUB_BORDER};
+  background: ${(props) => props.theme.INPUT_BACKGROUND};
+  display: flex;
   font-size: 2em;
-  font-weight: 600;
-  border-bottom: 3px solid ${(props) => props.theme.POINT};
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
 `

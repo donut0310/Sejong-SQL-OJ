@@ -14,32 +14,31 @@ const UserTable = ({ problemList, user }) => {
   const handleStatus = (pId) => {
     history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
   }
-
   const parseDateTime = (data) => {
-    const dateTime = new Date(data)
-    return dateTime.toISOString().substr(0, 19).replace('T', ' ')
+    const dateTime = new Date(data).toLocaleString('ko-KR')
+    return dateTime
   }
 
   return (
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '7.5%' }}>
             번호
           </li>
-          <li id="content" style={{ width: '20%' }}>
+          <li id="content" style={{ width: '28%' }}>
             제목
           </li>
-          <li id="content" style={{ width: '5%' }}>
+          <li id="content" style={{ width: '7.5%' }}>
             제출
           </li>
           <li id="content" style={{ width: '10%' }}>
             점수
           </li>
-          <li id="content" style={{ width: '22.5%' }}>
+          <li id="content" style={{ width: '19%' }}>
             Start
           </li>
-          <li id="content" style={{ width: '22.5%' }}>
+          <li id="content" style={{ width: '19%' }}>
             End
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -47,53 +46,102 @@ const UserTable = ({ problemList, user }) => {
           </li>
         </ul>
 
-        {problemList.map((problem, i) => (
-          <ul id="content-list" key={i}>
-            <li id="content" style={{ width: '10%' }}>
-              {problem.p_id}
-            </li>
-            <li id="content" style={{ width: '20%' }}>
-              <button
-                id="problem"
-                onClick={() => {
-                  handleProblemName(problem.p_id)
-                }}
-              >
-                {problem.title}
-              </button>
-            </li>
-            <li id="content" style={{ width: '5%' }}>
-              {/* 사용자 제출 횟수 가져와야함 */}
-              {problem.submit_cnt}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              {problem.score === 100 ? (
-                <>
-                  <span style={{ color: 'green' }}>{problem.score}</span> / 100
-                </>
-              ) : (
-                <>
-                  <span style={{ color: 'red' }}>{problem.score}</span> / 100
-                </>
-              )}
-            </li>
-            <li id="content" style={{ width: '22.5%' }}>
-              {parseDateTime(problem.start_time)}
-            </li>
-            <li id="content" style={{ width: '22.5%' }}>
-              {parseDateTime(problem.end_time)}
-            </li>
-            <li id="content" style={{ width: '10%' }}>
-              <StyledButton
-                onClick={() => {
-                  handleStatus(problem.p_id)
-                }}
-              >
-                Status
-              </StyledButton>
-            </li>
-          </ul>
-        ))}
+        {problemList.map((problem, i) => {
+          if (i === problemList.length - 1) {
+            return (
+              <ul id="content-list-last" key={i}>
+                <li id="content" style={{ width: '7.5%' }}>
+                  {problem.p_id}
+                </li>
+                <li id="content" style={{ width: '28%' }}>
+                  <button
+                    id="problem"
+                    onClick={() => {
+                      handleProblemName(problem.p_id)
+                    }}
+                  >
+                    {problem.title}
+                  </button>
+                </li>
+                <li id="content" style={{ width: '7.5%' }}>
+                  {problem.submit_cnt}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {problem.score === 100 ? (
+                    <>
+                      <span style={{ color: 'green' }}>{problem.score}</span> / 100
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: 'red' }}>{problem.score}</span> / 100
+                    </>
+                  )}
+                </li>
+                <li id="content" style={{ width: '19%' }}>
+                  {parseDateTime(problem.start_time)}
+                </li>
+                <li id="content" style={{ width: '19%' }}>
+                  {parseDateTime(problem.end_time)}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  <StyledButton
+                    onClick={() => {
+                      handleStatus(problem.p_id)
+                    }}
+                  >
+                    Status
+                  </StyledButton>
+                </li>
+              </ul>
+            )
+          } else
+            return (
+              <ul id="content-list" key={i}>
+                <li id="content" style={{ width: '7.5%' }}>
+                  {problem.p_id}
+                </li>
+                <li id="content" style={{ width: '28%' }}>
+                  <button
+                    id="problem"
+                    onClick={() => {
+                      handleProblemName(problem.p_id)
+                    }}
+                  >
+                    {problem.title}
+                  </button>
+                </li>
+                <li id="content" style={{ width: '7.5%' }}>
+                  {problem.submit_cnt}
+                </li>
+                <li id="content" style={{ width: '10%' }}>
+                  {problem.score === 100 ? (
+                    <>
+                      <span style={{ color: 'green' }}>{problem.score}</span> / 100
+                    </>
+                  ) : (
+                    <>
+                      <span style={{ color: 'red' }}>{problem.score}</span> / 100
+                    </>
+                  )}
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {parseDateTime(problem.start_time)}
+                </li>
+                <li id="content" style={{ width: '20%' }}>
+                  {parseDateTime(problem.end_time)}
+                </li>
+                <li id="content" style={{ width: '7%' }}>
+                  <StyledButton
+                    onClick={() => {
+                      handleStatus(problem.p_id)
+                    }}
+                  >
+                    Status
+                  </StyledButton>
+                </li>
+              </ul>
+            )
+        })}
       </ul>
     </Container>
   )
@@ -116,6 +164,7 @@ const StyledButton = styled.button`
   border: none;
   color: blue;
   background: none;
+  font-size: 0.8rem;
   &:hover {
     cursor: pointer;
     text-decoration: underline;

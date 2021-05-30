@@ -85,7 +85,7 @@ const Admin = () => {
 
     fetchStudentData()
     fetchTitleData()
-  }, [])
+  }, [classId])
 
   // TODO index -> admin.js생성 후 옮겨야됨
   return (

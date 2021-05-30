@@ -8,14 +8,7 @@ import Admin from './Admin'
 const StatusPage = ({ user }) => {
   const { classId } = useParams()
 
-  // TODO
-  // return <>{user.role === 1 || user.class_id.includes(classId) ? <Admin /> : <User />}</>
-  return (
-    <>
-      <User />
-      {/* <Admin /> */}
-    </>
-  )
+  return <>{user.role === 1 || user.class_id.includes(Number(classId)) ? <Admin /> : <User />}</>
 }
 
 const mapStateToProps = ({ user }) => {

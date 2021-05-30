@@ -20,9 +20,11 @@ const ModalComponent = ({ user }) => {
 
   useEffect(() => {
     ;(async () => {
-      const { data } = await axios.get(`/api/v1/user/${user.id}`)
-      console.log('Modal useEffect', data.result)
-      setUserClassList(data.result)
+      if (user.isAuth && user.role !== 2) {
+        const { data } = await axios.get(`/api/v1/user/courses`)
+        console.log('Modal useEffect', data)
+        setUserClassList(data.result)
+      }
     })()
   }, [])
 

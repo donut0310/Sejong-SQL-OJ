@@ -5,10 +5,6 @@ const ResultTable = ({ execResult }) => {
   const [attributes, setAttributes] = useState([])
 
   useEffect(() => {
-    console.log('execResult', execResult)
-  }, [])
-
-  useEffect(() => {
     const temp = []
     for (let i in execResult[0]) temp.push(i)
     setAttributes(temp)
