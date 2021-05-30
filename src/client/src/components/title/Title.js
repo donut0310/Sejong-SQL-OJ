@@ -6,7 +6,7 @@ import moment from 'moment'
 const Title = ({ problemInfo }) => {
   const parseDateTime = (data) => {
     const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
-    return moment(dateTime).format('YYYY-MM-DD HH:MM:SS')
+    return moment(dateTime).format('YYYY-MM-DD HH:mm:ss')
   }
 
   return (
