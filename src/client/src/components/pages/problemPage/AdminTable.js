@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import moment from 'momnet'
 
 const AdminTable = ({ user, problemList }) => {
   const history = useHistory()
@@ -23,8 +24,8 @@ const AdminTable = ({ user, problemList }) => {
 
   console.log(problemList)
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:MM:SS')
   }
 
   return (

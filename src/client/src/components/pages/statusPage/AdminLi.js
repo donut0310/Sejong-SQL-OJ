@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import { TextField, Collapse, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
 import axios from 'axios'
+import moment from 'moment'
 
 const AdminLi = ({ status, isChanged, setIsChanged }) => {
   const history = useHistory()
@@ -55,8 +56,8 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
     else return <img src={loadingIcon} alt="loading" style={{ width: '3rem' }} />
   }
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:MM:SS')
   }
 
   const handleCodeCheck = (submitId) => () => {
