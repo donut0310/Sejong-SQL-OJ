@@ -23,10 +23,8 @@ const LoginForm = ({ logIn }) => {
       const authResult = await axios.get('/api/v1/user/auth')
       console.log('authResult', authResult)
 
-      // TODO
-      // if (authResult.data.result.role == 2) history.push('/admin')
-      // else history.push('/')
-      history.push('/')
+      if (authResult.data.result.role === 2) history.push('/admin')
+      else history.push('/')
     }
   }
 
