@@ -6,6 +6,7 @@ import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import moment from 'moment'
 
 const AdminHighestTable = ({ statusList, classId, weekId }) => {
   const IconResult = ({ result }) => {
@@ -23,8 +24,8 @@ const AdminHighestTable = ({ statusList, classId, weekId }) => {
     history.push(`/${classId}/${weekId}/code/${submitId}`)
   }
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:MM:SS')
   }
 
   return (

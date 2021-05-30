@@ -8,6 +8,7 @@ import errorIcon from '../../../assets/resultIcons/error_icon.png'
 import loadingIcon from '../../../assets/resultIcons/loading_icon.png'
 import wrongAnswerIcon from '../../../assets/resultIcons/wronganswer_icon.png'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import moment from 'moment'
 
 const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   const history = useHistory()
@@ -30,8 +31,8 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
   }
 
   const parseDateTime = (data) => {
-    const dateTime = new Date(data).toLocaleString('ko-KR')
-    return dateTime
+    const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
+    return moment(dateTime).format('YYYY-MM-DD HH:MM:SS')
   }
 
   const handleQNAClick = (submitId) => async () => {
