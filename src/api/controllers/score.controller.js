@@ -3,8 +3,13 @@ export class ScoreController {
     async scoring(req,res) {
       // 사용자가 입력한 정답에 ;가 있는지 판별 
       let userQuery=req.body.user_query;
+      let flag=false;
       if(userQuery.indexOf(';') == -1) {
         userQuery=userQuery+';'  
+      }
+      var columnCount = userQuery.match(/;/g);
+      if(columnCount.length>=2){
+        flag=true;
       }
       let sql = "select tc_cnt from problem where p_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=?  order by tc_id asc;"
@@ -33,6 +38,9 @@ export class ScoreController {
           try {
             connection.beginTransaction();
             let [userJson] = await connection.query(userQuery);
+            if(flag==true){
+              userJson=userJson[userJson.length-1];
+            }
             let answerString = tcAnswer[j].tc_answer.replace(/(\r\n\t|\n|\r\t)/gm,"");
             answerString=answerString.replace(/(\s*)/g, "");
             if(JSON.stringify(userJson) === answerString){
@@ -77,6 +85,7 @@ export class ScoreController {
                   score+= 100*(correct)/length;
                 }
             }
+            console.log(score);
             connection.rollback();
             connection.release();
           } catch (err) {
