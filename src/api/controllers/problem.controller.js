@@ -125,9 +125,13 @@ export class ProblemController {
 
     const pId = req.params.pId;
     const userQuery = req.body.user_query;
+    let flag=false;
     let data = {};
     data.result = {};
-
+    var columnCount = userQuery.match(/;/g);
+    if(columnCount.length>=2){
+      flag=true;
+    }
     const sql = "select tc_id from problem where p_id = ?";
     const params = [pId];
     let [tcId] = await database.queryExecute(sql, params);
@@ -136,7 +140,11 @@ export class ProblemController {
       const connection =await database.testCaseConnect(tcId)
       try {
         connection.beginTransaction();
-        const [a] = await connection.query(userQuery);
+        let [a] = await connection.query(userQuery);
+        if(flag==true){
+          a=a[a.length-1];
+        }
+        console.log(a);
         connection.rollback();
         connection.release();
         data.result = a;
