@@ -8,7 +8,7 @@ const ProfessorManagement = ({ professor, setProfessor }) => {
     // console.log('new professor', professor)
   }
 
-  return <StyledTextField id="outlined-basic" label="교수 입력" multiline rows={3} variant="outlined" placeholder="담당 교수를 입력하세요." onChange={handleChangeNewProfessor} />
+  return <StyledTextField value={professor} id="outlined-basic" label="교수 입력" multiline rows={3} variant="outlined" placeholder="담당 교수를 입력하세요." onChange={handleChangeNewProfessor} />
 }
 
 export default ProfessorManagement

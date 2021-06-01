@@ -44,6 +44,7 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
 
     console.log('Edit submitted result', data)
 
+    setIsOpen(false)
     setIsChanged(!isChanged)
   }
 

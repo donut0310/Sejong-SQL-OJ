@@ -8,7 +8,7 @@ const TitleManagement = ({ className, setClassName }) => {
     // console.log(className)
   }
 
-  return <StyledTextField id="outlined-basic" label="강좌 이름" variant="outlined" placeholder={'강좌명을 입력하세요.'} onChange={handleChangeNewClassName} />
+  return <StyledTextField id="outlined-basic" value={className} label="강좌 이름" variant="outlined" placeholder={'강좌명을 입력하세요.'} onChange={handleChangeNewClassName} />
 }
 
 export default TitleManagement

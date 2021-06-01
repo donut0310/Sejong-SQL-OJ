@@ -28,6 +28,8 @@ const SystemAdmin = () => {
           class_name: className,
         })
         console.log(data)
+        setClassName('')
+        setProfessor([])
       })()
     } else {
       alert('모두 입력해주세요.')
