@@ -16,10 +16,10 @@ const AdminTable = ({ statusList, isChanged, setIsChanged }) => {
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '8.5%' }}>
+          <li id="content" style={{ width: '7%' }}>
             번호
           </li>
-          <li id="content" style={{ width: '21.5%' }}>
+          <li id="content" style={{ width: '23%' }}>
             아이디
           </li>
           <li id="content" style={{ width: '10%' }}>
@@ -31,13 +31,13 @@ const AdminTable = ({ statusList, isChanged, setIsChanged }) => {
           <li id="content" style={{ width: '10%' }}>
             코드
           </li>
-          <li id="content" style={{ width: '25%' }}>
+          <li id="content" style={{ width: '23%' }}>
             제출시각
           </li>
-          <li id="qna" style={{ width: '5%' }}>
+          <li id="qna" style={{ width: '8%' }}>
             질문
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '9%' }}>
             수정
           </li>
         </ul>
