@@ -16,7 +16,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 const ModalComponent = ({ user }) => {
   const history = useHistory()
   const [userClassList, setUserClassList] = useState([])
-  const [toggleMenu, setToggleMenu] = useState(true)
+  const [toggleMenu, setToggleMenu] = useState(false)
 
   useEffect(() => {
     ;(async () => {
