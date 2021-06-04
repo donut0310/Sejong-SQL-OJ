@@ -31,7 +31,7 @@ const Admin = () => {
   const [startTime, setStartTime] = useState('infinite')
   const [endTime, setEndTime] = useState('infinite')
   // 공개 / 비공개
-  const [isPublic, setIsPublic] = useState(true)
+  const [isPublic, setIsPublic] = useState(1)
 
   useEffect(() => {
     ;(async () => {
