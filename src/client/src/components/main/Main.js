@@ -25,7 +25,6 @@ const Main = () => {
       <Route path="/:classId/:weekId/code/:submitId" component={CodeCheckPage} />
       <Route path="/manage/:classId/:weekId/addproblem" component={ProblemAddPage} />
       <Route exact path="/manage/:classId" component={ClassManagePage} />
-      {/* TODO path 정하기 */}
       <Route path="/admin" component={SystemManagePage} />
     </MainWrapper>
   )

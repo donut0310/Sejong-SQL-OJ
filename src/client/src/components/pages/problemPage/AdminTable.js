@@ -1,28 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import moment from 'momnet'
+import moment from 'moment'
 
 const AdminTable = ({ user, problemList }) => {
   const history = useHistory()
+  const { classId, weekId } = useParams()
 
-  const classId = 1
-  const weekId = 1
-  const pId = 1
-
-  const handleProblemName = () => {
+  const handleProblemName = (pId) => {
     history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
-  const handleStatus = () => {
-    history.push(`/${classId}/${weekId}/status?userId=${user.id}&pId=${pId}`)
+  const handleStatus = (pId) => {
+    history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
   }
 
-  const handleDelete = () => {
-    console.log('delete problem')
-  }
-
-  console.log(problemList)
   const parseDateTime = (data) => {
     const dateTime = new Date(data).toLocaleString('en-US', { timeZone: 'Asia/Seoul' })
     return moment(dateTime).format('YYYY-MM-DD HH:mm:ss')
@@ -48,7 +40,7 @@ const AdminTable = ({ user, problemList }) => {
             Status
           </li>
           <li id="content" style={{ width: '10%' }}>
-            삭제
+            공개
           </li>
         </ul>
         {problemList.map((problem, i) => {
@@ -59,7 +51,12 @@ const AdminTable = ({ user, problemList }) => {
                   {problem.p_id}
                 </li>
                 <li id="content" style={{ width: '30%' }}>
-                  <button id="problem" onClick={handleProblemName}>
+                  <button
+                    id="problem"
+                    onClick={() => {
+                      handleProblemName(problem.p_id)
+                    }}
+                  >
                     {problem.title}
                   </button>
                 </li>
@@ -70,12 +67,16 @@ const AdminTable = ({ user, problemList }) => {
                   {parseDateTime(problem.end_time)}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  <StyledButton onClick={handleStatus}>Status</StyledButton>
+                  <StyledButton
+                    onClick={() => {
+                      handleStatus(problem.p_id)
+                    }}
+                  >
+                    Status
+                  </StyledButton>
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
-                    삭제
-                  </StyledButton>
+                  {problem.is_public === 1 ? <p style={{ fontSize: '0.8rem' }}>공개</p> : <p style={{ fontSize: '0.8rem' }}>비공개</p>}
                 </li>
               </ul>
             )
@@ -86,7 +87,12 @@ const AdminTable = ({ user, problemList }) => {
                   {problem.p_id}
                 </li>
                 <li id="content" style={{ width: '30%' }}>
-                  <button id="problem" onClick={handleProblemName}>
+                  <button
+                    id="problem"
+                    onClick={() => {
+                      handleProblemName(problem.p_id)
+                    }}
+                  >
                     {problem.title}
                   </button>
                 </li>
@@ -97,12 +103,16 @@ const AdminTable = ({ user, problemList }) => {
                   {parseDateTime(problem.end_time)}
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  <StyledButton onClick={handleStatus}>Status</StyledButton>
+                  <StyledButton
+                    onClick={() => {
+                      handleStatus(problem.p_id)
+                    }}
+                  >
+                    Status
+                  </StyledButton>
                 </li>
                 <li id="content" style={{ width: '10%' }}>
-                  <StyledButton style={{ color: 'red' }} onClick={handleDelete}>
-                    삭제
-                  </StyledButton>
+                  {problem.is_public === 1 ? <p style={{ fontSize: '0.8rem' }}>공개</p> : <p style={{ fontSize: '0.8rem' }}>비공개</p>}
                 </li>
               </ul>
             )

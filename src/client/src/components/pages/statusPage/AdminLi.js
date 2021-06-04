@@ -10,6 +10,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ExpandLessIcon from '@material-ui/icons/ExpandLess'
 import { TextField, Collapse, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core'
+import EditIcon from '@material-ui/icons/Edit'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -74,10 +75,10 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
   return (
     <Wrapper isOpen={isOpen}>
       <ul id="content-list">
-        <li id="content" style={{ width: '8.5%' }}>
+        <li id="content" style={{ width: '7%' }}>
           {status.submit_id}
         </li>
-        <li id="content" style={{ width: '21.5%' }}>
+        <li id="content" style={{ width: '23%' }}>
           {status.user_id}
         </li>
         <li id="content" style={{ width: '10%' }}>
@@ -99,13 +100,13 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
             Code
           </button>
         </li>
-        <li id="content" style={{ width: '25%' }}>
+        <li id="content" style={{ width: '23%' }}>
           {parseDateTime(status.submit_time)}
         </li>
-        <li id="qna" style={{ width: '5%' }}>
+        <li id="qna" style={{ width: '8%' }}>
           {status.is_objection ? <QnaIcon onClick={handleQNAClick(status.submit_id)} /> : <></>}
         </li>
-        <li id="content" style={{ width: '10%', display: 'flex', justifyContent: 'center' }}>
+        <li id="content" style={{ width: '9%' }}>
           {isOpen ? (
             <CloseEditBtn
               onClick={() => {
@@ -123,9 +124,9 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
       </ul>
       <Collapse in={isOpen}>
         <ul id="content-list">
-          <li id="content" style={{ width: '8.5%' }}></li>
-          <li id="content" style={{ width: '21.5%' }}></li>
-          <li id="content" style={{ width: '12.5%' }}>
+          <li id="content" style={{ width: '7%' }}></li>
+          <li id="content" style={{ width: '23%' }}></li>
+          <li id="content" style={{ width: '10%' }}>
             <StyledFormControl variant="outlined" size="small">
               <StyledSelect value={result} onChange={handleChangeResult}>
                 <StyledMenuItem value={'Accept'}>AC</StyledMenuItem>
@@ -135,23 +136,16 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
             </StyledFormControl>
           </li>
           <li id="content" style={{ width: '10%' }}></li>
-          <li id="content" style={{ width: '12.5%' }}>
-            <StyledTextField
-              value={editScore}
-              size="small"
-              variant="outlined"
-              type="text"
-              onChange={handleChangeEditScore}
-              // style={{ maxWidth: '65px', paddingRight: '20px' }}
-              // style={{ display: 'flex', justifyContent: 'center', paddingRight: '6px' }}
-            />
+          <li id="content" style={{ width: '10%' }}></li>
+          <li id="content" style={{ width: '23%' }}>
+            <StyledTextField value={editScore} size="small" variant="outlined" type="text" onChange={handleChangeEditScore} />
           </li>
-          <li id="content" style={{ width: '20%' }}></li>
-          <li id="qna" style={{ width: '0%' }}></li>
-          <li id="content" style={{ width: '20%', display: 'flex', justifyContent: 'center', paddingRight: '6px' }}>
-            <button id="submit-btn" onClick={handleEditBtn}>
+          <li id="qna" style={{ width: '8%' }}></li>
+          <li id="content" style={{ width: '9%' }}>
+            <EditBtn onClick={handleEditBtn} />
+            {/* <button id="submit-btn" onClick={handleEditBtn}>
               수정
-            </button>
+            </button> */}
           </li>
         </ul>
       </Collapse>
@@ -201,9 +195,8 @@ const StyledMenuItem = styled(MenuItem)``
 
 const StyledTextField = styled(TextField)`
   && {
-    width: 60%;
+    width: 80%;
     background: ${(props) => props.theme.HEADER_BACKGROUND};
-    margin-right: 18px;
     border-radius: 5px;
   }
 
@@ -249,6 +242,17 @@ const OpenEditBtn = styled(ExpandMoreIcon)`
 `
 
 const CloseEditBtn = styled(ExpandLessIcon)`
+  && {
+    font-size: 1.8rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    color: ${(props) => props.theme.POINT};
+  }
+`
+
+const EditBtn = styled(EditIcon)`
   && {
     font-size: 1.8rem;
   }
