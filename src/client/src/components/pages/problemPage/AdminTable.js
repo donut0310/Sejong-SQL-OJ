@@ -24,7 +24,7 @@ const AdminTable = ({ user, problemList }) => {
     <Container>
       <ul id="table-list">
         <ul id="title-tab">
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '7% ' }}>
             번호
           </li>
           <li id="content" style={{ width: '30%' }}>
@@ -36,10 +36,10 @@ const AdminTable = ({ user, problemList }) => {
           <li id="content" style={{ width: '20%' }}>
             End
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '15%' }}>
             Status
           </li>
-          <li id="content" style={{ width: '10%' }}>
+          <li id="content" style={{ width: '8%' }}>
             공개
           </li>
         </ul>
@@ -47,7 +47,7 @@ const AdminTable = ({ user, problemList }) => {
           if (i === problemList.length - 1) {
             return (
               <ul id="content-list-last" key={i}>
-                <li id="content" style={{ width: '10%' }}>
+                <li id="content" style={{ width: '7%' }}>
                   {problem.p_id}
                 </li>
                 <li id="content" style={{ width: '30%' }}>
@@ -66,7 +66,7 @@ const AdminTable = ({ user, problemList }) => {
                 <li id="content" style={{ width: '20%' }}>
                   {parseDateTime(problem.end_time)}
                 </li>
-                <li id="content" style={{ width: '10%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   <StyledButton
                     onClick={() => {
                       handleStatus(problem.p_id)
@@ -75,15 +75,15 @@ const AdminTable = ({ user, problemList }) => {
                     Status
                   </StyledButton>
                 </li>
-                <li id="content" style={{ width: '10%' }}>
-                  {problem.is_public === 1 ? <p style={{ fontSize: '0.8rem' }}>공개</p> : <p style={{ fontSize: '0.8rem' }}>비공개</p>}
+                <li id="content" style={{ width: '8%' }}>
+                  {problem.is_public === 1 ? <p style={{ fontSize: '0.8rem' }}>O</p> : <p style={{ fontSize: '0.8rem' }}>X</p>}
                 </li>
               </ul>
             )
           } else
             return (
               <ul id="content-list" key={i}>
-                <li id="content" style={{ width: '10%' }}>
+                <li id="content" style={{ width: '7%' }}>
                   {problem.p_id}
                 </li>
                 <li id="content" style={{ width: '30%' }}>
@@ -102,7 +102,7 @@ const AdminTable = ({ user, problemList }) => {
                 <li id="content" style={{ width: '20%' }}>
                   {parseDateTime(problem.end_time)}
                 </li>
-                <li id="content" style={{ width: '10%' }}>
+                <li id="content" style={{ width: '15%' }}>
                   <StyledButton
                     onClick={() => {
                       handleStatus(problem.p_id)
@@ -111,8 +111,8 @@ const AdminTable = ({ user, problemList }) => {
                     Status
                   </StyledButton>
                 </li>
-                <li id="content" style={{ width: '10%' }}>
-                  {problem.is_public === 1 ? <p style={{ fontSize: '0.8rem' }}>공개</p> : <p style={{ fontSize: '0.8rem' }}>비공개</p>}
+                <li id="content" style={{ width: '8%' }}>
+                  {problem.is_public === 1 ? <p style={{ fontSize: '0.8rem' }}>O</p> : <p style={{ fontSize: '0.8rem' }}>X</p>}
                 </li>
               </ul>
             )
@@ -135,24 +135,14 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 `
+
 const StyledButton = styled.button`
-  button.edit {
-    color: yellow;
-  }
-  .delete {
-    color: red;
-  }
   border: none;
   color: blue;
   background: none;
+  font-size: 0.8rem;
   &:hover {
     cursor: pointer;
     text-decoration: underline;
-  }
-  .edit {
-    color: yellow;
-  }
-  .delete {
-    color: red;
   }
 `
