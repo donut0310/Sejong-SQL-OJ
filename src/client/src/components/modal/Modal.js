@@ -26,7 +26,7 @@ const ModalComponent = ({ user }) => {
         setUserClassList(data.result)
       }
     })()
-  }, [])
+  }, [user.user_id])
 
   const handleToggleMenu = () => {
     setToggleMenu(!toggleMenu)
