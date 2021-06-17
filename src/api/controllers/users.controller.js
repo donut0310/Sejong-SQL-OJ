@@ -167,6 +167,7 @@ export class UsersController {
   //문제 추가 요청
   async postAddProblem(req, res) {
     const database = new Database();
+    let insertID;
     let data = {};
 
     req.body.body = JSON.parse(req.body.body);
@@ -208,7 +209,10 @@ export class UsersController {
           values.week_title,
         ];
 
+        // 문제 생성
         let [a] = await connection.query(sql, params);
+        insertID = a.insertId;
+        data.result = null;
         connection.release();
 
         let values2 = {
@@ -237,10 +241,21 @@ export class UsersController {
           }
 
           // // 2. output.json 데이터 삽입
-          output_data = output_data.split("[")[1];
-          output_data = output_data.split("]")[0];
+
+          let json_output_data = output_data.replace("[", "");
+          console.log(json_output_data);
+          json_output_data = json_output_data.replace("]", "");
+          console.log(json_output_data);
+          json_output_data = json_output_data.split("},");
+          console.log(json_output_data);
+          for (let i in json_output_data) {
+            if (i != json_output_data.length - 1) json_output_data[i] += "}";
+          }
+          console.log(json_output_data);
           try {
-            JSON.parse(output_data);
+            for (let i in json_output_data) {
+              JSON.parse(json_output_data[i]);
+            }
           } catch (err) {
             data.result = "fail";
             data.message = "output json file error";
@@ -262,11 +277,14 @@ export class UsersController {
           connection.release();
         }
 
-        if (data.result != fail) {
-          data.result = null;
+        if (data.result != "fail") {
           data.message = "success";
           res.status(200).send(data);
         } else {
+          let backSql = "delete from problem where p_id = ?";
+          let backParams = [insertID];
+          let [re] = await connection.query(backSql, backParams);
+          connection.release();
           res.status(400).send(data);
         }
       } catch (err) {
