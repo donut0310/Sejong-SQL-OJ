@@ -42,7 +42,7 @@ const Admin = () => {
   }, [])
 
   // 제출 버튼 핸들러
-  const handleAddProblem = async () => {
+  const handleAddProblem = () => {
     let cnt = 0
     for (const [index, file] of formData.entries()) {
       cnt++
@@ -61,13 +61,14 @@ const Admin = () => {
 
     formData.append('body', temp)
 
-    const { data } = await axios.post(`/api/v1/user/problem/${classId}/${weekId}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-
-    history.goBack()
+    axios
+      .post(`/api/v1/user/problem/${classId}/${weekId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(() => history.goBack())
+      .catch((error) => alert(error.response.data.message))
   }
 
   const handleCancel = () => {
