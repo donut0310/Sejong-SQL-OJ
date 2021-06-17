@@ -12,7 +12,7 @@ import axios from 'axios'
 const Menu = ({ handleToggleMenu, user }) => {
   const history = useHistory()
   const [userClassList, setUserClassList] = useState([])
-  const [toggleMenu, setToggleMenu] = useState(true)
+  const [toggleMenu, setToggleMenu] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -21,7 +21,7 @@ const Menu = ({ handleToggleMenu, user }) => {
         setUserClassList(data.result)
       }
     })()
-  }, [])
+  }, [user.user_id])
 
   const handleWeekInfo = (classID, weekID) => () => {
     history.push(`/${classID}/${weekID}/contents`)
