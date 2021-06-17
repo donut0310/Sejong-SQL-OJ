@@ -14,15 +14,7 @@ export class ScoreController {
       let sql = "select tc_cnt from problem where p_id=? ";
       let sql2= "select tc_content from testcase_problem where p_id=?  order by tc_id asc;"
       let sql3= "select tc_answer from testcase_problem where p_id=? order by tc_id asc;"
-      //문제 생성시 실행하도록
-      let testTable=`create table patient_info(
-        patient_id varchar(255) not null,
-          patient_sex varchar(255) DEFAULT NULL,
-          datatime datetime DEFAULT NULL,
-          patient_condition varchar(255) DEFAULT NULL,
-          name varchar(255) DEFAULT NULL,
-        PRIMARY KEY (patient_id)
-      );`
+      
       let params = [
         req.params.pId,
       ];
