@@ -8,16 +8,44 @@ const FileInput = ({ formData }) => {
   const output = useRef()
   const [printIn, setPrintIn] = useState([])
   const [printOut, setPrintOut] = useState([])
+  const [isSql, setIsSql] = useState(false)
+  const [isJson, setIsJson] = useState(false)
 
   const handleUpload = (e) => {
     e.preventDefault()
-    if (input.current.files.length !== 0 && output.current.files.length !== 0) {
-      formData.append(`I${printIn.length}`, input.current.files[0])
-      formData.append(`O${printOut.length}`, output.current.files[0])
+    if (isSql && isJson) {
+      if (input.current.files.length !== 0 && output.current.files.length !== 0) {
+        formData.append(`I${printIn.length}`, input.current.files[0])
+        formData.append(`O${printOut.length}`, output.current.files[0])
 
-      setPrintIn([...printIn, input.current.files[0]])
-      setPrintOut([...printOut, output.current.files[0]])
-    } else alert('파일을 입력해주세요.')
+        setPrintIn([...printIn, input.current.files[0]])
+        setPrintOut([...printOut, output.current.files[0]])
+      } else alert('파일을 입력해주세요.')
+    } else alert('파일 확장자를 확인해주세요.')
+  }
+
+  const SQLFileSelected = () => {
+    let pathpoint = input.current.files[0].name.lastIndexOf('.')
+    let filepoint = input.current.files[0].name.substring(pathpoint + 1, input.current.files[0].name.length)
+    let filetype = filepoint.toLowerCase()
+    if (filetype == 'sql') {
+      setIsSql(true)
+    } else {
+      alert('.sql 형식의 파일만 업로드해주세요.')
+      setIsSql(false)
+    }
+  }
+
+  const JSONFileSelected = () => {
+    let pathpoint = output.current.files[0].name.lastIndexOf('.')
+    let filepoint = output.current.files[0].name.substring(pathpoint + 1, output.current.files[0].name.length)
+    let filetype = filepoint.toLowerCase()
+    if (filetype == 'json') {
+      setIsJson(true)
+    } else {
+      alert('.json 형식의 파일만 업로드해주세요.')
+      setIsJson(false)
+    }
   }
 
   return (
@@ -28,14 +56,14 @@ const FileInput = ({ formData }) => {
             <Arrow />
             Input
           </TitleContainer>
-          <StyledUploadContainer type="file" id="input-file" accept=".sql" ref={input} />
+          <StyledUploadContainer type="file" id="input-file" accept=".sql" onChange={SQLFileSelected} ref={input} />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TitleContainer style={{ margin: '0' }}>
             <Arrow />
             Output
           </TitleContainer>
-          <StyledUploadContainer type="file" id="output-file" accept=".json" ref={output} />
+          <StyledUploadContainer type="file" id="output-file" accept=".json" onChange={JSONFileSelected} ref={output} />
           <div style={{ width: '100%', textAlign: 'end' }}>
             <button id="submit-btn" onClick={handleUpload}>
               추가
