@@ -19,47 +19,35 @@ const WeekManagement = () => {
 
   const handleChangeNewWeekName = (e) => {
     setNewWeekName(e.target.value)
-    console.log(newWeekName)
   }
 
   const handleAddWeekBtn = async () => {
-    console.log('handleAddWeekBtn 실행')
-
     const { data } = await axios.post(`/api/v1/course/week/${classId}`, { week_title: newWeekName })
     setIsChanged(!isChanged)
   }
 
   // TODO API 요청 아직 안함
   const handleDeleteWeekBtn = async (weekId) => {
-    console.log('handleDeleteWeekBtn 실행', weekId)
-
     const { data } = await axios.delete(`/api/v1/course/week/${weekId}`)
     setIsChanged(!isChanged)
   }
 
   const handleAddProblemBtn = async (weekId) => {
-    console.log('handleAddProblemBtn 실행', weekId)
-
     history.push(`/manage/${classId}/${weekId}/addproblem`)
   }
 
   const handleDeleteProblemBtn = async (pId) => {
-    console.log('handleDeleteProblemBtn 실행', pId)
-
     const { data } = await axios.delete(`/api/v1/course/problem/${pId}`)
     setIsChanged(!isChanged)
   }
 
   const handleProblemName = async (weekId, pId) => {
-    console.log('handleProblemName 실행', pId)
-
     history.push(`/${classId}/${weekId}/problem/${pId}`)
   }
 
   useEffect(() => {
     const fetchWeekList = async () => {
       const { data } = await axios.get(`/api/v1/course/problem/${classId}`)
-      console.log('Fetch Week&problem List', data.result)
 
       setClassInfo(data.result)
     }

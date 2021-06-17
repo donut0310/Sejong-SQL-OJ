@@ -5,12 +5,10 @@ import React from 'react'
 const TimeInput = ({ setStartTime, setEndTime }) => {
   const handleStartTimeChange = (e) => {
     setStartTime(e.target.value)
-    console.log('Time Input changed', e.target.value)
   }
 
   const handleEndTimeChange = (e) => {
     setEndTime(e.target.value)
-    console.log('Time Input changed', e.target.value)
   }
 
   return (

@@ -37,7 +37,6 @@ const Admin = () => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/week/${weekId}`)
       const currentInfo = data.result[0]
-      console.log('title currentInfo', currentInfo)
       setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.week_title })
     })()
   }, [])
@@ -62,18 +61,11 @@ const Admin = () => {
 
     formData.append('body', temp)
 
-    // for (const [index, file] of formData.entries()) {
-    //   console.log('formData', index, file)
-    // }
-
     const { data } = await axios.post(`/api/v1/user/problem/${classId}/${weekId}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
-
-    console.log('Add problem data', formData)
-    console.log('Add problem res', data)
 
     history.goBack()
   }

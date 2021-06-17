@@ -35,15 +35,10 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
   }
 
   const handleEditBtn = async () => {
-    console.log('Result ', result)
-    console.log('Score ', editScore)
-
     const { data } = await axios.post(`/api/v1/user/status/edit/${status.submit_id}`, {
       result: result,
       score: editScore,
     })
-
-    console.log('Edit submitted result', data)
 
     setIsOpen(false)
     setIsChanged(!isChanged)
@@ -68,7 +63,6 @@ const AdminLi = ({ status, isChanged, setIsChanged }) => {
 
   const handleQNAClick = (submitId) => async () => {
     const data = await axios.post(`/api/v1/user/qna/${submitId}`)
-    console.log('이의제기 Toggle', data)
     setIsChanged(!isChanged)
   }
 

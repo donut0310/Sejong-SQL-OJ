@@ -37,7 +37,6 @@ const UserTable = ({ statusList, isChanged, setIsChanged }) => {
 
   const handleQNAClick = (submitId) => async () => {
     const data = await axios.post(`/api/v1/user/qna/${submitId}`)
-    console.log('질문 Toggle', data)
     setIsChanged(!isChanged)
   }
 

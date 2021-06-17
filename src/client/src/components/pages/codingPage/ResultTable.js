@@ -8,7 +8,6 @@ const ResultTable = ({ execResult }) => {
     const temp = []
     for (let i in execResult[0]) temp.push(i)
     setAttributes(temp)
-    console.log(attributes)
   }, [, execResult])
 
   return (

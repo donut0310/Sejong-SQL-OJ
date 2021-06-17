@@ -5,7 +5,6 @@ import { TextField } from '@material-ui/core'
 const ProfessorManagement = ({ professor, setProfessor }) => {
   const handleChangeNewProfessor = (e) => {
     setProfessor(e.target.value.split(/\r\n|\r|\n/))
-    // console.log('new professor', professor)
   }
 
   return <StyledTextField value={professor} id="outlined-basic" label="교수 입력" multiline rows={3} variant="outlined" placeholder="담당 교수를 입력하세요." onChange={handleChangeNewProfessor} />

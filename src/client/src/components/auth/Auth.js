@@ -16,8 +16,6 @@ const Auth = (SpecificComponent, option, adminRoute = null) => {
     useEffect(() => {
       ;(async () => {
         const response = await dispatch(auth())
-        // Logged out
-        console.log('auth response', response)
 
         if (!response || !response.result) {
           history.push('/login')

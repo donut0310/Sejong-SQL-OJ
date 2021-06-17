@@ -17,15 +17,10 @@ const LoginForm = ({ logIn }) => {
   const history = useHistory()
 
   const onSubmit = async (data) => {
-    console.log('data.id', data.id)
-    console.log('data.password', data.password)
-
     const result = await logIn(data.id, data.password)
 
     if (result.isCompleted) {
       const authResult = await axios.get('/api/v1/user/auth')
-      console.log('authResult', authResult)
-
       if (authResult.data.result.role === 2) history.push('/admin')
       else history.push('/')
     } else {

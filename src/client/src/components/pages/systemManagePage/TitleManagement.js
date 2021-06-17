@@ -5,7 +5,6 @@ import { TextField } from '@material-ui/core'
 const TitleManagement = ({ className, setClassName }) => {
   const handleChangeNewClassName = (e) => {
     setClassName(e.target.value)
-    // console.log(className)
   }
 
   return <StyledTextField id="outlined-basic" value={className} label="강좌 이름" variant="outlined" placeholder={'강좌명을 입력하세요.'} onChange={handleChangeNewClassName} />

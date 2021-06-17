@@ -18,7 +18,6 @@ const Menu = ({ handleToggleMenu, user }) => {
     ;(async () => {
       if (user.isAuth && user.role !== 2) {
         const { data } = await axios.get(`/api/v1/user/courses`)
-        console.log('Modal useEffect', data)
         setUserClassList(data.result)
       }
     })()
@@ -30,7 +29,6 @@ const Menu = ({ handleToggleMenu, user }) => {
   }
   const handleManageClass = (classID) => () => {
     history.push(`/manage/${classID}`)
-    console.log('Go to settings (manage page) of class', classID)
     handleToggleMenu()
   }
 

@@ -22,13 +22,11 @@ const Public = () => {
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/user/code/${submitId}`)
-      console.log('submitted data', data.result[0])
       await setPId(data.result[0].p_id)
       setCode(data.result[0].user_query)
 
       const titleData = await axios.get(`/api/v1/problem/${data.result[0].p_id}`)
       const problem = titleData.data.result[0]
-      console.log('titledata', problem)
 
       setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title })
     })()
