@@ -35,14 +35,21 @@ const StyledPaper = styled(Paper)`
     align-items: center;
     flex-direction: column;
     width: 40%;
+    min-width: 300px;
     height: 30%;
-    padding: 10px;
+    padding: 30px;
+    background: ${(props) => props.theme.HEADER_BACKGROUND};
+    &:focus {
+      outline: 0;
+    }
   }
 `
 const StyledIcon = styled(ErrorOutlineIcon)`
   && {
-    width: 100px;
-    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    width: 15rem;
+    height: 15rem;
     margin-bottom: 10px;
     color: ${(props) => props.theme.POINT};
   }
@@ -51,6 +58,8 @@ const StyledIcon = styled(ErrorOutlineIcon)`
 const Text = styled.div`
   margin-top: 20px;
   font-weight: 500;
+  text-align: center;
+  color: ${(props) => props.theme.GENERAL_FONT};
   &:focus {
     outline: 0;
   }
