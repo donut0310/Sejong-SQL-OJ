@@ -7,12 +7,10 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 const TAManagement = ({ currentTA, setCurrentTA, updateTA, setUpdateTA, handleAddTA, handleDeleteTA }) => {
   const handleChangeCurTA = (e) => {
     setCurrentTA(e.target.value.split(/\r\n|\r|\n/))
-    console.log('currentTA', currentTA)
   }
 
   const handleChangeUpdateTA = (e) => {
     setUpdateTA(e.target.value.split(/\r\n|\r|\n/))
-    console.log('updateTA', updateTA)
   }
 
   return (

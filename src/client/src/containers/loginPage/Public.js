@@ -4,7 +4,7 @@ import { Hidden } from '@material-ui/core'
 import Left from '../../components/pages/loginPage/Left'
 import Right from '../../components/pages/loginPage/Right'
 
-const Public = () => {
+const Public = ({}) => {
   return (
     <LoginPageContainer>
       <Left />

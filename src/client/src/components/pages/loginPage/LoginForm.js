@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
@@ -6,25 +6,25 @@ import { useForm } from 'react-hook-form'
 import { Link, Button, TextField } from '@material-ui/core'
 import { useHistory } from 'react-router-dom'
 
+import Message from './Message'
+
 import { logIn } from '../../../redux'
 
 const LoginForm = ({ logIn }) => {
   const { register, errors, handleSubmit } = useForm()
+  const [isOpen, setIsOpen] = useState(false)
 
   const history = useHistory()
 
   const onSubmit = async (data) => {
-    console.log('data.id', data.id)
-    console.log('data.password', data.password)
-
     const result = await logIn(data.id, data.password)
 
     if (result.isCompleted) {
       const authResult = await axios.get('/api/v1/user/auth')
-      console.log('authResult', authResult)
-
       if (authResult.data.result.role === 2) history.push('/admin')
       else history.push('/')
+    } else {
+      setIsOpen(true)
     }
   }
 
@@ -33,16 +33,20 @@ const LoginForm = ({ logIn }) => {
   }
 
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
-      <LoginTextField variant="outlined" size="small" name="id" label="아이디" placeholder="아이디" inputRef={register({ required: true })} autoFocus />
-      {errors.id && <ErrorMessage>아이디를 입력하세요</ErrorMessage>}
-      <LoginTextField variant="outlined" size="small" name="password" label="비밀번호" placeholder="비밀번호" type="password" inputRef={register({ required: true })} />
-      {errors.password && <ErrorMessage>비밀번호를 입력하세요</ErrorMessage>}
-      <StyledButton type="submit" onClick={handleSubmit(onSubmit)}>
-        로그인
-      </StyledButton>
-      <StyledLink onClick={handleRegisterBtn}>회원가입</StyledLink>
-    </StyledForm>
+    <>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <LoginTextField variant="outlined" size="small" name="id" label="아이디" placeholder="아이디" inputRef={register({ required: true })} autoFocus />
+        {errors.id && <ErrorMessage>아이디를 입력하세요</ErrorMessage>}
+        <LoginTextField variant="outlined" size="small" name="password" label="비밀번호" placeholder="비밀번호" type="password" inputRef={register({ required: true })} />
+        {errors.password && <ErrorMessage>비밀번호를 입력하세요</ErrorMessage>}
+        <StyledButton type="submit" onClick={handleSubmit(onSubmit)}>
+          로그인
+        </StyledButton>
+        <StyledLink onClick={handleRegisterBtn}>회원가입</StyledLink>
+      </StyledForm>
+
+      <Message isOpen={isOpen} setIsOpen={setIsOpen} />
+    </>
   )
 }
 

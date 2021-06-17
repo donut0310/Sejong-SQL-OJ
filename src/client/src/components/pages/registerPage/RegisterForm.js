@@ -15,12 +15,7 @@ const RegisterForm = () => {
   password.current = watch('password')
 
   const onSubmit = async (data) => {
-    console.log('data.id', data.id)
-    console.log('data.name', data.name)
-    console.log('data.password', data.password)
-
     const res = await axios.post(`/api/v1/user/signup`, { user_id: data.id, user_name: data.name, user_pw: data.password })
-    console.log(res)
     if (res.status === 200) {
       history.push('/login')
     }

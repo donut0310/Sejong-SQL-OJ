@@ -20,12 +20,10 @@ const Admin = () => {
   useEffect(() => {
     ;(async () => {
       const { data } = await axios.get(`/api/v1/problem/${classId}/${weekId}`)
-      console.log('Get problem list =>', data)
       setProblemList(data.result)
 
       const res = await axios.get(`/api/v1/week/${weekId}`)
       const currentInfo = res.data.result[0]
-      console.log('Get week Info =>', currentInfo)
       setProblemInfo({ className: currentInfo.class_name, weekName: currentInfo.week_title })
     })()
   }, [classId, weekId])

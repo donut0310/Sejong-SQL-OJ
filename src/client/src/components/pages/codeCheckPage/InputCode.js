@@ -22,9 +22,7 @@ const InputCode = ({ theme, pId, code }) => {
     history.push(`/${classId}/${weekId}/problem/${pId}/${submitId}`)
   }
 
-  const onChange = (input) => {
-    console.log(input)
-  }
+  const onChange = (input) => {}
 
   const handleFontSize = (e) => {
     setFontSize(parseInt(e.target.value))

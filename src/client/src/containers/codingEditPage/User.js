@@ -41,11 +41,9 @@ const User = ({ user }) => {
 
   const handleExecCode = async () => {
     if (input) {
-      console.log('handleExecCode', input)
       setIsExecuted(true)
       setExecIsLoading(true)
       const { data } = await axios.post(`/api/v1/user/code/exec/${pId}`, { user_query: input })
-      console.log('Exec data', data)
 
       if (data.message === 'success') {
         setExecIsError(false)
@@ -64,7 +62,6 @@ const User = ({ user }) => {
       setIsSubmit(true)
       ;(async () => {
         const { data } = await axios.post(`/api/v1/user/code/submit/${pId}`, { user_query: input })
-        console.log('handleSubmitCode', data)
 
         await history.push(`/${classId}/${weekId}/status?userId=${user.user_id}&pId=${pId}`)
       })()
@@ -86,20 +83,14 @@ const User = ({ user }) => {
 
   // TODO
   useEffect(() => {
-    console.log('useEffect 실행')
-    console.log('classId=>', classId)
-    console.log('weekId=>', weekId)
-    console.log('pId=>', pId)
     ;(async () => {
       setIsLoading(true)
 
       const submittedData = await axios.get(`/api/v1/user/code/${submitId}`)
-      console.log('submittedData', submittedData.data.result[0])
       setInput(submittedData.data.result[0].user_query)
 
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
       const problem = data.result[0]
-      console.log('codingpage get problem info data.result[0] =>', problem)
 
       // Title
       setProblemInfo({ ...problemInfo, className: problem.class_name, weekName: problem.week_title, problemName: problem.title })

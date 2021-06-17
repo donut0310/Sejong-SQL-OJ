@@ -43,18 +43,15 @@ const Admin = ({ match }) => {
       if (viewType === 'all') {
         if (userId === '') {
           const { data } = await axios.get(`/api/v1/user/status/option?pId=${pId}&result=${result}&page=${page}`)
-          console.log('Get status', data)
           setStatusList(data.result)
           setMaxPage(data.maxpage)
         } else {
           const { data } = await axios.get(`/api/v1/user/status/option?userId=${userId}&pId=${pId}&result=${result}&page=${page}`)
-          console.log('Get status', data)
           setStatusList(data.result)
           setMaxPage(data.maxpage)
         }
       } else {
         const { data } = await axios.get(`/api/v1/course/status/${classId}/${pId}`)
-        console.log('Get status', data)
         setStatusList(data.result)
       }
     })()
@@ -64,7 +61,6 @@ const Admin = ({ match }) => {
   useEffect(() => {
     const fetchTitleData = async () => {
       const { data } = await axios.get(`/api/v1/problem/${pId}`)
-      console.log('Get titleData', data)
       const problem = data.result[0]
 
       setProblemInfo({ className: problem.class_name, weekName: problem.week_title, problemName: problem.title, startTime: problem.start_time, endTime: problem.end_time })
@@ -82,7 +78,6 @@ const Admin = ({ match }) => {
   }
 
   const handleSearch = () => {
-    console.log('Search ID:', userId, 'result:', result, 'page:', page)
     setIsChanged(!isChanged)
     setPage(1)
   }

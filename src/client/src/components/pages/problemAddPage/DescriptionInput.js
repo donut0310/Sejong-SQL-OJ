@@ -61,8 +61,6 @@ const DescriptionInput = ({ description, setDescription, tableInfo, setTableInfo
       else rangeY += 1
     }
 
-    console.log('attrub', attributes)
-
     // 2
     for (let i = 0; i < rangeY; i++) {
       let tempRow = {}
@@ -96,10 +94,7 @@ const DescriptionInput = ({ description, setDescription, tableInfo, setTableInfo
     })
   }
 
-  useEffect(() => {
-    console.log('update tableInfo =>', tableInfo)
-    console.log('update description =>', description)
-  }, [tableInfo])
+  useEffect(() => {}, [tableInfo])
 
   // -----------Table Input 관련
 

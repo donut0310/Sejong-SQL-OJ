@@ -6,9 +6,7 @@ import ResultTable from './ResultTable'
 import { Collapse, CircularProgress } from '@material-ui/core'
 
 const Result = ({ isExecuted, execIsLoading, execIsError, execResult }) => {
-  useEffect(() => {
-    console.log('REseult useEffect execResult', execResult)
-  }, [isExecuted, execIsLoading, execIsError, execResult])
+  useEffect(() => {}, [isExecuted, execIsLoading, execIsError, execResult])
 
   return (
     <ResultWrapper>

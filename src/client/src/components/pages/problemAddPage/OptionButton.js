@@ -17,7 +17,6 @@ const OptionButton = ({ isPublic, setIsPublic, handleCancel, handleSubmit }) => 
   const handleChange = (e) => {
     if (e.target.value === '1') setIsPublic(1)
     else setIsPublic(0)
-    console.log('Public? ', `${e.target.value}`)
   }
 
   return (

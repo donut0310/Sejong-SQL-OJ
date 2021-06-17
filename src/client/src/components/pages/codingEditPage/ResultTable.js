@@ -4,15 +4,12 @@ import styled from 'styled-components'
 const ResultTable = ({ execResult }) => {
   const [attributes, setAttributes] = useState([])
 
-  useEffect(() => {
-    console.log('execResult', execResult)
-  }, [])
+  useEffect(() => {}, [])
 
   useEffect(() => {
     const temp = []
     for (let i in execResult[0]) temp.push(i)
     setAttributes(temp)
-    console.log(attributes)
   }, [, execResult])
 
   return (

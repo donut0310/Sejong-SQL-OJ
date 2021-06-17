@@ -30,34 +30,29 @@ const Admin = () => {
 
   const handleAddTA = async () => {
     const { data } = await axios.post(`/api/v1/course/assists/${classId}`, { assists: updateTA })
-    console.log('Add TA List', data)
     setUpdateTA([])
     setIsChangedTA(!isChangedTA)
   }
 
   const handleDeleteTA = async () => {
     const { data } = await axios.delete(`/api/v1/course/assists/delete/${classId}`, { data: { assists: updateTA } })
-    console.log('Delete TA List', data)
     setUpdateTA([])
     setIsChangedTA(!isChangedTA)
   }
 
   const handleAddStd = async () => {
     const { data } = await axios.post(`/api/v1/course/stds/${classId}`, { stds: updateStd })
-    console.log('Add Std List', data)
     setUpdateStd([])
     setIsChangedStd(!isChangedStd)
   }
 
   const handleDeleteStd = async () => {
     const { data } = await axios.delete(`/api/v1/course/stds/delete/${classId}`, { data: { stds: updateStd } })
-    console.log('Delete Std List', data)
     setUpdateStd([])
     setIsChangedStd(!isChangedStd)
   }
 
   useEffect(() => {
-    console.log('내용 바뀜')
     const fetchStudentData = async () => {
       const { data } = await axios.get(`/api/v1/course/user/${classId}`)
       setCurrentStd(data.stds || [])
@@ -70,14 +65,12 @@ const Admin = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       const { data } = await axios.get(`/api/v1/course/user/${classId}`)
-      // console.log('Fetch stds, TA list=>', data)
       setCurrentStd(data.stds || [])
       setCurrentTA(data.assists || [])
     }
 
     const fetchTitleData = async () => {
       const { data } = await axios.get(`/api/v1/course/${classId}`)
-      // console.log('Fetch title date=>', data)
       setProblemInfo({
         className: data.result[0].class_name,
       })

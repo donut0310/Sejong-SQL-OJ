@@ -6,9 +6,7 @@ import Problem from '../codingPage/Problem'
 import ResultTable from './ResultTable'
 
 const Result = ({ isExecuted, execIsLoading, execIsError, execResult }) => {
-  useEffect(() => {
-    console.log('ExecResult', execResult)
-  }, [isExecuted, execIsLoading, execIsError, execResult])
+  useEffect(() => {}, [isExecuted, execIsLoading, execIsError, execResult])
 
   return (
     <ResultWrapper id="wrapper">
