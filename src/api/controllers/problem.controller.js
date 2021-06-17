@@ -129,7 +129,8 @@ export class ProblemController {
     let data = {};
     data.result = {};
     var columnCount = userQuery.match(/;/g);
-    if(columnCount.length>=2){
+    
+    if( columnCount!= null && columnCount.length>=2){
       flag=true;
     }
     const sql = "select tc_id from problem where p_id = ?";
