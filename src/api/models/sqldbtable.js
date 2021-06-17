@@ -414,27 +414,27 @@ values(1,3,'목동 나누리 병원 성별 인구조사','"patient_info" 테이�
 
 # 1 class 답안 문제 1번 및 top_submit 답안
 INSERT INTO submit_answer(week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) 
-values(1,1,'s1',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex desc;",
-3.5,50,"2021-05-15 12:17:00",'WA',"(홍길동) 1주차 기초 select문");
+values(1,1,'11',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex desc;",
+3.5,100,"2021-05-15 12:17:00",'WA',"(홍길동) 1주차 기초 select문");
 
 INSERT INTO submit_answer(week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) 
-values(1,1,'s1',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",
+values(1,1,'11',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",
 3.5,100,"2021-05-15 12:17:00",'Accept',"(홍길동) 1주차 기초 select문");
 
 INSERT INTO submit_answer(week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) 
-values(1,1,'s2',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",
+values(1,1,'12',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",
 3.5,100,"2021-05-15 12:17:00",'Accept',"(홍길동) 1주차 기초 select문");
 
 INSERT INTO submit_answer(week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) 
-values(1,1,'s3',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",
+values(1,1,'13',1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",
 3.5,100,"2021-05-15 12:17:00",'Accept',"(홍길동) 1주차 기초 select문");
 
 insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values
-(1,1,"s1",1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",3.5,100,"2021-05-15 12:17:00","ACCEPT","(홍길동) 1주차 기초 select문",2);
+(1,1,"11",1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",3.5,100,"2021-05-15 12:17:00","WA","(홍길동) 1주차 기초 select문",2);
 insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values
-(1,1,"s2",1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",3.5,100,"2021-05-15 12:17:00","ACCEPT","(홍길동) 1주차 기초 select문",1);
+(1,1,"12",1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",3.5,100,"2021-05-15 12:17:00","ACCEPT","(홍길동) 1주차 기초 select문",1);
 insert into top_submit_answer (week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title,submit_cnt) values
-(1,1,"s3",1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",3.5,100,"2021-05-15 12:17:00","ACCEPT","(홍길동) 1주차 기초 select문",1);
+(1,1,"13",1,"select patient_sex,count(patient_sex) from patient_info group by patient_sex ORDER BY patient_sex ASC;",3.5,100,"2021-05-15 12:17:00","ACCEPT","(홍길동) 1주차 기초 select문",1);
 
 # 2 class 답안 문제 2번 
 INSERT INTO submit_answer(week_id,class_id,user_id,p_id,user_query,query_cost,score,submit_time,result,week_title) 
