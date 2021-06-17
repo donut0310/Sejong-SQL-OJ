@@ -168,6 +168,7 @@ export class UsersController {
   async postAddProblem(req, res) {
     const database = new Database();
     let data = {};
+
     req.body.body = JSON.parse(req.body.body);
     const values = {
       classId: req.params.classId,
@@ -217,23 +218,38 @@ export class UsersController {
           tc_answer: "",
         };
 
-        // // 문제 테스트 케이스 테이블 생성
+        // 문제 테스트 케이스 테이블 생성
         for (let i = 0; i < values.tc_cnt; i++) {
           // file read
           let input_data = values.file[2 * i].buffer.toString(); //sql 파일 내 데이터
           let output_data = values.file[2 * i + 1].buffer.toString(); //json 파일 내 데이터
 
           // 1. 테스트 케이스 테이블 생성
-          // sql 파일내 오류 발생시 트라이 캐치 구문 추가하기
           let input_connection = await database.testCaseConnect(i);
-          await input_connection.query(input_data);
-          input_connection.release();
-          console.log("인풋파일 성공!!", i);
+          try {
+            await input_connection.query(input_data);
+          } catch (err) {
+            input_connection.release();
+            data.result = "fail";
+            data.message = "input sql file error";
+            data.error = err;
+            break;
+          }
 
-          // 2. output.json 데이터 삽입
+          // // 2. output.json 데이터 삽입
+          output_data = output_data.split("[")[1];
+          output_data = output_data.split("]")[0];
+          try {
+            JSON.parse(output_data);
+          } catch (err) {
+            data.result = "fail";
+            data.message = "output json file error";
+            data.error = err;
+            break;
+          }
+
           values2.tc_answer = output_data;
           values2.tc_id = i;
-          console.log(values2);
           let sql2 =
             "insert into testcase_problem (p_id,tc_answer,week_title,tc_id) values(?,?,?,?)";
           let params2 = [
@@ -242,17 +258,19 @@ export class UsersController {
             values2.week_title,
             values2.tc_id,
           ];
-          let sql3_rows = await database.queryExecute(sql2, params2);
-          console.log("아웃풋 파일 성공!", i);
+          let [sql3_rows] = await connection.query(sql2, params2);
+          connection.release();
         }
-        data.result = null;
-        data.message = "success";
-        res.status(200).send(data);
+
+        if (data.result != fail) {
+          data.result = null;
+          data.message = "success";
+          res.status(200).send(data);
+        } else {
+          res.status(400).send(data);
+        }
       } catch (err) {
         connection.release();
-        data.result = null;
-        data.message = "fail";
-        data.error = err;
         res.status(400).send(data);
       }
     } catch (err) {
