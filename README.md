@@ -1,6 +1,6 @@
 # Sejong-SQL-OJ
 
-
+[Sejong-Sql-oj 사진]
 
 ## 📄 개요  
 
@@ -87,4 +87,3 @@
 
 
 세부사항은 [Sejong-SQL-OJ 노션](https://www.notion.so/Sejong-SQL-OJ-df4d4127289540848659fb16cdddc392) 을 확인해 주세요!
-

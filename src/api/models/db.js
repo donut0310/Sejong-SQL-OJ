@@ -1,25 +1,60 @@
-import { config } from "../utils/config.util.js";
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
+import { config,
+   test_case0_config,test_case1_config,
+   test_case2_config,test_case3_config,
+   test_case4_config } from "./dbconfig.js";
 
-export class Models {
+export class Database {
+  pool;
+  tc0_pool;
+  tc1_pool;
+  tc2_pool;
+  tc3_pool;
+  tc4_pool;
   constructor() {
-    this.username = config.MYSQL_AUTH_USERNAME;
-    this.password = config.MYSQL_AUTH_PASSWORD;
-    this.host = config.MYSQL_HOST;
-    this.port = config.MYSQL_PORT;
-    this.dbname = config.MYSQL_DBNAME;
+    this.pool = mysql.createPool(config);
+    this.tc0_pool = mysql.createPool(test_case0_config);
+    this.tc1_pool = mysql.createPool(test_case1_config);
+    this.tc2_pool = mysql.createPool(test_case2_config);
+    this.tc3_pool = mysql.createPool(test_case3_config);
+    this.tc4_pool = mysql.createPool(test_case4_config);
   }
-  init() {
-    this.connecting();
+  async queryExecute(sql, params) {
+    try {
+      const connection = await this.pool.getConnection(async (conn) => conn);
+      try {
+        const [rows] = await connection.query(sql, params);
+        connection.release();
+        return rows;
+      } catch (err) {
+        console.log(err);
+        connection.release();
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   }
-  connecting() {
-    let connection = mysql.createConnection({
-      host: this.host,
-      user: this.username,
-      password: this.password,
-      database: this.dbname,
-    });
-    connection.connect();
-    console.log("Mysql is connected");
+
+  async testCaseConnect(num) {
+    let connection;
+    switch (num) {
+      case 0:
+        connection = await this.tc0_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 1:
+        connection = await this.tc1_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 2:
+        connection = await this.tc2_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 3:
+        connection = await this.tc3_pool.getConnection(async (conn) => conn);
+        return connection;
+      case 4:
+        connection = await this.tc4_pool.getConnection(async (conn) => conn);
+        return connection;
+    }
   }
 }
